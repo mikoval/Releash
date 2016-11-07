@@ -1,3 +1,8 @@
 Rails.application.routes.draw do
-  root 'application#hello'
+  get 'login/home'
+
+  get 'login/help'
+
+  resources :users
+  root 'login#home'
 end
