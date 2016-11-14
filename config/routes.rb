@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  get '/home', to: 'main#home'
+
+  get '/animals', to: 'main#animals'
+
+  get '/people', to: "main#people"
+  
+  root 'main#home'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,0 +1,16 @@
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container">
+    <%= link_to "iShelter", root_path, id: "logo" %>
+    <nav>
+      <ul class="nav navbar-nav navbar-left">
+         <li><%= link_to "Animals",    animals_path %></li>
+        <li><%= link_to "People",   people_path %></li>
+        <li><%= link_to "Search", '#' %></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+       <li><%= link_to "Log Out ",    root_path %></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
