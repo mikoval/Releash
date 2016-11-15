@@ -1,9 +1,22 @@
 Rails.application.routes.draw do
+  get 'sessions/new'
+
+  get 'users/new'
+
   get '/home', to: 'main#home'
 
   get '/animals', to: 'main#animals'
 
   get '/people', to: "main#people"
+  
+  get  '/signup',  to: 'users#new'
+  post '/signup',  to: 'users#create'
+  
+  get    '/login',   to: 'sessions#new'
+  post   '/login',   to: 'sessions#create'
+  delete '/logout',  to: 'sessions#destroy'
+  
+  resources :users
   
   root 'main#home'
   # The priority is based upon order of creation: first created -> highest priority.
