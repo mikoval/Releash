@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   get '/home', to: 'main#home'
 
   get '/animals', to: 'main#animals'
+  post  '/animals',   to: 'main#newAnimal'
+  patch  '/animals',   to: 'main#newAnimal'
 
   get '/people', to: "main#people"
   
@@ -15,6 +17,8 @@ Rails.application.routes.draw do
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
+
+
   
   resources :users
   
