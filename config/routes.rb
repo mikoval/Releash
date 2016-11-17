@@ -1,16 +1,15 @@
 Rails.application.routes.draw do
-  get 'sessions/new'
-
-  get 'users/new'
 
   get '/home', to: 'main#home'
 
-  get '/animals', to: 'main#animals'
-  post  '/animals',   to: 'main#newAnimal'
-  patch  '/animals',   to: 'main#newAnimal'
+  get '/animals/new'
+  get '/animals', to: 'animals#list'
+  post  '/animals',   to: 'animals#newAnimal'
+  patch  '/animals',   to: 'animals#newAnimal'
 
-  get '/people', to: "main#people"
-  
+  get '/people', to: "people#list"
+  get 'people/new'
+
   get  '/signup',  to: 'users#new'
   post '/signup',  to: 'users#create'
   

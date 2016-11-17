@@ -1,0 +1,14 @@
+<h1>Animals#new</h1>
+
+<div class="" style="display:inline-block">
+    <%= form_for(@animal, url: animals_path(@animal))  do |f| %>
+      <%= f.label :name %>
+      <%= f.text_field :name, class: 'form-control' %>
+
+      <%= f.label :species %>
+      <%= f.text_field :species, class: 'form-control' %>
+     
+
+      <%= f.submit "Add animal", class: "btn btn-primary" %>
+    <% end %>
+  </div>
