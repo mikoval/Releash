@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   get '/people', to: "people#list"
   get 'people/new'
+  post '/people', to: 'people#addEmployee'
 
   get  '/signup',  to: 'users#new'
   post '/signup',  to: 'users#create'
