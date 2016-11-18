@@ -1,2 +1,12 @@
+<% provide(:title, "People") %>
 <h1>People#list</h1>
-<p>Find me in app/views/people/list.html.erb</p>
+
+<%= link_to "<button>Add Employee</button>".html_safe,  :controller => "people", :action => "new", :method => "get" %>
+<div class=" ">
+<% @allPeople.each do |a| %>
+  name = <%= a.name %> 
+  |
+  role = <%= a.role %>
+  <br>
+<% end %>
+</div>
