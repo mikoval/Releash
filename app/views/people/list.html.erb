@@ -3,6 +3,10 @@
 
 <%= link_to "<button>Add Employee</button>".html_safe,  :controller => "people", :action => "new", :method => "get" %>
 <div class=" ">
+    <!-- 
+    loops over each person in @allPeople (defined in the people controller)
+    puts all of that in at plain html with values from the person in the for-each loop
+    -->
 <% @allPeople.each do |a| %>
   name = <%= a.name %> 
   |

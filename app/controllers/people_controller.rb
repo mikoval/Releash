@@ -1,21 +1,24 @@
 class PeopleController < ApplicationController
+  #for the main people that displays all of them
   def list
+   
       @allPeople = User.all
       user = User.all
-      
-   
   end
 
+  #page for adding new people to the organization 
   def new
   	 @employee = User.new
      @roles = Role.all
   end
 
+  #require says the type it has to be, for this one it has to have a user parameter
+  #says the fields that are allowed. have to match up with column names
   def people_params
       params.require(:user).permit(:name, :email, :password,
                                    :password_confirmation, :role_id)
   end
-
+  # the code that actually adds an employee. 
   def addEmployee
 
     @people = User.new(people_params)
