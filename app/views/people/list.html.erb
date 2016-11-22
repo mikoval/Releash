@@ -6,7 +6,10 @@
 <% @allPeople.each do |a| %>
   name = <%= a.name %> 
   |
-  role = <%= a.role %>
+  role = <%= a.role.title %>
+
+
   <br>
+
 <% end %>
 </div>

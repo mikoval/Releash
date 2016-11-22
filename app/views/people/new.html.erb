@@ -17,8 +17,8 @@
       <%= f.label :password_confirmation, "Confirmation" %>
       <%= f.password_field :password_confirmation, class: 'form-control' %>
 
-      <%= f.label :role %>
-      <%= f.text_field :role, class: 'form-control' %>
+      <%= f.label :role_id %>
+      <%= f.collection_select :role_id, @roles, :id, :title, :prompt => "Select Role" %>
 
       <%= f.submit "Create my account", class: "btn btn-primary" %>
     <% end %>
