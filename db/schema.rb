@@ -11,13 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161115181134) do
+ActiveRecord::Schema.define(version: 20161121211418) do
 
   create_table "animals", force: :cascade do |t|
     t.text     "name"
     t.text     "species"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "breed"
   end
 
   create_table "users", force: :cascade do |t|
@@ -29,6 +30,5 @@ ActiveRecord::Schema.define(version: 20161115181134) do
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
-
 
 end

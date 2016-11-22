@@ -1,14 +1,54 @@
-<h1>Animals#new</h1>
+<!-- This is the page to add a new animal -->
+<h2>Add a new animal</h2>
 
-<div class="" style="display:inline-block">
-    <%= form_for(@animal, url: animals_path(@animal))  do |f| %>
-      <%= f.label :name %>
-      <%= f.text_field :name, class: 'form-control' %>
+<div class="parent" style="border:solid #AAB2BA">
 
-      <%= f.label :species %>
-      <%= f.text_field :species, class: 'form-control' %>
-     
+<!-- Personal info -->
+<div class="personalinfo" style="display:inline-block; width:50%; height:100%; border:solid #AAB2BA">
+    <div class="addImage" style="display:inline-block; position:relative; width:20;">
+        <h4>Add an Image</h4>
+    </div>
+    
+    <div class="form" style="display:inline-block; width:20%">
+        <h2>Personal Info</h2>
+        <%= form_for(@animal, url: animals_path(@animal))  do |f| %>
+          <%= f.label :name %>
+          <%= f.text_field :name, class: 'form-control' %>
 
-      <%= f.submit "Add animal", class: "btn btn-primary" %>
-    <% end %>
-  </div>
+          <%= f.label :species %>
+          <%= f.text_field :species, class: 'form-control' %>
+
+          <%= f.label :breed %>
+          <%= f.text_field :breed, class: 'form-control' %>
+         
+
+          <%= f.submit "Add animal", class: "btn btn-primary" %>
+        <% end %>
+    </div>
+</div>
+
+
+<!-- Documents -->
+<div class="documents" style="display:inline-block; width:50%; border:solid #AAB2BA">
+    <h2>Documents</h2>
+
+</div>
+
+
+
+<!-- People -->
+<div class="documents" style="display:inline-block; width:50%; border:solid #AAB2BA">
+    <h2>People</h2>
+
+</div>
+
+
+<!-- Reminders -->
+<div class="documents" style="display:inline-block; width:50%; border:solid #AAB2BA">
+    <h2>Reminder</h2>
+
+</div>
+
+</div>
+
+
