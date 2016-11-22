@@ -1,2 +1,35 @@
-<h1>People#list</h1>
-<p>Find me in app/views/people/list.html.erb</p>
+<% provide(:title, "People") %>
+<h1>People</h1>
+
+<%= link_to "<button>Add Employee</button>".html_safe,  :controller => "people", :action => "new", :method => "get" %>
+<div class=" ">
+    <!-- 
+    loops over each person in @allPeople (defined in the people controller)
+    puts all of that in at plain html with values from the person in the for-each loop
+    -->
+<table class="table table-bordered table-inverse table-hover profile-row">
+  <thead>
+    <tr>
+      <th class= "col-md-1">#</th>
+      <th class= "col-md-1">Pic</th>
+      <th class= "col-md-3">Name</th>
+      <th class= "col-md-3">Role</th>
+    </tr>
+  </thead>
+  <tbody>
+<% @allPeople.each_with_index do |a, index| %>
+   <tr style = "height: 70px;">
+      <th scope="row"><%= index %></th>
+      <td>
+       <%= display_avatar(a, "50x50") %>
+
+        </td>
+      <td> <%= a.name %> </td>
+      <td> <%= a.role.title %> </td>
+    </tr>
+ 
+
+<% end %>
+  </tbody>
+</table>
+</div>

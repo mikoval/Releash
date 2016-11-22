@@ -1,2 +1,44 @@
-<h1>People#new</h1>
-<p>Find me in app/views/people/new.html.erb</p>
+<% provide(:title, 'New Employee') %>
+<h1>Add new employee</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <!-- form for submitting employees. 
+    submits to /people path. that can be found in routes. 
+    passes in @employee that is defined by the form
+    thats what :name, :email,  etc is for 
+
+  --> 
+    <%= form_for(@employee, html: { multipart: true },  url: people_path(@employee)) do |f| %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name, class: 'form-control' %>
+
+      <%= f.label :email %>
+      <%= f.email_field :email, class: 'form-control' %>
+
+      <%= f.label :password %>
+      <%= f.password_field :password, class: 'form-control' %>
+
+      <%= f.label :password_confirmation, "Confirmation" %>
+      <%= f.password_field :password_confirmation, class: 'form-control' %>
+
+      <%= f.label :role_id %>
+      <%= f.collection_select :role_id, @roles, :id, :title, :prompt => "Select Role" %>
+
+      <span class="picture">
+        <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
+      </span>
+      <%= f.submit "Create my account", class: "btn btn-primary" %>
+    <% end %>
+    </div>
+</div>
+
+<script type="text/javascript">
+  $('#micropost_picture').bind('change', function() {
+    var size_in_megabytes = this.files[0].size/1024/1024;
+    if (size_in_megabytes > 5) {
+      alert('Maximum file size is 5MB. Please choose a smaller file.');
+    }
+  });
+</script>

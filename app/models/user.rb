@@ -7,4 +7,16 @@ class User < ActiveRecord::Base
                     uniqueness: { case_sensitive: false }
     has_secure_password
     validates :password, presence: true, length: { minimum: 6 }
+    validate  :picture_size
+    mount_uploader :picture, PictureUploader
+    belongs_to :role
+
+    private
+
+    # Validates the size of an uploaded picture.
+    def picture_size
+      if picture.size > 5.megabytes
+        errors.add(:picture, "should be less than 5MB")
+      end
+    end
 end
