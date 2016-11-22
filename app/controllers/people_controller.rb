@@ -1,4 +1,6 @@
 class PeopleController < ApplicationController
+  # if you are wondering how these get called, look in routes. 
+
   #for the main people that displays all of them
   def list
    
@@ -16,7 +18,7 @@ class PeopleController < ApplicationController
   #says the fields that are allowed. have to match up with column names
   def people_params
       params.require(:user).permit(:name, :email, :password,
-                                   :password_confirmation, :role_id)
+                                   :password_confirmation, :role_id, :picture)
   end
   # the code that actually adds an employee. 
   def addEmployee

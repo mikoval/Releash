@@ -9,7 +9,7 @@
     thats what :name, :email,  etc is for 
 
   --> 
-    <%= form_for(@employee, url: people_path(@employee)) do |f| %>
+    <%= form_for(@employee, html: { multipart: true },  url: people_path(@employee)) do |f| %>
 
       <%= f.label :name %>
       <%= f.text_field :name, class: 'form-control' %>
@@ -26,7 +26,19 @@
       <%= f.label :role_id %>
       <%= f.collection_select :role_id, @roles, :id, :title, :prompt => "Select Role" %>
 
+      <span class="picture">
+        <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
+      </span>
       <%= f.submit "Create my account", class: "btn btn-primary" %>
     <% end %>
     </div>
 </div>
+
+<script type="text/javascript">
+  $('#micropost_picture').bind('change', function() {
+    var size_in_megabytes = this.files[0].size/1024/1024;
+    if (size_in_megabytes > 5) {
+      alert('Maximum file size is 5MB. Please choose a smaller file.');
+    }
+  });
+</script>
