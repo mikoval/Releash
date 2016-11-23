@@ -11,7 +11,9 @@ class PeopleController < ApplicationController
   #page for adding new people to the organization 
   def new
   	 @employee = User.new
+
      @roles = Role.all
+     puts "ROLES ARE GOING NOW"
   end
 
   #require says the type it has to be, for this one it has to have a user parameter

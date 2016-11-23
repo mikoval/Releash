@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
     validate  :picture_size
     mount_uploader :picture, PictureUploader
     belongs_to :role
+ 
 
     private
 
@@ -18,5 +19,20 @@ class User < ActiveRecord::Base
       if picture.size > 5.megabytes
         errors.add(:picture, "should be less than 5MB")
       end
+    end
+    
+
+    #setting constants for comparison 
+    @@VOLUNTEER = 1
+    @@EMPLOYEE = 2
+    @@ADMIN = 3
+    def self.ADMIN 
+        @@ADMIN 
+    end
+    def self.VOLUNTEER 
+        @@VOLUNTEER 
+    end
+    def self.EMPLOYEE 
+        @@EMPLOYEE 
     end
 end
