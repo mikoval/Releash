@@ -7,7 +7,7 @@
     loops over each person in @allPeople (defined in the people controller)
     puts all of that in at plain html with values from the person in the for-each loop
     -->
-<table class="table table-bordered table-inverse table-hover profile-row">
+<table id = "people-table" class="table table-bordered table-inverse table-hover people-table">
   <thead>
     <tr>
       <th class= "col-md-1">#</th>
@@ -18,13 +18,14 @@
   </thead>
   <tbody>
 <% @allPeople.each_with_index do |a, index| %>
-   <tr style = "height: 70px;">
+   <tr style = "height: 70px;" >
       <th scope="row"><%= index %></th>
       <td>
        <%= display_avatar(a, "50x50") %>
 
         </td>
-      <td> <%= a.name %> </td>
+
+      <td> <%= a.name %> <%= link_to ' <span class ="glyphicon glyphicon-pencil" style = "display:none; cursor: pointer;"></span>'.html_safe,  :controller => "people", :action => "edit", :param => a, :method => "get" %></td>
       <td> <%= a.role.title %> </td>
     </tr>
  
@@ -33,3 +34,14 @@
   </tbody>
 </table>
 </div>
+<script>
+$("#people-table tr").hover(
+  function(){
+    $(this).find(".glyphicon-pencil").show()
+  },
+  function(){
+    $(this).find(".glyphicon-pencil").hide()
+  }
+)
+</script>
+

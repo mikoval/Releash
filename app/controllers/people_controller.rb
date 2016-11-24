@@ -14,6 +14,11 @@ class PeopleController < ApplicationController
      @roles = Role.all
   end
 
+  def edit
+    @employee = User.find(params["param"])
+    @roles = Role.all
+  end
+
   #require says the type it has to be, for this one it has to have a user parameter
   #says the fields that are allowed. have to match up with column names
   def people_params
@@ -33,6 +38,15 @@ class PeopleController < ApplicationController
     end
   end
 
+def editEmployee
+    @user = User.find(params["format"])
+    if @user.update_attributes(people_params)
+      flash[:success] = "Saved employee"
+      redirect_to people_url
+    else
+      render 'edit'
+    end
+  end
 
 
 end
