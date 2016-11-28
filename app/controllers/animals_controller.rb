@@ -6,6 +6,8 @@ class AnimalsController < ApplicationController
 
   def new
     @animal = Animal.new
+    @species = Species.all
+    @breed = Breed.all
   end
 
   def newAnimal

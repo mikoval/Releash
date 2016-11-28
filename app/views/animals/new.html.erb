@@ -16,10 +16,10 @@
           <%= f.text_field :name, class: 'form-control' %>
 
           <%= f.label :species %>
-          <%= f.text_field :species, class: 'form-control' %>
+          <%= f.collection_select :species, @species,  :id, :kind, :prompt => "Select Species" %>
 
           <%= f.label :breed %>
-          <%= f.text_field :breed, class: 'form-control' %>
+          <%= f.collection_select :breed, @breed, :id, :name, :prompt => "Select Breed" %>
          
 
           <%= f.submit "Add animal", class: "btn btn-primary" %>
@@ -50,5 +50,8 @@
 </div>
 
 </div>
+<script>
+  $("#animal_species").change(function(){console.log('changed')})
+</script>
 
 

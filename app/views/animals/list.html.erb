@@ -10,9 +10,7 @@
 <% @allAnimals.each do |a| %>
   name =  <%= a.name %> 
   |
-  type = <%= a.species %>
-  |
-  breed = <%= a.breed %>
+  type = <%= a.species.kind %>
   <br>
 <% end %>
 </div>
