@@ -5,9 +5,7 @@
 
 <!-- Personal info -->
 <div class="personalinfo" style="display:inline-block; width:50%; height:100%; border:solid #AAB2BA">
-    <div class="addImage" style="display:inline-block; position:relative; width:20;">
-        <h4>Add an Image</h4>
-    </div>
+
     
     <div class="form" style="display:inline-block; width:20%">
         <h2>Personal Info</h2>
@@ -21,7 +19,10 @@
           <%= f.label :breed %>
           <%= f.collection_select :breed, @breed, :id, :name, :prompt => "Select Breed" %>
          
-
+          <span class="picture">
+            <%= f.label :picture %>
+            <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
+          </span>
           <%= f.submit "Add animal", class: "btn btn-primary" %>
         <% end %>
     </div>
