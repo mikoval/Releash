@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-class PictureUploader < CarrierWave::Uploader::Base
+class AnimalPictureUploader < CarrierWave::Uploader::Base
   #include CarrierWave::MiniMagick
   #process resize_to_limit: [400, 400]
   # Include RMagick or MiniMagick support:
@@ -18,7 +18,7 @@ class PictureUploader < CarrierWave::Uploader::Base
   end
 
   def default_url(*args)
-    "/images/defaultPerson.png"
+    "/images/defaultAnimal.jpg"
   end
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url

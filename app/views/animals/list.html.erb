@@ -8,6 +8,8 @@
 
 
 <% @allAnimals.each do |a| %>
+<%= display_avatar(a, "50x50") %>
+
   name =  <%= a.name %> 
   |
   type = <%= a.species.kind %>

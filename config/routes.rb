@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get '/home', to: 'main#home'
 
   get '/animals/new'
+  get '/animals/profile'
   get '/animals', to: 'animals#list'
   post  '/animals',   to: 'animals#newAnimal'
   patch  '/animals',   to: 'animals#newAnimal'
