@@ -4,15 +4,18 @@
 
 
 <%= link_to "<button>Add Animal</button>".html_safe,  :controller => "animals", :action => "new", :method => "get" %>
-<div class=" ">
 
 
-<% @allAnimals.each do |a| %>
-<%= display_avatar(a, "50x50") %>
+<div class = "container">
+    <% @allAnimals.each do |a| %>
+    <div class = "col-md-4 col-md-offset-1" style = "height:150px; border-radius:10px; border:solid">
+    <%= display_avatar(a, "100x100") %>
 
-  name =  <%= a.name %> 
-  |
-  type = <%= a.species.kind %>
-  <br>
+      name =  <%= a.name %> 
+      <br>
+      type = <%= a.species.kind %>
+    </div>
+
 <% end %>
 </div>
+

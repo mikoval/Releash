@@ -1,54 +1,60 @@
 <!-- This is the page to add a new animal -->
 <h2>Add a new animal</h2>
 
-<div class="parent" style="border:solid #AAB2BA">
 
-<!-- Personal info -->
-<div class="personalinfo" style="display:inline-block; width:50%; height:100%; border:solid #AAB2BA">
 
-    
-    <div class="form" style="display:inline-block; width:20%">
+<div class="container" style="border:solid #AAB2BA; display:inline-block; padding: 0px;">
+  <div class="form" style="display:inline-block; width:100%; padding: 0px;">
+    <%= form_for(@animal, url: animals_path(@animal))  do |f| %>
+      
+
+          <!-- Personal info -->
+      <div class="personalinfo col-md-6" style=" border:solid #AAB2BA; padding: 20px">
         <h2>Personal Info</h2>
-        <%= form_for(@animal, url: animals_path(@animal))  do |f| %>
-          <%= f.label :name %>
-          <%= f.text_field :name, class: 'form-control' %>
+        <%= f.label :name %>
+        <%= f.text_field :name, class: 'form-control' %>
 
-          <%= f.label :species_id %>
-          <%= f.collection_select :species_id, @species,  :id, :kind, :prompt => "Select Species" %>
+        <%= f.label :species_id %>
+        <%= f.collection_select :species_id, @species,  :id, :kind, :prompt => "Select Species" %>
 
-          <%= f.label :breed %>
-          <%= f.collection_select :breed, @breed, :id, :name, :prompt => "Select Breed" %>
-         
-          <span class="picture">
-            <%= f.label :picture %>
-            <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
-          </span>
-          <%= f.submit "Add animal", class: "btn btn-primary" %>
-        <% end %>
-    </div>
+        <%= f.label :breed %>
+        <%= f.collection_select :breed, @breed, :id, :name, :prompt => "Select Breed" %>
+       
+        <span class="picture">
+          <%= f.label :picture %>
+          <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
+        </span>
+        
+
+      </div>
+      <!-- Documents -->
+      <div class="documents col-md-6" style="border:solid #AAB2BA">
+          <h2>Documents</h2>
+          <%= f.label :documents %>
+          <%= f.file_field :documents %>
+      </div>
+
+
+
+      <!-- People -->
+      <div class="documents col-md-6" style=" border:solid #AAB2BA">
+          <h2>People</h2>
+
+      </div>
+
+
+      <!-- Reminders -->
+      <div class="documents col-md-6" style="border:solid #AAB2BA">
+          <h2>Reminder</h2>
+
+      </div>
+              <%= f.submit "Add animal", class: "btn btn-primary" %>
+    <% end %>
+  </div>
 </div>
 
 
-<!-- Documents -->
-<div class="documents" style="display:inline-block; width:50%; border:solid #AAB2BA">
-    <h2>Documents</h2>
 
-</div>
-
-
-
-<!-- People -->
-<div class="documents" style="display:inline-block; width:50%; border:solid #AAB2BA">
-    <h2>People</h2>
-
-</div>
-
-
-<!-- Reminders -->
-<div class="documents" style="display:inline-block; width:50%; border:solid #AAB2BA">
-    <h2>Reminder</h2>
-
-</div>
 
 </div>
 <script>
