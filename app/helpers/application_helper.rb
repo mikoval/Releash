@@ -17,4 +17,5 @@ module ApplicationHelper
       image_tag("/images/default.png",  :size => size, :class => "small_img")
      end    
   end
+
 end

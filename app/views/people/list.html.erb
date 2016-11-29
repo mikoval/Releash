@@ -1,7 +1,8 @@
 <% provide(:title, "People") %>
 <h1>People</h1>
-
-<%= link_to "<button>Add Employee</button>".html_safe,  :controller => "people", :action => "new", :method => "get" %>
+<% if admin?(current_user) %>
+  <%= link_to "<button>Add Employee</button>".html_safe,  :controller => "people", :action => "new", :method => "get" %>
+<% end %>
 <div class=" ">
     <!-- 
     loops over each person in @allPeople (defined in the people controller)
