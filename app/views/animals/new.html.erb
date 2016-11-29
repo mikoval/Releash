@@ -15,8 +15,8 @@
           <%= f.label :name %>
           <%= f.text_field :name, class: 'form-control' %>
 
-          <%= f.label :species %>
-          <%= f.collection_select :species, @species,  :id, :kind, :prompt => "Select Species" %>
+          <%= f.label :species_id %>
+          <%= f.collection_select :species_id, @species,  :id, :kind, :prompt => "Select Species" %>
 
           <%= f.label :breed %>
           <%= f.collection_select :breed, @breed, :id, :name, :prompt => "Select Breed" %>
@@ -51,7 +51,17 @@
 
 </div>
 <script>
-  $("#animal_species").change(function(){console.log('changed')})
+  $("#animal_species_id").change(function(){
+    if ($("#animal_species_id").val() == 1) {
+      $("#animal_breed option[value='2']").hide();
+      $("#animal_breed option[value='1']").show();
+    } else {
+      $("#animal_breed option[value='1']").hide();
+      $("#animal_breed option[value='2']").show();
+
+    }
+    console.log("Hey I changed :)")
+  });
 </script>
 
 
