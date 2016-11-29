@@ -10,6 +10,7 @@
 
   --> 
     <%= form_for(@employee, html: { multipart: true },  url: people_path(@employee)) do |f| %>
+      <%= render 'people/error_messages' %>
 
       <%= f.label :name %>
       <%= f.text_field :name, class: 'form-control' %>

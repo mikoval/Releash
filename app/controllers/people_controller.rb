@@ -28,22 +28,24 @@ class PeopleController < ApplicationController
   # the code that actually adds an employee. 
   def addEmployee
 
-    @people = User.new(people_params)
-    if @people.save
+    @employee = User.new(people_params)
+    if @employee.save
       flash[:success] = "Added employee"
       redirect_to people_url
     else
-      flash[:danger] = "Please fill out form correctly"
-      redirect_to :controller => "people", :action => "new"
+      @roles = Role.all
+      render 'new'
     end
   end
 
 def editEmployee
-    @user = User.find(params["format"])
-    if @user.update_attributes(people_params)
+    @employee = User.find(params["format"])
+
+    if @employee.update_attributes(people_params)
       flash[:success] = "Saved employee"
       redirect_to people_url
     else
+      @roles = Role.all
       render 'edit'
     end
   end
