@@ -58,7 +58,6 @@ ActiveRecord::Schema.define(version: 20161129170342) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.string   "password_digest"
-    t.integer  "role"
     t.integer  "role_id"
     t.string   "picture"
   end

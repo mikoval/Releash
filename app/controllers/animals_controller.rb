@@ -20,7 +20,6 @@ class AnimalsController < ApplicationController
     @species = Species.all
     @breed = Breed.all
     if @animal.save
-      debugger
       flash.now[:success] = "New Animal!"
       redirect_to :controller => "animals", :action => "profile"
     else
