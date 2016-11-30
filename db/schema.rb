@@ -30,6 +30,13 @@ ActiveRecord::Schema.define(version: 20161129170342) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "fosters", force: :cascade do |t|
+    t.string   "user_id"
+    t.string   "animal_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string "title"
   end
@@ -40,12 +47,18 @@ ActiveRecord::Schema.define(version: 20161129170342) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "test", id: false, force: :cascade do |t|
+    t.string  "name"
+    t.integer "price"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.string   "password_digest"
+    t.integer  "role"
     t.integer  "role_id"
     t.string   "picture"
   end
