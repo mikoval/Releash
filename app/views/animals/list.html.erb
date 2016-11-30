@@ -8,12 +8,18 @@
 
 <div class = "container">
     <% @allAnimals.each do |a| %>
-    <div class = "col-md-4 col-md-offset-1" style = "height:150px; border-radius:10px; border:solid; ">
-    <%= display_avatar(a, "100x100") %>
-
-      name =  <%= a.name %> 
-      <br>
-      type = <%= a.species.kind %>
+    <div class = "col-md-4 col-md-offset-1" style = "border-radius: 0px; border:solid;">
+    	<div style = "float: left;">
+    		<%= display_avatar(a, "100x100") %>
+		</div>
+		<div style = "padding-left: 125px; text-align: left; font-size: 25px;">
+			<%= a.name %>
+		</div>
+		<div style = " padding-left: 125px; text-align: left;">
+      		<%= a.species.kind %> | Husky
+      	</div>
+      	<span class ="glyphicon glyphicon-pencil" style = "float: right; cursor: pointer;">
+      	</span>
     </div>
      <div class = "col-md-1" style = "margin: 0px;">
     </div>
