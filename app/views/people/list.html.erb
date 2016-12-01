@@ -26,7 +26,12 @@
 
         </td>
 
-      <td> <%= a.name %> <%= link_to ' <span class ="glyphicon glyphicon-pencil" style = "display:none; cursor: pointer;"></span>'.html_safe,  :controller => "people", :action => "edit", :param => a, :method => "get" %></td>
+      <td> 
+        <%= a.name %>
+        <% if admin?(current_user) %>
+         <%= link_to ' <span class ="glyphicon glyphicon-pencil" style = "display:none; cursor: pointer;"></span>'.html_safe,  :controller => "people", :action => "edit", :param => a, :method => "get" %>
+         <% end %>
+     </td>
       <td> <%= a.role.title %> </td>
     </tr>
  
