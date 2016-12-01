@@ -11,6 +11,7 @@ class AnimalsController < ApplicationController
   end
 
   def profile
+    @animal = Animal.find(params["param"])
   end
 
 
@@ -21,7 +22,7 @@ class AnimalsController < ApplicationController
     @breed = Breed.all
     if @animal.save
       flash.now[:success] = "New Animal!"
-      redirect_to :controller => "animals", :action => "profile"
+      redirect_to :controller => "animals", :action => "profile", :param => @animal
     else
       flash.now[:danger] = "Error adding Animal!"
       render 'new'

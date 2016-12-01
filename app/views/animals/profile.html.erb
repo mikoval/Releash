@@ -1,1 +1,36 @@
 <h1>Profile Page</h1>
+<div style = "float: right;">
+<%= link_to "<button>Edit dog profile</button>".html_safe%>
+</div>
+
+<div class="container" style="border:solid #AAB2BA; display:inline-block; padding: 0px;">
+	<div class="form" style="display:inline-block; width:100%; padding: 0px;">
+
+	    <div class="personalinfo col-md-6" style=" border:solid #AAB2BA; padding: 20px">
+			<%= display_avatar(@animal, "100x100") %>
+			<h3>Name</h3>
+			<%= @animal.name %>
+			<h3>Species</h3>
+			<%= @animal.species.kind %>
+			<h3>Breed</h3>
+			<%= @animal.breed %>
+		</div>
+
+
+      	<!-- Documents -->
+		<div class="documents col-md-6" style="border:solid #AAB2BA">
+		  <h2>Documents</h2>
+		</div>
+
+		<!-- People -->
+		<div class="documents col-md-6" style=" border:solid #AAB2BA">
+		  <h2>People</h2>
+		</div>
+
+		<!-- Reminders -->
+		<div class="documents col-md-6" style="border:solid #AAB2BA">
+		  <h2>Reminder</h2>
+
+</div>
+	</div>	
+</div>
