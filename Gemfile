@@ -12,9 +12,16 @@ gem 'carrierwave',             '0.11.2'
 gem 'mini_magick',             '4.5.1'
 gem 'fog',                     '1.38.0'
 
+group :development, :test do
+  gem 'sqlite3', '1.3.12'
+  gem 'byebug',  '9.0.0', platform: :mri
+end
 
-# Use sqlite3 as the database for Active Record
-gem ‘pg’
+group :production do
+  gem 'pg', '0.18.4'
+end
+
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
