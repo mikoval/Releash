@@ -17,8 +17,8 @@
         <%= f.label :species_id %>
         <%= f.collection_select :species_id, @species,  :id, :kind, :prompt => "Select Species" %>
 
-        <%= f.label :breed %>
-        <%= f.collection_select :breed, @breed, :id, :name, :prompt => "Select Breed" %>
+        <%= f.label :breed_id %>
+        <%= f.collection_select :breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
        
         <span class="picture">
           <%= f.label :picture %>
