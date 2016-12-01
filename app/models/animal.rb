@@ -4,4 +4,5 @@ class Animal < ActiveRecord::Base
     mount_uploader :picture, AnimalPictureUploader
     mount_uploader :documents, FileUploader
     belongs_to :species
+    belongs_to :breed
 end
