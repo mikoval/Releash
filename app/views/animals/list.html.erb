@@ -1,12 +1,18 @@
+<!-- comment -->
 <% provide(:title, "Animals") %>
 <h1>Animals</h1>
 
+
 <%= link_to "<button>Add Animal</button>".html_safe,  :controller => "animals", :action => "new", :method => "get" %>
 <div class=" ">
+
+
 <% @allAnimals.each do |a| %>
-  name = <%= a.name %> 
+  name =  <%= a.name %> 
   |
   type = <%= a.species %>
+  |
+  breed = <%= a.breed %>
   <br>
 <% end %>
 </div>
