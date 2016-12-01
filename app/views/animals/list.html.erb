@@ -7,20 +7,26 @@
 <%= link_to "<button>Add Animal</button>".html_safe,  :controller => "animals", :action => "new", :method => "get" %>
 <% end %>
 
-<div class = "container">
+    <div class = "container">
     <% @allAnimals.each do |a| %>
-    <div class = "col-md-4 col-md-offset-1 col-sm-12 col-xs-12 animal-profile" style = "border-radius: 0px; border:solid; display: inline-block">
-    	<div style = "float: left;">
+
+   
+    <div class = "col-md-4 col-md-offset-1 col-sm-12 col-xs-12 animal-profile" style = "border-radius: 0px; border:solid; display: inline-block; margin-bottom: 10px">
+       <div class = "row">
+    	<div class = "col-md-4 col-sm-4 col-xs-4" style = "padding: 0px">
     		<%= display_avatar(a, "100x100") %>
 		</div>
-		<div style = "padding-left: 125px; text-align: left; font-size: 25px;">
+		<div class = "col-md-8 col-sm-8 col-xs-8" style = "text-align: left; font-size: 25px;">
 			<%= link_to a.name, :controller => "animals", :action => "profile", :param => a, :method => "get" %>
 		</div>
-		<div style = " padding-left: 125px; text-align: left;">
+		<div class = "col-md-8 col-sm-8 col-xs-8">
       		<%= a.species.kind %> | <%= a.breed.name %>
       	</div>
         <% if employee?(current_user) %>
       	<span class ="glyphicon glyphicon-pencil" style = "float: right; cursor: pointer; display:none">
+        </div>
+    
+
         <% end %>
       	</span>
     </div>
@@ -28,7 +34,7 @@
     </div>
 
 <% end %>
-</div>
+      </div>
 <script>
 $(".animal-profile").hover(
   function(){

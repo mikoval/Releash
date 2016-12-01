@@ -1,6 +1,8 @@
 <h1>Profile Page</h1>
 <div style = "float: right;">
+<% if employee?(current_user) %>
 <%= link_to "<button>Edit dog profile</button>".html_safe%>
+<% end %>
 </div>
 
 <div class="container" style="border:solid #AAB2BA; display:inline-block; padding: 0px;">
