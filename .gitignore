@@ -16,6 +16,7 @@
 !/log/.keep
 /tmp
 
+
 # ignore uploads by users
 
 /public/uploads

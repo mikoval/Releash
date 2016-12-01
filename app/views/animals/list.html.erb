@@ -4,15 +4,26 @@
 
 
 <%= link_to "<button>Add Animal</button>".html_safe,  :controller => "animals", :action => "new", :method => "get" %>
-<div class=" ">
 
 
-<% @allAnimals.each do |a| %>
-  name =  <%= a.name %> 
-  |
-  type = <%= a.species %>
-  |
-  breed = <%= a.breed %>
-  <br>
+<div class = "container">
+    <% @allAnimals.each do |a| %>
+    <div class = "col-md-4 col-md-offset-1 col-sm-12 col-xs-12" style = "border-radius: 0px; border:solid; display: inline-block">
+    	<div style = "float: left;">
+    		<%= display_avatar(a, "100x100") %>
+		</div>
+		<div style = "padding-left: 125px; text-align: left; font-size: 25px;">
+			<%= a.name %>
+		</div>
+		<div style = " padding-left: 125px; text-align: left;">
+      		<%= a.species.kind %> | <%= a.breed.name %>
+      	</div>
+      	<span class ="glyphicon glyphicon-pencil" style = "float: right; cursor: pointer;">
+      	</span>
+    </div>
+     <div class = "col-md-1" style = "margin: 0px;">
+    </div>
+
 <% end %>
 </div>
+
