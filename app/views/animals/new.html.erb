@@ -59,12 +59,13 @@
 </div>
 <script>
   $("#animal_species_id").change(function(){
+    console.log($("#animal_breed_id"))
     if ($("#animal_species_id").val() == 1) {
-      $("#animal_breed option[value='2']").hide();
-      $("#animal_breed option[value='1']").show();
+      $("#animal_breed_id option:eq(1)").hide();
+      $("#animal_breed_id option:eq(0)").show();
     } else {
-      $("#animal_breed option[value='1']").hide();
-      $("#animal_breed option[value='2']").show();
+      $("#animal_breed_id option:eq(0)").hide();
+      $("#animal_breed_id option:eq(1)").show();
 
     }
     console.log("Hey I changed :)")
