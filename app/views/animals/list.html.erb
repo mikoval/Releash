@@ -16,18 +16,22 @@
     	<div class = "col-md-4 col-sm-4 col-xs-4" style = "padding: 0px">
     		<%= display_avatar(a, "100x100") %>
 		</div>
-		<div class = "col-md-8 col-sm-8 col-xs-8" style = "text-align: left; font-size: 25px;">
+		<div class = "col-md-6 col-sm-6 col-xs-6" style = "text-align: left; font-size: 25px;">
 			<%= link_to a.name, :controller => "animals", :action => "profile", :param => a, :method => "get" %>
+      
 		</div>
+    <% if employee?(current_user) %>
+        <span class ="glyphicon glyphicon-pencil col-md-1 col-sm-1 col-xs-1" style = "float: left; cursor: pointer; display:none; margin:10px">
+        </span>
+          <% end %>
 		<div class = "col-md-8 col-sm-8 col-xs-8">
       		<%= a.species.kind %> | <%= a.breed.name %>
       	</div>
-        <% if employee?(current_user) %>
-      	<span class ="glyphicon glyphicon-pencil" style = "float: right; cursor: pointer; display:none">
+        
         </div>
     
 
-        <% end %>
+        
       	</span>
     </div>
      <div class = "col-md-1" style = "margin: 0px;">
