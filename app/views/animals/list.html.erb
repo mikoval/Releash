@@ -3,16 +3,45 @@
 <h1>Animals</h1>
 
 
+<% if employee?(current_user) %>
 <%= link_to "<button>Add Animal</button>".html_safe,  :controller => "animals", :action => "new", :method => "get" %>
-<div class=" ">
-
-
-<% @allAnimals.each do |a| %>
-  name =  <%= a.name %> 
-  |
-  type = <%= a.species %>
-  |
-  breed = <%= a.breed %>
-  <br>
 <% end %>
-</div>
+
+    <div class = "container">
+    <% @allAnimals.each do |a| %>
+
+   
+    <div class = "col-md-4 col-md-offset-1 col-sm-12 col-xs-12 animal-profile" style = "border-radius: 0px; border:solid; display: inline-block; margin-bottom: 10px">
+       <div class = "row">
+    	<div class = "col-md-4 col-sm-4 col-xs-4" style = "padding: 0px">
+    		<%= display_avatar(a, "100x100") %>
+		</div>
+		<div class = "col-md-8 col-sm-8 col-xs-8" style = "text-align: left; font-size: 25px;">
+			<%= link_to a.name, :controller => "animals", :action => "profile", :param => a, :method => "get" %>
+		</div>
+		<div class = "col-md-8 col-sm-8 col-xs-8">
+      		<%= a.species.kind %> | <%= a.breed.name %>
+      	</div>
+        <% if employee?(current_user) %>
+      	<span class ="glyphicon glyphicon-pencil" style = "float: right; cursor: pointer; display:none">
+        </div>
+    
+
+        <% end %>
+      	</span>
+    </div>
+     <div class = "col-md-1" style = "margin: 0px;">
+    </div>
+
+<% end %>
+      </div>
+<script>
+$(".animal-profile").hover(
+  function(){
+    $(this).find(".glyphicon-pencil").show()
+  },
+  function(){
+    $(this).find(".glyphicon-pencil").hide()
+  }
+)
+</script>

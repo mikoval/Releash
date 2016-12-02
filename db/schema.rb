@@ -13,22 +13,38 @@
 
 ActiveRecord::Schema.define(version: 20161123163900) do
 
-
   create_table "animals", force: :cascade do |t|
     t.text     "name"
-    t.text     "species"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "species_id"
+    t.string   "picture"
+    t.string   "documents"
+    t.integer  "breed_id",   default: 1
+  end
+
+  create_table "breeds", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "species_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "breed"
+  end
+
+  create_table "fosters", force: :cascade do |t|
+    t.string   "user_id"
+    t.string   "animal_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "roles", force: :cascade do |t|
     t.string "title"
   end
 
-  create_table "test", id: false, force: :cascade do |t|
-    t.string  "name"
-    t.integer "price"
+  create_table "species", force: :cascade do |t|
+    t.string   "kind"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -37,7 +53,6 @@ ActiveRecord::Schema.define(version: 20161123163900) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.string   "password_digest"
-    t.integer  "role"
     t.integer  "role_id"
     t.string   "picture"
     t.string   "remember_digest"

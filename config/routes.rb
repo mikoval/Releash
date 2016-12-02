@@ -12,13 +12,17 @@ Rails.application.routes.draw do
   get '/home', to: 'main#home'
 
   get '/animals/new'
+  get '/animals/profile'
   get '/animals', to: 'animals#list'
   post  '/animals',   to: 'animals#newAnimal'
   patch  '/animals',   to: 'animals#newAnimal'
 
   get '/people', to: "people#list"
   get 'people/new'
+  get 'people/edit'
+  
   post '/people', to: 'people#addEmployee'
+  patch '/people', to: 'people#editEmployee'
 
   get  '/signup',  to: 'users#new'
   post '/signup',  to: 'users#create'

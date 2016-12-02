@@ -1,5 +1,5 @@
- <% provide(:title, 'New Employee') %>
-<h1>Add new employee</h1>
+<% provide(:title, 'New Employee') %>
+<h1>Editing <%= @employee.email%></h1>
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
@@ -11,7 +11,6 @@
   --> 
     <%= form_for(@employee, html: { multipart: true },  url: people_path(@employee)) do |f| %>
       <%= render 'people/error_messages' %>
-
       <%= f.label :name %>
       <%= f.text_field :name, class: 'form-control' %>
 
@@ -30,7 +29,7 @@
       <span class="picture">
         <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
       </span>
-      <%= f.submit "Create my account", class: "btn btn-primary" %>
+      <%= f.submit "Submit changes", class: "btn btn-primary" %>
     <% end %>
     </div>
 </div>
