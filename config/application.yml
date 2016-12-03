@@ -9,5 +9,7 @@
 # production:
 #   stripe_api_key: sk_live_EeHnL644i6zo4Iyq4v1KdV9H
 #   stripe_publishable_key: pk_live_9lcthxpSIHbGwmdO941O1XVU
-AWS_ACCESS_KEY:  AKIAIOFRK67VFYY7P5UQ
-AWS_SECRET_KEY:  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
+S3_KEY:  "AKIAIYA5KJJAWSZXK2NQ"
+S3_SECRET:  "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"
+
+S3_BUCKET: "releashatlanta"
