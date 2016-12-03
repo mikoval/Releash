@@ -20,3 +20,5 @@
 # ignore uploads by users
 
 /public/uploads
+# Ignore application configuration
+/config/application.yml
