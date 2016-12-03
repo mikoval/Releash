@@ -30,22 +30,22 @@
       <!-- Documents -->
       <div class="documents col-md-6" style="border:solid #AAB2BA">
           <h2>Documents</h2>
-          <%= f.label :documents %>
-          <%= f.file_field :documents %>
+          <%= label_tag  %>
+          <%= file_field_tag 'documents[]', multiple: true %>
       </div>
 
 
 
       <!-- People -->
-      <div class="documents col-md-6" style=" border:solid #AAB2BA">
+      <div class="people col-md-6" style=" border:solid #AAB2BA">
           <h2>People</h2>
 
       </div>
 
 
       <!-- Reminders -->
-      <div class="documents col-md-6" style="border:solid #AAB2BA">
-          <h2>Reminder</h2>
+      <div class="reminders col-md-6" style="border:solid #AAB2BA">
+          <h2>Reminders</h2>
 
       </div>
               <%= f.submit "Add animal", class: "btn btn-primary" %>
