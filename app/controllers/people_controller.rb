@@ -20,7 +20,10 @@ class PeopleController < ApplicationController
     @employee = User.find(params["param"])
     @roles = Role.all
   end
-
+  
+   def profile
+    @employee = User.find(params["param"])
+  end
   #require says the type it has to be, for this one it has to have a user parameter
   #says the fields that are allowed. have to match up with column names
   def people_params
@@ -51,6 +54,18 @@ def editEmployee
       render 'edit'
     end
   end
+def query
+    @users = User.all.limit(10)
+    arr = []
+    @users.each do |d|
+      arr.push({
+        "id" =>  d.id, 
+        "name" => d.name,
+        "email" => d.email,
 
+      })
+    end
+    render json: arr
+  end
 
 end

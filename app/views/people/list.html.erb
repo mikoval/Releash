@@ -27,7 +27,8 @@
         </td>
 
       <td> 
-        <%= a.name %>
+          <%= link_to a.name,  :controller => "people", :action => "profile", :param => a, :method => "get" %>
+
         <% if admin?(current_user) %>
          <%= link_to ' <span class ="glyphicon glyphicon-pencil" style = "display:none; cursor: pointer;"></span>'.html_safe,  :controller => "people", :action => "edit", :param => a, :method => "get" %>
          <% end %>

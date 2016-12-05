@@ -21,7 +21,8 @@ Rails.application.routes.draw do
   get '/people', to: "people#list"
   get 'people/new'
   get 'people/edit'
-  
+  get 'people/query'
+  get 'people/profile'
   post '/people', to: 'people#addEmployee'
   patch '/people', to: 'people#editEmployee'
 

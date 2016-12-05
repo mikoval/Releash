@@ -5,20 +5,25 @@
     <div class = "col-md-5 animal-list" style = "border:solid; border-radius: 10px; margin: 20px">
     </div>
 
-    <div class = "col-md-5 animal-list"  style = "border:solid;  border-radius: 10px; margin: 20px">
+    <div class = "col-md-5 user-list"  style = "border:solid;  border-radius: 10px; margin: 20px">
     </div>
 
     <div class = "col-md-5 animal-list"  style = "border:solid;  border-radius: 10px; margin: 20px">
     </div>
 
-    <div class = "col-md-5 animal-list" style = "border:solid;  border-radius: 10px; margin: 20px">
+    <div class = "col-md-5 user-list" style = "border:solid;  border-radius: 10px; margin: 20px">
     </div>
 </div>
 
 <script>
 
 if($(".animal-list").length > 0){
-
+    widgetAnimalList();
+}
+if($(".user-list").length > 0){
+    widgetUserList();
+}
+function widgetAnimalList(){
     $.ajax({url: "animals/query", success: function(result){
         var str = " <h2>Animals</h2>"
         str += "<table class='table table-striped'>" 
@@ -33,6 +38,24 @@ if($(".animal-list").length > 0){
         }
         str +=  " </table>"
          $(".animal-list").each(function(){
+            $(this).html( str)
+         })
+    }});
+}
+function widgetUserList(){
+    $.ajax({url: "people/query", success: function(result){
+        var str = " <h2>Users</h2>"
+        str += "<table class='table table-striped'>" 
+
+        for (x in result){
+    
+                str += "<tr> \
+                <td> <a href='/people/profile?method=get&param=" + result[x].id + "' > " + result[x].name + "</a></td>\
+                 <td>" + result[x].email + "</td>\
+                </tr>"
+        }
+        str +=  " </table>"
+         $(".user-list").each(function(){
             $(this).html( str)
          })
     }});
