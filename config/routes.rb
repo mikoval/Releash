@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 # for example post to animal should add an animal, get at animal should list animals or get a specific one, depending on how you want to do it. 
   get '/home', to: 'main#home'
 
+  get 'animals/query'
   get '/animals/new'
   get '/animals/profile'
   get '/animals', to: 'animals#list'

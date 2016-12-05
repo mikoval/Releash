@@ -23,9 +23,11 @@ class AnimalsController < ApplicationController
     @species = Species.all
     @breed = Breed.all
     if @animal.save
-      params["documents"].each do |d|
-        @document = Document.new({animal_id: @animal.id, document: d})
-        @document.save
+      if params["documents"]
+        params["documents"].each do |d|
+          @document = Document.new({animal_id: @animal.id, document: d})
+          @document.save
+        end
       end
 
       
@@ -37,10 +39,23 @@ class AnimalsController < ApplicationController
       render 'new'
     end
   end
+  def query
+    @animals = Animal.all.limit(10)
+    arr = []
+    @animals.each do |d|
+      arr.push({
+        "id" =>  d.id, 
+        "name" => d.name,
+        "species" => d.species.kind,
+        "breed" => d.breed.name,
+        "picture" => d.picture,
+      })
+    end
+    render json: arr
+  end
   private
 
   def animal_params
-
 
     params.require(:animal).permit(:name, :species_id, :breed_id, :picture)
 
