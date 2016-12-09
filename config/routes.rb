@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get '/home', to: 'main#home'
 
   get 'animals/query'
+  get 'animals/search'
   get '/animals/new'
   get '/animals/profile'
   get '/animals', to: 'animals#list'

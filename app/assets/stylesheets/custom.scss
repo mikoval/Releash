@@ -64,6 +64,7 @@ p {
 
 /* header */
 
+
 #logo {
   float: left;
   margin-right: 10px;
@@ -79,6 +80,14 @@ p {
   color: #fff;
   text-decoration: none;
 }
+
+.search-list > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+   background-color: #f9f7ff;
+}
+.search-list > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+   background-color: #f2f2f2
+}
+
 /* footer */
 
 footer {

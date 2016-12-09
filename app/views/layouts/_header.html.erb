@@ -16,7 +16,12 @@
         <ul class="nav navbar-nav navbar-left">
            <li><%= link_to "Animals",    animals_path %></li>
           <li><%= link_to "People",   people_path %></li>
-          <li><%= link_to "Search", '#' %></li>
+          <li style = "display: inline-block; width: 500px; white-space: nowrap;">
+            <span class = 'glyphicon glyphicon-search navbar-text' style = "display: inline-block; font-size: 24px; margin-right:5px" ></span> 
+
+            <input style = " width: 100%; vertical-align: middle; margin-top:15px" placeholder="Search" class ="search" /> 
+          </li>
+          <li></li>
         </ul>
         
         <ul class="nav navbar-nav navbar-right">
@@ -43,4 +48,38 @@
     </div>
     </nav>
   </div>
+<div style = "position:fixed" class = "search-result col-md-4 col-md-offset-4">
+    
+</div>
 </header>
+
+
+<script>
+$(".search").on( "keyup",function(input){
+  var value = $(this).val()
+  //do the ajax call then update findings
+   $.ajax({
+    url: "animals/search",
+    data: {q: value},
+    success: function(result){
+        var str = " "
+        str += "<table class='table search-list'>" 
+
+        for (x in result){
+                console.log(result[x])
+                str += "<tr> \
+                <td>  <img src='"+ result[x].picture.picture.url+ "' alt='missing picture' style='width:50px;height:50px;'></td>\
+                <td> <a href='/people/profile?method=get&param=" + result[x].id + "' > " + result[x].name + "</a></td>\
+                 <td>" + result[x].breed + "</td>\
+                </tr>"
+
+        }
+
+        str +=  " </table>"
+         $(".search-result").each(function(){
+            $(this).html( str)
+         })
+        console.log(result)
+    }});
+})
+</script>

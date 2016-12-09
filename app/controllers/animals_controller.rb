@@ -53,6 +53,31 @@ class AnimalsController < ApplicationController
     end
     render json: arr
   end
+  def search
+    @search = params["q"]
+    @breed = Breed.where('name LIKE :search', search: "%#{@search}%" )
+    if(@breed.length > 0)
+      @breedid = @breed[0].id
+    end
+    @species = Species.where('kind LIKE :search', search: "%#{@search}%" )
+    if(@species.length > 0)
+      @speciesid = @species[0].id
+    end
+    @animals = Animal.where('name LIKE :search OR species_id = :species OR breed_id = :breed' , search: "%#{@search}%", breed: "#{@breedid}", species: "#{@speciesid}" )
+
+    arr = []
+    @animals.each do |d|
+      arr.push({
+        "id" =>  d.id, 
+        "name" => d.name,
+        "species" => d.species.kind,
+        "breed" => d.breed.name,
+        "picture" => d.picture,
+      })
+    end
+    render json: arr
+  end
+
   private
 
   def animal_params
