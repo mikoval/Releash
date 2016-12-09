@@ -59,7 +59,7 @@ $(".search").on( "keyup",function(input){
   var value = $(this).val()
   //do the ajax call then update findings
    $.ajax({
-    url: "animals/search",
+    url: "/animals/search",
     data: {q: value},
     success: function(result){
         var str = " "
@@ -69,7 +69,7 @@ $(".search").on( "keyup",function(input){
                 console.log(result[x])
                 str += "<tr> \
                 <td>  <img src='"+ result[x].picture.picture.url+ "' alt='missing picture' style='width:50px;height:50px;'></td>\
-                <td> <a href='/people/profile?method=get&param=" + result[x].id + "' > " + result[x].name + "</a></td>\
+                <td> <a href='/animals/profile?method=get&param=" + result[x].id + "' > " + result[x].name + "</a></td>\
                  <td>" + result[x].breed + "</td>\
                 </tr>"
 
