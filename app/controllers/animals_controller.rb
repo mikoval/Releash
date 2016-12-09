@@ -58,10 +58,14 @@ class AnimalsController < ApplicationController
     @breed = Breed.where('name LIKE :search', search: "%#{@search}%" )
     if(@breed.length > 0)
       @breedid = @breed[0].id
+    else 
+      @breedid = 0
     end
     @species = Species.where('kind LIKE :search', search: "%#{@search}%" )
     if(@species.length > 0)
       @speciesid = @species[0].id
+    else 
+      @speciesid = 0
     end
     @animals = Animal.where('name LIKE :search OR species_id = :species OR breed_id = :breed' , search: "%#{@search}%", breed: "#{@breedid}", species: "#{@speciesid}" )
 
