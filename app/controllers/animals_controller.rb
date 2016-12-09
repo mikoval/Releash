@@ -55,19 +55,19 @@ class AnimalsController < ApplicationController
   end
   def search
     @search = params["q"]
-    @breed = Breed.where('name LIKE :search', search: "%#{@search}%" )
+    @breed = Breed.where('LOWER(name) LIKE LOWER(:search)', search: "%#{@search}%" )
     if(@breed.length > 0)
       @breedid = @breed[0].id
     else 
       @breedid = 0
     end
-    @species = Species.where('kind LIKE :search', search: "%#{@search}%" )
+    @species = Species.where('LOWER(kind) LIKE LOWER(:search)', search: "%#{@search}%" )
     if(@species.length > 0)
       @speciesid = @species[0].id
     else 
       @speciesid = 0
     end
-    @animals = Animal.where('name LIKE :search OR species_id = :species OR breed_id = :breed' , search: "%#{@search}%", breed: "#{@breedid}", species: "#{@speciesid}" )
+    @animals = Animal.where('LOWER(name) LIKE LOWER(:search) OR species_id = :species OR breed_id = :breed' , search: "%#{@search}%", breed: "#{@breedid}", species: "#{@speciesid}" )
 
     arr = []
     @animals.each do |d|
