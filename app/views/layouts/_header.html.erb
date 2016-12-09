@@ -66,7 +66,6 @@ $(".search").on( "keyup",function(input){
         str += "<table class='table search-list'>" 
 
         for (x in result){
-                console.log(result[x])
                 str += "<tr> \
                 <td>  <img src='"+ result[x].picture.picture.url+ "' alt='missing picture' style='width:50px;height:50px;'></td>\
                 <td> <a href='/animals/profile?method=get&param=" + result[x].id + "' > " + result[x].name + "</a></td>\
@@ -79,7 +78,13 @@ $(".search").on( "keyup",function(input){
          $(".search-result").each(function(){
             $(this).html( str)
          })
-        console.log(result)
+
     }});
+   $(".search").on( "blur", function(){
+
+       $(".search-result").each(function(){
+            $(this).html( '')
+         })
+   } )
 })
 </script>
