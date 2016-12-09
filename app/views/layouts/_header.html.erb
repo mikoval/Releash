@@ -68,7 +68,7 @@ $(".search").on( "keyup",function(input){
         for (x in result){
                 str += "<tr> \
                 <td>  <img src='"+ result[x].picture.picture.url+ "' alt='missing picture' style='width:50px;height:50px;'></td>\
-                <td> <a href='/animals/profile?method=get&param=" + result[x].id + "' > " + result[x].name + "</a></td>\
+                <td> <a href='/animals/profile?method=get&param=" + result[x].id + "' onmousedown='link(event)'> " + result[x].name + " </a></td>\
                  <td>" + result[x].breed + "</td>\
                 </tr>"
 
@@ -80,11 +80,16 @@ $(".search").on( "keyup",function(input){
          })
 
     }});
-   $(".search").on( "blur", function(){
+   $(".search").on( "blur", function(target){
 
        $(".search-result").each(function(){
             $(this).html( '')
          })
    } )
 })
+function link(e){
+  $(e.target).trigger("click")
+ 
+  window.location.href = $(e.target).attr("href"); 
+}
 </script>
