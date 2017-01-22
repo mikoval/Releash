@@ -27,6 +27,29 @@
             <%= f.label :picture %>
             <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
           </span>
+
+          <%= f.label :gender %>
+          <%= f.select :gender, [ 'Male','Female' 'Unknown'], :prompt => 'Select Gender' %>
+
+          <%= f.label :color_primary %>
+          <%= f.text_field :color_primary, class: 'form-control' %>
+
+          <%= f.label :color_secondary %>
+          <%= f.text_field :color_secondary, class: 'form-control' %>
+
+          <%= f.label :eye_color %>
+          <%= f.text_field :eye_color, class: 'form-control' %>
+
+          <%= f.label :adoption_fee %>
+          <%= f.text_field :adoption_fee, class: 'form-control' %>
+
+          <%= f.label :animal_type %>
+          <%= f.select :animal_type, [ 'Domestic','filler', 'filler' ], :prompt => 'Select Type' %>
+
+          <%= f.label :birthday %>
+          <%= f.text_field :birthday, class: 'datepicker' %>
+
+
       </div>
     </div>
 
@@ -34,11 +57,23 @@
     <div class="card form-div documents col-md-6">
        <a class= "card-header doc-header" data-toggle="collapse" href="#doc-body">
         <div>
-          <h4>Documents</h4>
+          <h4>Medical</h4>
         </div>
        </a>
 
        <div id="doc-body" class="collapse">
+        <%= f.label :cage_number, "Cage #" %>
+        <%= f.text_field :cage_number, class: 'form-control' %>
+
+        <%= f.label :microchip_number , "Microchip #"%>
+        <%= f.text_field :microchip_number, class: 'form-control' %>
+
+        <%= f.label :tag_number , "Tag #" %>
+        <%= f.text_field :tag_number, class: 'form-control' %>
+
+        <%= f.label :neutered , "Spayed/Neutered" %>
+        <%= f.check_box :neutered, class: 'form-control' %>
+
         <%= label_tag  %>
         <%= file_field_tag 'documents[]', multiple: true %>
       </div>
@@ -90,6 +125,11 @@
 
     }
     console.log("Hey I changed :)")
+  });
+
+
+  $('.datepicker').datepicker({
+    endDate: '-0d'
   });
 </script>
 
