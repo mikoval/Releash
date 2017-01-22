@@ -1,3 +1,30 @@
 // Place all the styles related to the Animals controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+
+.animal.container {
+    border: solid #AAB2BA;
+    padding: 0px;
+    width: 100%;    
+}
+
+.form {
+    display: inline-block;
+    width:100%;
+    padding: 0px;
+}
+
+.form-div {
+    border: solid #AAB2BA; 
+}
+
+.personal {
+    padding: 20px;
+}
+
+.add-btn {
+    width: 20%;
+
+}
