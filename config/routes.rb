@@ -15,9 +15,10 @@ Rails.application.routes.draw do
   get 'animals/search'
   get '/animals/new'
   get '/animals/profile'
+  get '/animals/edit'
   get '/animals', to: 'animals#list'
   post  '/animals',   to: 'animals#newAnimal'
-  patch  '/animals',   to: 'animals#newAnimal'
+  patch  '/animals',   to: 'animals#editAnimal'
 
   get '/people', to: "people#list"
   get 'people/new'

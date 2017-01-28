@@ -1,0 +1,134 @@
+'<!-- This is the page to edit an animal -->
+<h2 class= "animal-title">Edit an Animal</h2>
+
+
+<div class="form">
+  <%= form_for(@animal, url: animals_path(@animal))  do |f| %>
+    
+    <!-- Personal info -->
+    <div class="card form-div personal col-md-6">
+      <a class="card-header personal-header" data-toggle="collapse" href="#personal-body">
+        <div style="background: white;">
+          <h4>Personal Body</h4>
+        </div>
+      </a>
+
+      <div id ="personal-body" class="collapse">
+          <%= f.label :name %>
+          <%= f.text_field :name, class: 'form-control' %>
+
+          <%= f.label :species_id %>
+          <%= f.collection_select :species_id, @species,  :id, :kind, :prompt => "Select Species" %>
+
+          <%= f.label :breed_id %>
+          <%= f.collection_select :breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
+         
+          <span class="picture">
+            <%= f.label :picture %>
+            <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
+          </span>
+
+          <%= f.label :gender %>
+          <%= f.select :gender, [ 'Male','Female' 'Unknown'], :prompt => 'Select Gender' %>
+
+          <%= f.label :color_primary %>
+          <%= f.text_field :color_primary, class: 'form-control' %>
+
+          <%= f.label :color_secondary %>
+          <%= f.text_field :color_secondary, class: 'form-control' %>
+
+          <%= f.label :eye_color %>
+          <%= f.text_field :eye_color, class: 'form-control' %>
+
+          <%= f.label :adoption_fee %>
+          <%= f.text_field :adoption_fee, class: 'form-control' %>
+
+          <%= f.label :animal_type %>
+          <%= f.select :animal_type, [ 'Domestic','filler', 'filler' ], :prompt => 'Select Type' %>
+
+          <%= f.label :birthday %>
+          <%= f.text_field :birthday, class: 'datepicker' %>
+
+
+      </div>
+    </div>
+
+    <!-- Documents -->
+    <div class="card form-div documents col-md-6">
+       <a class= "card-header doc-header" data-toggle="collapse" href="#doc-body">
+        <div>
+          <h4>Medical</h4>
+        </div>
+       </a>
+
+       <div id="doc-body" class="collapse">
+        <%= f.label :cage_number, "Cage #" %>
+        <%= f.text_field :cage_number, class: 'form-control' %>
+
+        <%= f.label :microchip_number , "Microchip #"%>
+        <%= f.text_field :microchip_number, class: 'form-control' %>
+
+        <%= f.label :tag_number , "Tag #" %>
+        <%= f.text_field :tag_number, class: 'form-control' %>
+
+        <%= f.label :neutered , "Spayed/Neutered" %>
+        <%= f.check_box :neutered, class: 'form-control' %>
+
+        <%= label_tag  %>
+        <%= file_field_tag 'documents[]', multiple: true %>
+      </div>
+    </div>
+
+    <!-- People -->
+    <div class="form-div people col-md-6">
+      <a class= "card-header doc-header" data-toggle="collapse" href="#people-body">
+        <div>
+          <h4>People</h4>
+        </div>
+      </a>
+
+      <div id="people-body" class="collapse">
+        <p> Functions for people</p>
+      </div>
+    </div>
+
+
+    <!-- Reminders -->
+   <div class="form-div reminders col-md-6">
+      <a class= "card-header doc-header" data-toggle="collapse" href="#reminders-body">
+        <div>
+          <h4>Reminders</h4>
+        </div>
+      </a>
+
+      <div id="reminders-body" class="collapse">
+        <p> Functions for reminders</p>
+      </div>    
+    </div>      
+    <%= f.submit "Submit changes", class: "btn btn-primary" %>
+
+  <% end %>
+</div>
+
+
+
+
+</div>
+<script>
+  $("#animal_species_id").change(function(){
+    console.log($("#animal_breed_id"))
+    if ($("#animal_species_id").val() == 1) {
+      $("#animal_breed_id option:eq(1)").hide();
+      $("#animal_breed_id option:eq(0)").show();
+    } else {
+      $("#animal_breed_id option:eq(0)").hide();
+      $("#animal_breed_id option:eq(1)").show();
+
+    }
+  });
+
+
+  $('.datepicker').datepicker({
+    endDate: '-0d'
+  });
+</script>

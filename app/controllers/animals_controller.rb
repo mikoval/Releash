@@ -10,6 +10,12 @@ class AnimalsController < ApplicationController
     @breed = Breed.all
   end
 
+  def edit
+    @animal = Animal.find(params["param"])
+    @species = Species.all
+    @breed = Breed.all
+  end
+  
   def profile
     @animal = Animal.find(params["param"])
     @documents = Document.where(:animal_id => params["param"])
@@ -17,7 +23,6 @@ class AnimalsController < ApplicationController
 
 
   def newAnimal
-
     @animal = Animal.new(animal_params)
     @allAnimals = Animal.all
     @species = Species.all
@@ -39,6 +44,20 @@ class AnimalsController < ApplicationController
       render 'new'
     end
   end
+
+  def editAnimal
+    @animal = Animal.find(params["format"])
+    if @animal.update_attributes(animal_params)
+      flash[:success] = "Saved animal"
+      redirect_to :controller => "animals", :action => "profile", :param => @animal
+    else
+      flash.now[:danger] = "Error editing animal!"
+      @species = Species.all
+      @breed = Breed.all
+      render 'edit'
+    end
+  end
+
   def query
     @animals = Animal.all.limit(10)
     arr = []
