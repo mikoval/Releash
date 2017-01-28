@@ -74,8 +74,23 @@
         <%= f.label :neutered , "Spayed/Neutered" %>
         <%= f.check_box :neutered, class: 'form-control' %>
 
-        <%= label_tag  %>
-        <%= file_field_tag 'documents[]', multiple: true %>
+        <div id="upload-buttons" style="padding-top: 15px">
+          <span class="btn btn-large btn-warning btn-file">
+              <%= label_tag "Upload Vetting" %>
+              <%= file_field_tag 'documents[]', multiple: true %>
+          </span>
+
+          <span class="btn btn-large btn-primary btn-file">
+              <%= label_tag "Upload Vaccinations" %>
+              <%= file_field_tag 'documents[]', multiple: true %>
+          </span>
+
+          <span class="btn btn-large btn-info btn-file">
+              <%= label_tag "Upload other forms" %>
+              <%= file_field_tag 'documents[]', multiple: true %>
+          </span>
+        </div>
+
       </div>
     </div>
 
