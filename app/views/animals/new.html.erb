@@ -9,7 +9,7 @@
     <div class="card form-div personal col-md-6">
       <a class="card-header personal-header" data-toggle="collapse" href="#personal-body">
         <div style="background: white;">
-          <h4>Personal Body</h4>
+          <h4>Personal Information</h4>
         </div>
       </a>
 
@@ -29,7 +29,7 @@
           </span>
 
           <%= f.label :gender %>
-          <%= f.select :gender, [ 'Male','Female' 'Unknown'], :prompt => 'Select Gender' %>
+          <%= f.select :gender, [ 'Male','Female', 'Unknown'], :prompt => 'Select Gender' %>
 
           <%= f.label :color_primary %>
           <%= f.text_field :color_primary, class: 'form-control' %>
@@ -44,11 +44,22 @@
           <%= f.text_field :adoption_fee, class: 'form-control' %>
 
           <%= f.label :animal_type %>
-          <%= f.select :animal_type, [ 'Domestic','filler', 'filler' ], :prompt => 'Select Type' %>
+          <%= f.select :animal_type, [ 'Domestic' ], :prompt => 'Select Type' %>
 
           <%= f.label :birthday %>
           <%= f.text_field :birthday, class: 'datepicker' %>
 
+          <%= f.label :cage_number, "Cage #" %>
+          <%= f.text_field :cage_number, class: 'form-control' %>
+
+          <%= f.label :microchip_number , "Microchip #"%>
+          <%= f.text_field :microchip_number, class: 'form-control' %>
+
+          <%= f.label :tag_number , "Tag #" %>
+          <%= f.text_field :tag_number, class: 'form-control' %>
+
+          <%= f.label :neutered , "Spayed/Neutered" %>
+          <%= f.check_box :neutered, class: 'form-control' %>
 
       </div>
     </div>
@@ -57,22 +68,11 @@
     <div class="card form-div documents col-md-6">
        <a class= "card-header doc-header" data-toggle="collapse" href="#doc-body">
         <div>
-          <h4>Medical</h4>
+          <h4>Paperwork</h4>
         </div>
        </a>
 
        <div id="doc-body" class="collapse">
-        <%= f.label :cage_number, "Cage #" %>
-        <%= f.text_field :cage_number, class: 'form-control' %>
-
-        <%= f.label :microchip_number , "Microchip #"%>
-        <%= f.text_field :microchip_number, class: 'form-control' %>
-
-        <%= f.label :tag_number , "Tag #" %>
-        <%= f.text_field :tag_number, class: 'form-control' %>
-
-        <%= f.label :neutered , "Spayed/Neutered" %>
-        <%= f.check_box :neutered, class: 'form-control' %>
 
         <div id="upload-buttons" style="padding-top: 15px">
           <span class="btn btn-large btn-warning btn-file">
