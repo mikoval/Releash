@@ -1,9 +1,9 @@
 <h1>Profile Page</h1>
 
 <% if employee?(current_user) %>
-<div class = 'col-md-2 col-md-offset-10 col-sm-4 col-sm-offset-8 col-xs-4 col-xs-offset-8'> <button>Edit dog profile</button></div>
-<% end %>
 
+<% end %>
+<%= link_to "<div class = 'col-md-2 col-md-offset-10 col-sm-4 col-sm-offset-8 col-xs-4 col-xs-offset-8'> <button>Edit dog profile</button></div>".html_safe,  :controller => "animals", :action => "edit", :param => @animal, :method => "get" %>
 
 <div class="container" style="border:solid #AAB2BA; display:inline-block; padding: 0px;">
 	<div class="form" style="display:inline-block; width:100%; padding: 0px;">
