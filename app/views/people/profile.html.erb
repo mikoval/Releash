@@ -1,5 +1,9 @@
 <% provide(:title, 'New Employee') %>
-<h1><%= @employee.email%> <%= link_to ' <span class ="glyphicon glyphicon-pencil" style = "cursor: pointer; font-size:25px;"></span>'.html_safe,  :controller => "people", :action => "edit", :param => @employee, :method => "get" %></h1>
+<h1><%= @employee.email%>
+    <% if admin?(current_user) || @employee.id == current_user.id %>
+ <%= link_to ' <span class ="glyphicon glyphicon-pencil" style = "cursor: pointer; font-size:25px;"></span>'.html_safe,  :controller => "people", :action => "edit", :param => @employee, :method => "get" %>
+ <%end %>
+</h1>
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
