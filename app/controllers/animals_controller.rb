@@ -106,7 +106,7 @@ class AnimalsController < ApplicationController
   def animal_params
 
     params.require(:animal).permit(:name, :species_id, :breed_id, :picture, :color_primary, :color_secondary, :eye_color,
-      :adoption_fee, :animal_type, :birthday
+      :adoption_fee, :animal_type, :birthday, :cage_number, :microchip_number, :tag_number, :neutered
       )
 
   end
