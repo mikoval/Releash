@@ -64,6 +64,11 @@ ActiveRecord::Schema.define(version: 20170122143830) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "test", id: false, force: :cascade do |t|
+    t.string  "name"
+    t.integer "price"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
