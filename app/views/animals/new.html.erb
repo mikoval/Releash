@@ -23,11 +23,11 @@
           <%= f.label :breed_id %>
           <%= f.collection_select :breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
          
-          <span class="picture">
+          <div class="picture">
             <%= f.label :picture %>
             <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'file-upload' %>
             <img id="profilepic" src="#" alt="your image"  style = "display:none" />
-          </span>
+          </div>
 
           <%= f.label :gender %>
           <%= f.select :gender, [ 'Male','Female', 'Unknown'], :prompt => 'Select Gender' %>
@@ -147,6 +147,24 @@
   $('.datepicker').datepicker({
     endDate: '-0d'
   });
+  $(".file-upload").change(function(input) { 
+    input = input.target
+    if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#profilepic')
+                    .attr('src', e.target.result)
+                    .width(150)
+                    .height(200);
+                $('#profilepic').show()
+            };
+
+            reader.readAsDataURL(input.files[0]);
+
+        }
+  }); 
+  
 </script>
 
 
