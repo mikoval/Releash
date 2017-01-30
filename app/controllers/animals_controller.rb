@@ -58,11 +58,15 @@ class AnimalsController < ApplicationController
     @animals = Animal.all.limit(10)
     arr = []
     @animals.each do |d|
+      sBreed = '';
+      if(d.secondary_breed_id)
+        sBreed = d.secondary_breed.name
+      end
       arr.push({
         "id" =>  d.id, 
         "name" => d.name,
         "primary" => d.primary_breed.name,
-        "secondary" => d.secondary_breed.name,
+        "secondary" => sBreed,
         "picture" => d.picture,
       })
     end
