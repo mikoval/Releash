@@ -25,7 +25,8 @@
          
           <span class="picture">
             <%= f.label :picture %>
-            <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
+            <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'file-upload' %>
+            <img id="profilepic" src="#" alt="your image"  style = "display:none" />
           </span>
 
           <%= f.label :gender %>
