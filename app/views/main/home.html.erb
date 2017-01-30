@@ -34,8 +34,8 @@ function widgetAnimalList(){
     
                 str += "<tr> \
                 <td> <a href='/animals/profile?method=get&param=" + result[x].id + "' > " + result[x].name + "</a></td>\
-                 <td>" + result[x].breed + "</td>\
-                <td>" + result[x].species + "</td>\
+                 <td>" + result[x].primary + "</td>\
+                <td>" + result[x].secondary + "</td>\
                 </tr>"
         }
         str +=  " </table>"

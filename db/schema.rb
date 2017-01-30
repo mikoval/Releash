@@ -11,15 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170122143830) do
+ActiveRecord::Schema.define(version: 20170130012348) do
 
   create_table "animals", force: :cascade do |t|
     t.text     "name"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.integer  "species_id"
     t.string   "picture"
-    t.integer  "breed_id",         default: 1
     t.string   "color_primary"
     t.string   "color_secondary"
     t.string   "eye_color"
@@ -31,6 +30,8 @@ ActiveRecord::Schema.define(version: 20170122143830) do
     t.integer  "microchip_number"
     t.integer  "tag_number"
     t.integer  "neutered"
+    t.integer  "primary_breed_id"
+    t.integer  "secondary_breed_id"
   end
 
   create_table "breeds", force: :cascade do |t|
@@ -64,12 +65,18 @@ ActiveRecord::Schema.define(version: 20170122143830) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "test", id: false, force: :cascade do |t|
+    t.string  "name"
+    t.integer "price"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.string   "password_digest"
+    t.integer  "role"
     t.integer  "role_id"
     t.string   "picture"
     t.string   "remember_digest"

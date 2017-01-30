@@ -6,13 +6,11 @@ class AnimalsController < ApplicationController
 
   def new
     @animal = Animal.new
-    @species = Species.all
     @breed = Breed.all
   end
 
   def edit
     @animal = Animal.find(params["param"])
-    @species = Species.all
     @breed = Breed.all
   end
   
@@ -25,7 +23,6 @@ class AnimalsController < ApplicationController
   def newAnimal
     @animal = Animal.new(animal_params)
     @allAnimals = Animal.all
-    @species = Species.all
     @breed = Breed.all
     if @animal.save
       if params["documents"]
@@ -52,7 +49,6 @@ class AnimalsController < ApplicationController
       redirect_to :controller => "animals", :action => "profile", :param => @animal
     else
       flash.now[:danger] = "Error editing animal!"
-      @species = Species.all
       @breed = Breed.all
       render 'edit'
     end
@@ -65,8 +61,8 @@ class AnimalsController < ApplicationController
       arr.push({
         "id" =>  d.id, 
         "name" => d.name,
-        "species" => d.species.kind,
-        "breed" => d.breed.name,
+        "primary" => d.primary_breed.name,
+        "secondary" => d.secondary_breed.name,
         "picture" => d.picture,
       })
     end
@@ -80,21 +76,15 @@ class AnimalsController < ApplicationController
     else 
       @breedid = 0
     end
-    @species = Species.where('LOWER(kind) LIKE LOWER(:search)', search: "%#{@search}%" )
-    if(@species.length > 0)
-      @speciesid = @species[0].id
-    else 
-      @speciesid = 0
-    end
-    @animals = Animal.where('LOWER(name) LIKE LOWER(:search) OR species_id = :species OR breed_id = :breed' , search: "%#{@search}%", breed: "#{@breedid}", species: "#{@speciesid}" )
+
+    @animals = Animal.where('LOWER(name) LIKE LOWER(:search) primary_breed_id = :breed' , search: "%#{@search}%", breed: "#{@breedid}")
 
     arr = []
     @animals.each do |d|
       arr.push({
         "id" =>  d.id, 
         "name" => d.name,
-        "species" => d.species.kind,
-        "breed" => d.breed.name,
+        "primary" => d.primary_breed.name,
         "picture" => d.picture,
       })
     end
@@ -105,7 +95,7 @@ class AnimalsController < ApplicationController
 
   def animal_params
 
-    params.require(:animal).permit(:name, :species_id, :breed_id, :picture, :color_primary, :color_secondary, :eye_color,
+    params.require(:animal).permit(:name, :primary_breed_id, :picture, :color_primary, :color_secondary, :eye_color,
       :adoption_fee, :animal_type, :birthday, :cage_number, :microchip_number, :tag_number, :neutered
       )
 
