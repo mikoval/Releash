@@ -1,27 +1,68 @@
 <!-- This is the page to add a new animal -->
-<h2 class= "animal-title">Add a new Animal</h2>
+<h2 class= "pg-title">Add a new Animal</h2>
 
+<div class= "nav-form-container col-md-12">
 
-<div class="form">
-  <%= form_for(@animal, url: animals_path(@animal))  do |f| %>
-    
-    <!-- Personal info -->
-    <div class="card form-div personal col-md-6">
+  <!-- Nav Bar Content -->
+  
+  <div class="form-nav col-md-3">
+    <!-- Personal info tab -->
+    <div class="card form-div personal col-md-12">
       <a class="card-header personal-header" data-toggle="collapse" href="#personal-body">
         <div style="background: white;">
-          <h4>Personal Information</h4>
+          <h4>Animal Characteristics</h4>
         </div>
       </a>
+    </div>
 
-      <div id ="personal-body" class="collapse">
+    <div class= "card form-div personal col-md-12">
+      <a class= "card-header paper-header" data-toggle="collapse" href="#paper-body">
+        <div>
+          <h4>Paperwork</h4>
+        </div>
+      </a>
+    </div>
+
+    <div class="form-div tracking col-md-12">
+      <a class= "card-header doc-header" data-toggle="collapse" href="#tracking-body">
+        <div>
+          <h4>Tracking</h4>
+        </div>
+      </a>
+    </div>
+
+    <div class="form-div alerts col-md-12">
+      <a class= "card-header alert-header" data-toggle="collapse" href="#alerts-body">
+        <div>
+         <h4>Alerts</h4>
+        </div>
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Inner form Content -->
+
+  <div class="form col-md-9">
+    <%= form_for(@animal, url: animals_path(@animal))  do |f| %>
+      
+      <!-- Personal Inner Div -->
+      <div id ="personal-body" class="collapse inner-formdiv">
+        <a class= "card-header pers-header" data-toggle="collapse" href="#characteristics-body">
+          <div>
+            <h4>Chacteristics</h4>
+          </div>
+        </a>
+
+        <div id = "characteristics-body" class="collapse">
           <%= f.label :name %>
           <%= f.text_field :name, class: 'form-control' %>
 
-          <%= f.label :species_id %>
-          <%= f.collection_select :species_id, @species,  :id, :kind, :prompt => "Select Species" %>
+          <%= f.label :primary_breed_id %>
+          <%= f.collection_select :primary_breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
 
-          <%= f.label :breed_id %>
-          <%= f.collection_select :breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
+          <%= f.label :secondary_breed_id %>
+          <%= f.collection_select :secondary_breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
          
           <div class="picture">
             <%= f.label :picture %>
@@ -61,20 +102,32 @@
 
           <%= f.label :neutered , "Spayed/Neutered" %>
           <%= f.check_box :neutered, class: 'form-control' %>
-
       </div>
-    </div>
 
-    <!-- Documents -->
-    <div class="card form-div documents col-md-6">
-       <a class= "card-header doc-header" data-toggle="collapse" href="#doc-body">
+      <!-- Medical -->
+      <a class= "card-header doc-header" data-toggle="collapse" href="#doc-body">
         <div>
-          <h4>Paperwork</h4>
+          <h4>Medical</h4>
         </div>
        </a>
 
-       <div id="doc-body" class="collapse">
+        <div id="doc-body" class="collapse">
+          <%= f.label :cage_number, "Cage #" %>
+          <%= f.text_field :cage_number, class: 'form-control' %>
 
+          <%= f.label :microchip_number , "Microchip #"%>
+          <%= f.text_field :microchip_number, class: 'form-control' %>
+
+          <%= f.label :tag_number , "Tag #" %>
+          <%= f.text_field :tag_number, class: 'form-control' %>
+
+          <%= f.label :neutered , "Spayed/Neutered" %>
+          <%= f.check_box :neutered, class: 'form-control' %>
+        </div>
+      </div>
+
+      <!-- Paperwork -->
+      <div id="paper-body" class="collapse inner-formdiv">
         <div id="upload-buttons" style="padding-top: 15px">
           <span class="btn btn-large btn-warning btn-file">
               <%= label_tag "Upload Vetting" %>
@@ -91,38 +144,22 @@
               <%= file_field_tag 'documents[]', multiple: true %>
           </span>
         </div>
-
       </div>
-    </div>
 
-    <!-- People -->
-    <div class="form-div people col-md-6">
-      <a class= "card-header doc-header" data-toggle="collapse" href="#people-body">
-        <div>
-          <h4>People</h4>
-        </div>
-      </a>
-
-      <div id="people-body" class="collapse">
+      <!-- Tracking -->
+      <div id="tracking-body" class="collapse inner-formdiv">
         <p> Functions for people</p>
       </div>
-    </div>
 
-
-    <!-- Reminders -->
-   <div class="form-div reminders col-md-6">
-      <a class= "card-header doc-header" data-toggle="collapse" href="#reminders-body">
-        <div>
-          <h4>Reminders</h4>
-        </div>
-      </a>
-
-      <div id="reminders-body" class="collapse">
-        <p> Functions for reminders</p>
+      <!-- Alerts -->
+      <div id="alerts-body" class="collapse inner-formdiv">
+          <p> Functions for reminders</p>
       </div>
-    </div>
-    <%= f.submit "Add animal", class: "add-btn btn-primary" %>
-  <% end %>
+    
+      <!-- Can i move this? -->
+      <%= f.submit "Add animal", class: "add-btn btn-primary" %>
+    <% end %>
+  </div>
 </div>
 
 

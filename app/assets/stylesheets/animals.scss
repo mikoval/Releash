@@ -2,17 +2,30 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.pg-title {
+    text-align: right;
+    font-size: 24px;
+}
 
+.inner-formdiv {
+    width: 100%;
+    padding: 20px;
+    border: solid #e8e8e8;
+    border-width: 1px;
+
+}
 
 .form {
     display: inline-block;
     width:100%;
     padding: 0px;
+    border-width: 5px;
 }
 
 .form-div {
     border: solid #AAB2BA; 
     padding: 5px;
+    border-width: 1px;
 }
 
 

@@ -17,11 +17,11 @@
           <%= f.label :name %>
           <%= f.text_field :name, class: 'form-control' %>
 
-          <%= f.label :species_id %>
-          <%= f.collection_select :species_id, @species,  :id, :kind, :prompt => "Select Species" %>
+          <%= f.label :primary_breed_id %>
+          <%= f.collection_select :primary_breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
 
-          <%= f.label :breed_id %>
-          <%= f.collection_select :breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
+          <%= f.label :secondary_breed_id %>
+          <%= f.collection_select :secondary_breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
          
           <span class="picture">
             <%= f.label :picture %>

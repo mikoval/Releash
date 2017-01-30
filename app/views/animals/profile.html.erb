@@ -12,10 +12,10 @@
 			<%= display_avatar(@animal, "100x100") %>
 			<h3>Name</h3>
 			<%= @animal.name %>
-			<h3>Species</h3>
-			<%= @animal.species.kind %>
-			<h3>Breed</h3>
-			<%= @animal.breed.name %>
+			<h3>Primary Breed</h3>
+			<%= @animal.primary_breed.name %>
+			<h3>Secondary Breed</h3>
+			<%= @animal.secondary_breed.name %>
 			<h3>Colors</h3>
 			<p> Primary: <%= @animal.color_primary %> </p>
 			<p> Secondary: <%= @animal.color_secondary %> </p>

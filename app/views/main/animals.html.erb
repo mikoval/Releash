@@ -4,11 +4,7 @@
 <div class=" row col-md-2 col-md-offset-0">
     <%= form_for(@animal, url: animals_path(@animal))  do |f| %>
       <%= f.label :name %>
-      <%= f.text_field :name, class: 'form-control' %>
-
-      <%= f.label :species %>
-      <%= f.text_field :species, class: 'form-control' %>
-     
+      <%= f.text_field :name, class: 'form-control' %>   
 
       <%= f.submit "Add animal", class: "btn btn-primary" %>
     <% end %>
@@ -16,8 +12,6 @@
 <div class=" row col-md-12 col-md-offset-0">
 <% @allAnimals.each do |a| %>
   name = <%= a.name %> 
-  |
-  type = <%= a.species %>
   <br>
 <% end %>
 </div>
