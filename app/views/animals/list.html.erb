@@ -21,11 +21,12 @@
       
     </div>
     <% if employee?(current_user) %>
-        <span class ="glyphicon glyphicon-pencil col-md-1 col-sm-1 col-xs-1" style = "float: left; cursor: pointer; display:none; margin:10px">
-        </span>
+      <%= link_to '<span class ="glyphicon glyphicon-pencil col-md-1 col-sm-1 col-xs-1" style = "float: left; cursor: pointer; display:none; margin:10px">
+        </span>'.html_safe, :controller => "animals", :action => "edit", :param => a, :method => "get" %>
+        
           <% end %>
-    <div class = "col-md-8 col-sm-8 col-xs-8">
-          <%= a.primary_breed.name %> | <%= a.secondary_breed.name %>
+        <div class = "col-md-8 col-sm-8 col-xs-8">
+          <%= a.primary_breed.name %>  <% if a.secondary_breed %> | <%= a.secondary_breed.name %> <% end %>
         </div>
         
         </div>

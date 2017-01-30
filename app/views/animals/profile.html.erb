@@ -14,22 +14,42 @@
 			<%= @animal.name %>
 			<h3>Primary Breed</h3>
 			<%= @animal.primary_breed.name %>
+			<% if @animal.secondary_breed %>
 			<h3>Secondary Breed</h3>
 			<%= @animal.secondary_breed.name %>
+			<% end %>
 			<h3>Colors</h3>
 			<p> Primary: <%= @animal.color_primary %> </p>
+			
 			<p> Secondary: <%= @animal.color_secondary %> </p>
+			
 		</div>
 
 
       	<!-- Documents -->
 		<div class="documents col-md-6 col-sm-12 col-xs-12" style="border:solid #AAB2BA">
-		  <h2>Documents </h2>
-
-		  	 <% @documents.each do |d| %>
-
-		  	 <p style = "text-align: center"><%= link_to d.document.file.filename, d.document.url %> </p>
-		  	 <% end %>
+		  <h2>Paperwork </h2>
+		  	<% if @animal.vetting_document.length > 0 %>
+		  	<p style = "text-align: center">Vetting Document: <%= link_to @animal.vetting_document.file.filename, @animal.vetting_document.url %> </p>
+		  	<% end %>
+		  	<% if @animal.owner_surrender_document.length > 0 %>
+		  	<p style = "text-align: center">Owner Surrender: <%= link_to @animal.owner_surrender_document.file.filename, @animal.owner_surrender_document.url %> </p>
+		  	<% end %>
+		  	<% if @animal.intake_document.length > 0 %>
+		  	<p style = "text-align: center">Intake: <%= link_to @animal.intake_document.file.filename, @animal.intake_document.url %> </p>
+		  	<% end %>
+		  	<% if @animal.home_check_document.length > 0 %>
+		  	<p style = "text-align: center">Home Check: <%= link_to @animal.home_check_document.file.filename, @animal.home_check_document.url %> </p>
+		  	<% end %>
+		  	<% if @animal.match_application_document.length > 0 %>
+		  	<p style = "text-align: center">Match Application: <%= link_to @animal.match_application_document.file.filename, @animal.match_application_document.url %> </p>
+		  	<% end %>
+		  	<% if @animal.adoption_application_document.length > 0 %>
+		  	<p style = "text-align: center">Adoption Application: <%= link_to @animal.adoption_application_document.file.filename, @animal.adoption_application_document.url %> </p>
+		  	<% end %>
+		  	<% if @animal.adoption_contract_document.length > 0 %>
+		  	<p style = "text-align: center">Adoption Contract: <%= link_to @animal.adoption_contract_document.file.filename, @animal.adoption_contract_document.url %> </p>
+		  	<% end %>
 		</div>
 
 		<!-- People -->

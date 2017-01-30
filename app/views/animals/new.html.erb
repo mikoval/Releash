@@ -128,18 +128,34 @@
       <div id="paper-body" class="collapse inner-formdiv">
         <div id="upload-buttons" style="padding-top: 15px">
           <span class="btn btn-large btn-warning btn-file">
-              <%= label_tag "Upload Vetting" %>
-              <%= file_field_tag 'documents[]', multiple: true %>
+              <%= label_tag "Vetting Document" %>
+              <%= f.file_field :vetting_document, class: 'file-upload' %>
           </span>
 
           <span class="btn btn-large btn-primary btn-file">
-              <%= label_tag "Upload Vaccinations" %>
-              <%= file_field_tag 'documents[]', multiple: true %>
+              <%= label_tag "Intake Document" %>
+              <%= f.file_field :intake_document, class: 'file-upload' %>
           </span>
 
           <span class="btn btn-large btn-info btn-file">
-              <%= label_tag "Upload other forms" %>
-              <%= file_field_tag 'documents[]', multiple: true %>
+              <%= label_tag "Owner Surrender" %>
+              <%= f.file_field  :owner_surrender_document, class: 'file-upload' %>
+          </span>
+          <span class="btn btn-large btn-info btn-file">
+              <%= label_tag "Home Check" %>
+              <%= f.file_field  :home_check_document, class: 'file-upload' %>
+          </span>
+          <span class="btn btn-large btn-info btn-file">
+              <%= label_tag "Match Application" %>
+              <%= f.file_field  :match_application_document, class: 'file-upload' %>
+          </span>
+          <span class="btn btn-large btn-info btn-file">
+              <%= label_tag "Adoption Application" %>
+              <%= f.file_field  :adoption_application_document, class: 'file-upload' %>
+          </span>
+          <span class="btn btn-large btn-info btn-file">
+              <%= label_tag "Adoption Contract" %>
+              <%= f.file_field  :adoption_contract_document, class: 'file-upload' %>
           </span>
         </div>
       </div>

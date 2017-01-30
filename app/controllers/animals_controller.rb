@@ -16,7 +16,6 @@ class AnimalsController < ApplicationController
   
   def profile
     @animal = Animal.find(params["param"])
-    @documents = Document.where(:animal_id => params["param"])
   end
 
 
@@ -25,16 +24,17 @@ class AnimalsController < ApplicationController
     @allAnimals = Animal.all
     @breed = Breed.all
     if @animal.save
-      if params["documents"]
-        params["documents"].each do |d|
-          @document = Document.new({animal_id: @animal.id, document: d})
-          @document.save
-        end
-      end
+      #this code was for old documents
+      #if params["documents"]
+      #  params["documents"].each do |d|
+      #    @document = Document.new({animal_id: @animal.id, document: d})
+      #    @document.save
+      #  end
+      flash.now[:success] = "New Animal!"
+      redirect_to :controller => "animals", :action => "profile", :param => @animal
 
       
-        flash.now[:success] = "New Animal!"
-        redirect_to :controller => "animals", :action => "profile", :param => @animal
+        
 
     else
       flash.now[:danger] = "Error adding Animal!"
@@ -95,9 +95,13 @@ class AnimalsController < ApplicationController
 
   def animal_params
 
-    params.require(:animal).permit(:name, :primary_breed_id, :picture, :color_primary, :color_secondary, :eye_color,
-      :adoption_fee, :animal_type, :birthday, :cage_number, :microchip_number, :tag_number, :neutered
+    params.require(:animal).permit(:name, :primary_breed_id, :secondary_breed_id, :picture, :color_primary, :color_secondary, :eye_color,
+      :adoption_fee, :animal_type, :birthday, :cage_number, :microchip_number, :tag_number, :neutered,  
+
+      :intake_document, :owner_surrender_document, :home_check_document, :match_application_document, :adoption_application_document, 
+      :adoption_contract_document, :vetting_document
       )
 
   end
 end
+
