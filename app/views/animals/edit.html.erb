@@ -1,4 +1,4 @@
-'<!-- This is the page to edit an animal -->
+<!-- This is the page to edit an animal -->
 <h2 class= "animal-title">Editing <%= @animal.name %></h2>
 
 
@@ -22,11 +22,19 @@
 
           <%= f.label :secondary_breed_id %>
           <%= f.collection_select :secondary_breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
-         
+          
+
           <span class="picture">
-            <%= f.label :picture %>
-            <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
-          </span>
+            <%= f.label :Photo %>        
+
+<!--              <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
+ --> 
+              <form><input type="file" id="pictureInput"></form>
+              <%= display_avatar(@animal, "100x100") %>
+              
+
+             <div id="target"></div>
+           </span>
 
           <%= f.label :gender %>
           <%= f.select :gender, [ 'Male','Female', 'Unknown'], :prompt => 'Select Gender' %>
@@ -145,5 +153,25 @@
 
   $('.datepicker').datepicker({
     endDate: '-0d'
+  });
+
+  $(function() {
+    $('#pictureInput').on('change', function(event) {
+      var files = event.target.files;
+      var image = files[0]
+      console.log(image.size);
+      var reader = new FileReader();
+      reader.onload = function(file) {
+        var img = new Image();
+        var w = img.width, h = img.height;
+        w = 100; h = 100;
+        img.width = w; img.height = h;
+        console.log(file);
+        img.src = file.target.result;
+        $('#target').html(img);
+      }
+    reader.readAsDataURL(image);
+    console.log(files);
+    });
   });
 </script>
