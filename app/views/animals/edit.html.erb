@@ -26,14 +26,11 @@
 
           <span class="picture">
             <%= f.label :Photo %>        
-
-<!--              <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
- --> 
-              <form><input type="file" id="pictureInput"></form>
-              <%= display_avatar(@animal, "100x100") %>
               
+              <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'file-upload' %>
 
-             <div id="target"></div>
+              <img id="profilepic" src=<%= @animal.picture %> alt="your image"  width = "100px" height = "100px" style = "display:block" />  
+
            </span>
 
           <%= f.label :gender %>
@@ -155,23 +152,21 @@
     endDate: '-0d'
   });
 
-  $(function() {
-    $('#pictureInput').on('change', function(event) {
-      var files = event.target.files;
-      var image = files[0]
-      console.log(image.size);
-      var reader = new FileReader();
-      reader.onload = function(file) {
-        var img = new Image();
-        var w = img.width, h = img.height;
-        w = 100; h = 100;
-        img.width = w; img.height = h;
-        console.log(file);
-        img.src = file.target.result;
-        $('#target').html(img);
-      }
-    reader.readAsDataURL(image);
-    console.log(files);
-    });
-  });
+  $(".file-upload").change(function(input) { 
+    input = input.target
+    if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#profilepic')
+                    .attr('src', e.target.result)
+                    .width(150)
+                    .height(200);
+                $('#profilepic').show()
+            };
+
+            reader.readAsDataURL(input.files[0]);
+
+        }
+  }); 
 </script>
