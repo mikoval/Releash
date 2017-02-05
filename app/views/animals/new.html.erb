@@ -68,7 +68,7 @@
               </div>
 
               <img id="profilepic" src="#" alt="Dog Image" style="display: none"/>
-              <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'file-upload' %>
+              <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'file-upload profile-file' %>
             </div>
 
             <!-- Basic Characteristics -->
@@ -209,7 +209,7 @@
   $('.datepicker').datepicker({
     endDate: '-0d'
   });
-  $(".file-upload").change(function(input) { 
+  $(".profile-file").change(function(input) { 
     input = input.target
     if (input.files && input.files[0]) {
             var reader = new FileReader();

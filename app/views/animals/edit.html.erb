@@ -62,7 +62,7 @@
               <%= f.label :picture %>
               <div id="pic-preview">
               <img id="profilepic" src=<%= @animal.picture %> alt="Dog Image"  width = "150px" height = "200px" style = "display:block" />  
-              <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'file-upload' %>
+              <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'file-upload profile-file' %>
               </div>
             </div>
 
@@ -188,7 +188,7 @@
     endDate: '-0d'
   });
 
-  $(".file-upload").change(function(input) { 
+  $(".profile-file").change(function(input) { 
     input = input.target
     if (input.files && input.files[0]) {
             var reader = new FileReader();
