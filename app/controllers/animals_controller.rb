@@ -72,29 +72,46 @@ class AnimalsController < ApplicationController
     end
     render json: arr
   end
+  
   def search
     @search = params["q"]
     @breed = Breed.where('LOWER(name) LIKE LOWER(:search)', search: "%#{@search}%" )
+    
     if(@breed.length > 0)
       @breedid = @breed[0].id
     else 
       @breedid = 0
     end
+    
+    @users = User.where('LOWER(name) LIKE LOWER(:search)', search: "%#{@search}%" )
+    if(@users.length > 0)
+      @usersid = @users[0].id
+    else 
+      @usersid = 0
+    end
 
-    @animals = Animal.where('LOWER(name) LIKE LOWER(:search) primary_breed_id = :breed' , search: "%#{@search}%", breed: "#{@breedid}")
-
+    @animals = Animal.where('LOWER(name) LIKE LOWER(:search) OR primary_breed_id = :breed' , search: "%#{@search}%", breed: "#{@breedid}")
+    @user = User.where('LOWER(name) LIKE LOWER(:search)' , search: "%#{@search}%")
+    
     arr = []
+
     @animals.each do |d|
+      sBreed = '';
+      if(d.secondary_breed_id)
+        sBreed = d.secondary_breed.name
+      end
       arr.push({
         "id" =>  d.id, 
         "name" => d.name,
         "primary" => d.primary_breed.name,
+        "secondary" => sBreed,
         "picture" => d.picture,
       })
     end
+
+    
     render json: arr
   end
-
   private
 
   def animal_params
