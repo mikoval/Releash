@@ -72,11 +72,7 @@ class AnimalsController < ApplicationController
     end
     render json: arr
   end
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> 41d8478181da17114c1b6425fb2da52e77aa5ade
   def search
     @search = params["q"]
     @breed = Breed.where('LOWER(name) LIKE LOWER(:search)', search: "%#{@search}%" )
