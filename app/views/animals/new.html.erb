@@ -24,7 +24,7 @@
     </div>
 
     <div class="form-div tracking col-md-12">
-      <a class= "card-header doc-header" data-toggle="collapse" href="#tracking-body">
+      <a class= "card-header tracking-header" data-toggle="collapse" href="#tracking-body">
         <div>
           <h4>Tracking</h4>
         </div>
@@ -48,44 +48,52 @@
       
       <!-- Personal Inner Div -->
       <div id ="personal-body" class="collapse show inner-formdiv">
-        <a class= "card-header pers-header" data-toggle="collapse" href="#characteristics-body">
-          <div>
-            <h4>Chacteristics</h4>
-          </div>
-        </a>
+        
+        <div class="bsc-chracteristics col-md-6">
+          <!--Basic Characteristics Header -->
+          <a class= "card-header pers-header" data-toggle="collapse" href="#characteristics-body">
+            <div>
+              <h4> Basic Chacteristics</h4>
+            </div>
+          </a>
 
-        <div id = "characteristics-body" class="collapse col-md-6 ">
+          <!--Basic Characteristics Body -->
+          <div id = "characteristics-body" class="collapse show col-md-12">
+            <!-- Profile Picture -->
+            <div class="picture col-md-6">
+              <%= f.label :picture %>
+              <div id="pic-preview" style=" padding: 5px">
+                <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
+                <!-- alt="Dog Image"-->
+              </div>
 
-          <div class="picture col-md-6">
-            <%= f.label :picture %>
-            <div id="pic-preview">
-              <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
-              <!-- alt="Dog Image"-->
+              <img id="profilepic" src="#" alt="Dog Image" style="display: none"/>
+              <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'file-upload' %>
             </div>
 
-            <img id="profilepic" src="#" alt="Dog Image" style="display: none"/>
-            <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'file-upload' %>
+            <!-- Basic Characteristics -->
+            <div class="characteristics-info col-md-6">
+              <%= f.label :name %>
+              <%= f.text_field :name, class: 'form-control' %>
+
+              <%= f.label :primary_breed_id %>
+              <%= f.collection_select :primary_breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
+
+              <%= f.label :secondary_breed_id %>
+              <%= f.collection_select :secondary_breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
+
+              <%= f.label :date_of_birth %>
+              <%= f.text_field :birthday, class: 'datepicker' %>
+
+              <%= f.label :status %>
+              <%= f.select :status, [ 'Intake','Vetting', 'Foster', 'Hold','Adopted'], :prompt => 'Select Status' %>
+            </div>
           </div>
+        </div>
 
-          <div class="characteristics-info col-md-6">
-            <%= f.label :name %>
-            <%= f.text_field :name, class: 'form-control' %>
-
-            <%= f.label :primary_breed_id %>
-            <%= f.collection_select :primary_breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
-
-            <%= f.label :secondary_breed_id %>
-            <%= f.collection_select :secondary_breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
-
-            <%= f.label :date_of_birth %>
-            <%= f.text_field :birthday, class: 'datepicker' %>
-
-            <%= f.label :status %>
-            <%= f.select :status, [ 'Intake','Vetting', 'Foster', 'Hold' 'Adopted'], :prompt => 'Select Status' %>
-
-
-
-              <!-- Physical Features -->
+        <div class = "phy-med-frame col-md-6">
+          <div class = "phys-features col-md-12">
+            <!-- Physical Features -->
             <a class= "card-header doc-header" data-toggle="collapse" href="#phys-feat">
               <div>
                 <h4>Physical Features</h4>
@@ -106,23 +114,26 @@
               <%= f.text_field :eye_color, class: 'form-control' %>
             </div>
           </div>
+
+          <div class = "med col-md-12">
+            <!-- Medical -->
+            <a class= "card-header doc-header" data-toggle="collapse" href="#doc-body">
+              <div>
+                <h4>Medical</h4>
+              </div>
+            </a>
+
+            <div id="doc-body" class="collapse col-md-12">
+              <%= f.label :microchip_number , "Microchip #"%>
+              <%= f.text_field :microchip_number, class: 'form-control' %>
+
+              <%= f.label :neutered , "Spayed/Neutered" %>
+              <%= f.check_box :neutered, class: 'form-control' %>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- Medical -->
-      <a class= "card-header doc-header" data-toggle="collapse" href="#doc-body">
-        <div>
-          <h4>Medical</h4>
-        </div>
-       </a>
-
-        <div id="doc-body" class="collapse col-md-6">
-          <%= f.label :microchip_number , "Microchip #"%>
-          <%= f.text_field :microchip_number, class: 'form-control' %>
-
-          <%= f.label :neutered , "Spayed/Neutered" %>
-          <%= f.check_box :neutered, class: 'form-control' %>
-        </div>
-      </div>
 
       <!-- Paperwork -->
       <div id="paper-body" class="collapse inner-formdiv">

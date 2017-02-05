@@ -1,86 +1,139 @@
 <!-- This is the page to edit an animal -->
-<h2 class= "animal-title">Editing <%= @animal.name %></h2>
+<h2 class= "pg-title">Editing <%= @animal.name %></h2>
 
+<div class= "nav-form-container col-md-12">
 
-<div class="form">
-  <%= form_for(@animal, url: animals_path(@animal))  do |f| %>
-    
-    <!-- Personal info -->
-    <div class="card form-div personal col-md-6">
-      <a class="card-header personal-header" data-toggle="collapse" href="#personal-body">
-        <div style="background: white;">
-          <h4>Personal Information</h4>
-        </div>
-      </a>
-
-      <div id ="personal-body" class="collapse">
-          <%= f.label :name %>
-          <%= f.text_field :name, class: 'form-control' %>
-
-          <%= f.label :primary_breed_id %>
-          <%= f.collection_select :primary_breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
-
-          <%= f.label :secondary_breed_id %>
-          <%= f.collection_select :secondary_breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
-          
-
-          <span class="picture">
-            <%= f.label :Photo %>        
-              
-              <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'file-upload' %>
-
-              <img id="profilepic" src=<%= @animal.picture %> alt="your image"  width = "100px" height = "100px" style = "display:block" />  
-
-           </span>
-
-          <%= f.label :gender %>
-          <%= f.select :gender, [ 'Male','Female', 'Unknown'], :prompt => 'Select Gender' %>
-
-          <%= f.label :color_primary %>
-          <%= f.text_field :color_primary, class: 'form-control' %>
-
-          <%= f.label :color_secondary %>
-          <%= f.text_field :color_secondary, class: 'form-control' %>
-
-          <%= f.label :eye_color %>
-          <%= f.text_field :eye_color, class: 'form-control' %>
-
-          <%= f.label :adoption_fee %>
-          <%= f.text_field :adoption_fee, class: 'form-control' %>
-
-          <%= f.label :animal_type %>
-          <%= f.select :animal_type, [ 'Domestic'], :prompt => 'Select Type' %>
-
-          <%= f.label :birthday %>
-          <%= f.text_field :birthday, class: 'datepicker' %>
-
-          <%= f.label :cage_number, "Cage #" %>
-          <%= f.text_field :cage_number, class: 'form-control' %>
-
-          <%= f.label :microchip_number , "Microchip #"%>
-          <%= f.text_field :microchip_number, class: 'form-control' %>
-
-          <%= f.label :tag_number , "Tag #" %>
-          <%= f.text_field :tag_number, class: 'form-control' %>
-
-          <%= f.label :neutered , "Spayed/Neutered" %>
-          <%= f.check_box :neutered, class: 'form-control' %>
-
+<!-- Nav Bar Content -->
+<div class="form-nav col-md-2">
+  <!-- Personal info tab -->
+  <div class="card form-div personal col-md-12">
+    <a class="card-header personal-header" data-toggle="collapse show" href="#personal-body">
+      <div style="background: white;">
+        <h4>Characteristics</h4>
       </div>
-    </div>
+    </a>
+  </div>
 
-    <!-- Documents -->
-    <div class="card form-div documents col-md-6">
-       <a class= "card-header doc-header" data-toggle="collapse" href="#doc-body">
-        <div>
-          <h4>Paperwork</h4>
+  <div class= "card form-div personal col-md-12">
+    <a class= "card-header paper-header" data-toggle="collapse" href="#paper-body">
+      <div>
+        <h4>Paperwork</h4>
+      </div>
+    </a>
+  </div>
+
+  <div class="form-div tracking col-md-12">
+    <a class= "card-header tracking-header" data-toggle="collapse" href="#tracking-body">
+      <div>
+        <h4>Tracking</h4>
+      </div>
+    </a>
+  </div>
+
+  <div class="form-div alerts col-md-12">
+    <a class= "card-header alert-header" data-toggle="collapse" href="#alerts-body">
+      <div>
+       <h4>Alerts</h4>
+      </div>
+    </a>
+  </div>
+</div>
+
+  <!-- Inner form Content -->
+
+  <div class="form col-md-10">
+    <%= form_for(@animal, url: animals_path(@animal))  do |f| %>
+      
+      <!-- Personal Inner Div -->
+      <div id ="personal-body" class="collapse show inner-formdiv">
+        
+        <div class="bsc-chracteristics col-md-6">
+          <!--Basic Characteristics Header -->
+          <a class= "card-header pers-header" data-toggle="collapse" href="#characteristics-body">
+            <div>
+              <h4> Basic Chacteristics</h4>
+            </div>
+          </a>
+
+          <!--Basic Characteristics Body -->
+          <div id = "characteristics-body" class="collapse show col-md-12">
+            <!-- Profile Picture -->
+            <div class="picture col-md-6">
+              <%= f.label :picture %>
+              <div id="pic-preview">
+              <img id="profilepic" src=<%= @animal.picture %> alt="Dog Image"  width = "150px" height = "200px" style = "display:block" />  
+              <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'file-upload' %>
+              </div>
+            </div>
+
+            <!-- Basic Characteristics -->
+            <div class="characteristics-info col-md-6">
+              <%= f.label :name %>
+              <%= f.text_field :name, class: 'form-control' %>
+
+              <%= f.label :primary_breed_id %>
+              <%= f.collection_select :primary_breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
+
+              <%= f.label :secondary_breed_id %>
+              <%= f.collection_select :secondary_breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
+
+              <%= f.label :date_of_birth %>
+              <%= f.text_field :birthday, class: 'datepicker' %>
+
+              <%= f.label :status %>
+              <%= f.select :status, [ 'Intake','Vetting', 'Foster', 'Hold','Adopted'], :prompt => 'Select Status' %>
+            </div>
+          </div>
         </div>
-       </a>
 
-       <div id="doc-body" class="collapse">
-       
+        <div class = "phy-med-frame col-md-6">
+          <div class = "phys-features col-md-12">
+            <!-- Physical Features -->
+            <a class= "card-header doc-header" data-toggle="collapse" href="#phys-feat">
+              <div>
+                <h4>Physical Features</h4>
+              </div>
+            </a>
 
-        <div id="upload-buttons" style="padding-top: 15px">
+            <div id="phys-feat" class="collapse col-md-12">
+              <%= f.label :gender %>
+              <%= f.select :gender, [ 'Male','Female', 'Unknown'], :prompt => 'Select Gender' %>    
+
+              <%= f.label :color_primary %>
+              <%= f.text_field :color_primary, class: 'form-control' %>
+
+              <%= f.label :color_secondary %>
+              <%= f.text_field :color_secondary, class: 'form-control' %>
+
+              <%= f.label :eye_color %>
+              <%= f.text_field :eye_color, class: 'form-control' %>
+            </div>
+          </div>
+
+          <div class = "med col-md-12">
+            <!-- Medical -->
+            <a class= "card-header doc-header" data-toggle="collapse" href="#doc-body">
+              <div>
+                <h4>Medical</h4>
+              </div>
+            </a>
+
+            <div id="doc-body" class="collapse col-md-12">
+              <%= f.label :microchip_number , "Microchip #"%>
+              <%= f.text_field :microchip_number, class: 'form-control' %>
+
+              <%= f.label :neutered , "Spayed/Neutered" %>
+              <%= f.check_box :neutered, class: 'form-control' %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Paperwork -->
+      <div id="paper-body" class="collapse inner-formdiv">
+
+          <div id="upload-buttons" style="padding-top: 15px">
           <span class="btn btn-large btn-warning btn-file">
               <%= label_tag "Upload Vetting" %>
               <%= file_field_tag 'documents[]', multiple: true %>
@@ -97,43 +150,26 @@
           </span>
         </div>
       </div>
-    </div>
 
-    <!-- People -->
-    <div class="form-div people col-md-6">
-      <a class= "card-header doc-header" data-toggle="collapse" href="#people-body">
-        <div>
-          <h4>People</h4>
-        </div>
-      </a>
-
-      <div id="people-body" class="collapse">
-        <p> Functions for people</p>
+      <!-- Tracking -->
+      <div id="tracking-body" class="collapse inner-formdiv">
+        <p> Functions for Stages</p>
       </div>
-    </div>
 
-
-    <!-- Reminders -->
-   <div class="form-div reminders col-md-6">
-      <a class= "card-header doc-header" data-toggle="collapse" href="#reminders-body">
-        <div>
-          <h4>Reminders</h4>
-        </div>
-      </a>
-
-      <div id="reminders-body" class="collapse">
-        <p> Functions for reminders</p>
-      </div>    
-    </div>      
-    <%= f.submit "Submit changes", class: "btn btn-primary" %>
-
-  <% end %>
-</div>
+      <!-- Alerts -->
+      <div id="alerts-body" class="collapse inner-formdiv">
+          <p> Functions for Alerts</p>
+      </div>
+    
+      <!-- Can i move this? -->
+      <%= f.submit "Submit Edit", class: "add-btn btn-primary" %>
+    <% end %>
+  </div>
+</div>  
 
 
 
-
-</div>
+</div> <!-- If this is not there there is a line across the screen. Not sure why - J -->
 <script>
   $("#animal_species_id").change(function(){
     console.log($("#animal_breed_id"))

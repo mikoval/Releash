@@ -1,66 +1,122 @@
-<h1>Profile Page</h1>
+<h1><%= @animal.name%> Profile </h1>
 
 <% if employee?(current_user) %>
 
 <% end %>
-<%= link_to "<div class = 'col-md-2 col-md-offset-10 col-sm-4 col-sm-offset-8 col-xs-4 col-xs-offset-8'> <button>Edit dog profile</button></div>".html_safe,  :controller => "animals", :action => "edit", :param => @animal, :method => "get" %>
-
-<div class="container" style="border:solid #AAB2BA; display:inline-block; padding: 0px;">
-	<div class="form" style="display:inline-block; width:100%; padding: 0px;">
-
-	    <div class="personalinfo col-md-6 col-sm-12 col-xs-12" style=" border:solid #AAB2BA; padding: 20px">
-			<%= display_avatar(@animal, "100x100") %>
-			<h3>Name</h3>
-			<%= @animal.name %>
-			<h3>Primary Breed</h3>
-			<%= @animal.primary_breed.name %>
-			<% if @animal.secondary_breed %>
-			<h3>Secondary Breed</h3>
-			<%= @animal.secondary_breed.name %>
-			<% end %>
-			<h3>Colors</h3>
-			<p> Primary: <%= @animal.color_primary %> </p>
-			
-			<p> Secondary: <%= @animal.color_secondary %> </p>
-			
-		</div>
+<%= link_to "<div class = 'col-md-2 col-md-offset-10 col-sm-4 col-sm-offset-8 col-xs-4 col-xs-offset-8'> <button>Edit profile</button></div>".html_safe,  :controller => "animals", :action => "edit", :param => @animal, :method => "get" %>
 
 
-      	<!-- Documents -->
-		<div class="documents col-md-6 col-sm-12 col-xs-12" style="border:solid #AAB2BA">
-		  <h2>Paperwork </h2>
-		  	<% if @animal.vetting_document.length > 0 %>
-		  	<p style = "text-align: center">Vetting Document: <%= link_to @animal.vetting_document.file.filename, @animal.vetting_document.url %> </p>
-		  	<% end %>
-		  	<% if @animal.owner_surrender_document.length > 0 %>
-		  	<p style = "text-align: center">Owner Surrender: <%= link_to @animal.owner_surrender_document.file.filename, @animal.owner_surrender_document.url %> </p>
-		  	<% end %>
-		  	<% if @animal.intake_document.length > 0 %>
-		  	<p style = "text-align: center">Intake: <%= link_to @animal.intake_document.file.filename, @animal.intake_document.url %> </p>
-		  	<% end %>
-		  	<% if @animal.home_check_document.length > 0 %>
-		  	<p style = "text-align: center">Home Check: <%= link_to @animal.home_check_document.file.filename, @animal.home_check_document.url %> </p>
-		  	<% end %>
-		  	<% if @animal.match_application_document.length > 0 %>
-		  	<p style = "text-align: center">Match Application: <%= link_to @animal.match_application_document.file.filename, @animal.match_application_document.url %> </p>
-		  	<% end %>
-		  	<% if @animal.adoption_application_document.length > 0 %>
-		  	<p style = "text-align: center">Adoption Application: <%= link_to @animal.adoption_application_document.file.filename, @animal.adoption_application_document.url %> </p>
-		  	<% end %>
-		  	<% if @animal.adoption_contract_document.length > 0 %>
-		  	<p style = "text-align: center">Adoption Contract: <%= link_to @animal.adoption_contract_document.file.filename, @animal.adoption_contract_document.url %> </p>
-		  	<% end %>
-		</div>
 
-		<!-- People -->
-		<div class="people col-md-6 col-sm-12 col-xs-12" style=" border:solid #AAB2BA">
-		  <h2>People</h2>
-		</div>
+<!-- Inner form Content -->
 
-		<!-- Reminders -->
-		<div class="reminders col-md-6  col-sm-12 col-xs-12" style="border:solid #AAB2BA">
-		  <h2>Reminders</h2>
+  <div class="form col-md-12">
+    <%= form_for(@animal, url: animals_path(@animal))  do |f| %>
+      
+      <!-- Personal Inner Div -->
+      <div id ="personal-body" class="collapse show inner-formdiv">
+        
+        <div class="bsc-chracteristics col-md-6">
+          <!--Basic Characteristics Header -->
+          <a class= "card-header pers-header" data-toggle="collapse show" href="#characteristics-body">
+            <div>
+              <h4> Basic Chacteristics</h4>
+            </div>
+          </a>
 
+           <!--Basic Characteristics Body -->
+          <div id = "characteristics-body" class="collapse show col-md-12">
+            <!-- Profile Picture -->
+            <div class="picture col-md-6">
+            	<%= display_avatar(@animal, "150x200") %>
+            </div>
+
+            <!-- Basic Characteristics -->
+            <div class="characteristics-info col-md-6">
+              <h4>Name</h4>
+              <%= @animal.name %>
+              <h4>Primary Breed</h4>
+              <%= @animal.primary_breed.name %>
+              <% if @animal.secondary_breed %>
+              <h4>Secondary Breed</h4>
+              <%= @animal.secondary_breed.name %>
+              <% end %>          	
+            </div>
+          </div>
+        </div>
+
+        <div class = "phy-med-frame col-md-6">
+          <div class = "phys-features col-md-12">
+            <!-- Physical Features -->
+            <a class= "card-header doc-header" data-toggle="collapse" href="#phys-feat">
+              <div>
+                <h4>Physical Features</h4>
+              </div>
+            </a>
+
+            <div id="phys-feat" class="collapse col-md-12">
+              <p> Primary: <%= @animal.color_primary %> </p>
+              <p> Secondary: <%= @animal.color_secondary %> </p>
+            </div>
+          </div>
+
+          <div class = "med col-md-12">
+            <!-- Medical -->
+            <a class= "card-header doc-header" data-toggle="collapse" href="#doc-body">
+              <div>
+                <h4>Medical</h4>
+              </div>
+            </a>
+
+            <div id="med-body" class="collapse col-md-12">
+              <%= f.label :microchip_number , "Microchip #"%>
+              <%= f.text_field :microchip_number, class: 'form-control' %>
+
+              <%= f.label :neutered , "Spayed/Neutered" %>
+              <%= f.check_box :neutered, class: 'form-control' %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Paperwork -->
+      <div id="paper-body" class="collapse inner-formdiv">
+        <% if @animal.vetting_document.length > 0 %>
+          <p style = "text-align: center">Vetting Document: <%= link_to @animal.vetting_document.file.filename, @animal.vetting_document.url %> </p>
+          <% end %>
+          <% if @animal.owner_surrender_document.length > 0 %>
+          <p style = "text-align: center">Owner Surrender: <%= link_to @animal.owner_surrender_document.file.filename, @animal.owner_surrender_document.url %> </p>
+          <% end %>
+          <% if @animal.intake_document.length > 0 %>
+          <p style = "text-align: center">Intake: <%= link_to @animal.intake_document.file.filename, @animal.intake_document.url %> </p>
+          <% end %>
+          <% if @animal.home_check_document.length > 0 %>
+          <p style = "text-align: center">Home Check: <%= link_to @animal.home_check_document.file.filename, @animal.home_check_document.url %> </p>
+          <% end %>
+          <% if @animal.match_application_document.length > 0 %>
+          <p style = "text-align: center">Match Application: <%= link_to @animal.match_application_document.file.filename, @animal.match_application_document.url %> </p>
+          <% end %>
+          <% if @animal.adoption_application_document.length > 0 %>
+          <p style = "text-align: center">Adoption Application: <%= link_to @animal.adoption_application_document.file.filename, @animal.adoption_application_document.url %> </p>
+          <% end %>
+          <% if @animal.adoption_contract_document.length > 0 %>
+          <p style = "text-align: center">Adoption Contract: <%= link_to @animal.adoption_contract_document.file.filename, @animal.adoption_contract_document.url %> </p>
+          <% end %>
+      </div>
+
+      <!-- Tracking -->
+      <div id="tracking-body" class="collapse inner-formdiv">
+        <p> Functions for Stages</p>
+      </div>
+
+      <!-- Alerts -->
+      <div id="alerts-body" class="collapse inner-formdiv">
+          <p> Functions for Alerts</p>
+      </div>
+    
+      <!-- Can i move this? -->
+    <% end %>
+  </div>
 </div>
-	</div>	
-</div>
+
+

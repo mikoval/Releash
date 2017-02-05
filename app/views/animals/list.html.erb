@@ -9,11 +9,10 @@
 
     <div class = "container">
     <% @allAnimals.each do |a| %>
-
    
-    <div class = "col-md-4 col-md-offset-1 col-sm-12 col-xs-12 animal-profile" style = "border-radius: 0px; border:solid; display: inline-block; margin-bottom: 10px">
+    <div class = "col-md-4 col-md-offset-1 col-sm-12 col-xs-12 list-card">
        <div class = "row">
-      <div class = "col-md-4 col-sm-4 col-xs-4" style = "padding: 0px">
+      <div class = "col-md-4 col-sm-4 col-xs-4 list-pic" style = "padding: 5px">
         <%= display_avatar(a, "100x100") %>
     </div>
     <div class = "col-md-6 col-sm-6 col-xs-6" style = "text-align: left; font-size: 25px;">
@@ -25,14 +24,14 @@
         </span>'.html_safe, :controller => "animals", :action => "edit", :param => a, :method => "get" %>
         
           <% end %>
-        <div class = "col-md-8 col-sm-8 col-xs-8">
-          <%= a.primary_breed.name %>  <% if a.secondary_breed %> | <%= a.secondary_breed.name %> <% end %>
+        <div class = "col-md-8 col-sm-8 col-xs-8 list-info">
+          <%= a.primary_breed.name %>  <% if a.secondary_breed %> | <%= a.secondary_breed.name %> <%a.birthday%> <%a.gender%> <%= a.status%> <% end %>
         </div>
+
+        
         
         </div>
     
-
-        
         </span>
     </div>
      <div class = "col-md-1" style = "margin: 0px;">
@@ -40,8 +39,9 @@
 
 <% end %>
       </div>
+
 <script>
-$(".animal-profile").hover(
+$(".list-card").hover(
   function(){
     $(this).find(".glyphicon-pencil").show()
   },
