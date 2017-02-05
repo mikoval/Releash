@@ -5,12 +5,12 @@
 
   <!-- Nav Bar Content -->
   
-  <div class="form-nav col-md-3">
+  <div class="form-nav col-md-2">
     <!-- Personal info tab -->
     <div class="card form-div personal col-md-12">
-      <a class="card-header personal-header" data-toggle="collapse" href="#personal-body">
+      <a class="card-header personal-header" data-toggle="collapse show" href="#personal-body">
         <div style="background: white;">
-          <h4>Animal Characteristics</h4>
+          <h4>Characteristics</h4>
         </div>
       </a>
     </div>
@@ -43,63 +43,69 @@
 
   <!-- Inner form Content -->
 
-  <div class="form col-md-9">
+  <div class="form col-md-10">
     <%= form_for(@animal, url: animals_path(@animal))  do |f| %>
       
       <!-- Personal Inner Div -->
-      <div id ="personal-body" class="collapse inner-formdiv">
+      <div id ="personal-body" class="collapse show inner-formdiv">
         <a class= "card-header pers-header" data-toggle="collapse" href="#characteristics-body">
           <div>
             <h4>Chacteristics</h4>
           </div>
         </a>
 
-        <div id = "characteristics-body" class="collapse">
-          <%= f.label :name %>
-          <%= f.text_field :name, class: 'form-control' %>
+        <div id = "characteristics-body" class="collapse col-md-6 ">
 
-          <%= f.label :primary_breed_id %>
-          <%= f.collection_select :primary_breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
-
-          <%= f.label :secondary_breed_id %>
-          <%= f.collection_select :secondary_breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
-         
-          <div class="picture">
+          <div class="picture col-md-6">
             <%= f.label :picture %>
+            <div id="pic-preview">
+              <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
+              <!-- alt="Dog Image"-->
+            </div>
+
+            <img id="profilepic" src="#" alt="Dog Image" style="display: none"/>
             <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'file-upload' %>
-            <img id="profilepic" src="#" alt="your image"  style = "display:none" />
           </div>
 
-          <%= f.label :gender %>
-          <%= f.select :gender, [ 'Male','Female', 'Unknown'], :prompt => 'Select Gender' %>
+          <div class="characteristics-info col-md-6">
+            <%= f.label :name %>
+            <%= f.text_field :name, class: 'form-control' %>
 
-          <%= f.label :color_primary %>
-          <%= f.text_field :color_primary, class: 'form-control' %>
+            <%= f.label :primary_breed_id %>
+            <%= f.collection_select :primary_breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
 
-          <%= f.label :color_secondary %>
-          <%= f.text_field :color_secondary, class: 'form-control' %>
+            <%= f.label :secondary_breed_id %>
+            <%= f.collection_select :secondary_breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
 
-          <%= f.label :eye_color %>
-          <%= f.text_field :eye_color, class: 'form-control' %>
+            <%= f.label :date_of_birth %>
+            <%= f.text_field :birthday, class: 'datepicker' %>
 
-          <%= f.label :adoption_fee %>
-          <%= f.text_field :adoption_fee, class: 'form-control' %>
+            <%= f.label :status %>
+            <%= f.select :status, [ 'Intake','Vetting', 'Foster', 'Hold' 'Adopted'], :prompt => 'Select Status' %>
 
-          <%= f.label :animal_type %>
-          <%= f.select :animal_type, [ 'Domestic' ], :prompt => 'Select Type' %>
 
-          <%= f.label :birthday %>
-          <%= f.text_field :birthday, class: 'datepicker' %>
 
-          <%= f.label :cage_number, "Cage #" %>
-          <%= f.text_field :cage_number, class: 'form-control' %>
+              <!-- Physical Features -->
+            <a class= "card-header doc-header" data-toggle="collapse" href="#phys-feat">
+              <div>
+                <h4>Physical Features</h4>
+              </div>
+            </a>
 
-          <%= f.label :microchip_number , "Microchip #"%>
-          <%= f.text_field :microchip_number, class: 'form-control' %>
+            <div id="phys-feat" class="collapse col-md-12">
+              <%= f.label :gender %>
+              <%= f.select :gender, [ 'Male','Female', 'Unknown'], :prompt => 'Select Gender' %>    
 
-          <%= f.label :tag_number , "Tag #" %>
-          <%= f.text_field :tag_number, class: 'form-control' %>
+              <%= f.label :color_primary %>
+              <%= f.text_field :color_primary, class: 'form-control' %>
 
+              <%= f.label :color_secondary %>
+              <%= f.text_field :color_secondary, class: 'form-control' %>
+
+              <%= f.label :eye_color %>
+              <%= f.text_field :eye_color, class: 'form-control' %>
+            </div>
+          </div>
       </div>
 
       <!-- Medical -->
@@ -109,15 +115,9 @@
         </div>
        </a>
 
-        <div id="doc-body" class="collapse">
-          <%= f.label :cage_number, "Cage #" %>
-          <%= f.text_field :cage_number, class: 'form-control' %>
-
+        <div id="doc-body" class="collapse col-md-6">
           <%= f.label :microchip_number , "Microchip #"%>
           <%= f.text_field :microchip_number, class: 'form-control' %>
-
-          <%= f.label :tag_number , "Tag #" %>
-          <%= f.text_field :tag_number, class: 'form-control' %>
 
           <%= f.label :neutered , "Spayed/Neutered" %>
           <%= f.check_box :neutered, class: 'form-control' %>
@@ -162,12 +162,12 @@
 
       <!-- Tracking -->
       <div id="tracking-body" class="collapse inner-formdiv">
-        <p> Functions for people</p>
+        <p> Functions for Stages</p>
       </div>
 
       <!-- Alerts -->
       <div id="alerts-body" class="collapse inner-formdiv">
-          <p> Functions for reminders</p>
+          <p> Functions for Alerts</p>
       </div>
     
       <!-- Can i move this? -->
@@ -208,6 +208,7 @@
                     .attr('src', e.target.result)
                     .width(150)
                     .height(200);
+                $('#pic-preview').hide()  
                 $('#profilepic').show()
             };
 

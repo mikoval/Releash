@@ -7,11 +7,26 @@
     font-size: 24px;
 }
 
+#pic-preview {
+    width: 150px;
+    height: 200px;
+    border: black;
+    background: grey;
+}
+
+.file-upload {
+        width: 150px;
+    height: 200px;
+    border: black;
+
+}
+
 .inner-formdiv {
     width: 100%;
     padding: 20px;
-    border: solid #e8e8e8;
+    border: solid #f0f0f0;
     border-width: 1px;
+    overflow: auto;
 
 }
 
@@ -23,7 +38,7 @@
 }
 
 .form-div {
-    border: solid #AAB2BA; 
+    border: solid #f0f0f0; 
     padding: 5px;
     border-width: 1px;
 }
