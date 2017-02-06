@@ -138,36 +138,62 @@
       <!-- Paperwork -->
       <div id="paper-body" class="collapse inner-formdiv">
         <div id="upload-buttons" style="padding-top: 15px">
-          <span class="btn btn-large btn-warning btn-file">
-              <%= label_tag "Vetting Document" %>
-              <%= f.file_field :vetting_document, class: 'file-upload' %>
-          </span>
-
-          <span class="btn btn-large btn-primary btn-file">
-              <%= label_tag "Intake Document" %>
-              <%= f.file_field :intake_document, class: 'file-upload' %>
-          </span>
-
-          <span class="btn btn-large btn-info btn-file">
-              <%= label_tag "Owner Surrender" %>
-              <%= f.file_field  :owner_surrender_document, class: 'file-upload' %>
-          </span>
+        <div class = "upload-wrapper">
+            <span class="btn btn-large btn-warning btn-file">
+                <%= label_tag "Vetting Document" %>
+                <%= f.file_field :vetting_document, class: 'file-upload' %>
+            </span>
+            <span class = "file-name"></span>
+            <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+        </div>
+        <div class = "upload-wrapper">
+            <span class="btn btn-large btn-primary btn-file">
+                <%= label_tag "Intake Document" %>
+                <%= f.file_field :intake_document, class: 'file-upload' %>
+            </span>
+            <span class = "file-name"></span>
+            <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+         </div>
+         <div class = "upload-wrapper">
+            <span class="btn btn-large btn-info btn-file">
+                <%= label_tag "Owner Surrender" %>
+                <%= f.file_field  :owner_surrender_document, class: 'file-upload' %>
+            </span>
+            <span class = "file-name"></span>
+            <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+        </div>
+        <div class = "upload-wrapper">
           <span class="btn btn-large btn-info btn-file">
               <%= label_tag "Home Check" %>
               <%= f.file_field  :home_check_document, class: 'file-upload' %>
           </span>
+          <span class = "file-name"></span>
+          <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+        </div>
+        <div class = "upload-wrapper">
           <span class="btn btn-large btn-info btn-file">
               <%= label_tag "Match Application" %>
               <%= f.file_field  :match_application_document, class: 'file-upload' %>
           </span>
+          <span class = "file-name"></span>
+          <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+        </div>
+        <div class = "upload-wrapper">
           <span class="btn btn-large btn-info btn-file">
               <%= label_tag "Adoption Application" %>
               <%= f.file_field  :adoption_application_document, class: 'file-upload' %>
           </span>
+          <span class = "file-name"></span>
+          <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+        </div>
+        <div class = "upload-wrapper">
           <span class="btn btn-large btn-info btn-file">
               <%= label_tag "Adoption Contract" %>
               <%= f.file_field  :adoption_contract_document, class: 'file-upload' %>
           </span>
+          <span class = "file-name"></span>
+          <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+        </div>
         </div>
       </div>
 
@@ -227,7 +253,31 @@
 
         }
   }); 
-  
+  $(".file-upload").change(function(input) { 
+    var input = input.target;
+    if (input.files && input.files[0]) {
+        var fileName = input.files[0].name;
+        var container =  $(this).closest(".upload-wrapper");
+        var nameSpan = container.find(".file-name");
+        nameSpan.text(fileName);
+        var removeSpan = container.find(".remove-file");
+        removeSpan.show();
+        }
+  }); 
+  $(".remove-file").on('click', function(){
+        var container =  $(this).closest(".upload-wrapper");
+
+        nameSpan = container.find(".file-name");
+        nameSpan.text("");
+
+        var removeSpan = container.find(".remove-file");
+        removeSpan.hide();
+
+        var inputfield  = container.find(".file-upload");
+        inputfield[0].value = "";
+
+  });
+
 </script>
 
 
