@@ -1,6 +1,10 @@
 <!-- This is the page to edit an animal -->
 <h2 class= "pg-title">Editing <%= @animal.name %></h2>
 
+<style>
+.upload-wrapper{padding-bottom: 15px}
+</style>
+
 <div class= "nav-form-container col-md-12">
 
 <!-- Nav Bar Content -->
@@ -133,6 +137,7 @@
       <!-- Paperwork -->
       <div id="paper-body" class="collapse inner-formdiv">
         <div id="upload-buttons" style="padding-top: 15px">
+
         <div class = "upload-wrapper">
             <span class="btn btn-large btn-warning btn-file">
                 <%= label_tag "Vetting Document" %>
@@ -145,6 +150,7 @@
             </span>
             <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"> </span>
         </div>
+
         <div class = "upload-wrapper">
             <span class="btn btn-large btn-primary btn-file">
                 <%= label_tag "Intake Document" %>
@@ -157,6 +163,7 @@
             </span>
             <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
          </div>
+
          <div class = "upload-wrapper">
             <span class="btn btn-large btn-info btn-file">
                 <%= label_tag "Owner Surrender" %>
@@ -169,6 +176,7 @@
             </span>
             <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
         </div>
+
         <div class = "upload-wrapper">
           <span class="btn btn-large btn-info btn-file">
               <%= label_tag "Home Check" %>
@@ -181,6 +189,7 @@
             </span>
           <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
         </div>
+
         <div class = "upload-wrapper">
           <span class="btn btn-large btn-info btn-file">
               <%= label_tag "Match Application" %>
@@ -193,6 +202,7 @@
             </span>
           <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
         </div>
+
         <div class = "upload-wrapper">
           <span class="btn btn-large btn-info btn-file">
               <%= label_tag "Adoption Application" %>
@@ -204,6 +214,7 @@
               <% end %></span>
           <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
         </div>
+
         <div class = "upload-wrapper">
           <span class="btn btn-large btn-info btn-file">
               <%= label_tag "Adoption Contract" %>
@@ -216,6 +227,7 @@
             </span>
           <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
         </div>
+
         </div>
       </div>
 
