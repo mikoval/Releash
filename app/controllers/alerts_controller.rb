@@ -9,7 +9,7 @@ class AlertsController < ApplicationController
   #for the new alerts
   def new
     @alert = Alert.new
-    @types = Type.all
+    @types = AlertType.all
     @users = User.all
   end
 
@@ -19,14 +19,19 @@ class AlertsController < ApplicationController
   end
 
   def newAlert
-    @alert = Alert.new(alert_params)
+    
+    @alert = Alert.new(alert_params)  do |q|
+          q.created_by_id = current_user.id
+    end
+    debugger
     @allAlerts = Alert.all
-    @type = Type.all
+    @types = AlertType.all
+    @users = User.all
     
     if @alert.save
       flash.now[:success] = "New Alert!"
-      redirect_to :controller => "alert", :action => "display", :param => @alert
-    else
+      redirect_to :controller => "alerts", :action => "list"
+    else       
       flash.now[:danger] = "Error adding Alert!"
       render 'new'
     end
@@ -45,7 +50,7 @@ class AlertsController < ApplicationController
   end
 
   def alert_params
-    params.require(:alert).permit(:title, :description, :date, :type, :assignee,
-                  :created_by, :animal_id, :location, :created_at)
+    params.require(:alert).permit(:title, :description, :date, :alert_type_id, :assignee_id,
+                  :created_by_id, :animal_id, :location, :created_at)
   end
 end

@@ -1,4 +1,4 @@
-<% provide(:title, "People") %>
+<% provide(:title, "Alerts") %>
 <h1>Alerts</h1>
 
 <div class=" ">
@@ -12,7 +12,7 @@
       <th class= "col-md-1">#</th>
       <th class= "col-md-1">Title</th>
       <th class= "col-md-3">Date</th>
-      <th class= "col-md-3">Description</th>
+      <th class= "col-md-3">Description,</th>
     </tr>
   </thead>
   <tbody>
@@ -20,18 +20,14 @@
    <tr style = "height: 70px;" >
       <th scope="row"><%= index %></th>
       <td>
-       <%= display_avatar(a, "50x50") %>
+       <%= a.title%> 
 
         </td>
 
       <td> 
-          <%= link_to a.name,  :controller => "people", :action => "profile", :param => a, :method => "get" %>
-
-        <% if admin?(current_user) %>
-         <%= link_to ' <span class ="glyphicon glyphicon-pencil" style = "display:none; cursor: pointer;"></span>'.html_safe,  :controller => "people", :action => "edit", :param => a, :method => "get" %>
-         <% end %>
+          <%= a.date%> 
      </td>
-      <td> <%= a.role.title %> </td>
+      <td> <%= a.description%> </td>
     </tr>
  
 

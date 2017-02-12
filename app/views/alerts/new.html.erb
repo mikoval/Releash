@@ -15,7 +15,7 @@
       <%= f.text_field :date, class: 'form-control' %>
 
       <%= f.label :type%>
-      <%= f.collection_select :type, @types, :id, :type, :prompt => "Select type" %>
+      <%= f.collection_select :alert_type_id, @types, :id, :name, :prompt => "Select type" %>
 
       <%= f.label :assignee%>
       <%= f.collection_select :assignee_id, @users, :id, :name, :prompt => "Select assignee" %>

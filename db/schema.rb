@@ -11,10 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170212040147) do
+ActiveRecord::Schema.define(version: 20170212183728) do
 
   create_table "alert_types", force: :cascade do |t|
-    t.string   "type"
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -23,20 +23,13 @@ ActiveRecord::Schema.define(version: 20170212040147) do
     t.string   "title"
     t.string   "description"
     t.datetime "date"
-    t.integer  "type"
+    t.integer  "alert_type_id"
     t.integer  "assignee_id"
     t.integer  "created_by_id"
     t.integer  "animal_id"
     t.string   "location"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-  end
-
-  create_table "animal_breeds", force: :cascade do |t|
-    t.integer  "animal_id"
-    t.integer  "breed_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "animals", force: :cascade do |t|
@@ -88,17 +81,6 @@ ActiveRecord::Schema.define(version: 20170212040147) do
 
   create_table "species", force: :cascade do |t|
     t.string   "kind"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "test", id: false, force: :cascade do |t|
-    t.string  "name"
-    t.integer "price"
-  end
-
-  create_table "types", force: :cascade do |t|
-    t.string   "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
