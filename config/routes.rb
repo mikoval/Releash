@@ -21,6 +21,8 @@ Rails.application.routes.draw do
   patch  '/animals',   to: 'animals#editAnimal'
 
   get 'alerts/new'
+  get 'alerts/list'
+  post  '/alerts',   to: 'alerts#newAlert'
 
   get '/people', to: "people#list"
   get 'people/new'

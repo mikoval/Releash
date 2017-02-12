@@ -9,7 +9,5 @@ class Alert < ActiveRecord::Base
     validates :type, presence: true
     validates :assignee, presence: true
     validates :created_by, presence: true
-    validates :description, presence: true
-    validates :type, presence: true
-    validates :assignee, presence: true
+
 end

@@ -8,8 +8,9 @@ class AlertsController < ApplicationController
 
   #for the new alerts
   def new
-    @animal = Alert.new
-    @type = Type.all
+    @alert = Alert.new
+    @types = Type.all
+    @users = User.all
   end
 
   #for displaying alerts
@@ -21,7 +22,7 @@ class AlertsController < ApplicationController
     @alert = Alert.new(alert_params)
     @allAlerts = Alert.all
     @type = Type.all
-
+    
     if @alert.save
       flash.now[:success] = "New Alert!"
       redirect_to :controller => "alert", :action => "display", :param => @alert
