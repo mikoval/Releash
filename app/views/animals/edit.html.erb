@@ -89,6 +89,18 @@
 
               <%= f.label :primary_breed_id %>
               <%= f.collection_select :primary_breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
+               <%= label :post, "Additional Breeds" %>
+              <%= collection_select(:breed_id, 0, @breed, :id, :name, {:prompt => "Select Breed"}, {class: "breed-selecter"}) %>              
+              <div id = "breeds-list">
+                <% @breeds.each do |b| %>
+                <div id = 'breed-<%= b.breed.id %>'   class = 'breed-item' style = 'position: relative; display: inline-block;'>
+                  <p style = 'margin:0px; padding-right:15px'> <%= b.breed.name %> </p> 
+                  <span class = 'glyphicon glyphicon-remove remove-breed' style='margin:2px; float:right;'></span>
+                </div>
+
+                <% end %>
+              </div>
+             <%= text_field_tag 'breeds', "", class: "hidden-breeds", style: "display:none;"  %>
 
            
               <%= f.label :date_of_birth %>
@@ -122,19 +134,7 @@
               <%= f.label :eye_color %>
               <%= f.text_field :eye_color, class: 'form-control' %>
 
-              <%= label :post, "Additional Breeds" %>
-              <%= collection_select(:breed_id, 0, @breed, :id, :name, {}, {class: "breed-selecter"}) %>              
-              <div id = "breeds-list">
-                <% @breeds.each do |b| %>
-                <div id = 'breed-<%= b.breed.id %>'   class = 'breed-item' style = 'position: relative; display: inline-block;'>
-                  <p style = 'margin:0px; padding-right:15px'> <%= b.breed.name %> </p> 
-                  <span class = 'glyphicon glyphicon-remove remove-breed' style='margin:2px; float:right;'></span>
-                </div>
-
-                <% end %>
-              </div>
-             <%= text_field_tag 'breeds', "", class: "hidden-breeds", style: "display:none;"  %>
-
+             
             </div>
           </div>
 

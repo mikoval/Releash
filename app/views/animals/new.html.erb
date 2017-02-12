@@ -95,6 +95,11 @@
               <%= f.label :primary_breed_id, "Primary Breed" %>
               <%= f.collection_select :primary_breed_id, @breed, :id, :name, {:prompt => "Select Breed"} %>
 
+               <%= label :post, "Additional Breeds" %>
+              <%= collection_select(:breed_id, 0, @breed, :id, :name, {:prompt => "Select Breed"}, {class: "breed-selecter"}) %>              
+              <div id = "breeds-list"></div>
+
+              <%= text_field_tag 'breeds', "", class: "hidden-breeds", style: "display:none;"  %>
              
 
               <%= f.label :date_of_birth %>
@@ -128,11 +133,7 @@
               <%= f.label :eye_color %>
               <%= f.text_field :eye_color, class: 'form-control' %>
 
-              <%= label :post, "Additional Breeds" %>
-              <%= collection_select(:breed_id, 0, @breed, :id, :name, {}, {class: "breed-selecter"}) %>              
-              <div id = "breeds-list"></div>
-
-              <%= text_field_tag 'breeds', "", class: "hidden-breeds", style: "display:none;"  %>
+             
             </div>
           </div>
 
