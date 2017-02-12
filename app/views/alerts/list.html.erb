@@ -1,0 +1,52 @@
+<% provide(:title, "People") %>
+<h1>Alerts</h1>
+
+<div class=" ">
+    <!-- 
+    loops over each person in @allPeople (defined in the people controller)
+    puts all of that in at plain html with values from the person in the for-each loop
+    -->
+<table id = "alert-table" class="table table-bordered table-inverse table-hover people-table">
+  <thead>
+    <tr>
+      <th class= "col-md-1">#</th>
+      <th class= "col-md-1">Pic</th>
+      <th class= "col-md-3">Name</th>
+      <th class= "col-md-3">Role</th>
+    </tr>
+  </thead>
+  <tbody>
+<% @allPeople.each_with_index do |a, index| %>
+   <tr style = "height: 70px;" >
+      <th scope="row"><%= index %></th>
+      <td>
+       <%= display_avatar(a, "50x50") %>
+
+        </td>
+
+      <td> 
+          <%= link_to a.name,  :controller => "people", :action => "profile", :param => a, :method => "get" %>
+
+        <% if admin?(current_user) %>
+         <%= link_to ' <span class ="glyphicon glyphicon-pencil" style = "display:none; cursor: pointer;"></span>'.html_safe,  :controller => "people", :action => "edit", :param => a, :method => "get" %>
+         <% end %>
+     </td>
+      <td> <%= a.role.title %> </td>
+    </tr>
+ 
+
+<% end %>
+  </tbody>
+</table>
+</div>
+<script>
+$("#people-table tr").hover(
+  function(){
+    $(this).find(".glyphicon-pencil").show()
+  },
+  function(){
+    $(this).find(".glyphicon-pencil").hide()
+  }
+)
+</script>
+
