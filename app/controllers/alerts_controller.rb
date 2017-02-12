@@ -23,7 +23,7 @@ class AlertsController < ApplicationController
     @alert = Alert.new(alert_params)  do |q|
           q.created_by_id = current_user.id
     end
-    debugger
+
     @allAlerts = Alert.all
     @types = AlertType.all
     @users = User.all
