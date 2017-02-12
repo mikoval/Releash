@@ -1,6 +1,22 @@
 <!-- This is the page to add a new animal -->
 <h2 class= "pg-title">Add a new Animal</h2>
+<style>
+.breed-item{
+  border:solid;
+  border-width: 1px;
+  padding:3px;
+  border-radius:5px;
 
+  margin:4px;
+  width:100%;
+}
+.remove-breed{
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+</style>
 <div class= "nav-form-container col-md-12">
 
   <!-- Nav Bar Content -->
@@ -53,7 +69,7 @@
           <!--Basic Characteristics Header -->
           <a class= "card-header pers-header" data-toggle="collapse" href="#characteristics-body">
             <div>
-              <h4> Basic Chacteristics</h4>
+              <h4> Basic Characteristics</h4>
             </div>
           </a>
 
@@ -76,11 +92,10 @@
               <%= f.label :name %>
               <%= f.text_field :name, class: 'form-control' %>
 
-              <%= f.label :primary_breed_id %>
-              <%= f.collection_select :primary_breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
+              <%= f.label :primary_breed_id, "Primary Breed" %>
+              <%= f.collection_select :primary_breed_id, @breed, :id, :name, {:prompt => "Select Breed"} %>
 
-              <%= f.label :secondary_breed_id %>
-              <%= f.collection_select :secondary_breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
+             
 
               <%= f.label :date_of_birth %>
               <%= f.text_field :birthday, class: 'datepicker' %>
@@ -112,6 +127,12 @@
 
               <%= f.label :eye_color %>
               <%= f.text_field :eye_color, class: 'form-control' %>
+
+              <%= label :post, "Additional Breeds" %>
+              <%= collection_select(:breed_id, 0, @breed, :id, :name, {}, {class: "breed-selecter"}) %>              
+              <div id = "breeds-list"></div>
+
+              <%= text_field_tag 'breeds', "", class: "hidden-breeds", style: "display:none;"  %>
             </div>
           </div>
 
@@ -300,7 +321,34 @@
         inputfield[0].value = "";
 
   });
-
+  $(".breed-selecter").on("change", function(){
+    var text = $(".breed-selecter option:selected").text();
+    var val = $(".breed-selecter option:selected").val();
+    if(text == "Select Breed"){
+      return
+    }
+    html = $("#breeds-list").html();
+    html += "<div id = 'breed-" + val + "'' class = 'breed-item' style = 'position: relative; display: inline-block;'>" 
+        + "<p style = 'margin:0px; padding-right:15px'>" + text + "</p>" + 
+       "<span class = 'glyphicon glyphicon-remove remove-breed' style='margin:2px; float:right;'>" +"</span>" + 
+       " </div>"
+    $("#breeds-list").html(html);
+    $(".remove-breed").on("click", function(){
+      $(this).closest(".breed-item").detach()
+      setHiddenBreeds();
+    })
+    //just for now while im setting up the new breeds
+    $(this).get(0).selectedIndex = 0;
+    setHiddenBreeds();
+  })
+  function setHiddenBreeds(){
+    str = ""
+    $(".breed-item").each(function(){
+      var id = this.id.split("-")[1]
+      str += id + "|"
+    })
+    $(".hidden-breeds").val(str)
+  }
 </script>
 
 

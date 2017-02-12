@@ -6,16 +6,20 @@ class AnimalsController < ApplicationController
 
   def new
     @animal = Animal.new
-    @breed = Breed.all
+    @breed = Breed.order('name ASC')
   end
 
   def edit
     @animal = Animal.find(params["param"])
-    @breed = Breed.all
+    @breed = Breed.order('name ASC')
+    @breeds = AnimalBreed.where("animal_id = " + params["param"])
+
   end
   
   def profile
     @animal = Animal.find(params["param"])
+    @breeds = AnimalBreed.where("animal_id = " + params["param"])
+
   end
 
 
@@ -25,11 +29,14 @@ class AnimalsController < ApplicationController
     @breed = Breed.all
     if @animal.save
       #this code was for old documents
-      #if params["documents"]
-      #  params["documents"].each do |d|
-      #    @document = Document.new({animal_id: @animal.id, document: d})
-      #    @document.save
-      #  end
+      if params["breeds"]
+        arr = params["breeds"].split("|")
+        arr.each do |d|
+          
+        @breed = AnimalBreed.new({animal_id: @animal.id, breed_id: d})
+        @breed.save
+        end
+      end
       flash.now[:success] = "New Animal!"
       redirect_to :controller => "animals", :action => "profile", :param => @animal
 
@@ -45,6 +52,17 @@ class AnimalsController < ApplicationController
   def editAnimal
     @animal = Animal.find(params["format"])
     if @animal.update_attributes(animal_params)
+      if params["breeds"]
+        arr = params["breeds"].split("|")
+        AnimalBreed.where("animal_id = " +  @animal.id.to_s).destroy_all
+
+        arr.each do |d|
+        str = "animal_id = " +  @animal.id.to_s + " and breed_id = " + d
+
+        @breed = AnimalBreed.new({animal_id: @animal.id, breed_id: d})
+        @breed.save
+        end
+      end
       flash[:success] = "Saved animal"
       redirect_to :controller => "animals", :action => "profile", :param => @animal
     else
@@ -116,7 +134,7 @@ class AnimalsController < ApplicationController
 
   def animal_params
 
-    params.require(:animal).permit(:name, :primary_breed_id, :secondary_breed_id, :picture, :status, :color_primary, :color_secondary, :eye_color,
+    params.require(:animal).permit(:name, :primary_breed_id, :picture, :status, :color_primary, :color_secondary, :eye_color,
       :adoption_fee, :animal_type, :birthday, :cage_number, :microchip_number, :tag_number, :neutered,  
 
       :intake_document, :owner_surrender_document, :home_check_document, :match_application_document, :adoption_application_document, 

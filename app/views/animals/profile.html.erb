@@ -53,8 +53,15 @@
             </a>
 
             <div id="phys-feat" class="collapse col-md-12">
-              <p> Primary: <%= @animal.color_primary %> </p>
-              <p> Secondary: <%= @animal.color_secondary %> </p>
+              <p> Primary Color: <%= @animal.color_primary %> </p>
+              <p> Secondary Color: <%= @animal.color_secondary %> </p>
+              <p> Additional Breeds:
+                <% @breeds.each do |b| %>
+                  <%= b.breed.name %>  
+                  <%if b != @breeds.last %>|
+                  <% end %>
+                <% end %> 
+               </p>
             </div>
           </div>
 
