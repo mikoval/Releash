@@ -1,6 +1,7 @@
 #  this is where you put in values that you want in the database when created. 
 # run 'rake db:seed'
 Role.create([{title: 'Volunteer'}, {title: 'Employee'}, {title: 'Administrator '}])
+AlertType.create([{name: 'Medical'}, {name: 'Adoption'}, {name: 'Event'}, {name: 'Organization'}, {name: 'Other'}])
 User.create ({name: "Admin", email: "admin@releash.com", password: "password", password_confirmation: "password", role_id:3})
 Species.create([{kind: 'Dog'}, {kind: 'Cat'}])
 Breed.create([{name: 'Australian Cattle', species_id:1}, {name: 'Australian Shepherd', species_id:1},

@@ -11,7 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170205084608) do
+ActiveRecord::Schema.define(version: 20170212183728) do
+
+  create_table "alert_types", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "alerts", force: :cascade do |t|
+    t.string   "title"
+    t.string   "description"
+    t.datetime "date"
+    t.integer  "alert_type_id"
+    t.integer  "assignee_id"
+    t.integer  "created_by_id"
+    t.integer  "animal_id"
+    t.string   "location"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
 
   create_table "animals", force: :cascade do |t|
     t.text     "name"
@@ -64,11 +83,6 @@ ActiveRecord::Schema.define(version: 20170205084608) do
     t.string   "kind"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "test", id: false, force: :cascade do |t|
-    t.string  "name"
-    t.integer "price"
   end
 
   create_table "users", force: :cascade do |t|
