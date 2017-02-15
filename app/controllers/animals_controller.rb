@@ -80,14 +80,18 @@ class AnimalsController < ApplicationController
       @breed = Breed.where('LOWER(name) LIKE LOWER(:search)', search: "%#{@search}%" )
       
       if(@breed.length > 0)
-        @breedid = @breed[0].id
+        breedid = @breed.ids
       else 
-       @breedid = 0
+        breedid = 0
       end
-
-      @animals = Animal.where('LOWER(name) LIKE LOWER(:search) OR primary_breed_id = :breed' , search: "%#{@search}%", breed: "#{@breedid}")
+      
+      @animal = Animal.where('LOWER(name) LIKE LOWER(:search)' , search: "%#{@search}%")
+      @breeds = Animal.where(primary_breed_id: breedid)
+      
+      @animals = @animal | @breeds
       @user = User.where('LOWER(name) LIKE LOWER(:search)' , search: "%#{@search}%")
     end
+
     arr = []
     if (!@animals.nil?) 
       @animals.each do |d|
