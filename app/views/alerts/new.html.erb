@@ -12,7 +12,7 @@
       <%= f.text_field :description, class: 'form-control' %>
 
       <%= f.label :date %>
-      <%= f.text_field :date, class: 'form-control' %>
+      <%= f.text_field :date, class: 'datepicker' %>
 
       <%= f.label :type%>
       <%= f.collection_select :alert_type_id, @types, :id, :name, :prompt => "Select type" %>
@@ -24,3 +24,14 @@
     <% end %>
     </div>
 </div>
+
+</div> <!-- If this is not there there is a line across the screen. Not sure why - J -->
+<script>
+
+
+  $('.datepicker').datepicker({
+    endDate: '+5y'
+  });
+
+
+</script>
