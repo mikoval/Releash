@@ -55,8 +55,27 @@ class AlertsController < ApplicationController
   end
   def query
     @id = params["id"]
-    @alert = Alert.find(@id)
-    @str = {"title" => @alert.title, "description" => @alert.description } 
+    if(@id!=nil)
+      @alert = Alert.find(@id)
+      @str = {"title" => @alert.title, "description" => @alert.description } 
+    else
+      @alerts = Alert.all
+      @str = []
+      if (!@alerts.nil?) 
+      @alerts.each do |a|
+        @str.push({
+          "id" =>  a.id, 
+          "title" => a.title,
+          "description" => a.description,
+          "date" => a.date,
+        })
+      end
+    end
+
+
+
+    end
+    
     render json: @str
   end
 end

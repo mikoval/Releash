@@ -9,7 +9,7 @@
     <div class = "col-md-5 col-sm-12 col-xs-12 user-list"  style = "border:solid;  border-radius: 10px;  margin: 5px">
     </div>
 
-    <div class = "col-md-5 col-sm-12 col-xs-12 animal-list"  style = "border:solid;  border-radius: 10px;  margin: 5px ">
+    <div class = "col-md-5 col-sm-12 col-xs-12 alert-list"  style = "border:solid;  border-radius: 10px;  margin: 5px ">
     </div>
 
     <div class = "col-md-5 col-sm-12 col-xs-12 user-list" style = "border:solid;  border-radius: 10px;  margin: 5px">
@@ -24,6 +24,9 @@ if($(".animal-list").length > 0){
 }
 if($(".user-list").length > 0){
     widgetUserList();
+}
+if($(".alert-list").length > 0){
+    widgetAlertList();
 }
 function widgetAnimalList(){
     $.ajax({url: "animals/query", success: function(result){
@@ -58,6 +61,25 @@ function widgetUserList(){
         }
         str +=  " </table>"
          $(".user-list").each(function(){
+            $(this).html( str)
+         })
+    }});
+}
+
+function widgetAlertList(){
+    $.ajax({url: "/alerts/query", success: function(result){
+        var str = " <h2>Alerts</h2>"
+        str += "<table class='table table-striped'>" 
+
+        for (x in result){
+    
+                str += "<tr> \
+                <td> <a> " + result[x].title + "</a></td>\
+                 <td>" + result[x].date + "</td>\
+                </tr>"
+        }
+        str +=  " </table>"
+         $(".alert-list").each(function(){
             $(this).html( str)
          })
     }});
