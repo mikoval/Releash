@@ -53,4 +53,10 @@ class AlertsController < ApplicationController
     params.require(:alert).permit(:title, :description, :date, :alert_type_id, :assignee_id,
                   :created_by_id, :animal_id, :location, :created_at)
   end
+  def query
+    @id = params["id"]
+    @alert = Alert.find(@id)
+    @str = {"title" => @alert.title, "description" => @alert.description } 
+    render json: @str
+  end
 end

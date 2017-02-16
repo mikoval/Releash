@@ -13,7 +13,7 @@
 
         <% alerts.each do |alert| %>
           <div>
-            <a href = "#" ><%= alert.title %> </a>
+            <a href = "#" class = "alert-event" id = "alert-<%= alert.id %> "><%= alert.title %> </a>
           </div>
         <% end %>
 
@@ -61,7 +61,25 @@
     loops over each person in @allPeople (defined in the people controller)
     puts all of that in at plain html with values from the person in the for-each loop
     -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 <script>
 $("#people-table tr").hover(
@@ -72,5 +90,26 @@ $("#people-table tr").hover(
     $(this).find(".glyphicon-pencil").hide()
   }
 )
+$(".alert-event").on("click", function(){
+  event.preventDefault()
+  var id = $(this).attr('id').split("-")[1]
+  
+  //do the ajax call then update findings
+
+   $.ajax({
+    url: "/alerts/query",
+    data: {"id": id},
+    success: function(result){
+        $(".modal-title").text(result["title"])
+        $(".modal-body").text(result["description"])
+        $('#myModal').modal('toggle');
+    },
+    error: function(){
+      console.log("failed")
+    }
+  });
+   console.log("ajax called")
+  
+})
 </script>
 
