@@ -11,13 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170212040147) do
+ActiveRecord::Schema.define(version: 20170213161700) do
 
   create_table "animal_breeds", force: :cascade do |t|
     t.integer  "animal_id"
     t.integer  "breed_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "animal_characteristics", force: :cascade do |t|
+    t.integer  "animal_id"
+    t.integer  "characteristic_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   create_table "animals", force: :cascade do |t|
@@ -56,6 +63,13 @@ ActiveRecord::Schema.define(version: 20170212040147) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "characteristics", force: :cascade do |t|
+    t.string   "name"
+    t.string   "category"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "fosters", force: :cascade do |t|
     t.string   "user_id"
     t.string   "animal_id"
@@ -71,11 +85,6 @@ ActiveRecord::Schema.define(version: 20170212040147) do
     t.string   "kind"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "test", id: false, force: :cascade do |t|
-    t.string  "name"
-    t.integer "price"
   end
 
   create_table "users", force: :cascade do |t|

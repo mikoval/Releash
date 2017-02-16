@@ -7,6 +7,8 @@ class AnimalsController < ApplicationController
   def new
     @animal = Animal.new
     @breed = Breed.order('name ASC')
+    @behavior = Characteristic.where("category = 'Behavior'")
+    @attribute = Characteristic.where("category = 'Attribute'")
   end
 
   def edit
@@ -19,6 +21,18 @@ class AnimalsController < ApplicationController
   def profile
     @animal = Animal.find(params["param"])
     @breeds = AnimalBreed.where("animal_id = " + params["param"])
+    @characteristics = AnimalCharacteristic.where("animal_id = " + params["param"])
+    @attributes = []
+    @behaviors = []
+
+    @characteristics.each do |d|
+
+      if(d.characteristic.category == "Attribute")
+        @attributes.push(d)
+      else 
+        @behaviors.push(d)
+      end
+    end
 
   end
 
@@ -37,6 +51,23 @@ class AnimalsController < ApplicationController
         @breed.save
         end
       end
+      if params["behavior"]
+        arr = params["behavior"].split("|")
+        arr.each do |d|
+          
+        @Characteristic = AnimalCharacteristic.new({animal_id: @animal.id, characteristic_id: d})
+        @Characteristic.save
+        end
+      end
+      if params["attribute"]
+        arr = params["attribute"].split("|")
+        arr.each do |d|
+          
+        @Characteristic = AnimalCharacteristic.new({animal_id: @animal.id, characteristic_id: d})
+        @Characteristic.save
+        end
+      end
+
       flash.now[:success] = "New Animal!"
       redirect_to :controller => "animals", :action => "profile", :param => @animal
 

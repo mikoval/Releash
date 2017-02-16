@@ -3,6 +3,12 @@
 Role.create([{title: 'Volunteer'}, {title: 'Employee'}, {title: 'Administrator '}])
 User.create ({name: "Admin", email: "admin@releash.com", password: "password", password_confirmation: "password", role_id:3})
 Species.create([{kind: 'Dog'}, {kind: 'Cat'}])
+Characteristic.create(
+	[
+		{category: "Behavior", name: 'Fearful'}, {category: "Behavior", name: 'Good with Cats'},{category: "Behavior", name: 'Good with children'},
+		{category: "Behavior", name: 'Housebroken'},{category: "Behavior", name: 'Social'},
+		{category: "Attribute", name: 'Declawed'},{category: "Attribute", name: 'House Trained'},{category: "Attribute", name: 'Special Needs'}
+	])
 Breed.create([{name: 'Australian Cattle', species_id:1}, {name: 'Australian Shepherd', species_id:1},
 			
 			{name: 'Bearded Collie', species_id:1}, {name: 'Beauceron', species_id:1}, {name: 'Bergamasco', species_id:1},
