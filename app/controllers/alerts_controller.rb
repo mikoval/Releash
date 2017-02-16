@@ -3,7 +3,7 @@ class AlertsController < ApplicationController
   #listing all the alerts
   def list
     @alert = Alert.new
-    @allAlerts = Alert.all
+    @alerts = Alert.all
   end
 
   #for the new alerts
