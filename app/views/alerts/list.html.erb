@@ -1,40 +1,60 @@
 <% provide(:title, "Alerts") %>
 <h1>Alerts</h1>
+ <ul class="nav nav-tabs">
+    <li class="active"><a href="#calendar" data-toggle="tab">Calendar</a></li>
+    <li><a href="#list" data-toggle="tab">List</a></li>
+</ul>
 
-<div class=" ">
+<div class="tab-content">
+  
+    <div class="tab-pane active" id="calendar">
+      <%= month_calendar do |date| %>
+        <%= date %>
+      <% end %>
+    </div>
+
+
+
+
+    <div class="tab-pane" id="list">
+
+      <table id = "alert-table" class="table table-bordered table-inverse table-hover people-table">
+        <thead>
+          <tr>
+            <th class= "col-md-1">#</th>
+            <th class= "col-md-1">Title</th>
+            <th class= "col-md-3">Date</th>
+            <th class= "col-md-3">Description,</th>
+          </tr>
+        </thead>
+        <tbody>
+      <% @allAlerts.each_with_index do |a, index| %>
+         <tr style = "height: 70px;" >
+            <th scope="row"><%= index %></th>
+            <td>
+             <%= a.title%> 
+
+              </td>
+
+            <td> 
+                <%= a.date%> 
+           </td>
+            <td> <%= a.description%> </td>
+          </tr>
+       
+
+      <% end %>
+        </tbody>
+      </table>
+    </div>
+    
+</div>
     <!-- 
     loops over each person in @allPeople (defined in the people controller)
     puts all of that in at plain html with values from the person in the for-each loop
     -->
-<table id = "alert-table" class="table table-bordered table-inverse table-hover people-table">
-  <thead>
-    <tr>
-      <th class= "col-md-1">#</th>
-      <th class= "col-md-1">Title</th>
-      <th class= "col-md-3">Date</th>
-      <th class= "col-md-3">Description,</th>
-    </tr>
-  </thead>
-  <tbody>
-<% @allAlerts.each_with_index do |a, index| %>
-   <tr style = "height: 70px;" >
-      <th scope="row"><%= index %></th>
-      <td>
-       <%= a.title%> 
 
-        </td>
 
-      <td> 
-          <%= a.date%> 
-     </td>
-      <td> <%= a.description%> </td>
-    </tr>
- 
-
-<% end %>
-  </tbody>
-</table>
-</div>
 <script>
 $("#people-table tr").hover(
   function(){

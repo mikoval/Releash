@@ -14,6 +14,7 @@ gem 'fog',                     '1.38.0'
 gem "figaro"
 gem 'rails_12factor'
 gem 'bootstrap-datepicker-rails'
+gem "simple_calendar", "~> 2.0"
 
 group :development, :test do
   gem 'sqlite3', '1.3.12'
