@@ -67,15 +67,21 @@ $(".search").on( "keyup",function(input){
         str += "<table class='table search-list'>" 
 
         for (x in result){
-                str += "<tr> \
-                <td>  <img src='"+ result[x].picture.picture.url+ "' alt='missing picture' style='width:50px;height:50px;'></td>\
-                <td> <a href='/animals/profile?method=get&param=" + result[x].id + "' onmousedown='link(event)'> " + result[x].name + " </a></td>\
-                 <td>" + result[x].primary + "</td>\
-                 <td>" + result[x].secondary + "</td>\
-                </tr>"
-
+                if (result[x].check == "animal") {
+                  str += "<tr> \
+                  <td>  <img src='"+ result[x].picture.picture.url+ "' alt='missing picture' style='width:50px;height:50px;'></td>\
+                  <td> <a href='/animals/profile?method=get&param=" + result[x].id + "' onmousedown='link(event)'> " + result[x].name + " </a></td>\
+                   <td>" + result[x].attribute + "</td>\
+                  </tr>"
+                }
+                if (result[x].check == "user") {
+                  str += "<tr> \
+                    <td>  <img src='"+ result[x].picture.picture.url+ "' alt='missing picture' style='width:50px;height:50px;'></td>\
+                    <td> <a href='/people/profile?method=get&param=" + result[x].id + "' onmousedown='link(event)'> " + result[x].name + " </a></td>\
+                     <td>" + result[x].attribute + "</td>\
+                    </tr>"
+                }
         }
-
         str +=  " </table>"
          $(".search-result").each(function(){
             $(this).html( str)

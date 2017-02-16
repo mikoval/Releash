@@ -6,20 +6,22 @@ class AnimalsController < ApplicationController
 
   def new
     @animal = Animal.new
+
     @breed = Breed.order('name ASC')
     @behavior = Characteristic.where("category = 'Behavior'")
     @attribute = Characteristic.where("category = 'Attribute'")
+
+
   end
 
   def edit
     @animal = Animal.find(params["param"])
-    @breed = Breed.order('name ASC')
-    @breeds = AnimalBreed.where("animal_id = " + params["param"])
-
+    @breed = Breed.all
   end
   
   def profile
     @animal = Animal.find(params["param"])
+
     @breeds = AnimalBreed.where("animal_id = " + params["param"])
     @characteristics = AnimalCharacteristic.where("animal_id = " + params["param"])
     @attributes = []
@@ -33,6 +35,7 @@ class AnimalsController < ApplicationController
         @behaviors.push(d)
       end
     end
+
 
   end
 
@@ -68,6 +71,7 @@ class AnimalsController < ApplicationController
         end
       end
 
+
       flash.now[:success] = "New Animal!"
       redirect_to :controller => "animals", :action => "profile", :param => @animal
 
@@ -83,17 +87,6 @@ class AnimalsController < ApplicationController
   def editAnimal
     @animal = Animal.find(params["format"])
     if @animal.update_attributes(animal_params)
-      if params["breeds"]
-        arr = params["breeds"].split("|")
-        AnimalBreed.where("animal_id = " +  @animal.id.to_s).destroy_all
-
-        arr.each do |d|
-        str = "animal_id = " +  @animal.id.to_s + " and breed_id = " + d
-
-        @breed = AnimalBreed.new({animal_id: @animal.id, breed_id: d})
-        @breed.save
-        end
-      end
       flash[:success] = "Saved animal"
       redirect_to :controller => "animals", :action => "profile", :param => @animal
     else
@@ -111,6 +104,7 @@ class AnimalsController < ApplicationController
       if(d.secondary_breed_id)
         sBreed = d.secondary_breed.name
       end
+
       arr.push({
         "id" =>  d.id, 
         "name" => d.name,
@@ -124,48 +118,57 @@ class AnimalsController < ApplicationController
 
   def search
     @search = params["q"]
-    @breed = Breed.where('LOWER(name) LIKE LOWER(:search)', search: "%#{@search}%" )
-    
-    if(@breed.length > 0)
-      @breedid = @breed[0].id
-    else 
-      @breedid = 0
-    end
-    
-    @users = User.where('LOWER(name) LIKE LOWER(:search)', search: "%#{@search}%" )
-    if(@users.length > 0)
-      @usersid = @users[0].id
-    else 
-      @usersid = 0
-    end
-
-    @animals = Animal.where('LOWER(name) LIKE LOWER(:search) OR primary_breed_id = :breed' , search: "%#{@search}%", breed: "#{@breedid}")
-    @user = User.where('LOWER(name) LIKE LOWER(:search)' , search: "%#{@search}%")
-    
-    arr = []
-
-    @animals.each do |d|
-      sBreed = '';
-      if(d.secondary_breed_id)
-        sBreed = d.secondary_breed.name
+    if (@search != "")
+      @breed = Breed.where('LOWER(name) LIKE LOWER(:search)', search: "%#{@search}%" )
+      
+      if(@breed.length > 0)
+        breedid = @breed.ids
+      else 
+        breedid = 0
       end
-      arr.push({
-        "id" =>  d.id, 
-        "name" => d.name,
-        "primary" => d.primary_breed.name,
-        "secondary" => sBreed,
-        "picture" => d.picture,
-      })
+      
+      @animal = Animal.where('LOWER(name) LIKE LOWER(:search)' , search: "%#{@search}%")
+      @breeds = Animal.where(primary_breed_id: breedid)
+      
+      @animals = @animal | @breeds
+      @user = User.where('LOWER(name) LIKE LOWER(:search)' , search: "%#{@search}%")
     end
 
-    
+    arr = []
+    if (!@animals.nil?) 
+      @animals.each do |d|
+        sBreed = '';
+        if(d.secondary_breed_id)
+          sBreed = d.secondary_breed.name
+        end
+        arr.push({
+          "check" => "animal",
+          "id" =>  d.id, 
+          "name" => d.name,
+          "attribute" => d.primary_breed.name,
+          "picture" => d.picture,
+        })
+      end
+    end
+    if (!@user.nil?) 
+      @user.each do |d|
+        arr.push({
+          "check" => "user",
+          "id" =>  d.id, 
+          "name" => d.name,
+          "attribute" => d.email,
+          "picture" => d.picture,
+        })
+      end
+    end
     render json: arr
+
   end
   private
 
   def animal_params
 
-    params.require(:animal).permit(:name, :primary_breed_id, :picture, :status, :color_primary, :color_secondary, :eye_color,
+    params.require(:animal).permit(:name, :primary_breed_id, :secondary_breed_id, :picture, :status, :color_primary, :color_secondary, :eye_color,
       :adoption_fee, :animal_type, :birthday, :cage_number, :microchip_number, :tag_number, :neutered,  
 
       :intake_document, :owner_surrender_document, :home_check_document, :match_application_document, :adoption_application_document, 
