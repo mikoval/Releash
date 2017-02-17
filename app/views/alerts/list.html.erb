@@ -1,12 +1,12 @@
 <% provide(:title, "Alerts") %>
 <h1>Alerts</h1>
+ <%= link_to "<button>Add Alert</button>".html_safe,  :controller => "alerts", :action => "new", :method => "get" %>
  <ul class="nav nav-tabs">
     <li class="active"><a href="#calendar" data-toggle="tab">Calendar</a></li>
     <li><a href="#list" data-toggle="tab">List</a></li>
 </ul>
 
 <div class="tab-content">
-
     <div class="tab-pane active" id="calendar">
         <%= month_calendar events: @alerts do |date, alerts| %>
         <%= date %>
