@@ -3,7 +3,7 @@ class AlertsController < ApplicationController
   #listing all the alerts
   def list
     @alert = Alert.new
-    @allAlerts = Alert.all
+    @alerts = Alert.all
   end
 
   #for the new alerts
@@ -52,5 +52,30 @@ class AlertsController < ApplicationController
   def alert_params
     params.require(:alert).permit(:title, :description, :date, :alert_type_id, :assignee_id,
                   :created_by_id, :animal_id, :location, :created_at)
+  end
+  def query
+    @id = params["id"]
+    if(@id!=nil)
+      @alert = Alert.find(@id)
+      @str = {"title" => @alert.title, "description" => @alert.description } 
+    else
+      @alerts = Alert.all
+      @str = []
+      if (!@alerts.nil?) 
+      @alerts.each do |a|
+        @str.push({
+          "id" =>  a.id, 
+          "title" => a.title,
+          "description" => a.description,
+          "date" => a.date,
+        })
+      end
+    end
+
+
+
+    end
+    
+    render json: @str
   end
 end
