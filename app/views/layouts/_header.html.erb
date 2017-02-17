@@ -10,7 +10,7 @@
                     <span class="icon-bar"></span>
                 </button>
             </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
+          <div class="collapse navbar-collapse" id="myNavbar">
             <div style="padding-left: 20px"> <%= link_to "Dashboard", root_path, id: "logo" %> </div>
             <!-- Top Menu Items -->
           <ul class="nav navbar-left top-nav">
@@ -43,13 +43,12 @@
               
             </ul>
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <li class="active">
-                        <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                    <li>
+                      <%= link_to "Dashboard", root_path %> 
                     </li>
                     <li>
-                        <%= link_to "Animals",    animals_path %>
+                      <%= link_to "Animals",   animals_path %>
                     </li>
                     <li>
                       <%= link_to "People",   people_path %>
@@ -58,62 +57,12 @@
                       <%= link_to "Upcoming Events",   alerts_path %>
                     </li>
                 </ul>
-            </div>
             <!-- /.navbar-collapse -->
           </div>
         </nav>
 <!--       <div style = "position:fixed" class = "search-result col-md-4 col-md-offset-4">  
     </div> -->
 </header>
-
-<!--     <nav>
-      <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-
-
-        <ul class="nav navbar-nav navbar-left">
-           <li><%= link_to "Animals",    animals_path %></li>
-          <li><%= link_to "People",   people_path %></li>
-          <li style = "display: inline-block; width: 200px; white-space: nowrap;">
-            <span class = 'glyphicon glyphicon-search navbar-text' style = "display: inline-block; font-size: 24px; margin-right:5px" ></span> 
-
-            <input style = " width: 100%; vertical-align: middle; margin-top:15px" placeholder="Search" class ="search" /> 
-          </li>
-          <li></li>
-        </ul>
-        
-        <ul class="nav navbar-nav navbar-right">
-         <% if logged_in? %>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                Account <b class="caret"></b>
-              </a>
-              <ul class="dropdown-menu">
-
-                <li> <%= link_to "Profile",  :controller => "people", :action => "profile", :param => current_user, :method => "get" %></li>
-                <li><%= link_to "Settings", '#' %></li>
-                <li class="divider"></li>
-                <li>
-                  <%= link_to "Log out", logout_path, method: "delete" %>
-                </li>
-              </ul>
-            </li>
-          <% else %>
-            <li><%= link_to "Log in", login_path %></li>
-          <% end %>
-          
-        </ul>
-      </div>
-    </div>
-    </nav> -->
-
 
 <script>
 $(".search").on( "keyup",function(input){
@@ -155,7 +104,8 @@ $(".search").on( "keyup",function(input){
          })
    } )
 })
-function link(e){
+
+function link(e) {
   $(e.target).trigger("click")
  
   window.location.href = $(e.target).attr("href"); 

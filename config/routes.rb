@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   get 'alerts/new'
   get 'alerts/list'
   get 'alerts/query'
+  get '/alerts', to: "alerts#list"
   post  '/alerts',   to: 'alerts#newAlert'
 
   get '/people', to: "people#list"
