@@ -1,0 +1,37 @@
+ <% provide(:title, 'Alert') %>
+<h1>Add new alert</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+
+    <%= form_for(@alert, html: { multipart: true },  url: alerts_path(@alert)) do |f| %>
+      <%= f.label :title %>
+      <%= f.text_field :title, class: 'form-control' %>
+
+      <%= f.label :description %>
+      <%= f.text_field :description, class: 'form-control' %>
+
+      <%= f.label :date %>
+      <%= f.text_field :date, class: 'datepicker' %>
+
+      <%= f.label :type%>
+      <%= f.collection_select :alert_type_id, @types, :id, :name, :prompt => "Select type" %>
+
+      <%= f.label :assignee%>
+      <%= f.collection_select :assignee_id, @users, :id, :name, :prompt => "Select assignee" %>
+
+      <%= f.submit "Create Alert", class: "btn btn-primary" %>
+    <% end %>
+    </div>
+</div>
+
+</div> <!-- If this is not there there is a line across the screen. Not sure why - J -->
+<script>
+
+
+  $('.datepicker').datepicker({
+    endDate: '+5y' 
+  });
+
+
+</script>

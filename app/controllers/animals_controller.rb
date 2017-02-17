@@ -179,6 +179,7 @@ class AnimalsController < ApplicationController
       @user = User.where('LOWER(name) LIKE LOWER(:search)' , search: "%#{@search}%")
     end
 
+
     arr = []
     if (!@animals.nil?) 
       @animals.each do |d|
