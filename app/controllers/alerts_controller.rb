@@ -10,7 +10,7 @@ class AlertsController < ApplicationController
   def new
     @alert = Alert.new
     @types = AlertType.all
-    @users = User.all
+    @users = User.where(disabled: false)
   end
 
   #for displaying alerts
