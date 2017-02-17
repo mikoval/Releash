@@ -1,8 +1,40 @@
 <!-- This is the page to edit an animal -->
 <h2 class= "pg-title">Editing <%= @animal.name %></h2>
 
+
 <style>
 .upload-wrapper{padding-bottom: 15px}
+
+.select-item{
+  border:solid;
+  border-width: 1px;
+  padding:3px;
+  border-radius:5px;
+
+  margin:4px;
+
+}
+.breed-item{
+  border:solid;
+  border-width: 1px;
+  padding:3px;
+  border-radius:5px;
+
+  margin:4px;
+  width: 100%;
+}
+.remove-item{
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+.remove-breed{
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
 </style>
 
 <div class= "nav-form-container col-md-12">
@@ -77,10 +109,20 @@
 
               <%= f.label :primary_breed_id %>
               <%= f.collection_select :primary_breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
+              <%= label :post, "Additional Breeds" %>
+              <%= collection_select(:breed_id, 0, @breed, :id, :name, {:prompt => "Select Breed"}, {class: "breed-selecter"}) %>              
+              <div id = "breeds-list">
+                <% @breeds.each do |b| %>
+                <div id = 'breed-<%= b.breed.id %>'   class = 'breed-item' style = 'position: relative; display: inline-block;'>
+                  <p style = 'margin:0px; padding-right:15px'> <%= b.breed.name %> </p> 
+                  <span class = 'glyphicon glyphicon-remove remove-breed' style='margin:2px; float:right;'></span>
+                </div>
 
-              <%= f.label :secondary_breed_id %>
-              <%= f.collection_select :secondary_breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
+                <% end %>
+              </div>
+             <%= text_field_tag 'breeds', "", class: "hidden-breeds", style: "display:none;"  %>
 
+           
               <%= f.label :date_of_birth %>
               <%= f.text_field :birthday, class: 'datepicker' %>
 
@@ -111,14 +153,16 @@
 
               <%= f.label :eye_color %>
               <%= f.text_field :eye_color, class: 'form-control' %>
+
+             
             </div>
           </div>
 
           <div class = "med col-md-12">
-            <!-- Medical -->
+            <!-- Vetting -->
             <a class= "card-header doc-header" data-toggle="collapse" href="#doc-body">
               <div>
-                <h4>Medical</h4>
+                <h4>Vetting</h4>
               </div>
             </a>
 
@@ -130,6 +174,49 @@
               <%= f.check_box :neutered, class: 'form-control' %>
             </div>
           </div>
+           <div class = "med col-md-12">
+            <!-- Personality -->
+            <a class= "card-header doc-header" data-toggle="collapse" href="#pers-body">
+              <div>
+                <h4>Personality</h4>
+              </div>
+            </a>
+
+            <div id="pers-body" class="collapse col-md-12">
+              <%= label :post, "behavior" %>
+              <%= collection_select(:behavior_id, 0, @behavior, :id, :name, {:prompt => "Select behavior"}, {class: "behavior-selecter"}) %>              
+              <div id = "behavior-list">
+                <% @behaviors.each do |b| %>
+                <div id = 'behavior-<%= b.characteristic.id %>'   class = 'select-item behavior-item' style = 'position: relative; display: inline-block;'>
+                  <p style = 'margin:0px; padding-right:15px'> <%= b.characteristic.name %> </p> 
+                  <span class = 'glyphicon glyphicon-remove remove-item remove-behavior' style='margin:2px; float:right;'></span>
+                </div>
+
+                <% end %>
+              </div>
+
+
+              <%= text_field_tag 'behavior', "", class: "hidden-behavior", style: "display:none;"  %>
+
+              <%= label :post, "attribute" %>
+              <%= collection_select(:attribute_id, 0, @attribute, :id, :name, {:prompt => "Select attribute"}, {class: "attribute-selecter"}) %>              
+              <div id = "attribute-list">
+                <% @attributes.each do |b| %>
+                <div id = 'behavior-<%= b.characteristic.id %>'   class = 'select-item attribute-item' style = 'position: relative; display: inline-block;'>
+                  <p style = 'margin:0px; padding-right:15px'> <%= b.characteristic.name %> </p> 
+                  <span class = 'glyphicon glyphicon-remove remove-item remove-attribute' style='margin:2px; float:right;'></span>
+                </div>
+
+                <% end %>
+              </div>
+
+              <%= text_field_tag 'attribute', "", class: "hidden-attribute", style: "display:none;"  %>
+
+
+            </div>
+          </div>
+
+
         </div>
       </div>
 
@@ -309,5 +396,105 @@
         inputfield[0].value = "";
 
   });
+  $(".breed-selecter").on("change", function(){
+    var text = $(".breed-selecter option:selected").text();
+    var val = $(".breed-selecter option:selected").val();
+    if(text == "Select Breed"){
+      return
+    }
+    html = $("#breeds-list").html();
+    html += "<div id = 'breed-" + val + "'' class = 'breed-item select-item' style = 'position: relative; display: inline-block;'>" 
+        + "<p style = 'margin:0px; padding-right:15px'>" + text + "</p>" + 
+       "<span class = 'glyphicon glyphicon-remove remove-breed remove-item' style='margin:2px; float:right;'>" +"</span>" + 
+       " </div>"
+    $("#breeds-list").html(html);
+    $(".remove-breed").on("click", function(){
+      $(this).closest(".breed-item").detach()
+      setHiddenBreeds();
+    })
+    //just for now while im setting up the new breeds
+    $(this).get(0).selectedIndex = 0;
+    setHiddenBreeds();
+  })
+  function setHiddenBreeds(){
+    str = ""
+    $(".breed-item").each(function(){
+      var id = this.id.split("-")[1]
+      str += id + "|"
+    })
+    $(".hidden-breeds").val(str)
+  }
+  //do on start for existing ones
+  setHiddenBreeds();
+  $(".remove-breed").on("click", function(){
+      $(this).closest(".breed-item").detach()
+      setHiddenBreeds();
+  })
+  $(".remove-attribute").on("click", function(){
+      $(this).closest(".attribute-item").detach()
+      setHiddenAttribute();
+  })
+  $(".remove-behavior").on("click", function(){
+      $(this).closest(".behavior-item").detach()
+      setHiddenBehavior();
+  })
+  $(".attribute-selecter").on("change", function(){
+    var text = $(".attribute-selecter option:selected").text();
+    var val = $(".attribute-selecter option:selected").val();
+    if(text == "Select Attribute"){
+      return
+    }
+    html = $("#attribute-list").html();
+    html += "<div id = 'attribute-" + val + "'' class = 'attribute-item select-item' style = 'position: relative; display: inline-block;'>" 
+        + "<p style = 'margin:0px; padding-right:15px'>" + text + "</p>" + 
+       "<span class = 'glyphicon glyphicon-remove remove-attribute remove-item' style='margin:2px; float:right;'>" +"</span>" + 
+       " </div>"
+    $("#attribute-list").html(html);
+    $(".remove-attribute").on("click", function(){
+      $(this).closest(".attribute-item").detach()
+      setHiddenAttribute();
+    })
+    //just for now while im setting up the new breeds
+    $(this).get(0).selectedIndex = 0;
+    setHiddenAttribute();
+  })
+  function setHiddenAttribute(){
+    str = ""
+    $(".attribute-item").each(function(){
+      var id = this.id.split("-")[1]
+      str += id + "|"
+    })
+    $(".hidden-attribute").val(str)
+  }
 
+  setHiddenAttribute();
+  $(".behavior-selecter").on("change", function(){
+    var text = $(".behavior-selecter option:selected").text();
+    var val = $(".behavior-selecter option:selected").val();
+    if(text == "Select Behavior"){
+      return
+    }
+    html = $("#behavior-list").html();
+    html += "<div id = 'behavior-" + val + "'' class = 'behavior-item select-item' style = 'position: relative; display: inline-block;'>" 
+        + "<p style = 'margin:0px; padding-right:15px'>" + text + "</p>" + 
+       "<span class = 'glyphicon glyphicon-remove remove-behavior remove-item' style='margin:2px; float:right;'>" +"</span>" + 
+       " </div>"
+    $("#behavior-list").html(html);
+    $(".remove-behavior").on("click", function(){
+      $(this).closest(".behavior-item").detach()
+      setHiddenBehavior();
+    })
+    //just for now while im setting up the new breeds
+    $(this).get(0).selectedIndex = 0;
+    setHiddenBehavior();
+  })
+  function setHiddenBehavior(){
+    str = ""
+    $(".behavior-item").each(function(){
+      var id = this.id.split("-")[1]
+      str += id + "|"
+    })
+    $(".hidden-behavior").val(str)
+  }
+  setHiddenBehavior();
 </script>

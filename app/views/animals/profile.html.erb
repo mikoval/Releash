@@ -38,7 +38,17 @@
               <% if @animal.secondary_breed %>
               <h4>Secondary Breed</h4>
               <%= @animal.secondary_breed.name %>
-              <% end %>          	
+              <% end %>  
+               <h4>Additional Breeds</h4> 
+              <p> 
+                <% @breeds.each do |b| %>
+                  <% if b != @breeds.last %>
+                    <%= b.breed.name + "," %> 
+                  <% else %>
+                    <%= b.breed.name  %> 
+                  <% end %>
+                <% end %> 
+               </p>       	
             </div>
           </div>
         </div>
@@ -53,16 +63,17 @@
             </a>
 
             <div id="phys-feat" class="collapse col-md-12">
-              <p> Primary: <%= @animal.color_primary %> </p>
-              <p> Secondary: <%= @animal.color_secondary %> </p>
+              <p> Primary Color: <%= @animal.color_primary %> </p>
+              <p> Secondary Color: <%= @animal.color_secondary %> </p>
+              
             </div>
           </div>
 
           <div class = "med col-md-12">
             <!-- Medical -->
-            <a class= "card-header doc-header" data-toggle="collapse" href="#doc-body">
+            <a class= "card-header doc-header" data-toggle="collapse" href="#med-body">
               <div>
-                <h4>Medical</h4>
+                <h4>Vetting</h4>
               </div>
             </a>
 
@@ -74,6 +85,50 @@
               <%= f.check_box :neutered, class: 'form-control' %>
             </div>
           </div>
+
+          <div class = "med col-md-12">
+            <!-- Personality -->
+            <a class= "card-header doc-header" data-toggle="collapse" href="#char-body">
+              <div>
+                <h4>Characteristics</h4>
+              </div>
+            </a>
+
+            <div id="char-body" class="collapse col-md-12">
+              <h4>Behavior</h4> 
+              <p id = "behavior-list"> 
+               <% @behaviors.each do |b| %>
+                 <% if b != @behaviors.last %>
+                    <%= b.characteristic.name + "," %> 
+                  <% else %>
+                    <%= b.characteristic.name  %> 
+                  <% end %>
+                   
+
+
+                <% end %> 
+
+               </p>   
+
+               <h4>Attribute</h4> 
+              <p id = "attribute-list">  
+                <% @attributes.each do |b| %>
+                  
+                  <% if b != @attributes.last %>
+                    <%= b.characteristic.name + "," %> 
+                  <% else %>
+                    <%= b.characteristic.name  %> 
+                  <% end %>
+                   
+
+
+                <% end %> 
+               </p>         
+
+            </div>
+          </div>
+
+
         </div>
       </div>
 
@@ -124,5 +179,14 @@
     <% end %>
   </div>
 </div>
+<script>
+
+
+var blist = $("#behavior-list").text();
+console.log( $("#behavior-list"))
+blist = blist.substr(0, (blist.length - 2));
+$("#behavior-list").text(blist);
+
+</script>
 
 
