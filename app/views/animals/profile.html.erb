@@ -1,9 +1,9 @@
 <h1><%= @animal.name%> Profile </h1>
 
 <% if employee?(current_user) %>
-
-<% end %>
 <%= link_to "<div class = 'col-md-2 col-md-offset-10 col-sm-4 col-sm-offset-8 col-xs-4 col-xs-offset-8'> <button>Edit profile</button></div>".html_safe,  :controller => "animals", :action => "edit", :param => @animal, :method => "get" %>
+<% end %>
+
 
 
 
@@ -73,7 +73,7 @@
             <!-- Medical -->
             <a class= "card-header doc-header" data-toggle="collapse" href="#med-body">
               <div>
-                <h4>Medical</h4>
+                <h4>Vetting</h4>
               </div>
             </a>
 
@@ -87,10 +87,10 @@
           </div>
 
           <div class = "med col-md-12">
-            <!-- Medical -->
+            <!-- Personality -->
             <a class= "card-header doc-header" data-toggle="collapse" href="#char-body">
               <div>
-                <h4>Characteristics</h4>
+                <h4>Personality</h4>
               </div>
             </a>
 

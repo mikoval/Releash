@@ -1,0 +1,115 @@
+<% provide(:title, "Alerts") %>
+<h1>Alerts</h1>
+ <%= link_to "<button>Add Alert</button>".html_safe,  :controller => "alerts", :action => "new", :method => "get" %>
+ <ul class="nav nav-tabs">
+    <li class="active"><a href="#calendar" data-toggle="tab">Calendar</a></li>
+    <li><a href="#list" data-toggle="tab">List</a></li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane active" id="calendar">
+        <%= month_calendar events: @alerts do |date, alerts| %>
+        <%= date %>
+
+        <% alerts.each do |alert| %>
+          <div>
+            <a href = "#" class = "alert-event" id = "alert-<%= alert.id %> "><%= alert.title %> </a>
+          </div>
+        <% end %>
+
+
+      <% end %>
+    </div>
+
+
+
+
+    <div class="tab-pane" id="list">
+
+      <table id = "alert-table" class="table table-bordered table-inverse table-hover people-table">
+        <thead>
+          <tr>
+            <th class= "col-md-1">#</th>
+            <th class= "col-md-1">Title</th>
+            <th class= "col-md-3">Date</th>
+            <th class= "col-md-3">Description,</th>
+          </tr>
+        </thead>
+        <tbody>
+      <% @alerts.each_with_index do |a, index| %>
+         <tr style = "height: 70px;" >
+            <th scope="row"><%= index %></th>
+            <td>
+             <%= a.title%> 
+
+              </td>
+
+            <td> 
+                <%= a.date%> 
+           </td>
+            <td> <%= a.description%> </td>
+          </tr>
+       
+
+      <% end %>
+        </tbody>
+      </table>
+    </div>
+    
+</div>
+    <!-- 
+    loops over each person in @allPeople (defined in the people controller)
+    puts all of that in at plain html with values from the person in the for-each loop
+    -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+$("#people-table tr").hover(
+  function(){
+    $(this).find(".glyphicon-pencil").show()
+  },
+  function(){
+    $(this).find(".glyphicon-pencil").hide()
+  }
+)
+$(".alert-event").on("click", function(){
+  event.preventDefault()
+  var id = $(this).attr('id').split("-")[1]
+  
+  //do the ajax call then update findings
+
+   $.ajax({
+    url: "/alerts/query",
+    data: {"id": id},
+    success: function(result){
+        $(".modal-title").text(result["title"])
+        $(".modal-body").text(result["description"])
+        $('#myModal').modal('toggle');
+    },
+    error: function(){
+      console.log("failed")
+    }
+  });
+   console.log("ajax called")
+  
+})
+</script>
+

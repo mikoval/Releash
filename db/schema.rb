@@ -11,7 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170213161700) do
+
+ActiveRecord::Schema.define(version: 20170217183640) do
+
+
+  create_table "alert_types", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "alerts", force: :cascade do |t|
+    t.string   "title"
+    t.string   "description"
+    t.datetime "date"
+    t.integer  "alert_type_id"
+    t.integer  "assignee_id"
+    t.integer  "created_by_id"
+    t.integer  "animal_id"
+    t.string   "location"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
 
   create_table "animal_breeds", force: :cascade do |t|
     t.integer  "animal_id"
@@ -90,12 +111,13 @@ ActiveRecord::Schema.define(version: 20170213161700) do
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.string   "password_digest"
     t.integer  "role_id"
     t.string   "picture"
     t.string   "remember_digest"
+    t.boolean  "disabled",        default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
