@@ -218,7 +218,7 @@ class AnimalsController < ApplicationController
       :adoption_fee, :animal_type, :birthday, :cage_number, :microchip_number, :tag_number, :neutered,  
 
       :intake_document, :owner_surrender_document, :home_check_document, :match_application_document, :adoption_application_document, 
-      :adoption_contract_document, :vetting_document
+      :adoption_contract_document, :vetting_document, :intake_date
       )
 
   end

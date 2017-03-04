@@ -262,7 +262,53 @@
 
       <!-- Tracking -->
       <div id="tracking-body" class="collapse inner-formdiv">
-        <p> Functions for Stages</p>
+        <!-- Dropdown option selections -->
+        <div id="status-sel" class="col-md-4">
+          <%= f.label :status %>
+          <%= f.select :status, [ 'Intake','Vetting', 'Foster', 'Hold','Adopted'], :prompt => 'Current Status' %>
+        </div>
+    
+        <div id="status-sel" class="col-md-12">
+          <!-- Tab headers for each status -->
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation"><a href="#intake" data-toggle="tab">Intake</a></li>
+            <li role="presentation"><a href="#vetting" data-toggle="tab">Vetting</a></li>
+            <li role="presentation"><a href="#foster" data-toggle="tab">Foster</a></li>
+            <li role="presentation"><a href="#adopted" data-toggle="tab">Adopted</a></li>
+          </ul>
+
+          <!-- Information for Tabs-->
+          <div class="tab-content">
+            <div id="intake" role="tabpanel" class="tab-pane fade in">
+              <%= f.label :intake_date %>
+              <%#= f.text_field :intake_date, class: 'datepicker' %>
+              <%= f.label :intake_current_location%>
+              <%#= f.text_field :intake_curloc, class: 'form-control' %>
+              <%= f.label :intake_previous_location%>
+              <%#= f.text_field :intake_prevloc, class: 'form-control' %>
+              <%= f.label :description %>
+              <%#= f.text_field :description, class: 'form-control' %>
+            </div>
+            <div id="vetting" role="tabpanel" class="tab-pane">
+              <%= f.label :vetting_date %>
+              <%#= f.text_field :vetting_date, class: 'datepicker' %>
+              <%= f.label :vet %>
+              <%#= f.select :vets, [ 'null'], :prompt => 'Select Veterinarian' %>
+              <%= f.label :foster %>
+              <%#= f.select :fosters, [ 'null'], :prompt => 'Add Foster' %>
+            </div>
+            <div id="foster" role="tabpanel" class="tab-pane">
+              <%= f.label :foster_date %>
+              <%#= f.text_field :foster_date, class: 'datepicker' %>
+              <%= f.label :foster %>
+              <%#= f.select :fosters, [ 'null'], :prompt => 'Select Foster' %>
+            </div>
+            <div id="adopted" role="tabpanel" class="tab-pane">
+              <%= f.label :adopted_date %>
+              <%#= f.text_field :adopted_date, class: 'datepicker' %>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Alerts -->
