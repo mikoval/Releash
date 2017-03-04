@@ -21,8 +21,24 @@ class AlertsController < ApplicationController
     @types = AlertType.all
     @users = User.where(disabled: false)
     @animals = Animal.all
-  end
 
+  end
+  def edit
+    @alert = Alert.find(params["param"])
+    @types = AlertType.all
+    @users = User.where(disabled: false)
+    @animals = Animal.all
+    @assigneesSelected = []
+    @animalsSelected = []
+    @assigneesRaw = UserAlert.where(alert_id: params["param"])
+    @animalsRaw = AnimalAlert.where(alert_id: params["param"])
+    @animalsRaw.each do |a|
+      @animalsSelected.push(a.animal)
+    end
+    @assigneesRaw.each do |a|
+      @assigneesSelected.push(a.user)
+    end
+  end
   #for displaying alerts
   def display
     @alert = Alert.find(params["param"])
@@ -67,8 +83,30 @@ class AlertsController < ApplicationController
   def editAlert
     @alert = Alert.find(params["format"])
     if @alert.update_attributes(alert_params)
-      flash[:success] = "Created Alert"
-      redirect_to :controller => "alerts", :action => "display", :param => @alert
+      #delete old ones
+      UserAlert.where("alert_id = " + @alert.id.to_s).delete_all
+      AnimalAlert.where("alert_id = " + @alert.id.to_s).delete_all
+      #add new ones
+      if params["assignees"]
+        arr = params["assignees"].split("|")
+        arr.each do |d|
+          
+        @userAlert = UserAlert.new({alert_id: @alert.id, user_id: d})
+        @userAlert.save
+        end
+      end
+      if params["animals"]
+        arr = params["animals"].split("|")
+        arr.each do |d|
+          
+        @animalAlert = AnimalAlert.new({alert_id: @alert.id, animal_id: d})
+        @animalAlert.save
+        end
+      end
+
+
+      flash[:success] = "Updated Alert"
+      redirect_to :controller => "alerts", :action => "list"
     else
       flash.now[:danger] = "Error creating alert"
       @type = Type.all

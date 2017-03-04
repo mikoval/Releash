@@ -202,8 +202,8 @@
               <%= collection_select(:attribute_id, 0, @attribute, :id, :name, {:prompt => "Select attribute"}, {class: "attribute-selecter"}) %>              
               <div id = "attribute-list">
                 <% @attributes.each do |b| %>
-                <div id = 'behavior-<%= b.characteristic.id %>'   class = 'select-item attribute-item' style = 'position: relative; display: inline-block;'>
-                  <p style = 'margin:0px; padding-right:15px'> <%= b.characteristic.name %> </p> 
+                <div id = 'behavior-<%= b.id %>'   class = 'select-item attribute-item' style = 'position: relative; display: inline-block;'>
+                  <p style = 'margin:0px; padding-right:15px'> <%= b.name %> </p> 
                   <span class = 'glyphicon glyphicon-remove remove-item remove-attribute' style='margin:2px; float:right;'></span>
                 </div>
 

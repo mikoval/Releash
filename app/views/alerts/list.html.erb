@@ -14,8 +14,9 @@
 
 <div class="tab-content">
     <div class="tab-pane active" id="calendar">
+
         <%= month_calendar events: @alerts do |date, alerts| %>
-        <%= date %>
+        <%= date.day%>
 
         <% alerts.each do |alert| %>
           <div>
@@ -105,34 +106,34 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 style = "display: inline-block; margin-right: 5px" class="modal-title">N/A</h4><span class = "modal-edit"></span>
+        <h4 style = "display: inline-block; margin-right: 5px" class="modal-title"></h4><span class = "modal-edit"></span>
       </div>
 
       
       <div class="modal-body">
           <div class = "modal-div">
-            Created by: <span class="modal-created-by">N/A</span>
+             <span class="modal-created-by"></span>
           </div>
 
           <div class = "modal-div">
-            Assignees: <span class="modal-assignees">N/A</span>
+           <span class="modal-assignees"></span>
           </div>
 
           <div class = "modal-div">
-            Animals: <span class="modal-animals">N/A</span>
+           <span class="modal-animals"></span>
           </div>
 
           <div class = "modal-div">
-            Date: <span class="modal-date">N/A</span>
+            <span class="modal-date"></span>
           </div>
 
           <div class = "modal-div">
-            Location: <span class="modal-location">N/A</span>
+            <span class="modal-location"></span>
           </div>
 
           <div class = "modal-div">
-            Description <br> 
-            <div class = "modal-description"> NA </div>
+            
+            <div class = "modal-description"> </div>
           </div>
       </div>
       <div class="modal-footer">
@@ -164,14 +165,26 @@ $(".alert-event").on("click", function(){
     success: function(result){
 
         $(".modal-title").text(result["title"])
-        $(".modal-created-by").html(generateUsers(result["created_by"]))
-        $(".modal-date").text(result["date"])
-        $(".modal-description").text(result["description"])
-        $(".modal-location").text(result["location"])
+        $(".modal-created-by").html("Created by: " + generateUsers(result["created_by"]))
 
-        $(".modal-animals").html(generateAnimals(result["animals"]))
-        $(".modal-assignees").html(generateUsers(result["users"]))
+        if(result["date"] != null){
+          $(".modal-date").text("date: " + result["date"])
+        }
 
+        if(result["description"] != null){
+          $(".modal-description").html("Description: <br>" + result["description"])
+        }
+
+        if(result["location"] != null){
+          $(".modal-location").text("Location: " + result["location"])
+        }
+
+        if(result["animals"].length > 0){
+           $(".modal-animals").html("Animals: " + generateAnimals(result["animals"]))
+        }
+        if(result["users"].length > 0){
+          $(".modal-assignees").html("Assignees: " + generateUsers(result["users"]))
+        }
         checkEditable(result["user_id"], result["created_by"][0].id, result["id"])
 
         $('#myModal').modal('toggle');
@@ -215,7 +228,7 @@ function generateUsers(arr){
 }
 function checkEditable(userID, createdID, alertID){ 
   if(userID == createdID){
-    str = "<a href='/people/profile?method=get&param=" + alertID + "'><span class = 'glyphicon glyphicon-pencil'></span></a>"
+    str = "<a href='/alerts/edit?method=get&param=" + alertID + "'><span class = 'glyphicon glyphicon-pencil'></span></a>"
     $(".modal-edit").html(str)
   }
   else{
