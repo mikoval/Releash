@@ -1,9 +1,15 @@
 <% provide(:title, "Alerts") %>
+<style>
+.modal-div{
+  margin:10px;
+}
+</style>
 <h1>Alerts</h1>
  <%= link_to "<button>Add Alert</button>".html_safe,  :controller => "alerts", :action => "new", :method => "get" %>
  <ul class="nav nav-tabs">
     <li class="active"><a href="#calendar" data-toggle="tab">Calendar</a></li>
     <li><a href="#list" data-toggle="tab">List</a></li>
+    <li><a href="#created" data-toggle="tab">Created</a></li>
 </ul>
 
 <div class="tab-content">
@@ -32,7 +38,7 @@
             <th class= "col-md-1">#</th>
             <th class= "col-md-1">Title</th>
             <th class= "col-md-3">Date</th>
-            <th class= "col-md-3">Description,</th>
+            <th class= "col-md-3">Created By</th>
           </tr>
         </thead>
         <tbody>
@@ -40,14 +46,45 @@
          <tr style = "height: 70px;" >
             <th scope="row"><%= index %></th>
             <td>
-             <%= a.title%> 
+             <a href = "#" class = "alert-event" id = "alert-<%= a.id %> "><%= a.title %> </a>
 
               </td>
 
             <td> 
-                <%= a.date%> 
+                <%= date_format(a.date) %> 
+           </td> 
+            <td> <%= a.created_by.name%> </td> 
+          </tr> 
+       
+
+      <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="tab-pane" id="created">
+
+      <table id = "alert-table" class="table table-bordered table-inverse table-hover people-table">
+        <thead>
+          <tr>
+            <th class= "col-md-1">#</th>
+            <th class= "col-md-1">Title</th>
+            <th class= "col-md-3">Date</th>
+            <th class= "col-md-3">Created By</th>
+          </tr>
+        </thead>
+        <tbody>
+      <% @createdAlerts.each_with_index do |a, index| %>
+         <tr style = "height: 70px;" >
+            <th scope="row"><%= index %></th>
+            <td>
+             <a href = "#" class = "alert-event" id = "alert-<%= a.id %> "><%= a.title %> </a>
+
+              </td>
+
+            <td> 
+                <%= date_format(a.date) %> 
            </td>
-            <td> <%= a.description%> </td>
+            <td> <%= a.created_by.name%> </td>
           </tr>
        
 
@@ -68,10 +105,35 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
+        <h4 style = "display: inline-block; margin-right: 5px" class="modal-title">N/A</h4><span class = "modal-edit"></span>
       </div>
+
+      
       <div class="modal-body">
-        <p>Some text in the modal.</p>
+          <div class = "modal-div">
+            Created by: <span class="modal-created-by">N/A</span>
+          </div>
+
+          <div class = "modal-div">
+            Assignees: <span class="modal-assignees">N/A</span>
+          </div>
+
+          <div class = "modal-div">
+            Animals: <span class="modal-animals">N/A</span>
+          </div>
+
+          <div class = "modal-div">
+            Date: <span class="modal-date">N/A</span>
+          </div>
+
+          <div class = "modal-div">
+            Location: <span class="modal-location">N/A</span>
+          </div>
+
+          <div class = "modal-div">
+            Description <br> 
+            <div class = "modal-description"> NA </div>
+          </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -100,8 +162,18 @@ $(".alert-event").on("click", function(){
     url: "/alerts/query",
     data: {"id": id},
     success: function(result){
+
         $(".modal-title").text(result["title"])
-        $(".modal-body").text(result["description"])
+        $(".modal-created-by").html(generateUsers(result["created_by"]))
+        $(".modal-date").text(result["date"])
+        $(".modal-description").text(result["description"])
+        $(".modal-location").text(result["location"])
+
+        $(".modal-animals").html(generateAnimals(result["animals"]))
+        $(".modal-assignees").html(generateUsers(result["users"]))
+
+        checkEditable(result["user_id"], result["created_by"][0].id, result["id"])
+
         $('#myModal').modal('toggle');
     },
     error: function(){
@@ -111,5 +183,44 @@ $(".alert-event").on("click", function(){
    console.log("ajax called")
   
 })
+function generateAnimals(arr){
+  str = ""
+  for (i in arr){
+    var id = arr[i].id;
+    var name = arr[i].name;
+    str = str + "<span><a href='/animals/profile?method=get&param=" + id + "'>" + name + "</a></span>";
+    if(i != arr.length -1){
+      str = str + ", ";
+    }
+    else{
+      str = str + " ";
+    }
+  }
+  return str;
+}
+function generateUsers(arr){
+  str = ""
+  for (i in arr){
+    var id = arr[i].id;
+    var name = arr[i].name;
+    str = str + "<span><a href='/people/profile?method=get&param=" + id + "'>" + name + "</a></span>";
+    if(i != arr.length -1){
+      str = str + ", ";
+    }
+    else{
+      str = str + " ";
+    }
+  }
+  return str;
+}
+function checkEditable(userID, createdID, alertID){ 
+  if(userID == createdID){
+    str = "<a href='/people/profile?method=get&param=" + alertID + "'><span class = 'glyphicon glyphicon-pencil'></span></a>"
+    $(".modal-edit").html(str)
+  }
+  else{
+    $(".modal-edit").html("")
+  }
+}
 </script>
 

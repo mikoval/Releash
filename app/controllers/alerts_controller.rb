@@ -1,9 +1,18 @@
 class AlertsController < ApplicationController
-  
+  def date_format(date)
+    return date.to_formatted_s(:long_ordinal)
+  end
   #listing all the alerts
   def list
-    @alert = Alert.new
-    @alerts = Alert.all
+    @alerts = []
+    @alertsRaw = UserAlert.where(user_id: current_user.id)
+    @createdAlerts = Alert.where(created_by_id: current_user.id)
+    puts @alerts
+
+    @alertsRaw.each do |a|
+      @alerts.push(a.alert)
+    end
+
   end
 
   #for the new alerts
@@ -11,6 +20,7 @@ class AlertsController < ApplicationController
     @alert = Alert.new
     @types = AlertType.all
     @users = User.where(disabled: false)
+    @animals = Animal.all
   end
 
   #for displaying alerts
@@ -20,6 +30,7 @@ class AlertsController < ApplicationController
 
   def newAlert
     
+
     @alert = Alert.new(alert_params)  do |q|
           q.created_by_id = current_user.id
     end
@@ -29,6 +40,22 @@ class AlertsController < ApplicationController
     @users = User.all
     
     if @alert.save
+      if params["assignees"]
+        arr = params["assignees"].split("|")
+        arr.each do |d|
+          
+        @userAlert = UserAlert.new({alert_id: @alert.id, user_id: d})
+        @userAlert.save
+        end
+      end
+      if params["animals"]
+        arr = params["animals"].split("|")
+        arr.each do |d|
+          
+        @animalAlert = AnimalAlert.new({alert_id: @alert.id, animal_id: d})
+        @animalAlert.save
+        end
+      end
       flash.now[:success] = "New Alert!"
       redirect_to :controller => "alerts", :action => "list"
     else       
@@ -57,7 +84,42 @@ class AlertsController < ApplicationController
     @id = params["id"]
     if(@id!=nil)
       @alert = Alert.find(@id)
-      @str = {"title" => @alert.title, "description" => @alert.description } 
+      @AnimalList = AnimalAlert.where(alert_id: @id)
+      @UserList = UserAlert.where(alert_id: @id)
+
+      #generate the list of animals
+      @AnimalNameList = []
+      @AnimalList.each do |a|
+          @AnimalNameList.push({
+            "id" =>  a.animal.id, 
+            "name" => a.animal.name,
+
+          })
+      end
+      #generate the list of users
+      @UserNameList = []
+      @UserList.each do |a|
+          @UserNameList.push({
+            "id" =>  a.user.id, 
+            "name" => a.user.name,
+
+          })
+      end
+      #generate the json to be returned
+      @str = {
+        "id" => @alert.id, 
+        "title" => @alert.title, 
+        "description" => @alert.description,
+        "date" => date_format(@alert.date),
+        "created_by" =>  [{"name" => @alert.created_by.name, "id" => @alert.created_by.id}], 
+        "location" =>  @alert.location,
+        "animals" => @AnimalNameList,
+        "users" => @UserNameList,
+        "user_id" => current_user.id,
+      } 
+
+
+
     else
       @alerts = Alert.all
       @str = []
@@ -68,6 +130,7 @@ class AlertsController < ApplicationController
           "title" => a.title,
           "description" => a.description,
           "date" => a.date,
+
         })
       end
     end

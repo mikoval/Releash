@@ -11,9 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 20170217183640) do
-
+ActiveRecord::Schema.define(version: 20170303225008) do
 
   create_table "alert_types", force: :cascade do |t|
     t.string   "name"
@@ -32,6 +30,27 @@ ActiveRecord::Schema.define(version: 20170217183640) do
     t.string   "location"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+  end
+
+  create_table "alerts_user", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "alert_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "alerts_user_tables", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "alert_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "animal_alerts", force: :cascade do |t|
+    t.integer  "animal_id"
+    t.integer  "alert_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "animal_breeds", force: :cascade do |t|
@@ -104,6 +123,13 @@ ActiveRecord::Schema.define(version: 20170217183640) do
 
   create_table "species", force: :cascade do |t|
     t.string   "kind"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_alerts", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "alert_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
