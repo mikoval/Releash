@@ -275,6 +275,8 @@
             <li role="presentation"><a href="#vetting" data-toggle="tab">Vetting</a></li>
             <li role="presentation"><a href="#foster" data-toggle="tab">Foster</a></li>
             <li role="presentation"><a href="#adopted" data-toggle="tab">Adopted</a></li>
+            <li role="presentation"><a href="#sleep" data-toggle="tab">Sleep</a></li>
+            <li role="presentation"><a href="#transfer" data-toggle="tab">Transfer</a></li>
           </ul>
 
           <!-- Information for Tabs-->
@@ -306,6 +308,14 @@
             <div id="adopted" role="tabpanel" class="tab-pane">
               <%= f.label :adopted_date %>
               <%#= f.text_field :adopted_date, class: 'datepicker' %>
+            </div>
+            <div id="sleep" role="tabpanel" class="tab-pane">
+              <%= f.label :sleep_date %>
+              <%#= f.text_field :sleep_date, class: 'datepicker' %>
+            </div>
+            <div id="transfer" role="tabpanel" class="tab-pane">
+              <%= f.label :transfer_date %>
+              <%#= f.text_field :transfer_date, class: 'datepicker' %>
             </div>
           </div>
         </div>
