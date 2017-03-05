@@ -11,9 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+ActiveRecord::Schema.define(version: 20170305163708) do
 
-ActiveRecord::Schema.define(version: 20170217183640) do
+  create_table "adopteds", force: :cascade do |t|
+    t.date    "adopt_date"
+    t.integer "adopter_id"
+    t.string  "comments"
+  end
 
+  create_table "adopters", force: :cascade do |t|
+    t.string  "name"
+    t.string  "street"
+    t.string  "city"
+    t.integer "zip_code"
+    t.string  "phone_number"
+    t.string  "email_add"
+  end
 
   create_table "alert_types", force: :cascade do |t|
     t.string   "name"
@@ -32,6 +45,16 @@ ActiveRecord::Schema.define(version: 20170217183640) do
     t.string   "location"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+  end
+
+  create_table "ani_sleeps", force: :cascade do |t|
+    t.date   "sleep_date"
+    t.string "comments"
+  end
+
+  create_table "ani_transfers", force: :cascade do |t|
+    t.date   "transfer_date"
+    t.string "comments"
   end
 
   create_table "animal_breeds", force: :cascade do |t|
@@ -91,11 +114,43 @@ ActiveRecord::Schema.define(version: 20170217183640) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "foster_stages", force: :cascade do |t|
+    t.date    "foster_date"
+    t.integer "curr_fost_id"
+    t.string  "comment"
+    t.integer "fost_hold_id"
+  end
+
   create_table "fosters", force: :cascade do |t|
     t.string   "user_id"
     t.string   "animal_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "hold_types", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "illnesses", force: :cascade do |t|
+    t.date    "ill_date"
+    t.integer "ill_vet_id"
+    t.string  "ill_info"
+    t.string  "comments"
+  end
+
+  create_table "intakes", force: :cascade do |t|
+    t.date    "intake_date"
+    t.integer "foster_id"
+    t.integer "vet_id"
+    t.string  "comments"
+    t.integer "intake_hold_id"
+  end
+
+  create_table "other_holds", force: :cascade do |t|
+    t.date   "other_date"
+    t.string "comments"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -106,6 +161,18 @@ ActiveRecord::Schema.define(version: 20170217183640) do
     t.string   "kind"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "status_types", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "trainings", force: :cascade do |t|
+    t.date    "train_date"
+    t.string  "problem_info"
+    t.decimal "expense"
+    t.integer "train_hold_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -121,5 +188,21 @@ ActiveRecord::Schema.define(version: 20170217183640) do
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
+
+  create_table "veterinarian", force: :cascade do |t|
+    t.string  "name"
+    t.string  "street"
+    t.string  "city"
+    t.string  "state"
+    t.integer "zip_code"
+  end
+
+  create_table "vettings", force: :cascade do |t|
+    t.date    "vet_date"
+    t.integer "curr_vet_id"
+    t.integer "curr_fost_id"
+    t.string  "comments"
+    t.integer "vet_hold_id"
+  end
 
 end
