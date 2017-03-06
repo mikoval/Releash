@@ -71,6 +71,7 @@
 
 
       <%= f.submit "Create Alert", :onclick => "return validateform();", class: "btn btn-primary" %>
+      <button  class= "btn btn-danger alert-delete" id= "delete-<%= @alert.id.to_s %> " > Delete Alert </button>
     <% end %>
     </div>
 </div>
@@ -158,6 +159,19 @@ $(".animal-selecter").on("change", function(){
       $(this).closest(".animal-item").detach()
       setHiddenAnimal();
   })
-
+$(".alert-delete").on("click", function(event){
+  event.preventDefault()
+  $.ajax({
+    type: "DELETE",
+    url: "/alerts",
+    data: "param=" + $(this).attr("id").split("-")[1],
+    success: function(msg){
+        
+    },
+    error: function(){
+      alert("unable to delete alert")
+    }
+  });
+});
 
 </script>
