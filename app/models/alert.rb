@@ -5,7 +5,6 @@ class Alert < ActiveRecord::Base
     belongs_to :type, :class_name => 'AlertType'
 
     validates :title, presence: true
-    validates :description, presence: true
     validates :alert_type_id, presence: true
     #validates :assignee_id, presence: true
     validates :created_by_id, presence: true

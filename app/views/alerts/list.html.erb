@@ -99,6 +99,7 @@
     loops over each person in @allPeople (defined in the people controller)
     puts all of that in at plain html with values from the person in the for-each loop
     -->
+
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
@@ -153,6 +154,7 @@ $("#people-table tr").hover(
     $(this).find(".glyphicon-pencil").hide()
   }
 )
+
 $(".alert-event").on("click", function(){
   event.preventDefault()
   var id = $(this).attr('id').split("-")[1]
@@ -196,44 +198,6 @@ $(".alert-event").on("click", function(){
    console.log("ajax called")
   
 })
-function generateAnimals(arr){
-  str = ""
-  for (i in arr){
-    var id = arr[i].id;
-    var name = arr[i].name;
-    str = str + "<span><a href='/animals/profile?method=get&param=" + id + "'>" + name + "</a></span>";
-    if(i != arr.length -1){
-      str = str + ", ";
-    }
-    else{
-      str = str + " ";
-    }
-  }
-  return str;
-}
-function generateUsers(arr){
-  str = ""
-  for (i in arr){
-    var id = arr[i].id;
-    var name = arr[i].name;
-    str = str + "<span><a href='/people/profile?method=get&param=" + id + "'>" + name + "</a></span>";
-    if(i != arr.length -1){
-      str = str + ", ";
-    }
-    else{
-      str = str + " ";
-    }
-  }
-  return str;
-}
-function checkEditable(userID, createdID, alertID){ 
-  if(userID == createdID){
-    str = "<a href='/alerts/edit?method=get&param=" + alertID + "'><span class = 'glyphicon glyphicon-pencil'></span></a>"
-    $(".modal-edit").html(str)
-  }
-  else{
-    $(".modal-edit").html("")
-  }
-}
+
 </script>
 

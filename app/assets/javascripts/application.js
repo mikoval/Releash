@@ -18,3 +18,59 @@
 //= require bootstrap-datepicker
 //= require moment
 //= require bootstrap-datetimepicker
+
+function generateAnimals(arr){
+  str = ""
+  for (i in arr){
+    var id = arr[i].id;
+    var name = arr[i].name;
+    str = str + "<span><a href='/animals/profile?method=get&param=" + id + "'>" + name + "</a></span>";
+    if(i != arr.length -1){
+      str = str + ", ";
+    }
+    else{
+      str = str + " ";
+    }
+  }
+  return str;
+}
+function generateUsers(arr){
+  str = ""
+  for (i in arr){
+    var id = arr[i].id;
+    var name = arr[i].name;
+    str = str + "<span><a href='/people/profile?method=get&param=" + id + "'>" + name + "</a></span>";
+    if(i != arr.length -1){
+      str = str + ", ";
+    }
+    else{
+      str = str + " ";
+    }
+  }
+  return str;
+}
+function checkEditable(userID, createdID, alertID){ 
+  if(userID == createdID){
+    str = "<a href='/alerts/edit?method=get&param=" + alertID + "'><span class = 'glyphicon glyphicon-pencil'></span></a>"
+    $(".modal-edit").html(str)
+  }
+  else{
+    $(".modal-edit").html("")
+  }
+}
+ function validateform(){
+    ret = true
+    $(".required").each(function(){
+        console.log($(this).val())
+        if($(this).val()==""){
+          $(this).addClass("required-error")
+          ret = false;
+        }
+        else{
+            $(this).removeClass("required-error")
+        }
+    
+
+    })
+    return ret;
+  }

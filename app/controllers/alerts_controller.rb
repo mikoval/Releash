@@ -17,6 +17,8 @@ class AlertsController < ApplicationController
 
   #for the new alerts
   def new
+    session[:prev_url] = request.referer
+    @animal = Animal.where(id=params["param"])
     @alert = Alert.new
     @types = AlertType.all
     @users = User.where(disabled: false)
@@ -24,6 +26,7 @@ class AlertsController < ApplicationController
 
   end
   def edit
+    session[:prev_url] = request.referer
     @alert = Alert.find(params["param"])
     @types = AlertType.all
     @users = User.where(disabled: false)
@@ -38,6 +41,7 @@ class AlertsController < ApplicationController
     @assigneesRaw.each do |a|
       @assigneesSelected.push(a.user)
     end
+
   end
   #for displaying alerts
   def display
@@ -73,7 +77,7 @@ class AlertsController < ApplicationController
         end
       end
       flash.now[:success] = "New Alert!"
-      redirect_to :controller => "alerts", :action => "list"
+      redirect_to session[:prev_url]
     else       
       flash.now[:danger] = "Error adding Alert!"
       render 'new'
@@ -106,12 +110,14 @@ class AlertsController < ApplicationController
 
 
       flash[:success] = "Updated Alert"
-      redirect_to :controller => "alerts", :action => "list"
+      redirect_to session[:prev_url]
+
     else
       flash.now[:danger] = "Error creating alert"
       @type = Type.all
       render 'edit'
     end
+
   end
 
   def alert_params

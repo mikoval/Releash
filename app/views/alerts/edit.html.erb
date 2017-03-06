@@ -22,16 +22,16 @@
 
     <%= form_for(@alert, html: { multipart: true },  url: alerts_path(@alert)) do |f| %>
       <%= f.label :title %>
-      <%= f.text_field :title, class: 'form-control' %>
+      <%= f.text_field :title, class: 'form-control required' %>
 
       <%= f.label :description %>
       <%= f.text_field :description, class: 'form-control' %>
 
       <%= f.label :date %>
-      <%= f.text_field :date, class: 'datepicker' %>
+      <%= f.text_field :date, class: 'datepicker required' %>
 
       <%= f.label :type%>
-      <%= f.collection_select :alert_type_id, @types, :id, :name, :prompt => "Select type" %>
+      <%= f.collection_select(:alert_type_id, @types, :id, :name, {:prompt => "Select type"}, {class: "required"})%>
 
       <%= f.label :location %>
       <%= f.text_field :location, class: 'form-control' %>
@@ -70,7 +70,7 @@
 
 
 
-      <%= f.submit "Create Alert", class: "btn btn-primary" %>
+      <%= f.submit "Create Alert", :onclick => "return validateform();", class: "btn btn-primary" %>
     <% end %>
     </div>
 </div>

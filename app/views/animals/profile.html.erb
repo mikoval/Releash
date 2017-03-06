@@ -132,7 +132,7 @@
         </div>
       </div>
 
-      <div class= "card form-div personal col-md-12">
+    <div class= "card form-div personal col-md-12">
       <a class= "card-header paper-header" data-toggle="collapse" href="#paper-body">
         <div>
           <h4>Paperwork</h4>
@@ -164,22 +164,138 @@
           <p style = "text-align: center">Adoption Contract: <%= link_to @animal.adoption_contract_document.file.filename, @animal.adoption_contract_document.url %> </p>
           <% end %>
       </div>
-
+     
       <!-- Tracking -->
       <div id="tracking-body" class="collapse inner-formdiv">
         <p> Functions for Stages</p>
       </div>
 
+      <div class= "card form-div alerts col-md-12">
+        <a class= "card-header alert-header" data-toggle="collapse" href="#alerts-body">
+          <div>
+            <h4>Alerts</h4>
+          </div>
+        </a>
+      </div>
+
       <!-- Alerts -->
       <div id="alerts-body" class="collapse inner-formdiv">
-          <p> Functions for Alerts</p>
+          <table>
+            <thead>
+              <tr>
+                <th class= "col-md-3">Title</th>
+                <th class= "col-md-3">Date</th>
+                <th class= "col-md-3">Created By</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @alerts.each do |a| %>
+                <tr>
+                <td><a href = "#" class = "alert-event" id = "alert-<%= a['id'] %> "><%= a["title"] %> </a></td>
+                <td><%= a["date"] %></td>
+                <td><%= a["created_by"] %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <a href='/alerts/new?method=get&param=' + <%= @animal.id %> + ><button class = "button" >Add New Alert</button></a>
       </div>
     
       <!-- Can i move this? -->
     <% end %>
   </div>
 </div>
+
+    
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 style = "display: inline-block; margin-right: 5px" class="modal-title"></h4><span class = "modal-edit"></span>
+      </div>
+
+      
+      <div class="modal-body">
+          <div class = "modal-div">
+             <span class="modal-created-by"></span>
+          </div>
+
+          <div class = "modal-div">
+           <span class="modal-assignees"></span>
+          </div>
+
+          <div class = "modal-div">
+           <span class="modal-animals"></span>
+          </div>
+
+          <div class = "modal-div">
+            <span class="modal-date"></span>
+          </div>
+
+          <div class = "modal-div">
+            <span class="modal-location"></span>
+          </div>
+
+          <div class = "modal-div">
+            
+            <div class = "modal-description"> </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 <script>
+
+$(".alert-event").on("click", function(){
+  event.preventDefault()
+  var id = $(this).attr('id').split("-")[1]
+  
+  //do the ajax call then update findings
+
+   $.ajax({
+    url: "/alerts/query",
+    data: {"id": id},
+    success: function(result){
+
+        $(".modal-title").text(result["title"])
+        $(".modal-created-by").html("Created by: " + generateUsers(result["created_by"]))
+
+        if(result["date"] != null){
+          $(".modal-date").text("date: " + result["date"])
+        }
+
+        if(result["description"] != null){
+          $(".modal-description").html("Description: <br>" + result["description"])
+        }
+
+        if(result["location"] != null){
+          $(".modal-location").text("Location: " + result["location"])
+        }
+
+        if(result["animals"].length > 0){
+           $(".modal-animals").html("Animals: " + generateAnimals(result["animals"]))
+        }
+        if(result["users"].length > 0){
+          $(".modal-assignees").html("Assignees: " + generateUsers(result["users"]))
+        }
+        checkEditable(result["user_id"], result["created_by"][0].id, result["id"])
+
+        $('#myModal').modal('toggle');
+    },
+    error: function(){
+      console.log("failed")
+    }
+  });
+   console.log("ajax called")
+  
+})
 
 
 var blist = $("#behavior-list").text();

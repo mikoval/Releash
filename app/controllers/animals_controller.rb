@@ -37,10 +37,11 @@ class AnimalsController < ApplicationController
   end
   
   def profile
-    @animal = Animal.find(params["param"])
+    id = params["param"]
+    @animal = Animal.find(id)
 
-    @breeds = AnimalBreed.where("animal_id = " + params["param"])
-    @characteristics = AnimalCharacteristic.where("animal_id = " + params["param"])
+    @breeds = AnimalBreed.where("animal_id = " + id)
+    @characteristics = AnimalCharacteristic.where("animal_id = " + id)
     @attributes = []
     @behaviors = []
 
@@ -52,7 +53,19 @@ class AnimalsController < ApplicationController
         @behaviors.push(d)
       end
     end
+    @alerts = []
+    @alertsRaw = AnimalAlert.where("animal_id = " + id)
+    @alertsRaw.each do |a|
 
+      @alerts.push({
+        "id" => a.alert.id,
+        "title" => a.alert.title,
+        "date" => a.alert.date.to_formatted_s(:long_ordinal),
+        "created_by" => a.alert.created_by.name
+
+        })
+    end
+    
 
   end
 
