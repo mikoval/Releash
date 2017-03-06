@@ -6,7 +6,7 @@ class AnimalsController < ApplicationController
 
   def new
     @animal = Animal.new
-
+    @status = StatusType.all
     @breed = Breed.order('name ASC')
     @behavior = Characteristic.where("category = 'Behavior'")
     @attribute = Characteristic.where("category = 'Attribute'")
@@ -16,6 +16,7 @@ class AnimalsController < ApplicationController
 
   def edit
     @animal = Animal.find(params["param"])
+    @status = StatusType.all
     @breed = Breed.order('name ASC')
     @breeds = AnimalBreed.where("animal_id = " + params["param"])
     @behavior = Characteristic.where("category = 'Behavior'")
@@ -38,7 +39,7 @@ class AnimalsController < ApplicationController
   
   def profile
     @animal = Animal.find(params["param"])
-
+    @status = StatusType.all
     @breeds = AnimalBreed.where("animal_id = " + params["param"])
     @characteristics = AnimalCharacteristic.where("animal_id = " + params["param"])
     @attributes = []
@@ -59,6 +60,7 @@ class AnimalsController < ApplicationController
 
   def newAnimal
     @animal = Animal.new(animal_params)
+    @status = StatusType.all
     @allAnimals = Animal.all
     @breed = Breed.all
     if @animal.save
@@ -214,7 +216,7 @@ class AnimalsController < ApplicationController
 
   def animal_params
 
-    params.require(:animal).permit(:name, :primary_breed_id, :secondary_breed_id, :picture, :status, :color_primary, :color_secondary, :eye_color,
+    params.require(:animal).permit(:name, :primary_breed_id, :secondary_breed_id, :picture, :status_id, :color_primary, :color_secondary, :eye_color,
       :adoption_fee, :animal_type, :birthday, :cage_number, :microchip_number, :tag_number, :neutered,  
 
       :intake_document, :owner_surrender_document, :home_check_document, :match_application_document, :adoption_application_document, 

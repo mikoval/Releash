@@ -115,7 +115,7 @@
               <%= f.text_field :birthday, class: 'datepicker' %>
 
               <%= f.label :status %>
-              <%= f.select :status, [ 'Intake','Vetting', 'Foster', 'Illness','Adopted', 'Sleep'], :prompt => 'Select Status' %>
+              <%= f.collection_select :status_id, @breed, :id, :name, {:prompt => "Select Status"} %>
             </div>
           </div>
         </div>
@@ -265,7 +265,7 @@
         <!-- Dropdown option selections -->
         <div id="status-sel" class="col-md-4">
           <%= f.label :status %>
-          <%= f.select :status, [ 'Intake','Vetting', 'Foster', 'Hold','Adopted'], :prompt => 'Current Status' %>
+          <%= f.collection_select :status_id, @breed, :id, :name, {:prompt => "Current Status"} %>
         </div>
     
         <div id="status-sel" class="col-md-12">

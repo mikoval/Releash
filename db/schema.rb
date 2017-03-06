@@ -11,12 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170305163708) do
+ActiveRecord::Schema.define(version: 20170306170353) do
 
   create_table "adopteds", force: :cascade do |t|
     t.date    "adopt_date"
     t.integer "adopter_id"
     t.string  "comments"
+    t.integer "animal_id"
   end
 
   create_table "adopters", force: :cascade do |t|
@@ -48,13 +49,15 @@ ActiveRecord::Schema.define(version: 20170305163708) do
   end
 
   create_table "ani_sleeps", force: :cascade do |t|
-    t.date   "sleep_date"
-    t.string "comments"
+    t.date    "sleep_date"
+    t.string  "comments"
+    t.integer "animal_id"
   end
 
   create_table "ani_transfers", force: :cascade do |t|
-    t.date   "transfer_date"
-    t.string "comments"
+    t.date    "transfer_date"
+    t.string  "comments"
+    t.integer "animal_id"
   end
 
   create_table "animal_breeds", force: :cascade do |t|
@@ -97,7 +100,7 @@ ActiveRecord::Schema.define(version: 20170305163708) do
     t.string   "adoption_application_document"
     t.string   "adoption_contract_document"
     t.string   "vetting_document"
-    t.string   "status"
+    t.integer  "status_id"
   end
 
   create_table "breeds", force: :cascade do |t|
@@ -119,6 +122,7 @@ ActiveRecord::Schema.define(version: 20170305163708) do
     t.integer "curr_fost_id"
     t.string  "comment"
     t.integer "fost_hold_id"
+    t.integer "animal_id"
   end
 
   create_table "fosters", force: :cascade do |t|
@@ -138,6 +142,7 @@ ActiveRecord::Schema.define(version: 20170305163708) do
     t.integer "ill_vet_id"
     t.string  "ill_info"
     t.string  "comments"
+    t.integer "animal_id"
   end
 
   create_table "intakes", force: :cascade do |t|
@@ -146,11 +151,13 @@ ActiveRecord::Schema.define(version: 20170305163708) do
     t.integer "vet_id"
     t.string  "comments"
     t.integer "intake_hold_id"
+    t.integer "animal_id"
   end
 
   create_table "other_holds", force: :cascade do |t|
-    t.date   "other_date"
-    t.string "comments"
+    t.date    "other_date"
+    t.string  "comments"
+    t.integer "animal_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -172,7 +179,7 @@ ActiveRecord::Schema.define(version: 20170305163708) do
     t.date    "train_date"
     t.string  "problem_info"
     t.decimal "expense"
-    t.integer "train_hold_id"
+    t.integer "animal_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -203,6 +210,7 @@ ActiveRecord::Schema.define(version: 20170305163708) do
     t.integer "curr_fost_id"
     t.string  "comments"
     t.integer "vet_hold_id"
+    t.integer "animal_id"
   end
 
 end

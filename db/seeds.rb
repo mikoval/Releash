@@ -4,6 +4,8 @@ Role.create([{title: 'Volunteer'}, {title: 'Employee'}, {title: 'Administrator '
 AlertType.create([{name: 'Medical'}, {name: 'Adoption'}, {name: 'Event'}, {name: 'Organization'}, {name: 'Other'}])
 User.create ({name: "Admin", email: "admin@releash.com", password: "password", password_confirmation: "password", role_id:3})
 Species.create([{kind: 'Dog'}, {kind: 'Cat'}])
+HoldType.create([{name: 'Illness'}, {name: 'Training'}, {name: 'Other'}])
+StatusType.create([{name: 'Intake'}, {name: 'Foster'}, {name: 'Vetting'}, {name: 'Adopted'}, {name: 'Sleep'}, {name: 'Transfer'}])
 Characteristic.create(
 	[
 		{category: "Behavior", name: 'Fearful'}, {category: "Behavior", name: 'Good with Cats'},{category: "Behavior", name: 'Good with children'},
