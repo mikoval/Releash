@@ -17,7 +17,7 @@ class AlertsController < ApplicationController
 
   #for the new alerts
   def new
-    session[:prev_url] = request.referer
+    update_referer(request.referer, request.original_url)
     @animal = Animal.where(id=params["param"])
     @alert = Alert.new
     @types = AlertType.all
@@ -26,7 +26,7 @@ class AlertsController < ApplicationController
 
   end
   def edit
-    session[:prev_url] = request.referer
+    update_referer(request.referer, request.original_url)
     @alert = Alert.find(params["param"])
     @types = AlertType.all
     @users = User.where(disabled: false)
@@ -43,6 +43,14 @@ class AlertsController < ApplicationController
     end
 
   end
+  def unsubscribe
+    session[:prev_url] = request.referer
+
+
+    redirect_to session[:prev_url]
+
+  end 
+
   #for displaying alerts
   def display
     @alert = Alert.find(params["param"])
@@ -110,6 +118,7 @@ class AlertsController < ApplicationController
 
 
       flash[:success] = "Updated Alert"
+      debugger
       redirect_to session[:prev_url]
 
     else
@@ -184,5 +193,10 @@ class AlertsController < ApplicationController
     end
     
     render json: @str
+  end
+  def update_referer(previous, current)
+      if(current!=previous)
+        session[:prev_url] = previous.to_s
+      end
   end
 end
