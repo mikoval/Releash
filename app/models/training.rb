@@ -1,3 +1,3 @@
 class Training < ActiveRecord::Base
-	belongs_to :itrain_hold, :class_name => 'hold_types'
+	belongs_to :train_hold, :class_name => 'HoldType'
 end
