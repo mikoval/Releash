@@ -57,6 +57,13 @@ ActiveRecord::Schema.define(version: 20170305163708) do
     t.string "comments"
   end
 
+  create_table "animal_alerts", force: :cascade do |t|
+    t.integer  "animal_id"
+    t.integer  "alert_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "animal_breeds", force: :cascade do |t|
     t.integer  "animal_id"
     t.integer  "breed_id"
@@ -168,11 +175,23 @@ ActiveRecord::Schema.define(version: 20170305163708) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "test", id: false, force: :cascade do |t|
+    t.string  "name"
+    t.integer "price"
+  end
+
   create_table "trainings", force: :cascade do |t|
     t.date    "train_date"
     t.string  "problem_info"
     t.decimal "expense"
     t.integer "train_hold_id"
+  end
+
+  create_table "user_alerts", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "alert_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

@@ -283,9 +283,9 @@
           <div class="tab-content">
             <div id="intake" role="tabpanel" class="tab-pane fade in">
               <%= f.label :intake_date %>
-              <%#= f.text_field :intake_date, class: 'datepicker' %>
+              <%= text_field :intake_date, "", class: 'datepicker' %>
               <%= f.label :intake_current_location%>
-              <%#= f.text_field :intake_curloc, class: 'form-control' %>
+              <%= text_field :intake_curloc, class: 'form-control' %>
               <%= f.label :intake_previous_location%>
               <%#= f.text_field :intake_prevloc, class: 'form-control' %>
               <%= f.label :description %>
