@@ -265,7 +265,7 @@
         <!-- Dropdown option selections -->
         <div id="status-sel" class="col-md-4">
           <%= f.label :status %>
-          <%= f.collection_select :status_id, @breed, :id, :name, {:prompt => "Current Status"} %>
+          <%= f.collection_select :status_id, @status, :id, :name, {:prompt => "Current Status"} %>
         </div>
     
         <div id="status-sel" class="col-md-12">
@@ -282,14 +282,26 @@
           <!-- Information for Tabs-->
           <div class="tab-content">
             <div id="intake" role="tabpanel" class="tab-pane fade in">
-              <%= f.label :intake_date %>
-              <%= text_field :intake_date, "", class: 'datepicker' %>
-              <%= f.label :intake_current_location%>
-              <%= text_field :intake_curloc, class: 'form-control' %>
-              <%= f.label :intake_previous_location%>
-              <%#= f.text_field :intake_prevloc, class: 'form-control' %>
-              <%= f.label :description %>
-              <%#= f.text_field :description, class: 'form-control' %>
+              <!-- Selecting Date-->
+              <%= f.label :intake_date, "Intake Date" %>
+              <%#= text_field :intake_dt, "", class: 'datepicker' %>
+              <%= text_field_tag 'intake_dt', "" ,class: 'datepicker' %>
+              <!-- Selecting Foster-->
+              <%= f.label :intake_fost, "Foster"%>
+              <%= collection_select(:intake_fost, :user_id, User.all, :id, :name, {:prompt => "Select foster"}) %>
+              
+              <!-- Selecting Vets-->
+              <%= f.label :intake_vet, "Veterinarian"%>
+              <%= collection_select(:intake_vet, :veterinarian_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian"}) %>
+
+              <!-- Inputing Comments-->
+              <%= f.label :intake_comm, "Comments" %>
+              <%= text_field_tag 'intake_cm', "", class: 'form-control' %>
+
+              <!-- Selecting Hold-->
+              <%= f.label :intake_hold, "Hold"%>
+              <%= collection_select(:intake_hold, :hold_type_id, HoldType.all, :id, :name, {:prompt => "Select a Hold"}) %>
+
             </div>
             <div id="vetting" role="tabpanel" class="tab-pane">
               <%= f.label :vetting_date %>

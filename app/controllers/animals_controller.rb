@@ -6,7 +6,10 @@ class AnimalsController < ApplicationController
 
   def new
     @animal = Animal.new
+    
     @status = StatusType.all
+    @hold = HoldType.all
+    
     @breed = Breed.order('name ASC')
     @behavior = Characteristic.where("category = 'Behavior'")
     @attribute = Characteristic.where("category = 'Attribute'")
@@ -39,7 +42,20 @@ class AnimalsController < ApplicationController
   
   def profile
     @animal = Animal.find(params["param"])
-    @status = StatusType.all
+
+    #checking status to display correct one
+    @status = StatusType.find(@animal.status_id)
+    @status_name = @status.name
+    #Rails.logger.debug("My object: #{status_name.inspect}")
+    
+    if (@status_name.to_s == "Intake")
+      @intake = Intake.find(@animal.id)
+      @intake_foster = User.find(@intake.foster_id).name
+      @intake_vet = Veterinarian.find(@intake.vet_id).name
+      @intake_hold = HoldType.find(@intake.intake_hold_id).name
+      Rails.logger.debug("My object: #{@intake.inspect}")
+    end
+    
     @breeds = AnimalBreed.where("animal_id = " + params["param"])
     @characteristics = AnimalCharacteristic.where("animal_id = " + params["param"])
     @attributes = []
@@ -63,6 +79,9 @@ class AnimalsController < ApplicationController
     @status = StatusType.all
     @allAnimals = Animal.all
     @breed = Breed.all
+    @users = User.all
+
+
     if @animal.save
       #this code was for old documents
       if params["breeds"]
@@ -73,6 +92,25 @@ class AnimalsController < ApplicationController
         @breed.save
         end
       end
+
+      if params["intake_dt"]
+
+        @intake = params[:intake_dt]
+        @foster = params[:intake_fost][:user_id]
+        @vet = params[:intake_vet][:veterinarian_id]
+        #@comm = params[:intake_comm]["{:class=>%22form-control%22}"]
+        @comm = params[:intake_cm]
+        @hold = params[:intake_hold][:hold_type_id]
+
+        @new_intake = Intake.new({intake_date: @intake, intake_date: @intake, foster_id: @foster,
+                      vet_id: @vet, comments: @comm, intake_hold_id: @hold, animal_id: @animal.id})
+        @new_intake.save
+        @testing = Intake.all
+        Rails.logger.debug("My object: #{@new_intake.inspect}")
+
+
+      end
+      
       if params["behavior"]
         arr = params["behavior"].split("|")
         arr.each do |d|
@@ -105,6 +143,8 @@ class AnimalsController < ApplicationController
 
   def editAnimal
     @animal = Animal.find(params["format"])
+    
+
     if @animal.update_attributes(animal_params)
        AnimalBreed.where("animal_id = " + @animal.id.to_s).delete_all
        AnimalCharacteristic.where("animal_id = " + @animal.id.to_s).delete_all
