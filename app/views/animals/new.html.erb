@@ -115,7 +115,7 @@
               <%= f.text_field :birthday, class: 'datepicker' %>
 
               <%= f.label :status %>
-              <%= f.collection_select :status_id, @breed, :id, :name, {:prompt => "Select Status"} %>
+              <%= f.collection_select :status_id, @status, :id, :name, {:prompt => "Select Status"} %>
             </div>
           </div>
         </div>
