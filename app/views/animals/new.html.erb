@@ -260,97 +260,214 @@
         </div>
       </div>
 
-      <!-- Tracking -->
+      <!--========================== TRACKING =============================-->
       <div id="tracking-body" class="collapse inner-formdiv">
-        <!-- Dropdown option selections -->
-        <div id="status-sel" class="col-md-4">
+        <!--========== BEGIN DROPDOWN OPTIONS =========-->
+        <div id="status-dropdown" class="col-md-4">
           <%= f.label :status %>
-          <%= f.collection_select :status_id, @breed, :id, :name, {:prompt => "Current Status"} %>
+          <%= f.collection_select :status_id, @status, :id, :name, {:prompt => "Current Status"} %>
         </div>
-    
-        <div id="status-sel" class="col-md-12">
-          <!-- Tab headers for each status -->
-          <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation"><a href="#intake" data-toggle="tab">Intake</a></li>
-            <li role="presentation"><a href="#vetting" data-toggle="tab">Vetting</a></li>
-            <li role="presentation"><a href="#foster" data-toggle="tab">Foster</a></li>
-            <li role="presentation"><a href="#adopted" data-toggle="tab">Adopted</a></li>
-            <li role="presentation"><a href="#sleep" data-toggle="tab">Sleep</a></li>
-            <li role="presentation"><a href="#transfer" data-toggle="tab">Transfer</a></li>
-          </ul>
+        <!--========== END DROPDOWN OPTIONS =========-->
 
-          <!-- Information for Tabs-->
-          <div class="tab-content">
-            <div id = "intake" role="tabpanel" class="tab-pane fade in">
-              <div id="intake_form" role="tabpanel" class="tab-pane fade in col-md-6">
-                <%= f.label :intake_date %>
-                <%= text_field :intake_date, "", class: 'datepicker' %>
-                <%= f.label :intake_current_location%>
-                <%= text_field :intake_curloc, "", class: 'form-control' %>
-                <%= f.label :intake_previous_location%>
-                <%= text_field :intake_prevloc, class: 'form-control' %>
-                <%= f.label :description %>
-                <%= text_field :description, class: 'form-control' %>
+        <!--=========== ADD HOLD ==========-->
+        <div id="hold-sel" class="peopleFostDiv col-md-4">
+          <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#holdModal">
+            Add Hold
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="holdModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Add Hold</h4>
+                </div>
+                
+                <div class="modal-body">
+                  
+                  <!-- Hold option selections -->
+                  <h3>Select Hold Type</h3>
+                  <div class="hold=options">
+                    <button id="illness_btn" type="button" class="btn btn-primary btn-md col-md-3">Illness</button>
+                    <button id="training-btn" type="button" class="btn btn-primary btn-md col-md-3">Training</button>
+                    <button type="button" class="btn btn-primary btn-md col-md-3">Other</button>
+                  </div>
+
+                  <!-- Hold option selected info -->
+                  <div id="illness-info" class="col-md-12">
+                    <p> Show if ilness button clicked </p>
+                  </div>
+                  <div id="training-info" class="col-md-12">
+                    <p> Show if training button clicked </p>
+                  </div>
+                  <div id="other-info" class="col-md-12">
+                    <p> Show if other button clicked </p>
+                  </div>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                  <button type="button" class="btn btn-primary">Add Hold</button>
+                </div>
+                
               </div>
-              <div id="intake_add" role="tabpanel" class="tab-pane fade in col-md-6">
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-                  Add Foster
-                </button>
+            </div>
+          </div>            
+        </div>
+        <!--=========== END ADD HOLD ==========-->       
 
-                <%= button_tag "Add foster", class: "add-btn btn-primary", data-toggle:"modal" data-target:"#myModal"%>
 
-                <!-- Modal -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                      </div>
-                      <div class="modal-body">
-                        <!-- search bar -->
-                        <li style = "display: inline-block; width: 200px; white-space: nowrap;">
-                        <input style = " width: 100%; vertical-align: middle; margin-top:15px" placeholder="Search" class ="search" /> 
-                        </li>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                      </div>
+    
+        <!--========== BEGIN TRACKING TABS =========-->
+        <div id= "trackingInner-div" class="col-md-12">
+          
+          <div id="status-tabs" class="trackingInner-div1 col-md-8">
+            <!-- Tab headers for each status -->
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation"><a href="#intake" data-toggle="tab">Intake</a></li>
+              <li role="presentation"><a href="#vetting" data-toggle="tab">Vetting</a></li>
+              <li role="presentation"><a href="#foster" data-toggle="tab">Foster</a></li>
+              <li role="presentation"><a href="#adopted" data-toggle="tab">Adopted</a></li>
+              <li role="presentation"><a href="#sleep" data-toggle="tab">Sleep</a></li>
+              <li role="presentation"><a href="#transfer" data-toggle="tab">Transfer</a></li>
+            </ul>
+
+            <!-- Information for Statuses in Tabs-->
+            <div class="status-tabsInner tab-content">
+              <!-- INTAKE -->
+              <div id = "intake" role="tabpanel" class="tab-pane fade in">
+                <!-- Selecting Date-->
+                <%= f.label :intake_date, "Intake Date" %>
+                <%= text_field :intake_date, "", class: 'datepicker' %>
+                <%#= text_field_tag 'intake_dt', "" ,class: 'datepicker' %>
+                
+                <!-- Selecting Foster-->
+                <%= f.label :intake_fost, "Foster"%>
+                <%= collection_select(:intake_fost, :user_id, User.all, :id, :name, {:prompt => "Select foster"}) %>
+                
+                <!-- Selecting Vets-->
+                <%= f.label :intake_vet, "Veterinarian"%>
+                <%= collection_select(:intake_vet, :veterinarian_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian"}) %>
+
+                <!-- Inputing Details-->
+                <%= f.label :intake_comm, "Details" %>
+                <%= text_field_tag 'intake_cm', "", class: 'form-control' %>
+              </div> 
+
+
+              <!-- VETTING -->
+              <div id="vetting" role="tabpanel" class="tab-pane">
+                  <%= f.label :vetting_date %>
+                  <%= text_field :vet_date, "",  class: 'datepicker' %>
+                  <!-- Selecting Foster-->
+                  <%= f.label :intake_fost, "Foster"%>
+                  <%= collection_select(:intake_fost, :user_id, User.all, :id, :name, {:prompt => "Select foster"}) %>
+                  
+                  <!-- Selecting Vets-->
+                  <%= f.label :intake_vet, "Veterinarian"%>
+                  <%= collection_select(:intake_vet, :veterinarian_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian"}) %>
+                  <!-- Inputing Details-->
+                  <%= f.label :comments, "Details" %>
+                  <%= text_field_tag 'comments', "", class: 'form-control' %>
+              </div>
+              
+              <!-- FOSTER -->
+              <div id="foster" role="tabpanel" class="tab-pane">
+                <%= f.label :foster_date %>
+                <%= text_field :foster_date, "", class: 'datepicker' %>
+                <%= f.label :comment, "Details" %>
+                <%= text_field_tag 'comment', "", class: 'form-control' %>
+              </div>
+              
+              <!-- ADOPTED -->
+              <div id="adopted" role="tabpanel" class="tab-pane">
+                <%= f.label :adopt_date %>
+                <%= text_field :adopted_date, "", class: 'datepicker' %>
+                <%= f.label :comments, "Details" %>
+                <%= text_field_tag 'comments', "", class: 'form-control' %>              
+              </div>
+              
+              <!-- SLEEP -->
+              <div id="sleep" role="tabpanel" class="tab-pane">
+                <%= f.label :sleep_date %>
+                <%= text_field :sleep_date, "", class: 'datepicker' %>
+                <%= f.label :comments, "Details" %>
+                <%= text_field_tag 'comments', "", class: 'form-control' %>  
+              </div>
+              
+              <!-- FOSTER -->
+              <div id="transfer" role="tabpanel" class="tab-pane">
+                <%= f.label :transfer_date %>
+                <%= text_field :transfer_date, "", class: 'datepicker' %>
+                <%= f.label :comments, "Details" %>
+                <%= text_field_tag 'comments', "", class: 'form-control' %>  
+              </div>
+            </div>
+          </div>
+          <!--========== END TRACKING TABS =========-->
+
+          <!--===================== BEGIN ADD PEOPLE ========================-->
+          <div id="foster sel" class="trackingInner-div2 col-md-4">
+            
+
+            <!-- BEGIN ADD FOSTER -->
+            <div id="foster sel" class="peopleFostDiv col-md-12">
+              <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#fostModal">
+                Add Foster
+              </button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="fostModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">Add Foster</h4>
+                    </div>
+                    <div class="modal-body">
+                      ...
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                      <button type="button" class="btn btn-primary">Add Foster</button>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>  
-            <div id="vetting" role="tabpanel" class="tab-pane">
-              <%= f.label :vetting_date %>
-              <%#= f.text_field :vetting_date, class: 'datepicker' %>
-              <%= f.label :vet %>
-              <%#= f.select :vets, [ 'null'], :prompt => 'Select Veterinarian' %>
-              <%= f.label :foster %>
-              <%#= f.select :fosters, [ 'null'], :prompt => 'Add Foster' %>
+              </div>            
             </div>
-            <div id="foster" role="tabpanel" class="tab-pane">
-              <%= f.label :foster_date %>
-              <%#= f.text_field :foster_date, class: 'datepicker' %>
-              <%= f.label :foster %>
-              <%#= f.select :fosters, [ 'null'], :prompt => 'Select Foster' %>
+            <!-- END ADD FOSTER -->
+
+            <!-- BEGIN ADD VET -->
+            <div id="vet sel" class="peopleVetDiv col-md-12">
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#vetModal">
+                Add Veterenarian
+              </button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="vetModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">Add Vet</h4>
+                    </div>
+                    <div class="modal-body">
+                      ...
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                      <button type="button" class="btn btn-primary">Add Vet</button>
+                    </div>
+                  </div>
+                </div>
+              </div>            
             </div>
-            <div id="adopted" role="tabpanel" class="tab-pane">
-              <%= f.label :adopted_date %>
-              <%#= f.text_field :adopted_date, class: 'datepicker' %>
-            </div>
-            <div id="sleep" role="tabpanel" class="tab-pane">
-              <%= f.label :sleep_date %>
-              <%#= f.text_field :sleep_date, class: 'datepicker' %>
-            </div>
-            <div id="transfer" role="tabpanel" class="tab-pane">
-              <%= f.label :transfer_date %>
-              <%#= f.text_field :transfer_date, class: 'datepicker' %>
-            </div>
+            <!-- END ADD VET -->
           </div>
-        </div>
+          <!--===================== END ADD PEOPLE ========================-->
+        </div>  
       </div>
 
       <!-- Alerts -->
@@ -369,6 +486,18 @@
 
 </div>
 <script>
+  // //Tracking show modals
+  // function showDiv() {
+  //  document.getElementById('welcomeDiv').style.display = "block";
+  // }
+  // $("")
+
+
+
+
+
+
+
   $("#animal_species_id").change(function(){
     console.log($("#animal_breed_id"))
     if ($("#animal_species_id").val() == 1) {

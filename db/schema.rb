@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170306170353) do
+ActiveRecord::Schema.define(version: 20170308063647) do
 
   create_table "adopteds", force: :cascade do |t|
     t.date    "adopt_date"
@@ -153,7 +153,7 @@ ActiveRecord::Schema.define(version: 20170306170353) do
   end
 
   create_table "intakes", force: :cascade do |t|
-    t.date    "intake_date"
+    t.string  "intake_date"
     t.integer "foster_id"
     t.integer "vet_id"
     t.string  "comments"

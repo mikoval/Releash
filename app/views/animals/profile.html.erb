@@ -35,9 +35,21 @@
               <%= @animal.name %>
               <h4>Primary Breed</h4>
               <%= @animal.primary_breed.name %>
+              
+              <!-- Status (Really Crude Way)-->
+              <h4>Current Status</h4>
+              <%=@status_name%>
+              <p> Date: <%= @intake.intake_date%> </p>
+              <p> Foster: <%=@intake_foster%> </p>
+              <p> Vet: <%=@intake_vet%> </p>
+              <p> Comments: <%= @intake.comments%> </p>
+              <p> Hold: <%=@intake_hold%> </p>
+
+
               <% if @animal.secondary_breed %>
               <h4>Secondary Breed</h4>
               <%= @animal.secondary_breed.name %>
+              
               <% end %>  
                <h4>Additional Breeds</h4> 
               <p> 
