@@ -45,15 +45,64 @@ class AnimalsController < ApplicationController
 
     #checking status to display correct one
     @status = StatusType.find(@animal.status_id)
+    
     @status_name = @status.name
     #Rails.logger.debug("My object: #{status_name.inspect}")
     
     if (@status_name.to_s == "Intake")
       @intake = Intake.find(@animal.id)
+      
       @intake_foster = User.find(@intake.foster_id).name
+      
       @intake_vet = Veterinarian.find(@intake.vet_id).name
-      @intake_hold = HoldType.find(@intake.intake_hold_id).name
+      
+      #@intake_hold = HoldType.find(@intake.intake_hold_id).name
+      
       Rails.logger.debug("My object: #{@intake.inspect}")
+    end
+
+    if (@status_name.to_s == "Foster")
+      @foster = FosterStage.find(@animal.id)
+      
+      @fost_foster = User.find(@foster.curr_fost_id).name
+      
+      @foster_hold = HoldType.find(@foster.fost_hold_id).name
+      
+      Rails.logger.debug("My object: #{@foster.inspect}")
+    end
+
+    if (@status_name.to_s == "Vetting")
+      @test = Vetting.all
+      Rails.logger.debug("My object: #{@test.inspect}")
+      @vetting = Vetting.find(@animal.id)
+      
+      @vetting_foster = User.find(@vetting.curr_fost_id).name
+      
+      @vetting_vet = Veterinarian.find(@vetting.curr_vet_id).name
+     
+      #@vetting_hold = HoldType.find(@vetting.vet_hold_id).name
+      
+      #Rails.logger.debug("My object: #{@vetting.inspect}")
+    end
+
+    if (@status_name.to_s == "Adopted")
+      @adopted = Adopted.find(@animal.id)
+      
+      #@adopter = Adopter.find(@adopted.adopter_id).name
+      
+      Rails.logger.debug("My object: #{@adopted.inspect}")
+    end
+
+    if (@status_name.to_s == "Sleep")
+      @sleep = AniSleep.find(@animal.id)
+      
+      Rails.logger.debug("My object: #{@sleep.inspect}")
+    end
+    
+    if (@status_name.to_s == "Transfer")
+      @transfers = AniTransfer.find(@animal.id)
+      
+      Rails.logger.debug("My object: #{@transfers.inspect}")
     end
     
     @breeds = AnimalBreed.where("animal_id = " + params["param"])
@@ -100,17 +149,97 @@ class AnimalsController < ApplicationController
         @vet = params[:intake_vet][:veterinarian_id]
         #@comm = params[:intake_comm]["{:class=>%22form-control%22}"]
         @comm = params[:intake_cm]
-        @hold = params[:intake_hold][:hold_type_id]
+        #@hold = params[:intake_hold][:hold_type_id]
+        @hold = nil
 
-        @new_intake = Intake.new({intake_date: @intake, intake_date: @intake, foster_id: @foster,
+        @new_intake = Intake.new({intake_date: @intake, foster_id: @foster,
                       vet_id: @vet, comments: @comm, intake_hold_id: @hold, animal_id: @animal.id})
         @new_intake.save
-        @testing = Intake.all
+
         Rails.logger.debug("My object: #{@new_intake.inspect}")
 
 
       end
+
+      if params["vet_dt"]
+
+        @vetting = params[:vet_dt]
+        @foster = params[:vet_fost][:user_id]
+        
+        @vet = params[:vet_vet][:veterinarian_id]
+        #@comm = params[:intake_comm]["{:class=>%22form-control%22}"]
+        @comm = params[:vet_cm]
+        @hold = nil
+
+        @new_vet = Vetting.new({vet_date: @vetting, curr_vet_id: @vet, curr_fost_id: @foster, comments: @comm, vet_hold_id: @hold, animal_id: @animal.id})
+        @new_vet.save
+        
+        Rails.logger.debug("My object: #{@new_vet.inspect}")
+
+
+      end
+
+      if params["foster_dt"]
+
+        @foster_date = params[:foster_dt]
+        @foster = params[:fost_fost][:user_id]
+ 
+        @comm = params[:fost_cm]
+        @hold = nil
+
+        @new_foster = FosterStage.new({foster_date: @foster_date, curr_fost_id: @foster,
+                      comment: @comm, fost_hold_id: @hold, animal_id: @animal.id})
+        @new_foster.save
+
+        Rails.logger.debug("My object: #{@new_foster.inspect}")
+
+
+      end
+
+      if params["sleep_dt"]
+
+        @sleep = params[:sleep_dt]
+
+        @comm = params[:sleep_cm]
+
+        @new_sleep = AniSleep.new({sleep_date: @sleep, comments: @comm, animal_id: @animal.id})
+        @new_sleep.save
+
+        Rails.logger.debug("My object: #{@new_sleep.inspect}")
+
+
+      end
+
+      if params["transfer_dt"]
+
+        @transfer = params[:transfer_dt]
+
+        @comm = params[:transfer_cm]
+
+
+        @new_transfer = AniTransfer.new({transfer_date: @transfer, comments: @comm, animal_id: @animal.id})
+
+        @new_transfer.save
+
+        Rails.logger.debug("My object: #{@new_transfer.inspect}")
+
+
+      end
       
+      if params["adopted_dt"]
+
+        @adopt_date = params[:adopted_dt]
+ 
+        @comm = params[:adopted_cm]
+        @hold = nil
+
+        @new_adopt = Adopted.new({adopt_date: @adopt_date, comments: @comm, animal_id: @animal.id})
+        @new_adopt.save
+        Rails.logger.debug("My object: #{@new_adopt.inspect}")
+
+
+      end
+
       if params["behavior"]
         arr = params["behavior"].split("|")
         arr.each do |d|

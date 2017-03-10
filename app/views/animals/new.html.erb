@@ -339,8 +339,7 @@
               <div id = "intake" role="tabpanel" class="tab-pane fade in">
                 <!-- Selecting Date-->
                 <%= f.label :intake_date, "Intake Date" %>
-                <%= text_field :intake_date, "", class: 'datepicker' %>
-                <%#= text_field_tag 'intake_dt', "" ,class: 'datepicker' %>
+                <%= text_field_tag 'intake_dt', "" ,class: 'datepicker' %>
                 
                 <!-- Selecting Foster-->
                 <%= f.label :intake_fost, "Foster"%>
@@ -359,49 +358,57 @@
               <!-- VETTING -->
               <div id="vetting" role="tabpanel" class="tab-pane">
                   <%= f.label :vetting_date %>
-                  <%= text_field :vet_date, "",  class: 'datepicker' %>
+                  <%= text_field_tag 'vet_dt', "" ,class: 'datepicker' %>
                   <!-- Selecting Foster-->
-                  <%= f.label :intake_fost, "Foster"%>
-                  <%= collection_select(:intake_fost, :user_id, User.all, :id, :name, {:prompt => "Select foster"}) %>
+                  <%= f.label :vet_fost, "Foster"%>
+                  <%= collection_select(:vet_fost, :user_id, User.all, :id, :name, {:prompt => "Select foster"}) %>
                   
                   <!-- Selecting Vets-->
-                  <%= f.label :intake_vet, "Veterinarian"%>
-                  <%= collection_select(:intake_vet, :veterinarian_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian"}) %>
+                  <%= f.label :vet_vet, "Veterinarian"%>
+                  <%= collection_select(:vet_vet, :veterinarian_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian"}) %>
                   <!-- Inputing Details-->
-                  <%= f.label :comments, "Details" %>
-                  <%= text_field_tag 'comments', "", class: 'form-control' %>
+                  <%= f.label :vet_comm, "Details" %>
+                  <%= text_field_tag 'vet_cm', "", class: 'form-control' %>
+
               </div>
               
               <!-- FOSTER -->
               <div id="foster" role="tabpanel" class="tab-pane">
                 <%= f.label :foster_date %>
-                <%= text_field :foster_date, "", class: 'datepicker' %>
-                <%= f.label :comment, "Details" %>
-                <%= text_field_tag 'comment', "", class: 'form-control' %>
+                <%= text_field_tag 'foster_dt', "" ,class: 'datepicker' %>
+                
+                <%= f.label :fost_fost, "Foster"%>
+                  <%= collection_select(:fost_fost, :user_id, User.all, :id, :name, {:prompt => "Select foster"}) %>
+
+                <%= f.label :fost_comm, "Details" %>
+                <%= text_field_tag 'fost_cm', "", class: 'form-control' %>
               </div>
               
               <!-- ADOPTED -->
               <div id="adopted" role="tabpanel" class="tab-pane">
                 <%= f.label :adopt_date %>
-                <%= text_field :adopted_date, "", class: 'datepicker' %>
-                <%= f.label :comments, "Details" %>
-                <%= text_field_tag 'comments', "", class: 'form-control' %>              
+                <%= text_field_tag 'adopted_dt', "", class: 'form-control' %>
+                
+                <%= f.label :adopt_comm, "Details" %>
+                <%= text_field_tag 'adopted_cm', "", class: 'form-control' %>              
               </div>
               
               <!-- SLEEP -->
               <div id="sleep" role="tabpanel" class="tab-pane">
                 <%= f.label :sleep_date %>
-                <%= text_field :sleep_date, "", class: 'datepicker' %>
-                <%= f.label :comments, "Details" %>
-                <%= text_field_tag 'comments', "", class: 'form-control' %>  
+                <%= text_field_tag 'sleep_dt', "", class: 'form-control' %>
+                
+                <%= f.label :sleep_comm, "Details" %>
+                <%= text_field_tag 'sleep_cm', "", class: 'form-control' %>
               </div>
               
-              <!-- FOSTER -->
+              <!-- TRANSFER -->
               <div id="transfer" role="tabpanel" class="tab-pane">
                 <%= f.label :transfer_date %>
-                <%= text_field :transfer_date, "", class: 'datepicker' %>
-                <%= f.label :comments, "Details" %>
-                <%= text_field_tag 'comments', "", class: 'form-control' %>  
+                <%= text_field_tag 'transfer_dt', "", class: 'form-control' %>
+                
+                <%= f.label :transfer_comm, "Details" %>
+                <%= text_field_tag 'transfer_cm', "", class: 'form-control' %> 
               </div>
             </div>
           </div>
