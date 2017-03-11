@@ -42,6 +42,7 @@ class AnimalsController < ApplicationController
   
   def profile
     @animal = Animal.find(params["param"])
+    @animal_check = @animal.neutered
 
     #checking status to display correct one
     @status = StatusType.find(@animal.status_id)
@@ -56,7 +57,7 @@ class AnimalsController < ApplicationController
       
       @intake_vet = Veterinarian.find(@intake.vet_id).name
       
-      #@intake_hold = HoldType.find(@intake.intake_hold_id).name
+      @intake_hold = HoldType.find(@intake.intake_hold_id).name
       
       Rails.logger.debug("My object: #{@intake.inspect}")
     end
@@ -80,7 +81,7 @@ class AnimalsController < ApplicationController
       
       @vetting_vet = Veterinarian.find(@vetting.curr_vet_id).name
      
-      #@vetting_hold = HoldType.find(@vetting.vet_hold_id).name
+      @vetting_hold = HoldType.find(@vetting.vet_hold_id).name
       
       #Rails.logger.debug("My object: #{@vetting.inspect}")
     end
@@ -147,10 +148,9 @@ class AnimalsController < ApplicationController
         @intake = params[:intake_dt]
         @foster = params[:intake_fost][:user_id]
         @vet = params[:intake_vet][:veterinarian_id]
-        #@comm = params[:intake_comm]["{:class=>%22form-control%22}"]
+
         @comm = params[:intake_cm]
-        #@hold = params[:intake_hold][:hold_type_id]
-        @hold = nil
+        @hold = params[:intake_hold][:hold_type_id]
 
         @new_intake = Intake.new({intake_date: @intake, foster_id: @foster,
                       vet_id: @vet, comments: @comm, intake_hold_id: @hold, animal_id: @animal.id})
@@ -167,9 +167,9 @@ class AnimalsController < ApplicationController
         @foster = params[:vet_fost][:user_id]
         
         @vet = params[:vet_vet][:veterinarian_id]
-        #@comm = params[:intake_comm]["{:class=>%22form-control%22}"]
+
         @comm = params[:vet_cm]
-        @hold = nil
+        @hold = params[:vet_hold][:hold_type_id]
 
         @new_vet = Vetting.new({vet_date: @vetting, curr_vet_id: @vet, curr_fost_id: @foster, comments: @comm, vet_hold_id: @hold, animal_id: @animal.id})
         @new_vet.save
@@ -185,7 +185,7 @@ class AnimalsController < ApplicationController
         @foster = params[:fost_fost][:user_id]
  
         @comm = params[:fost_cm]
-        @hold = nil
+        @hold = params[:fost_hold][:hold_type_id]
 
         @new_foster = FosterStage.new({foster_date: @foster_date, curr_fost_id: @foster,
                       comment: @comm, fost_hold_id: @hold, animal_id: @animal.id})
@@ -231,7 +231,6 @@ class AnimalsController < ApplicationController
         @adopt_date = params[:adopted_dt]
  
         @comm = params[:adopted_cm]
-        @hold = nil
 
         @new_adopt = Adopted.new({adopt_date: @adopt_date, comments: @comm, animal_id: @animal.id})
         @new_adopt.save

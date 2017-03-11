@@ -183,8 +183,6 @@
               <div id = "attribute-list"></div>
 
               <%= text_field_tag 'attribute', "", class: "hidden-attribute", style: "display:none;"  %>
-
-
             </div>
           </div>
         </div>
@@ -263,10 +261,7 @@
       <!--========================== TRACKING =============================-->
       <div id="tracking-body" class="collapse inner-formdiv">
         <!--========== BEGIN DROPDOWN OPTIONS =========-->
-        <div id="status-dropdown" class="col-md-4">
-          <%= f.label :status %>
-          <%= f.collection_select :status_id, @status, :id, :name, {:prompt => "Current Status"} %>
-        </div>
+
 
         <!--========== END DROPDOWN OPTIONS =========-->
 
@@ -353,6 +348,10 @@
                 <!-- Inputing Details-->
                 <%= f.label :intake_comm, "Details" %>
                 <%= text_field_tag 'intake_cm', "", class: 'form-control' %>
+
+                <%= f.label :intake_hold, "Hold"%>
+                <%= collection_select(:intake_hold, :hold_type_id, HoldType.all, :id, :name, {:prompt => "Select a Hold"}) %>
+              
               </div> 
 
 
@@ -367,6 +366,10 @@
                   <!-- Selecting Vets-->
                   <%= f.label :vet_vet, "Veterinarian"%>
                   <%= collection_select(:vet_vet, :veterinarian_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian"}) %>
+                  
+                  <!-- Selecting Holds-->
+                  <%= f.label :vet_hold, "Hold"%>
+                  <%= collection_select(:vet_hold, :hold_type_id, HoldType.all, :id, :name, {:prompt => "Select a Hold"}) %>
                   <!-- Inputing Details-->
                   <%= f.label :vet_comm, "Details" %>
                   <%= text_field_tag 'vet_cm', "", class: 'form-control' %>
@@ -379,7 +382,11 @@
                 <%= text_field_tag 'foster_dt', "" ,class: 'datepicker' %>
                 
                 <%= f.label :fost_fost, "Foster"%>
-                  <%= collection_select(:fost_fost, :user_id, User.all, :id, :name, {:prompt => "Select foster"}) %>
+                <%= collection_select(:fost_fost, :user_id, User.all, :id, :name, {:prompt => "Select foster"}) %>
+
+                <!-- Selecting Holds-->
+                <%= f.label :fost_hold, "Hold"%>
+                <%= collection_select(:fost_hold, :hold_type_id, HoldType.all, :id, :name, {:prompt => "Select a Hold"}) %>
 
                 <%= f.label :fost_comm, "Details" %>
                 <%= text_field_tag 'fost_cm', "", class: 'form-control' %>

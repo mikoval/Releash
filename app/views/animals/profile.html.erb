@@ -62,7 +62,6 @@
             <div id="phys-feat" class="collapse col-md-12">
               <p> Primary Color: <%= @animal.color_primary %> </p>
               <p> Secondary Color: <%= @animal.color_secondary %> </p>
-              
             </div>
           </div>
 
@@ -76,11 +75,15 @@
 
             <div id="med-body" class="collapse col-md-12">
               <p> Microchip Number: <%= @animal.microchip_number %> </p>
-              <%= f.label :microchip_number , "Microchip #"%>
-              <%= f.text_field :microchip_number, class: 'form-control' %>
 
-              <%= f.label :neutered , "Spayed/Neutered" %>
-              <%= f.check_box :neutered, class: 'form-control' %>
+
+                 <!-- Check if Spayed/ Neutered -->
+                <%if @animal_check == 0%>
+                  <p> Spayed / Neutered: No </p> 
+                <% else %>
+                  <p> Spayed / Neutered: Yes </p> 
+                <% end %> 
+            
             </div>
           </div>
 
@@ -101,10 +104,7 @@
                   <% else %>
                     <%= b.characteristic.name  %> 
                   <% end %>
-                   
-
-
-                <% end %> 
+                  <% end %> 
 
                </p>   
 
@@ -173,6 +173,7 @@
 
       <!-- Tracking -->
       <div id="tracking-body" class="collapse inner-formdiv">
+
         <!-- Status (Really Crude Way)-->
         <h4>Current Status</h4>
 
@@ -182,6 +183,7 @@
         <p> Date: <%= @intake.intake_date%> </p>
         <p> Foster: <%=@intake_foster%> </p>
         <p> Vet: <%=@intake_vet%> </p>
+        <p> Holds: <%=@intake_hold%> </p>
         <p> Comments: <%= @intake.comments%> </p>
 
         <% end %> 
@@ -194,6 +196,7 @@
         <p> Date: <%= @vetting.vet_date%> </p>
         <p> Foster: <%=@vetting_foster%> </p>
         <p> Vet: <%=@vetting_vet%> </p>
+        <p> Holds: <%=@vetting_hold%> </p>
         <p> Comments: <%= @vetting.comments%> </p>
 
         <% end %> 
@@ -205,7 +208,8 @@
         <%=@status_name%>
         <p> Date: <%= @foster.foster_date%> </p>
         <p> Foster: <%=@fost_foster%> </p>
-        <p> Comments: <%= @foster.comments%> </p>
+        <p> Holds: <%=@foster_hold%> </p>
+        <p> Comments: <%= @foster.comment%> </p>
 
         <% end %>
 
@@ -217,6 +221,7 @@
         <p> Date: <%= @adopted.adopt_date%> </p>
 
         <% end %>
+
 
         <!-- Sleep -->
 
