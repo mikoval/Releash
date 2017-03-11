@@ -267,16 +267,17 @@
           <%= f.label :status %>
           <%= f.collection_select :status_id, @status, :id, :name, {:prompt => "Current Status"} %>
         </div>
+
         <!--========== END DROPDOWN OPTIONS =========-->
 
         <!--=========== ADD HOLD ==========-->
-        <div id="hold-sel" class="peopleFostDiv col-md-4">
+        <!--<div id="hold-sel" class="peopleFostDiv col-md-4">
           <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#holdModal">
             Add Hold
-          </button>
+          </button>-->
 
           <!-- Modal -->
-          <div class="modal fade" id="holdModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <!--<div class="modal fade" id="holdModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -284,18 +285,18 @@
                   <h4 class="modal-title" id="myModalLabel">Add Hold</h4>
                 </div>
                 
-                <div class="modal-body">
+                <div class="modal-body">-->
                   
                   <!-- Hold option selections -->
-                  <h3>Select Hold Type</h3>
+                  <!--<h3>Select Hold Type</h3>
                   <div class="hold=options">
                     <button id="illness_btn" type="button" class="btn btn-primary btn-md col-md-3">Illness</button>
                     <button id="training-btn" type="button" class="btn btn-primary btn-md col-md-3">Training</button>
                     <button type="button" class="btn btn-primary btn-md col-md-3">Other</button>
-                  </div>
+                  </div>-->
 
                   <!-- Hold option selected info -->
-                  <div id="illness-info" class="col-md-12">
+                  <!--<div id="illness-info" class="col-md-12">
                     <p> Show if ilness button clicked </p>
                   </div>
                   <div id="training-info" class="col-md-12">
@@ -314,7 +315,7 @@
               </div>
             </div>
           </div>            
-        </div>
+        </div>-->
         <!--=========== END ADD HOLD ==========-->       
 
 
@@ -414,18 +415,19 @@
           </div>
           <!--========== END TRACKING TABS =========-->
 
+
           <!--===================== BEGIN ADD PEOPLE ========================-->
-          <div id="foster sel" class="trackingInner-div2 col-md-4">
+          <!-- <div id="foster sel" class="trackingInner-div2 col-md-4"> -->
             
 
             <!-- BEGIN ADD FOSTER -->
-            <div id="foster sel" class="peopleFostDiv col-md-12">
+            <!--<div id="foster sel" class="peopleFostDiv col-md-12">
               <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#fostModal">
                 Add Foster
-              </button>
+              </button> -->
 
               <!-- Modal -->
-              <div class="modal fade" id="fostModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <!--<div class="modal fade" id="fostModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -442,18 +444,18 @@
                   </div>
                 </div>
               </div>            
-            </div>
+            </div> -->
             <!-- END ADD FOSTER -->
 
             <!-- BEGIN ADD VET -->
-            <div id="vet sel" class="peopleVetDiv col-md-12">
+            <!-- <div id="vet sel" class="peopleVetDiv col-md-12"> -->
               <!-- Button trigger modal -->
-              <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#vetModal">
+              <!--<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#vetModal">
                 Add Veterenarian
-              </button>
+              </button> -->
 
               <!-- Modal -->
-              <div class="modal fade" id="vetModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <!--<div class="modal fade" id="vetModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -470,10 +472,11 @@
                   </div>
                 </div>
               </div>            
-            </div>
+            </div> -->
             <!-- END ADD VET -->
-          </div>
+          <!--</div> -->
           <!--===================== END ADD PEOPLE ========================-->
+
         </div>  
       </div>
 
