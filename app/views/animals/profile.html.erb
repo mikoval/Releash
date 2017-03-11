@@ -45,6 +45,7 @@
               <p> Date: <%= @intake.intake_date%> </p>
               <p> Foster: <%=@intake_foster%> </p>
               <p> Vet: <%=@intake_vet%> </p>
+              <p> Holds: <%=@intake_hold%> </p>
               <p> Comments: <%= @intake.comments%> </p>
 
               <% end %> 
@@ -57,6 +58,7 @@
               <p> Date: <%= @vetting.vet_date%> </p>
               <p> Foster: <%=@vetting_foster%> </p>
               <p> Vet: <%=@vetting_vet%> </p>
+              <p> Holds: <%=@vetting_hold%> </p>
               <p> Comments: <%= @vetting.comments%> </p>
 
               <% end %> 
@@ -68,7 +70,8 @@
               <%=@status_name%>
               <p> Date: <%= @foster.foster_date%> </p>
               <p> Foster: <%=@fost_foster%> </p>
-              <p> Comments: <%= @foster.comments%> </p>
+              <p> Holds: <%=@foster_hold%> </p>
+              <p> Comments: <%= @foster.comment%> </p>
 
               <% end %>
 
