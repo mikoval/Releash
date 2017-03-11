@@ -4,6 +4,17 @@ Role.create([{title: 'Volunteer'}, {title: 'Employee'}, {title: 'Administrator '
 AlertType.create([{name: 'Medical'}, {name: 'Adoption'}, {name: 'Event'}, {name: 'Organization'}, {name: 'Other'}])
 User.create ({name: "Admin", email: "admin@releash.com", password: "password", password_confirmation: "password", role_id:3})
 Species.create([{kind: 'Dog'}, {kind: 'Cat'}])
+HoldType.create([{name: 'Illness'}, {name: 'Training'}, {name: 'Other'}])
+StatusType.create([{name: 'Intake'}, {name: 'Foster'}, {name: 'Vetting'}, {name: 'Adopted'}, {name: 'Sleep'}, {name: 'Transfer'}])
+Veterinarian.create(
+	[
+		{name: 'Fayetteville Animal Hospital', street: '1145 GA-54', city: 'Fayetteville', state: 'GA', zip_code: 30214},
+		{name: 'Intown Animal Hospital', street: '1402 N Highland Ave NE # 3', city: 'Atlanta', state: 'GA', zip_code: 30306},
+		{name: 'Greater Atlanta Vet', street: '11093 Sandy Plains Rd', city: 'Marietta', state: 'GA', zip_code: 30066}, 
+		{name: 'Tritt Animal Hospital', street: '4349 Shallowford Rd', city: 'Marietta', state: 'GA', zip_code: 30062},
+		{name: 'North Georgia Veterinary', street: '1145 GA-54', city: 'Buford', state: 'GA', zip_code: 30518} 
+	])
+
 Characteristic.create(
 	[
 		{category: "Behavior", name: 'Fearful'}, {category: "Behavior", name: 'Good with Cats'},{category: "Behavior", name: 'Good with children'},

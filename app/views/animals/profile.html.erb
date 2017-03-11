@@ -35,11 +35,8 @@
               <%= @animal.name %>
               <h4>Primary Breed</h4>
               <%= @animal.primary_breed.name %>
-              <% if @animal.secondary_breed %>
-              <h4>Secondary Breed</h4>
-              <%= @animal.secondary_breed.name %>
-              <% end %>  
-               <h4>Additional Breeds</h4> 
+
+              <h4>Additional Breeds</h4> 
               <p> 
                 <% @breeds.each do |b| %>
                   <% if b != @breeds.last %>
@@ -65,7 +62,6 @@
             <div id="phys-feat" class="collapse col-md-12">
               <p> Primary Color: <%= @animal.color_primary %> </p>
               <p> Secondary Color: <%= @animal.color_secondary %> </p>
-              
             </div>
           </div>
 
@@ -78,11 +74,16 @@
             </a>
 
             <div id="med-body" class="collapse col-md-12">
-              <%= f.label :microchip_number , "Microchip #"%>
-              <%= f.text_field :microchip_number, class: 'form-control' %>
+              <p> Microchip Number: <%= @animal.microchip_number %> </p>
 
-              <%= f.label :neutered , "Spayed/Neutered" %>
-              <%= f.check_box :neutered, class: 'form-control' %>
+
+                 <!-- Check if Spayed/ Neutered -->
+                <%if @animal_check == 0%>
+                  <p> Spayed / Neutered: No </p> 
+                <% else %>
+                  <p> Spayed / Neutered: Yes </p> 
+                <% end %> 
+            
             </div>
           </div>
 
@@ -103,10 +104,7 @@
                   <% else %>
                     <%= b.characteristic.name  %> 
                   <% end %>
-                   
-
-
-                <% end %> 
+                  <% end %> 
 
                </p>   
 
@@ -138,7 +136,7 @@
           <h4>Paperwork</h4>
         </div>
       </a>
-    </div>
+      </div>
 
       <!-- Paperwork -->
       <div id="paper-body" class="collapse inner-formdiv">
@@ -164,10 +162,90 @@
           <p style = "text-align: center">Adoption Contract: <%= link_to @animal.adoption_contract_document.file.filename, @animal.adoption_contract_document.url %> </p>
           <% end %>
       </div>
-     
+
+      <div class= "card form-div personal col-md-12">
+      <a class= "card-header tracking-header" data-toggle="collapse" href="#tracking-body">
+        <div>
+          <h4>Tracking</h4>
+        </div>
+      </a>
+      </div>
+
       <!-- Tracking -->
       <div id="tracking-body" class="collapse inner-formdiv">
-        <p> Functions for Stages</p>
+
+        <!-- Status (Really Crude Way)-->
+        <h4>Current Status</h4>
+
+        <!-- Intake-->
+        <%if @status_name == "Intake"%>
+        <%=@status_name%>
+        <p> Date: <%= @intake.intake_date%> </p>
+        <p> Foster: <%=@intake_foster%> </p>
+        <p> Vet: <%=@intake_vet%> </p>
+        <p> Holds: <%=@intake_hold%> </p>
+        <p> Comments: <%= @intake.comments%> </p>
+
+        <% end %> 
+
+        <!-- Vetting-->
+
+        <%if @status_name == "Vetting"%>
+
+        <%=@status_name%>
+        <p> Date: <%= @vetting.vet_date%> </p>
+        <p> Foster: <%=@vetting_foster%> </p>
+        <p> Vet: <%=@vetting_vet%> </p>
+        <p> Holds: <%=@vetting_hold%> </p>
+        <p> Comments: <%= @vetting.comments%> </p>
+
+        <% end %> 
+
+        <!-- Foster-->
+
+        <%if @status_name == "Foster"%>
+
+        <%=@status_name%>
+        <p> Date: <%= @foster.foster_date%> </p>
+        <p> Foster: <%=@fost_foster%> </p>
+        <p> Holds: <%=@foster_hold%> </p>
+        <p> Comments: <%= @foster.comment%> </p>
+
+        <% end %>
+
+        <!-- Adopted -->
+
+        <%if @status_name == "Adopted"%>
+
+        <%= @status_name%>
+        <p> Date: <%= @adopted.adopt_date%> </p>
+
+        <% end %>
+
+
+        <!-- Sleep -->
+
+        <%if @status_name == "Sleep"%>
+
+        <%=@status_name%>
+        <p> Date: <%= @sleep.sleep_date%> </p>
+
+        <% end %>
+
+        <!-- Transfer -->
+
+        <%if @status_name == "Transfer"%>
+
+        <%= @status_name%>
+        <p> Date: <%= @transfers.transfer_date%> </p>
+
+        <% end %>
+
+        <% if @animal.secondary_breed %>
+        <h4>Secondary Breed</h4>
+        <%= @animal.secondary_breed.name %>
+
+        <% end %> 
       </div>
 
       <div class= "card form-div alerts col-md-12">
