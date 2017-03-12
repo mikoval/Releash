@@ -56,38 +56,42 @@ class AnimalsController < ApplicationController
     #Rails.logger.debug("My object: #{status_name.inspect}")
     
     if (@status_name.to_s == "Intake")
+
       @intake = Intake.find(@animal.id)
-      
-      @intake_foster = User.find(@intake.foster_id).name
-      
-      @intake_vet = Veterinarian.find(@intake.vet_id).name
-      
-      @intake_hold = HoldType.find(@intake.intake_hold_id).name
-      
-      Rails.logger.debug("My object: #{@intake.inspect}")
+    
+      if(@intake.foster_id != nil)
+        @intake_foster = User.find(@intake.foster_id).name
+        
+        @intake_vet = Veterinarian.find(@intake.vet_id).name
+        
+        @intake_hold = HoldType.find(@intake.intake_hold_id).name
+        
+        Rails.logger.debug("My object: #{@intake.inspect}")
+      end
     end
 
     if (@status_name.to_s == "Foster")
       @foster = FosterStage.find(@animal.id)
-      
-      @fost_foster = User.find(@foster.curr_fost_id).name
-      
-      @foster_hold = HoldType.find(@foster.fost_hold_id).name
-      
-      Rails.logger.debug("My object: #{@foster.inspect}")
+      if(@foster.curr_fost_id != nil)
+        @fost_foster = User.find(@foster.curr_fost_id).name
+        
+        @foster_hold = HoldType.find(@foster.fost_hold_id).name
+        
+        Rails.logger.debug("My object: #{@foster.inspect}")
+      end
     end
 
     if (@status_name.to_s == "Vetting")
       @test = Vetting.all
       Rails.logger.debug("My object: #{@test.inspect}")
       @vetting = Vetting.find(@animal.id)
-      
-      @vetting_foster = User.find(@vetting.curr_fost_id).name
-      
-      @vetting_vet = Veterinarian.find(@vetting.curr_vet_id).name
-     
-      @vetting_hold = HoldType.find(@vetting.vet_hold_id).name
-      
+      if(@vetting.curr_fost_id != nil)
+        @vetting_foster = User.find(@vetting.curr_fost_id).name
+        
+        @vetting_vet = Veterinarian.find(@vetting.curr_vet_id).name
+       
+        @vetting_hold = HoldType.find(@vetting.vet_hold_id).name
+      end
       #Rails.logger.debug("My object: #{@vetting.inspect}")
     end
 

@@ -11,8 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 20170303225008) do
+ActiveRecord::Schema.define(version: 20170310045003) do
 
   create_table "adopteds", force: :cascade do |t|
     t.string  "adopt_date"
@@ -48,18 +47,6 @@ ActiveRecord::Schema.define(version: 20170303225008) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end
-
-  create_table "alerts_user", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "alert_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-
-  create_table "alerts_user_tables", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "alert_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
 
   create_table "ani_sleeps", force: :cascade do |t|
     t.string  "sleep_date"
@@ -193,11 +180,6 @@ ActiveRecord::Schema.define(version: 20170303225008) do
   create_table "status_types", force: :cascade do |t|
     t.string   "name"
     t.datetime "updated_at", null: false
-  end
-
-  create_table "test", id: false, force: :cascade do |t|
-    t.string  "name"
-    t.integer "price"
   end
 
   create_table "trainings", force: :cascade do |t|
