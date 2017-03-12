@@ -27,7 +27,7 @@ class PeopleController < ApplicationController
   #says the fields that are allowed. have to match up with column names
   def people_params
       params.require(:user).permit(:name, :email, :password,
-                                   :password_confirmation, :role_id, :picture)
+                                   :password_confirmation, :role_id, :picture, :disabled)
   end
   # the code that actually adds an employee. 
   def addEmployee

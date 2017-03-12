@@ -1,17 +1,26 @@
 class SessionsController < ApplicationController
   skip_before_filter :require_login
+  layout "login"
   def new
-    render :layout => 'login'
+   
   end
 
   def create
+
     user = User.find_by(email: params[:session][:email].downcase)
-    if user && user.authenticate(params[:session][:password])
-      log_in user
-      params[:session][:remember_me] == '1' ? remember(user) : forget(user)
-      redirect_to root_url
+    if (user && user.authenticate(params[:session][:password]))
+      if(!user.disabled)
+        log_in user
+        params[:session][:remember_me] == '1' ? remember(user) : forget(user)
+        redirect_to root_url
+      else
+        flash.now[:danger] = 'Account disabled. Contact an organization administrator.'
+     
+        render 'new'
+      end
     else
       flash.now[:danger] = 'Invalid email/password combination'
+     
       render 'new'
     end
   end

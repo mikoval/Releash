@@ -1,9 +1,9 @@
 <h1><%= @animal.name%> Profile </h1>
 
 <% if employee?(current_user) %>
-
-<% end %>
 <%= link_to "<div class = 'col-md-2 col-md-offset-10 col-sm-4 col-sm-offset-8 col-xs-4 col-xs-offset-8'> <button>Edit profile</button></div>".html_safe,  :controller => "animals", :action => "edit", :param => @animal, :method => "get" %>
+<% end %>
+
 
 
 
@@ -35,10 +35,17 @@
               <%= @animal.name %>
               <h4>Primary Breed</h4>
               <%= @animal.primary_breed.name %>
-              <% if @animal.secondary_breed %>
-              <h4>Secondary Breed</h4>
-              <%= @animal.secondary_breed.name %>
-              <% end %>          	
+
+              <h4>Additional Breeds</h4> 
+              <p> 
+                <% @breeds.each do |b| %>
+                  <% if b != @breeds.last %>
+                    <%= b.breed.name + "," %> 
+                  <% else %>
+                    <%= b.breed.name  %> 
+                  <% end %>
+                <% end %> 
+               </p>       	
             </div>
           </div>
         </div>
@@ -53,37 +60,83 @@
             </a>
 
             <div id="phys-feat" class="collapse col-md-12">
-              <p> Primary: <%= @animal.color_primary %> </p>
-              <p> Secondary: <%= @animal.color_secondary %> </p>
+              <p> Primary Color: <%= @animal.color_primary %> </p>
+              <p> Secondary Color: <%= @animal.color_secondary %> </p>
             </div>
           </div>
 
           <div class = "med col-md-12">
             <!-- Medical -->
-            <a class= "card-header doc-header" data-toggle="collapse" href="#doc-body">
+            <a class= "card-header doc-header" data-toggle="collapse" href="#med-body">
               <div>
-                <h4>Medical</h4>
+                <h4>Vetting</h4>
               </div>
             </a>
 
             <div id="med-body" class="collapse col-md-12">
-              <%= f.label :microchip_number , "Microchip #"%>
-              <%= f.text_field :microchip_number, class: 'form-control' %>
+              <p> Microchip Number: <%= @animal.microchip_number %> </p>
 
-              <%= f.label :neutered , "Spayed/Neutered" %>
-              <%= f.check_box :neutered, class: 'form-control' %>
+
+                 <!-- Check if Spayed/ Neutered -->
+                <%if @animal_check == 0%>
+                  <p> Spayed / Neutered: No </p> 
+                <% else %>
+                  <p> Spayed / Neutered: Yes </p> 
+                <% end %> 
+            
             </div>
           </div>
+
+          <div class = "med col-md-12">
+            <!-- Personality -->
+            <a class= "card-header doc-header" data-toggle="collapse" href="#char-body">
+              <div>
+                <h4>Personality</h4>
+              </div>
+            </a>
+
+            <div id="char-body" class="collapse col-md-12">
+              <h4>Behavior</h4> 
+              <p id = "behavior-list"> 
+               <% @behaviors.each do |b| %>
+                 <% if b != @behaviors.last %>
+                    <%= b.characteristic.name + "," %> 
+                  <% else %>
+                    <%= b.characteristic.name  %> 
+                  <% end %>
+                  <% end %> 
+
+               </p>   
+
+               <h4>Attribute</h4> 
+              <p id = "attribute-list">  
+                <% @attributes.each do |b| %>
+                  
+                  <% if b != @attributes.last %>
+                    <%= b.characteristic.name + "," %> 
+                  <% else %>
+                    <%= b.characteristic.name  %> 
+                  <% end %>
+                   
+
+
+                <% end %> 
+               </p>         
+
+            </div>
+          </div>
+
+
         </div>
       </div>
 
-      <div class= "card form-div personal col-md-12">
+    <div class= "card form-div personal col-md-12">
       <a class= "card-header paper-header" data-toggle="collapse" href="#paper-body">
         <div>
           <h4>Paperwork</h4>
         </div>
       </a>
-    </div>
+      </div>
 
       <!-- Paperwork -->
       <div id="paper-body" class="collapse inner-formdiv">
@@ -110,19 +163,224 @@
           <% end %>
       </div>
 
+      <div class= "card form-div personal col-md-12">
+      <a class= "card-header tracking-header" data-toggle="collapse" href="#tracking-body">
+        <div>
+          <h4>Tracking</h4>
+        </div>
+      </a>
+      </div>
+
       <!-- Tracking -->
       <div id="tracking-body" class="collapse inner-formdiv">
-        <p> Functions for Stages</p>
+
+        <!-- Status (Really Crude Way)-->
+        <h4>Current Status</h4>
+
+        <!-- Intake-->
+        <%if @status_name == "Intake"%>
+        <%=@status_name%>
+        <p> Date: <%= @intake.intake_date%> </p>
+        <p> Foster: <%=@intake_foster%> </p>
+        <p> Vet: <%=@intake_vet%> </p>
+        <p> Holds: <%=@intake_hold%> </p>
+        <p> Comments: <%= @intake.comments%> </p>
+
+        <% end %> 
+
+        <!-- Vetting-->
+
+        <%if @status_name == "Vetting"%>
+
+        <%=@status_name%>
+        <p> Date: <%= @vetting.vet_date%> </p>
+        <p> Foster: <%=@vetting_foster%> </p>
+        <p> Vet: <%=@vetting_vet%> </p>
+        <p> Holds: <%=@vetting_hold%> </p>
+        <p> Comments: <%= @vetting.comments%> </p>
+
+        <% end %> 
+
+        <!-- Foster-->
+
+        <%if @status_name == "Foster"%>
+
+        <%=@status_name%>
+        <p> Date: <%= @foster.foster_date%> </p>
+        <p> Foster: <%=@fost_foster%> </p>
+        <p> Holds: <%=@foster_hold%> </p>
+        <p> Comments: <%= @foster.comment%> </p>
+
+        <% end %>
+
+        <!-- Adopted -->
+
+        <%if @status_name == "Adopted"%>
+
+        <%= @status_name%>
+        <p> Date: <%= @adopted.adopt_date%> </p>
+
+        <% end %>
+
+
+        <!-- Sleep -->
+
+        <%if @status_name == "Sleep"%>
+
+        <%=@status_name%>
+        <p> Date: <%= @sleep.sleep_date%> </p>
+
+        <% end %>
+
+        <!-- Transfer -->
+
+        <%if @status_name == "Transfer"%>
+
+        <%= @status_name%>
+        <p> Date: <%= @transfers.transfer_date%> </p>
+
+        <% end %>
+
+        <% if @animal.secondary_breed %>
+        <h4>Secondary Breed</h4>
+        <%= @animal.secondary_breed.name %>
+
+        <% end %> 
+      </div>
+
+      <div class= "card form-div alerts col-md-12">
+        <a class= "card-header alert-header" data-toggle="collapse" href="#alerts-body">
+          <div>
+            <h4>Alerts</h4>
+          </div>
+        </a>
       </div>
 
       <!-- Alerts -->
       <div id="alerts-body" class="collapse inner-formdiv">
-          <p> Functions for Alerts</p>
+          <table>
+            <thead>
+              <tr>
+                <th class= "col-md-3">Title</th>
+                <th class= "col-md-3">Date</th>
+                <th class= "col-md-3">Created By</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @alerts.each do |a| %>
+                <tr>
+                <td><a href = "#" class = "alert-event" id = "alert-<%= a['id'] %> "><%= a["title"] %> </a></td>
+                <td><%= a["date"] %></td>
+                <td><%= a["created_by"] %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <a href='/alerts/new?method=get&param=' + <%= @animal.id %> + ><button class = "button" >Add New Alert</button></a>
       </div>
     
       <!-- Can i move this? -->
     <% end %>
   </div>
 </div>
+
+    
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 style = "display: inline-block; margin-right: 5px" class="modal-title"></h4><span class = "modal-edit"></span>
+      </div>
+
+      
+      <div class="modal-body">
+          <div class = "modal-div">
+             <span class="modal-created-by"></span>
+          </div>
+
+          <div class = "modal-div">
+           <span class="modal-assignees"></span>
+          </div>
+
+          <div class = "modal-div">
+           <span class="modal-animals"></span>
+          </div>
+
+          <div class = "modal-div">
+            <span class="modal-date"></span>
+          </div>
+
+          <div class = "modal-div">
+            <span class="modal-location"></span>
+          </div>
+
+          <div class = "modal-div">
+            
+            <div class = "modal-description"> </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script>
+
+$(".alert-event").on("click", function(){
+  event.preventDefault()
+  var id = $(this).attr('id').split("-")[1]
+  
+  //do the ajax call then update findings
+
+   $.ajax({
+    url: "/alerts/query",
+    data: {"id": id},
+    success: function(result){
+
+        $(".modal-title").text(result["title"])
+        $(".modal-created-by").html("Created by: " + generateUsers(result["created_by"]))
+
+        if(result["date"] != null){
+          $(".modal-date").text("date: " + result["date"])
+        }
+
+        if(result["description"] != null){
+          $(".modal-description").html("Description: <br>" + result["description"])
+        }
+
+        if(result["location"] != null){
+          $(".modal-location").text("Location: " + result["location"])
+        }
+
+        if(result["animals"].length > 0){
+           $(".modal-animals").html("Animals: " + generateAnimals(result["animals"]))
+        }
+        if(result["users"].length > 0){
+          $(".modal-assignees").html("Assignees: " + generateUsers(result["users"]))
+        }
+        checkEditable(result["user_id"], result["created_by"][0].id, result["id"])
+
+        $('#myModal').modal('toggle');
+    },
+    error: function(){
+      console.log("failed")
+    }
+  });
+   console.log("ajax called")
+  
+})
+
+
+var blist = $("#behavior-list").text();
+console.log( $("#behavior-list"))
+blist = blist.substr(0, (blist.length - 2));
+$("#behavior-list").text(blist);
+
+</script>
 
 

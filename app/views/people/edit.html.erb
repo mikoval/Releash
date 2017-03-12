@@ -26,6 +26,16 @@
       <%= f.label :role_id %>
       <%= f.collection_select :role_id, @roles, :id, :title, :prompt => "Select Role" %>
 
+      
+      <% if admin?(current_user) %>
+        <%= f.label :disabled %>
+        <%= f.check_box :disabled, class: 'form-control' %>
+        <br>
+      <% end %>
+
+
+      
+
       <span class="picture">
         <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
       </span>
