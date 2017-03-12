@@ -1,0 +1,163 @@
+ <% provide(:title, 'Alert') %>
+<h1>Editing Alert</h1>
+<style>
+.select-item{
+  border:solid;
+  border-width: 1px;
+  padding:3px;
+  border-radius:5px;
+
+  margin:4px;
+
+}
+.remove-item{
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+</style>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+
+    <%= form_for(@alert, html: { multipart: true },  url: alerts_path(@alert)) do |f| %>
+      <%= f.label :title %>
+      <%= f.text_field :title, class: 'form-control required' %>
+
+      <%= f.label :description %>
+      <%= f.text_field :description, class: 'form-control' %>
+
+      <%= f.label :date %>
+      <%= f.text_field :date, class: 'datepicker required' %>
+
+      <%= f.label :type%>
+      <%= f.collection_select(:alert_type_id, @types, :id, :name, {:prompt => "Select type"}, {class: "required"})%>
+
+      <%= f.label :location %>
+      <%= f.text_field :location, class: 'form-control' %>
+
+
+      <%= label :post, "Assignees" %>
+      <%= collection_select(:assignee_id, 0, @users, :id, :name, {:prompt => "Select assignee"}, {class: "assignee-selecter"}) %>              
+      <div id = "assignee-list">
+        <% @assigneesSelected.each do |b| %>
+        <div id = 'assignee-<%= b.id %>'   class = 'select-item assignee-item' style = 'position: relative; display: inline-block;'>
+          <p style = 'margin:0px; padding-right:15px'> <%= b.name %> </p> 
+          <span class = 'glyphicon glyphicon-remove remove-item remove-assignee' style='margin:2px; float:right;'></span>
+        </div>
+
+        <% end %>
+      </div>
+
+      <%= text_field_tag 'assignees', "", class: "hidden-assignee", style: "display:none;"  %>
+
+      <!-- sdfasdfasdf -->
+
+      <%= label :post, "Animals" %>
+      <%= collection_select(:animal_id, 0, @animals, :id, :name, {:prompt => "Select Animal"}, {class: "animal-selecter"}) %>              
+      <div id = "animal-list">
+        <% @animalsSelected.each do |b| %>
+        <div id = 'animal-<%= b.id %>'   class = 'select-item animal-item' style = 'position: relative; display: inline-block;'>
+          <p style = 'margin:0px; padding-right:15px'> <%= b.name %> </p> 
+          <span class = 'glyphicon glyphicon-remove remove-item remove-animal' style='margin:2px; float:right;'></span>
+        </div>
+
+        <% end %>
+      </div>
+
+      <%= text_field_tag 'animals', "", class: "hidden-animal", style: "display:none;"  %>
+
+
+
+
+      <%= f.submit "Create Alert", :onclick => "return validateform();", class: "btn btn-primary" %>
+    <% end %>
+    </div>
+</div>
+
+
+
+
+</div> <!-- If this is not there there is a line across the screen. Not sure why - J -->
+<script>
+
+
+  $('.datepicker').datetimepicker({
+    //endDate: '+5y',
+    format:'YYYY/MM/DD hh:mm A',
+    
+  });
+
+
+
+$(".assignee-selecter").on("change", function(){
+    var text = $(".assignee-selecter option:selected").text();
+    var val = $(".assignee-selecter option:selected").val();
+    if(text == "Select Assignee"){
+      return
+    }
+    html = $("#assignee-list").html();
+    html += "<div id = 'assignee-" + val + "'' class = 'assignee-item select-item' style = 'position: relative; display: inline-block;'>" 
+        + "<p style = 'margin:0px; padding-right:15px'>" + text + "</p>" + 
+       "<span class = 'glyphicon glyphicon-remove remove-assignee remove-item' style='margin:2px; float:right;'>" +"</span>" + 
+       " </div>"
+    $("#assignee-list").html(html);
+    $(".remove-assignee").on("click", function(){
+      $(this).closest(".assignee-item").detach()
+      setHiddenAssignee();
+    })
+    //just for now while im setting up the new breeds
+    $(this).get(0).selectedIndex = 0;
+    setHiddenAssignee();
+  })
+  function setHiddenAssignee(){
+    str = ""
+    $(".assignee-item").each(function(){
+      var id = this.id.split("-")[1]
+      str += id + "|"
+    })
+    $(".hidden-assignee").val(str)
+  }
+  setHiddenAssignee();
+  $(".remove-assignee").on("click", function(){
+      $(this).closest(".assignee-item").detach()
+      setHiddenAssignee();
+  })
+
+
+$(".animal-selecter").on("change", function(){
+    var text = $(".animal-selecter option:selected").text();
+    var val = $(".animal-selecter option:selected").val();
+    if(text == "Select Animal"){
+      return
+    }
+    html = $("#animal-list").html();
+    html += "<div id = 'animal-" + val + "'' class = 'animal-item select-item' style = 'position: relative; display: inline-block;'>" 
+        + "<p style = 'margin:0px; padding-right:15px'>" + text + "</p>" + 
+       "<span class = 'glyphicon glyphicon-remove remove-animal remove-item' style='margin:2px; float:right;'>" +"</span>" + 
+       " </div>"
+    $("#animal-list").html(html);
+    $(".remove-animal").on("click", function(){
+      $(this).closest(".animal-item").detach()
+      setHiddenAnimal();
+    })
+    //just for now while im setting up the new breeds
+    $(this).get(0).selectedIndex = 0;
+    setHiddenAnimal();
+  })
+  function setHiddenAnimal(){
+    str = ""
+    $(".animal-item").each(function(){
+      var id = this.id.split("-")[1]
+      str += id + "|"
+    })
+    $(".hidden-animal").val(str)
+  }
+  setHiddenAnimal();
+  $(".remove-animal").on("click", function(){
+      $(this).closest(".animal-item").detach()
+      setHiddenAnimal();
+  })
+
+
+</script>

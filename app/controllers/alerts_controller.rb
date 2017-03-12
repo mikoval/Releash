@@ -1,17 +1,55 @@
 class AlertsController < ApplicationController
-  
+  def date_format(date)
+    return date.to_formatted_s(:long_ordinal)
+  end
   #listing all the alerts
   def list
-    @alert = Alert.new
-    @alerts = Alert.all
+    @alerts = []
+    @alertsRaw = UserAlert.where(user_id: current_user.id)
+    @createdAlerts = Alert.where(created_by_id: current_user.id)
+    puts @alerts
+
+    @alertsRaw.each do |a|
+      @alerts.push(a.alert)
+    end
+
   end
 
   #for the new alerts
   def new
+    update_referer(request.referer, request.original_url)
+    @animal = Animal.where(id=params["param"])
     @alert = Alert.new
     @types = AlertType.all
     @users = User.where(disabled: false)
+    @animals = Animal.all
+
   end
+  def edit
+    update_referer(request.referer, request.original_url)
+    @alert = Alert.find(params["param"])
+    @types = AlertType.all
+    @users = User.where(disabled: false)
+    @animals = Animal.all
+    @assigneesSelected = []
+    @animalsSelected = []
+    @assigneesRaw = UserAlert.where(alert_id: params["param"])
+    @animalsRaw = AnimalAlert.where(alert_id: params["param"])
+    @animalsRaw.each do |a|
+      @animalsSelected.push(a.animal)
+    end
+    @assigneesRaw.each do |a|
+      @assigneesSelected.push(a.user)
+    end
+
+  end
+  def unsubscribe
+    session[:prev_url] = request.referer
+
+
+    redirect_to session[:prev_url]
+
+  end 
 
   #for displaying alerts
   def display
@@ -20,6 +58,7 @@ class AlertsController < ApplicationController
 
   def newAlert
     
+
     @alert = Alert.new(alert_params)  do |q|
           q.created_by_id = current_user.id
     end
@@ -29,8 +68,24 @@ class AlertsController < ApplicationController
     @users = User.all
     
     if @alert.save
+      if params["assignees"]
+        arr = params["assignees"].split("|")
+        arr.each do |d|
+          
+        @userAlert = UserAlert.new({alert_id: @alert.id, user_id: d})
+        @userAlert.save
+        end
+      end
+      if params["animals"]
+        arr = params["animals"].split("|")
+        arr.each do |d|
+          
+        @animalAlert = AnimalAlert.new({alert_id: @alert.id, animal_id: d})
+        @animalAlert.save
+        end
+      end
       flash.now[:success] = "New Alert!"
-      redirect_to :controller => "alerts", :action => "list"
+      redirect_to session[:prev_url]
     else       
       flash.now[:danger] = "Error adding Alert!"
       render 'new'
@@ -40,13 +95,38 @@ class AlertsController < ApplicationController
   def editAlert
     @alert = Alert.find(params["format"])
     if @alert.update_attributes(alert_params)
-      flash[:success] = "Created Alert"
-      redirect_to :controller => "alerts", :action => "display", :param => @alert
+      #delete old ones
+      UserAlert.where("alert_id = " + @alert.id.to_s).delete_all
+      AnimalAlert.where("alert_id = " + @alert.id.to_s).delete_all
+      #add new ones
+      if params["assignees"]
+        arr = params["assignees"].split("|")
+        arr.each do |d|
+          
+        @userAlert = UserAlert.new({alert_id: @alert.id, user_id: d})
+        @userAlert.save
+        end
+      end
+      if params["animals"]
+        arr = params["animals"].split("|")
+        arr.each do |d|
+          
+        @animalAlert = AnimalAlert.new({alert_id: @alert.id, animal_id: d})
+        @animalAlert.save
+        end
+      end
+
+
+      flash[:success] = "Updated Alert"
+      debugger
+      redirect_to session[:prev_url]
+
     else
       flash.now[:danger] = "Error creating alert"
       @type = Type.all
       render 'edit'
     end
+
   end
 
   def alert_params
@@ -57,7 +137,42 @@ class AlertsController < ApplicationController
     @id = params["id"]
     if(@id!=nil)
       @alert = Alert.find(@id)
-      @str = {"title" => @alert.title, "description" => @alert.description } 
+      @AnimalList = AnimalAlert.where(alert_id: @id)
+      @UserList = UserAlert.where(alert_id: @id)
+
+      #generate the list of animals
+      @AnimalNameList = []
+      @AnimalList.each do |a|
+          @AnimalNameList.push({
+            "id" =>  a.animal.id, 
+            "name" => a.animal.name,
+
+          })
+      end
+      #generate the list of users
+      @UserNameList = []
+      @UserList.each do |a|
+          @UserNameList.push({
+            "id" =>  a.user.id, 
+            "name" => a.user.name,
+
+          })
+      end
+      #generate the json to be returned
+      @str = {
+        "id" => @alert.id, 
+        "title" => @alert.title, 
+        "description" => @alert.description,
+        "date" => date_format(@alert.date),
+        "created_by" =>  [{"name" => @alert.created_by.name, "id" => @alert.created_by.id}], 
+        "location" =>  @alert.location,
+        "animals" => @AnimalNameList,
+        "users" => @UserNameList,
+        "user_id" => current_user.id,
+      } 
+
+
+
     else
       @alerts = Alert.all
       @str = []
@@ -68,6 +183,7 @@ class AlertsController < ApplicationController
           "title" => a.title,
           "description" => a.description,
           "date" => a.date,
+
         })
       end
     end
@@ -77,5 +193,10 @@ class AlertsController < ApplicationController
     end
     
     render json: @str
+  end
+  def update_referer(previous, current)
+      if(current!=previous)
+        session[:prev_url] = previous.to_s
+      end
   end
 end

@@ -1,15 +1,22 @@
 <% provide(:title, "Alerts") %>
+<style>
+.modal-div{
+  margin:10px;
+}
+</style>
 <h1>Alerts</h1>
  <%= link_to "<button>Add Alert</button>".html_safe,  :controller => "alerts", :action => "new", :method => "get" %>
  <ul class="nav nav-tabs">
     <li class="active"><a href="#calendar" data-toggle="tab">Calendar</a></li>
     <li><a href="#list" data-toggle="tab">List</a></li>
+    <li><a href="#created" data-toggle="tab">Created</a></li>
 </ul>
 
 <div class="tab-content">
     <div class="tab-pane active" id="calendar">
+
         <%= month_calendar events: @alerts do |date, alerts| %>
-        <%= date %>
+        <%= date.day%>
 
         <% alerts.each do |alert| %>
           <div>
@@ -32,7 +39,7 @@
             <th class= "col-md-1">#</th>
             <th class= "col-md-1">Title</th>
             <th class= "col-md-3">Date</th>
-            <th class= "col-md-3">Description,</th>
+            <th class= "col-md-3">Created By</th>
           </tr>
         </thead>
         <tbody>
@@ -40,14 +47,45 @@
          <tr style = "height: 70px;" >
             <th scope="row"><%= index %></th>
             <td>
-             <%= a.title%> 
+             <a href = "#" class = "alert-event" id = "alert-<%= a.id %> "><%= a.title %> </a>
 
               </td>
 
             <td> 
-                <%= a.date%> 
+                <%= date_format(a.date) %> 
+           </td> 
+            <td> <%= a.created_by.name%> </td> 
+          </tr> 
+       
+
+      <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="tab-pane" id="created">
+
+      <table id = "alert-table" class="table table-bordered table-inverse table-hover people-table">
+        <thead>
+          <tr>
+            <th class= "col-md-1">#</th>
+            <th class= "col-md-1">Title</th>
+            <th class= "col-md-3">Date</th>
+            <th class= "col-md-3">Created By</th>
+          </tr>
+        </thead>
+        <tbody>
+      <% @createdAlerts.each_with_index do |a, index| %>
+         <tr style = "height: 70px;" >
+            <th scope="row"><%= index %></th>
+            <td>
+             <a href = "#" class = "alert-event" id = "alert-<%= a.id %> "><%= a.title %> </a>
+
+              </td>
+
+            <td> 
+                <%= date_format(a.date) %> 
            </td>
-            <td> <%= a.description%> </td>
+            <td> <%= a.created_by.name%> </td>
           </tr>
        
 
@@ -61,6 +99,7 @@
     loops over each person in @allPeople (defined in the people controller)
     puts all of that in at plain html with values from the person in the for-each loop
     -->
+
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
@@ -68,10 +107,35 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
+        <h4 style = "display: inline-block; margin-right: 5px" class="modal-title"></h4><span class = "modal-edit"></span>
       </div>
+
+      
       <div class="modal-body">
-        <p>Some text in the modal.</p>
+          <div class = "modal-div">
+             <span class="modal-created-by"></span>
+          </div>
+
+          <div class = "modal-div">
+           <span class="modal-assignees"></span>
+          </div>
+
+          <div class = "modal-div">
+           <span class="modal-animals"></span>
+          </div>
+
+          <div class = "modal-div">
+            <span class="modal-date"></span>
+          </div>
+
+          <div class = "modal-div">
+            <span class="modal-location"></span>
+          </div>
+
+          <div class = "modal-div">
+            
+            <div class = "modal-description"> </div>
+          </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -90,6 +154,7 @@ $("#people-table tr").hover(
     $(this).find(".glyphicon-pencil").hide()
   }
 )
+
 $(".alert-event").on("click", function(){
   event.preventDefault()
   var id = $(this).attr('id').split("-")[1]
@@ -100,8 +165,30 @@ $(".alert-event").on("click", function(){
     url: "/alerts/query",
     data: {"id": id},
     success: function(result){
+
         $(".modal-title").text(result["title"])
-        $(".modal-body").text(result["description"])
+        $(".modal-created-by").html("Created by: " + generateUsers(result["created_by"]))
+
+        if(result["date"] != null){
+          $(".modal-date").text("date: " + result["date"])
+        }
+
+        if(result["description"] != null){
+          $(".modal-description").html("Description: <br>" + result["description"])
+        }
+
+        if(result["location"] != null){
+          $(".modal-location").text("Location: " + result["location"])
+        }
+
+        if(result["animals"].length > 0){
+           $(".modal-animals").html("Animals: " + generateAnimals(result["animals"]))
+        }
+        if(result["users"].length > 0){
+          $(".modal-assignees").html("Assignees: " + generateUsers(result["users"]))
+        }
+        checkEditable(result["user_id"], result["created_by"][0].id, result["id"])
+
         $('#myModal').modal('toggle');
     },
     error: function(){
@@ -111,5 +198,6 @@ $(".alert-event").on("click", function(){
    console.log("ajax called")
   
 })
+
 </script>
 
