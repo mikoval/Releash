@@ -99,10 +99,10 @@
             <!-- Basic Characteristics -->
             <div class="characteristics-info col-md-6">
               <%= f.label :name %>
-              <%= f.text_field :name, class: 'form-control' %>
+              <%= f.text_field :name, class: 'form-control required' %>
 
               <%= f.label :primary_breed_id, "Primary Breed" %>
-              <%= f.collection_select :primary_breed_id, @breed, :id, :name, {:prompt => "Select Breed"} %>
+              <%= f.collection_select :primary_breed_id, @breed, :id, :name, {:prompt => "Select Breed"}, class:'required' %>
 
                <%= label :post, "Additional Breeds" %>
               <%= collection_select(:breed_id, 0, @breed, :id, :name, {:prompt => "Select Breed"}, {class: "breed-selecter"}) %>              
@@ -112,10 +112,10 @@
              
 
               <%= f.label :date_of_birth %>
-              <%= f.text_field :birthday, class: 'datepicker' %>
+              <%= f.text_field :birthday, class: 'datepicker required' %>
 
               <%= f.label :status %>
-              <%= f.collection_select :status_id, @status, :id, :name, {:prompt => "Select Status"} %>
+              <%= f.collection_select :status_id, @status, :id, :name, {:prompt => "Select Status"}, class: 'required' %>
             </div>
           </div>
         </div>
@@ -493,7 +493,7 @@
       </div>
     
       <!-- Can i move this? -->
-      <%= f.submit "Add animal", class: "add-btn btn-primary" %>
+      <%= f.submit "Add animal", :onclick => "return validateform();", class: "add-btn btn-primary" %>
     <% end %>
   </div>
 </div>
