@@ -27,6 +27,8 @@ Rails.application.routes.draw do
   get '/alerts', to: "alerts#list"
   post  '/alerts',   to: 'alerts#newAlert'
   patch  '/alerts',   to: 'alerts#editAlert'
+  delete  '/alerts',   to: 'alerts#deleteAlert'
+  post  '/alerts/unsubscribeAlert'
 
   get '/people', to: "people#list"
   get 'people/new'
