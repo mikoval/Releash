@@ -11,7 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 20170303225008) do
+
+  create_table "adopteds", force: :cascade do |t|
+    t.string  "adopt_date"
+    t.integer "adopter_id"
+    t.string  "comments"
+    t.integer "animal_id"
+  end
+
+  create_table "adopters", force: :cascade do |t|
+    t.string  "name"
+    t.string  "street"
+    t.string  "city"
+    t.integer "zip_code"
+    t.string  "phone_number"
+    t.string  "email_add"
+  end
 
   create_table "alert_types", force: :cascade do |t|
     t.string   "name"
@@ -37,13 +54,23 @@ ActiveRecord::Schema.define(version: 20170303225008) do
     t.integer  "alert_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
 
   create_table "alerts_user_tables", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "alert_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+
+  create_table "ani_sleeps", force: :cascade do |t|
+    t.string  "sleep_date"
+    t.string  "comments"
+    t.integer "animal_id"
+  end
+
+  create_table "ani_transfers", force: :cascade do |t|
+    t.string  "transfer_date"
+    t.string  "comments"
+    t.integer "animal_id"
   end
 
   create_table "animal_alerts", force: :cascade do |t|
@@ -93,7 +120,7 @@ ActiveRecord::Schema.define(version: 20170303225008) do
     t.string   "adoption_application_document"
     t.string   "adoption_contract_document"
     t.string   "vetting_document"
-    t.string   "status"
+    t.integer  "status_id"
   end
 
   create_table "breeds", force: :cascade do |t|
@@ -110,11 +137,47 @@ ActiveRecord::Schema.define(version: 20170303225008) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "foster_stages", force: :cascade do |t|
+    t.string  "foster_date"
+    t.integer "curr_fost_id"
+    t.string  "comment"
+    t.integer "fost_hold_id"
+    t.integer "animal_id"
+  end
+
   create_table "fosters", force: :cascade do |t|
     t.string   "user_id"
     t.string   "animal_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "hold_types", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "illnesses", force: :cascade do |t|
+    t.string  "ill_date"
+    t.integer "ill_vet_id"
+    t.string  "ill_info"
+    t.string  "comments"
+    t.integer "animal_id"
+  end
+
+  create_table "intakes", force: :cascade do |t|
+    t.string  "intake_date"
+    t.integer "foster_id"
+    t.integer "vet_id"
+    t.string  "comments"
+    t.integer "intake_hold_id"
+    t.integer "animal_id"
+  end
+
+  create_table "other_holds", force: :cascade do |t|
+    t.string  "other_date"
+    t.string  "comments"
+    t.integer "animal_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -125,6 +188,23 @@ ActiveRecord::Schema.define(version: 20170303225008) do
     t.string   "kind"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "status_types", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "test", id: false, force: :cascade do |t|
+    t.string  "name"
+    t.integer "price"
+  end
+
+  create_table "trainings", force: :cascade do |t|
+    t.string  "train_date"
+    t.string  "problem_info"
+    t.decimal "expense"
+    t.integer "animal_id"
   end
 
   create_table "user_alerts", force: :cascade do |t|
@@ -147,5 +227,22 @@ ActiveRecord::Schema.define(version: 20170303225008) do
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
+
+  create_table "veterinarian", force: :cascade do |t|
+    t.string  "name"
+    t.string  "street"
+    t.string  "city"
+    t.string  "state"
+    t.integer "zip_code"
+  end
+
+  create_table "vettings", force: :cascade do |t|
+    t.string  "vet_date"
+    t.integer "curr_vet_id"
+    t.integer "curr_fost_id"
+    t.string  "comments"
+    t.integer "vet_hold_id"
+    t.integer "animal_id"
+  end
 
 end
