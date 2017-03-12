@@ -17,5 +17,7 @@ module ApplicationHelper
       image_tag("/images/default.png",  :size => size, :class => "small_img")
      end    
   end
-
+  def date_format(date)
+    return date.to_formatted_s(:long_ordinal)
+  end
 end

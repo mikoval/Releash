@@ -41,7 +41,13 @@ class AnimalsController < ApplicationController
   end
   
   def profile
+    id = params["param"]
+    @animal = Animal.find(id)
+
+    @breeds = AnimalBreed.where("animal_id = " + id)
+    @characteristics = AnimalCharacteristic.where("animal_id = " + id)
     @animal = Animal.find(params["param"])
+    @animal_check = @animal.neutered
 
     #checking status to display correct one
     @status = StatusType.find(@animal.status_id)
@@ -118,7 +124,19 @@ class AnimalsController < ApplicationController
         @behaviors.push(d)
       end
     end
+    @alerts = []
+    @alertsRaw = AnimalAlert.where("animal_id = " + id)
+    @alertsRaw.each do |a|
 
+      @alerts.push({
+        "id" => a.alert.id,
+        "title" => a.alert.title,
+        "date" => a.alert.date.to_formatted_s(:long_ordinal),
+        "created_by" => a.alert.created_by.name
+
+        })
+    end
+    
 
   end
 
@@ -150,7 +168,6 @@ class AnimalsController < ApplicationController
 
         @comm = params[:intake_cm]
         @hold = params[:intake_hold][:hold_type_id]
-        @hold = nil
 
         @new_intake = Intake.new({intake_date: @intake, foster_id: @foster,
                       vet_id: @vet, comments: @comm, intake_hold_id: @hold, animal_id: @animal.id})
