@@ -1,25 +1,118 @@
 <% provide(:title, "Home") %>
 
+      
+      <h1>Dashboard</h1>
 
-<div class = "container" style="display:flex; flex-flow: row wrap;  justify-content: space-around;">
-    <div class= "col-md-12 col-sm-12 col-xs-12 "><h1>Dashboard</h1></div>
-    <div class = "col-md-5 col-sm-12 col-xs-12 animal-list" style = "border:solid; border-radius: 10px; margin: 5px">
+      <div id = "grid" class="grid-stack">
+        <div class="grid-stack-item" widget-type = "animal-list" data-gs-x="0" data-gs-y="0" data-gs-width="5" data-gs-height="4">
+             <div class="grid-stack-item-content animal-list panel panel-default"></div>
+        </div>
+        <div class="grid-stack-item" widget-type = "user-list"   data-gs-x="6" data-gs-y="0" data-gs-width="5" data-gs-height="4">
+             <div class="grid-stack-item-content user-list panel panel-default"></div>
+        </div>
+        <div class="grid-stack-item" widget-type = "alert-list"   data-gs-x="0" data-gs-y="4" data-gs-width="5" data-gs-height="4">
+             <div class="grid-stack-item-content alert-list panel panel-default"></div>
+        </div>
+        <div class="grid-stack-item" widget-type = "animal-list"  data-gs-x="6" data-gs-y="4" data-gs-width="5" data-gs-height="4">
+             <div class="grid-stack-item-content animal-list panel panel-default"></div>
+        </div>
+        <div class="grid-stack-item" widget-type = "new-widget"  data-gs-x="0" data-gs-y="8" data-gs-width="3" data-gs-height="4">
+             <div class="grid-stack-item-content  panel panel-default">
+              <div class='panel-heading clearfix'><h3>Add Widget</h3></div>
+              <input type="image" class = "new-widget" href = "#widgetsList" style = "max-width: 100%; max-height:100%" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Plus_font_awesome.svg/2000px-Plus_font_awesome.svg.png" />
+             </div>
+        </div>
+      </div>
     </div>
+   
 
-    <div class = "col-md-5 col-sm-12 col-xs-12 user-list"  style = "border:solid;  border-radius: 10px;  margin: 5px">
-    </div>
 
-    <div class = "col-md-5 col-sm-12 col-xs-12 alert-list"  style = "border:solid;  border-radius: 10px;  margin: 5px ">
-    </div>
+        <div id="widgetsList" class="modal fade" role="dialog">
+          <div class="modal-dialog">
 
-    <div class = "col-md-5 col-sm-12 col-xs-12 user-list" style = "border:solid;  border-radius: 10px;  margin: 5px">
-    </div >
-    <div style = "visibile:false; width: 45% "> </div>
-</div>
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add widget</h4>
+              </div>
+              <div class="modal-body">
+                <button onClick="addAnimalWidget()" type="button" class="btn btn-info btn-lg">Animals Widget</button>
+                <button onClick="addAlertsWidget()" type="button" class="btn btn-primary btn-lg">Alerts Widget</button>
+                <button onClick="addUserWidget()" type="button" class="btn btn-warning btn-lg">User Widget</button>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            </div>
+          </div>
+
 
 <script>
+var grid;
+$(function () {
+    var options = {
+        cell_height: 80,
+        vertical_margin: 10
+    };
+    grid = $('.grid-stack').gridstack(options);
+    grid = grid.data("gridstack");
+   
+  
+});
 
-if($(".animal-list").length > 0){
+
+
+
+
+function saveLayout() {
+    var arr = []
+    $(".grid-stack-item").each(function() {
+        var type = $(this).attr("widget-type");
+        var x = $(this).attr("data-gs-x");
+        var y = $(this).attr("data-gs-y");
+        arr.push({"type": type, "x": x, "y": y});
+
+    })
+    console.log(arr);
+
+}
+
+saveLayout()
+
+
+function addAnimalWidget() {
+    var el = $.parseHTML('<div class="grid-stack-item" widget-type = "animal-list" data-gs-x="0" data-gs-y="0" data-gs-width="5" data-gs-height="4"><div class="grid-stack-item-content animal-list panel panel-default"></div></div>');
+    grid.addWidget(el, 0, 0, 5, 4, true);
+    widgetAnimalList()
+}
+
+function addAlertsWidget() {
+    
+
+     var el = $.parseHTML('<div class="grid-stack-item" widget-type = "alert-list" data-gs-x="0" data-gs-y="0" data-gs-width="5" data-gs-height="4"><div class="grid-stack-item-content alert-list panel panel-default"></div></div>');
+    grid.addWidget(el, 0, 0, 5, 4, true);
+    widgetAlertList()
+
+
+}
+
+function addUserWidget() {
+    var el = $.parseHTML('<div class="grid-stack-item" widget-type = "user-list" data-gs-x="0" data-gs-y="0" data-gs-width="5" data-gs-height="4"><div class="grid-stack-item-content user-list panel panel-default"></div></div>');
+    grid.addWidget(el, 0, 0, 5, 4, true);
+    widgetUserList()
+}
+
+function drop(event) {
+    saveLayout()
+}
+
+
+
+
+if($(".animal-list").length > 0) {
     widgetAnimalList();
 }
 if($(".user-list").length > 0){
@@ -28,29 +121,34 @@ if($(".user-list").length > 0){
 if($(".alert-list").length > 0){
     widgetAlertList();
 }
+
 function widgetAnimalList(){
     $.ajax({url: "animals/query", success: function(result){
-        var str = " <h2>Animals</h2>"
-        str += "<table class='table table-striped'>" 
+        var str = "<div class='panel-heading clearfix'> <div class='btn-group pull-right'> <button class= 'btn toggle-dropdown' data-toggle='dropdown' aria-expanded='false' aria-haspopup='true'> <span class='glyphicon glyphicon-cog'></span> </button> <ul class='dropdown-menu dropdown-menu-right'> <li> <a href='#' class='remove-item-btn' onclick='return false;'>Remove</a> </li> </ul> </div> <h3 class= 'panel-title pull-left' style='padding-top: 8.5px;'> Animals</h3> </div>"
 
+        str += "<div class='panel-body'> <div class='table-responsive'> <table class='table table-bordered table-hover table-striped'> <thead> <tr> <th>Name</th> <th>Primary Breed</th> <th>Secondary Breed</th> </tr> </thead>" 
         for (x in result){
     
                 str += "<tr> \
-                <td> <a href='/animals/profile?method=get&param=" + result[x].id + "' > " + result[x].name + "</a></td>\
+                <td> <a href='/animals/profile?method=get&param=" + result[x].id + "class= 'list-group-item' >" + result[x].name + "</a></td>\
                  <td>" + result[x].primary + "</td>\
                 <td>" + result[x].secondary + "</td>\
                 </tr>"
         }
-        str +=  " </table>"
+        str +=  " </table> </div> <div class='text-right'> <a href= animals>View all Animals</a> </div> </div>"
+
          $(".animal-list").each(function(){
             $(this).html( str)
          })
+         bindRemove();
     }});
 }
+
 function widgetUserList(){
     $.ajax({url: "people/query", success: function(result){
-        var str = " <h2>Users</h2>"
-        str += "<table class='table table-striped'>" 
+        var str = "<div class='panel-heading clearfix'> <div class='btn-group pull-right'> <button class= 'btn toggle-dropdown' data-toggle='dropdown' aria-expanded='false' aria-haspopup='true'> <span class='glyphicon glyphicon-cog'></span> </button> <ul class='dropdown-menu dropdown-menu-right'> <li> <a href='#' class='remove-item-btn' onclick='return false;'>Remove</a> </li> </ul> </div> <h3 class= 'panel-title pull-left' style='padding-top: 8.5px;'> Users</h3> </div>"
+
+        str += "<div class='panel-body'> <div class='table-responsive'> <table class='table table-bordered table-hover table-striped'> <thead> <tr> <th>Name</th> <th>Email</th> </tr> </thead>" 
 
         for (x in result){
     
@@ -59,17 +157,20 @@ function widgetUserList(){
                  <td>" + result[x].email + "</td>\
                 </tr>"
         }
-        str +=  " </table>"
+        str +=  " </table> </div> <div class='text-right'> <a href= people>View all Users</a> </div> </div>"
+
          $(".user-list").each(function(){
             $(this).html( str)
          })
+         bindRemove();
     }});
 }
 
 function widgetAlertList(){
     $.ajax({url: "/alerts/query", success: function(result){
-        var str = " <h2>Alerts</h2>"
-        str += "<table class='table table-striped'>" 
+        var str = "<div class='panel-heading clearfix'> <div class='btn-group pull-right'> <button class= 'btn toggle-dropdown' data-toggle='dropdown' aria-expanded='false' aria-haspopup='true'> <span class='glyphicon glyphicon-cog'></span> </button> <ul class='dropdown-menu dropdown-menu-right'> <li> <a href='#' class='remove-item-btn' onclick='return false;'>Remove</a> </li> </ul> </div> <h3 class= 'panel-title pull-left' style='padding-top: 8.5px;' <h3 class= 'panel-title'> Alerts</h3> </div>"
+
+        str += "<div class='panel-body'> <div class='table-responsive'> <table class='table table-bordered table-hover table-striped'> <thead> <tr> <th>Title</th> <th>Date</th> </tr> </thead>" 
 
         for (x in result){
     
@@ -78,10 +179,26 @@ function widgetAlertList(){
                  <td>" + result[x].date + "</td>\
                 </tr>"
         }
-        str +=  " </table>"
+        str +=  " </table> </div> <div class='text-right'> <a href= alerts>View all Alerts</a> </div> </div>"
+
          $(".alert-list").each(function(){
             $(this).html( str)
          })
+         bindRemove();
     }});
 }
+function bindRemove(){
+  $('.remove-item-btn').on('click', function(event) {
+    console.log("removing")
+    $(this).closest('.grid-stack-item').remove()
+  })
+
+}
+
+$('.grid-stack').on('change', function(event, items) {
+  saveLayout();
+});
+$(".new-widget").on("click", function(){
+  $('#widgetsList').modal('show')    
+})
 </script>

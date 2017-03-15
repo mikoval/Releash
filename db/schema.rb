@@ -11,8 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 20170303225008) do
+ActiveRecord::Schema.define(version: 20170315140547) do
 
   create_table "adopteds", force: :cascade do |t|
     t.string  "adopt_date"
@@ -48,18 +47,6 @@ ActiveRecord::Schema.define(version: 20170303225008) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end
-
-  create_table "alerts_user", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "alert_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-
-  create_table "alerts_user_tables", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "alert_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
 
   create_table "ani_sleeps", force: :cascade do |t|
     t.string  "sleep_date"
@@ -195,11 +182,6 @@ ActiveRecord::Schema.define(version: 20170303225008) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "test", id: false, force: :cascade do |t|
-    t.string  "name"
-    t.integer "price"
-  end
-
   create_table "trainings", force: :cascade do |t|
     t.string  "train_date"
     t.string  "problem_info"
@@ -217,13 +199,16 @@ ActiveRecord::Schema.define(version: 20170303225008) do
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.string   "password_digest"
     t.integer  "role_id"
     t.string   "picture"
     t.string   "remember_digest"
-    t.boolean  "disabled",        default: false
+    t.boolean  "disabled",          default: false
+    t.string   "activation_digest"
+    t.boolean  "activated",         default: false
+    t.datetime "activated_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

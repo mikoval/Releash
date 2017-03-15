@@ -4,15 +4,23 @@ class AlertsController < ApplicationController
   end
   #listing all the alerts
   def list
-    @alerts = []
+    @allAlerts = []
+    @myAlerts = []
     @alertsRaw = UserAlert.where(user_id: current_user.id)
     @createdAlerts = Alert.where(created_by_id: current_user.id)
     puts @alerts
 
     @alertsRaw.each do |a|
-      @alerts.push(a.alert)
+      a.alert.assigned = true
+      @myAlerts.push(a.alert)
+      @allAlerts.push(a.alert)
     end
-
+    @createdAlerts.each do |a|
+      a.assigned = false
+      unless (@allAlerts.include?(a))
+       @allAlerts.push(a)
+     end
+    end
   end
 
   #for the new alerts
@@ -43,14 +51,25 @@ class AlertsController < ApplicationController
     end
 
   end
-  def unsubscribe
+  def unsubscribeAlert
     session[:prev_url] = request.referer
 
+     id = request["param"]
+     UserAlert.where("alert_id =" + id.to_s + " and user_id = " + current_user.id.to_s).delete_all
 
     redirect_to session[:prev_url]
 
   end 
+  def deleteAlert
 
+
+    id = request["param"]
+    AnimalAlert.where("alert_id =" + id.to_s).delete_all
+    UserAlert.where("alert_id =" + id.to_s).delete_all
+    Alert.where("id =" + id.to_s).delete_all
+
+    redirect_to session[:prev_url]
+  end
   #for displaying alerts
   def display
     @alert = Alert.find(params["param"])
@@ -118,7 +137,6 @@ class AlertsController < ApplicationController
 
 
       flash[:success] = "Updated Alert"
-      debugger
       redirect_to session[:prev_url]
 
     else
@@ -135,6 +153,7 @@ class AlertsController < ApplicationController
   end
   def query
     @id = params["id"]
+
     if(@id!=nil)
       @alert = Alert.find(@id)
       @AnimalList = AnimalAlert.where(alert_id: @id)
@@ -150,8 +169,12 @@ class AlertsController < ApplicationController
           })
       end
       #generate the list of users
+      @assigned = false;
       @UserNameList = []
       @UserList.each do |a|
+          if(a.user_id == current_user.id)
+            @assigned = true;
+          end
           @UserNameList.push({
             "id" =>  a.user.id, 
             "name" => a.user.name,
@@ -169,6 +192,7 @@ class AlertsController < ApplicationController
         "animals" => @AnimalNameList,
         "users" => @UserNameList,
         "user_id" => current_user.id,
+        "assigned" => @assigned
       } 
 
 

@@ -24,8 +24,11 @@ Rails.application.routes.draw do
   get 'alerts/edit'
   get 'alerts/list'
   get 'alerts/query'
+  get '/alerts', to: "alerts#list"
   post  '/alerts',   to: 'alerts#newAlert'
   patch  '/alerts',   to: 'alerts#editAlert'
+  delete  '/alerts',   to: 'alerts#deleteAlert'
+  post  '/alerts/unsubscribeAlert'
 
   get '/people', to: "people#list"
   get 'people/new'
@@ -40,11 +43,12 @@ Rails.application.routes.draw do
   
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
-  delete '/logout',  to: 'sessions#destroy'
+  get '/logout',  to: 'sessions#destroy'
 
 
   
   resources :users
+  resources :account_activations, only: [:edit]
   
   root 'main#home'
 end

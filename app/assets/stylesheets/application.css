@@ -14,10 +14,10 @@
  *
  *= require_tree .
  *= require_self
-*= require bootstrap-datetimepicker
- *= require bootstrap-datepicker
- # Or if using bootstrap v3:
- *= require bootstrap-datepicker3
+ *= require bootstrap-datetimepicker
+
+ *= require jquery-ui
+ *= require gridstack-js-rails
  */
 
 /*Change font everywhere */

@@ -11,13 +11,14 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery_ujs
+//= require jquery-ui
 //= require turbolinks
-//= require_tree .
 //= require bootstrap
-//= require bootstrap-datepicker
 //= require moment
 //= require bootstrap-datetimepicker
+//= require gridstack-js-rails
+//= require_tree .
+
 
 function generateAnimals(arr){
   str = ""
