@@ -33,6 +33,7 @@ class PeopleController < ApplicationController
   def addEmployee
 
     @employee = User.new(people_params)
+    UserMailer.account_activation(@employee).deliver_now
     if @employee.save
       flash[:success] = "Added employee"
       redirect_to people_url

@@ -1,87 +1,107 @@
 <% provide(:title, "Home") %>
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<div id="page-wrapper">
-    <div class = "container-fluid" style="display:flex; flex-flow: row wrap;  justify-content: space-around;">
-        <div class= "col-lg-12 col-md-12 col-sm-12 col-xs-12 "><h1>Dashboard</h1></div>
-            <div id="sortable" class="row" style = "width:100%">
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div class= "panel panel-default animal-list" widget-type="animal-list" ondrop="drop(event)"></div>
-                </div>
+      
+      <h1>Dashboard</h1>
 
-                <div class = "col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div class= "panel panel-default user-list" widget-type="user-list"  ondrop="drop(event)"></div>
-                </div>
-
-                <div class = "col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div class= "panel panel-default alert-list" widget-type="alert-list"  ondrop="drop(event)"></div>
-                </div>
-
-                <div class = "col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div class= "panel panel-default animal-list" widget-type="animal-list"  ondrop="drop(event)"></div>
-                </div>
-              </div>
-
-              <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="justify-content: center">
-                <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#widgetsList">Add Widget</button>
-                </div> 
-
-                <div id="widgetsList" class="modal fade" role="dialog">
-                  <div class="modal-dialog">
-
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Add widget</h4>
-                      </div>
-                      <div class="modal-body">
-                        <button onClick="addAnimalWidget()" type="button" class="btn btn-info btn-lg">Animals Widget</button>
-                        <button onClick="addAlertsWidget()" type="button" class="btn btn-primary btn-lg">Alerts Widget</button>
-                        <button onClick="addUserWidget()" type="button" class="btn btn-warning btn-lg">User Widget</button>
-
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                      </div>
-                    </div>
-                    </div>
-                  </div>
-
-
-        <div style = "visibile:false; width: 45% "> </div>
+      <div id = "grid" class="grid-stack">
+        <div class="grid-stack-item" widget-type = "animal-list" data-gs-x="0" data-gs-y="0" data-gs-width="5" data-gs-height="4">
+             <div class="grid-stack-item-content animal-list panel panel-default"></div>
+        </div>
+        <div class="grid-stack-item" widget-type = "user-list"   data-gs-x="6" data-gs-y="0" data-gs-width="5" data-gs-height="4">
+             <div class="grid-stack-item-content user-list panel panel-default"></div>
+        </div>
+        <div class="grid-stack-item" widget-type = "alert-list"   data-gs-x="0" data-gs-y="4" data-gs-width="5" data-gs-height="4">
+             <div class="grid-stack-item-content alert-list panel panel-default"></div>
+        </div>
+        <div class="grid-stack-item" widget-type = "animal-list"  data-gs-x="6" data-gs-y="4" data-gs-width="5" data-gs-height="4">
+             <div class="grid-stack-item-content animal-list panel panel-default"></div>
+        </div>
+        <div class="grid-stack-item" widget-type = "new-widget"  data-gs-x="0" data-gs-y="8" data-gs-width="3" data-gs-height="4">
+             <div class="grid-stack-item-content  panel panel-default">
+              <div class='panel-heading clearfix'><h3>Add Widget</h3></div>
+              <input type="image" class = "new-widget" href = "#widgetsList" style = "max-width: 100%; max-height:100%" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Plus_font_awesome.svg/2000px-Plus_font_awesome.svg.png" />
+             </div>
+        </div>
+      </div>
     </div>
+   
 
-</div>
+
+        <div id="widgetsList" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add widget</h4>
+              </div>
+              <div class="modal-body">
+                <button onClick="addAnimalWidget()" type="button" class="btn btn-info btn-lg">Animals Widget</button>
+                <button onClick="addAlertsWidget()" type="button" class="btn btn-primary btn-lg">Alerts Widget</button>
+                <button onClick="addUserWidget()" type="button" class="btn btn-warning btn-lg">User Widget</button>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            </div>
+          </div>
+
 
 <script>
+var grid;
+$(function () {
+    var options = {
+        cell_height: 80,
+        vertical_margin: 10
+    };
+    grid = $('.grid-stack').gridstack(options);
+    grid = grid.data("gridstack");
+   
+  
+});
+
+
+
+
 
 function saveLayout() {
     var arr = []
-    $(".panel").each(function() {
-        var type = $(this).attr("widget-type")
-        arr.push(type)
+    $(".grid-stack-item").each(function() {
+        var type = $(this).attr("widget-type");
+        var x = $(this).attr("data-gs-x");
+        var y = $(this).attr("data-gs-y");
+        arr.push({"type": type, "x": x, "y": y});
 
     })
-    console.log(arr)
+    console.log(arr);
+
 }
 
 saveLayout()
 
 
 function addAnimalWidget() {
-    document.getElementById('sortable').innerHTML += "<div class = 'col-lg-6 col-md-6 col-sm-12 col-xs-12'> <div class= 'panel panel-default animal-list' widget-type='animal-list'  ondrop='drop(event)'></div> </div>"
+    var el = $.parseHTML('<div class="grid-stack-item" widget-type = "animal-list" data-gs-x="0" data-gs-y="0" data-gs-width="5" data-gs-height="4"><div class="grid-stack-item-content animal-list panel panel-default"></div></div>');
+    grid.addWidget(el, 0, 0, 5, 4, true);
     widgetAnimalList()
 }
 
 function addAlertsWidget() {
-    document.getElementById('sortable').innerHTML += "<div class = 'col-lg-6 col-md-6 col-sm-12 col-xs-12'> <div class= 'panel panel-default alert-list' widget-type='alert-list'  ondrop='drop(event)'></div> </div>"
+    
+
+     var el = $.parseHTML('<div class="grid-stack-item" widget-type = "alert-list" data-gs-x="0" data-gs-y="0" data-gs-width="5" data-gs-height="4"><div class="grid-stack-item-content alert-list panel panel-default"></div></div>');
+    grid.addWidget(el, 0, 0, 5, 4, true);
     widgetAlertList()
+
+
 }
 
 function addUserWidget() {
-    document.getElementById('sortable').innerHTML += "<div class = 'col-lg-6 col-md-6 col-sm-12 col-xs-12'> <div class= 'panel panel-default user-list' widget-type='user-list'  ondrop='drop(event)'></div> </div>"
+    var el = $.parseHTML('<div class="grid-stack-item" widget-type = "user-list" data-gs-x="0" data-gs-y="0" data-gs-width="5" data-gs-height="4"><div class="grid-stack-item-content user-list panel panel-default"></div></div>');
+    grid.addWidget(el, 0, 0, 5, 4, true);
     widgetUserList()
 }
 
@@ -90,10 +110,7 @@ function drop(event) {
 }
 
 
-$(function () {
-    $("#sortable").sortable();
-    $("#sortable").disableSelection();
-});
+
 
 if($(".animal-list").length > 0) {
     widgetAnimalList();
@@ -173,10 +190,15 @@ function widgetAlertList(){
 function bindRemove(){
   $('.remove-item-btn').on('click', function(event) {
     console.log("removing")
-    $(this).closest('.ui-sortable-handle').remove()
+    $(this).closest('.grid-stack-item').remove()
   })
 
 }
 
-
+$('.grid-stack').on('change', function(event, items) {
+  saveLayout();
+});
+$(".new-widget").on("click", function(){
+  $('#widgetsList').modal('show')    
+})
 </script>

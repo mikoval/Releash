@@ -11,12 +11,13 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery_ujs
+//= require jquery-ui
 //= require turbolinks
 //= require bootstrap
-//= require bootstrap-datepicker
+//= require jquery-ui/widgets/mouse
 //= require moment
 //= require bootstrap-datetimepicker
+//= require gridstack-js-rails
 //= require_tree .
 
 
