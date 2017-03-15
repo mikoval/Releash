@@ -14,7 +14,6 @@
 //= require jquery-ui
 //= require turbolinks
 //= require bootstrap
-//= require jquery-ui/widgets/mouse
 //= require moment
 //= require bootstrap-datetimepicker
 //= require gridstack-js-rails
