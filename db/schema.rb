@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170316021729) do
+ActiveRecord::Schema.define(version: 20170316132530) do
 
   create_table "adopteds", force: :cascade do |t|
     t.string  "adopt_date"
@@ -210,6 +210,8 @@ ActiveRecord::Schema.define(version: 20170316021729) do
     t.boolean  "activated",         default: false
     t.datetime "activated_at"
     t.string   "dashboard",         default: "[{\"type\":\"animal-list\", \"x\":0, \"y\":0, \"height\": 4 , \"width\": 5},\n    {\"type\":\"user-list\", \"x\":5, \"y\":0, \"height\": 4 , \"width\": 5},\n    {\"type\":\"alert-list\", \"x\":0, \"y\":5, \"height\": 4 , \"width\": 5},\n    {\"type\":\"new-widget\", \"x\":5, \"y\":5, \"height\": 4 , \"width\": 5}]"
+    t.string   "reset_digest"
+    t.datetime "reset_sent_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
