@@ -1,5 +1,5 @@
 class PeopleController < ApplicationController
-   skip_before_filter :verify_authenticity_token 
+   skip_before_filter :verify_authenticity_token, :only => :dashboardSave
   # if you are wondering how these get called, look in routes. 
 
   #for the main people that displays all of them
