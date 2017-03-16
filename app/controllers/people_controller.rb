@@ -57,6 +57,21 @@ def editEmployee
       render 'edit'
     end
   end
+def dashboardSave
+    str = params["str"]
+    
+    
+    @employee = User.where("id =  " + current_user.id.to_s).update_all( dashboard: str )
+   
+
+    render json: params
+
+end
+def dashboardGet
+  json = {"str": current_user.dashboard}
+  render json: json
+end
+
 def query
     @users = User.all.limit(10)
     arr = []
@@ -72,3 +87,5 @@ def query
   end
 
 end
+
+

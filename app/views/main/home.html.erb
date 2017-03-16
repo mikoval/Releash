@@ -4,26 +4,8 @@
       <h1>Dashboard</h1>
 
       <div id = "grid" class="grid-stack">
-        <div class="grid-stack-item" widget-type = "animal-list" data-gs-x="0" data-gs-y="0" data-gs-width="5" data-gs-height="4">
-             <div class="grid-stack-item-content animal-list panel panel-default"></div>
-        </div>
-        <div class="grid-stack-item" widget-type = "user-list"   data-gs-x="6" data-gs-y="0" data-gs-width="5" data-gs-height="4">
-             <div class="grid-stack-item-content user-list panel panel-default"></div>
-        </div>
-        <div class="grid-stack-item" widget-type = "alert-list"   data-gs-x="0" data-gs-y="4" data-gs-width="5" data-gs-height="4">
-             <div class="grid-stack-item-content alert-list panel panel-default"></div>
-        </div>
-        <div class="grid-stack-item" widget-type = "animal-list"  data-gs-x="6" data-gs-y="4" data-gs-width="5" data-gs-height="4">
-             <div class="grid-stack-item-content animal-list panel panel-default"></div>
-        </div>
-        <div class="grid-stack-item" widget-type = "new-widget"  data-gs-x="0" data-gs-y="8" data-gs-width="3" data-gs-height="4">
-             <div class="grid-stack-item-content  panel panel-default">
-              <div class='panel-heading clearfix'><h3>Add Widget</h3></div>
-              <input type="image" class = "new-widget" href = "#widgetsList" style = "max-width: 100%; max-height:100%" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Plus_font_awesome.svg/2000px-Plus_font_awesome.svg.png" />
-             </div>
-        </div>
+        
       </div>
-    </div>
    
 
 
@@ -52,17 +34,6 @@
 
 <script>
 var grid;
-$(function () {
-    var options = {
-        cell_height: 80,
-        vertical_margin: 10
-    };
-    grid = $('.grid-stack').gridstack(options);
-    grid = grid.data("gridstack");
-   
-  
-});
-
 
 
 
@@ -73,14 +44,27 @@ function saveLayout() {
         var type = $(this).attr("widget-type");
         var x = $(this).attr("data-gs-x");
         var y = $(this).attr("data-gs-y");
-        arr.push({"type": type, "x": x, "y": y});
+        var width = $(this).attr("data-gs-width");
+        var height = $(this).attr("data-gs-height");
+        arr.push({"type": type, "x": x, "y": y, "width": width, "height": height});
 
     })
-    console.log(arr);
+    var str = JSON.stringify(arr);
+    $.ajax({
+
+        url: "people/dashboardSave",
+        type: "GET",
+        data: {"str": str},
+       success: function(result){
+       },
+       error: function(){
+        console.log("failed")
+       }
+     })
+
 
 }
 
-saveLayout()
 
 
 function addAnimalWidget() {
@@ -121,7 +105,17 @@ if($(".user-list").length > 0){
 if($(".alert-list").length > 0){
     widgetAlertList();
 }
+function widgetNewWidgets(){
+  var str = '<div class=\'panel-heading clearfix\'> <h3 class= \'panel-title pull-left\' style=\'padding-top: 8.5px;\'> New Widgets</h3></div><input type="image" class = "new-widget-img" href = "#widgetsList" style = "max-width: 100%; max-height:100%" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Plus_font_awesome.svg/2000px-Plus_font_awesome.svg.png" />'
+   $(".new-widget").each(function(){
 
+        $(this).html( str)
+     })
+
+   $(".new-widget-img").on("click", function(){
+      $('#widgetsList').modal('show')    
+    })
+}
 function widgetAnimalList(){
     $.ajax({url: "animals/query", success: function(result){
         var str = "<div class='panel-heading clearfix'> <div class='btn-group pull-right'> <button class= 'btn toggle-dropdown' data-toggle='dropdown' aria-expanded='false' aria-haspopup='true'> <span class='glyphicon glyphicon-cog'></span> </button> <ul class='dropdown-menu dropdown-menu-right'> <li> <a href='#' class='remove-item-btn' onclick='return false;'>Remove</a> </li> </ul> </div> <h3 class= 'panel-title pull-left' style='padding-top: 8.5px;'> Animals</h3> </div>"
@@ -187,6 +181,7 @@ function widgetAlertList(){
          bindRemove();
     }});
 }
+
 function bindRemove(){
   $('.remove-item-btn').on('click', function(event) {
     console.log("removing")
@@ -198,7 +193,57 @@ function bindRemove(){
 $('.grid-stack').on('change', function(event, items) {
   saveLayout();
 });
-$(".new-widget").on("click", function(){
-  $('#widgetsList').modal('show')    
-})
+
+function activateWidgets(){
+  widgetAlertList();
+  widgetUserList();
+  widgetAnimalList();
+  widgetNewWidgets();
+}
+function loadWidgets(){
+  console.log("loading widgets")
+  $.ajax({
+
+        url: "people/dashboardGet",
+        type: "GET",
+       success: function(result){
+        console.log(result);
+        str = result.str;
+        obj = JSON.parse(str);
+        for (i = 0; i < obj.length; i++){
+          
+          console.log(obj[i].type)
+
+          console.log(obj[i].x)
+
+          console.log(obj[i].y)
+
+          var el = $.parseHTML('<div class="grid-stack-item" widget-type = "' + obj[i].type + '" data-gs-x="'+ obj[i].x+'" data-gs-y="'+ obj[i].y +'" data-gs-width="' + obj[i].width + '" data-gs-height="' +obj[i].height+'"><div class="grid-stack-item-content '+obj[i].type+' panel panel-default"></div></div>');
+          $("#grid").append(el);
+
+
+        }
+
+        $(function () {
+            var options = {
+                cell_height: 80,
+                vertical_margin: 10
+            };
+            grid = $('.grid-stack').gridstack(options);
+            grid = grid.data("gridstack");
+
+          
+        });
+
+
+
+        activateWidgets();
+       },
+       error: function(){
+        console.log("failed")
+       }
+     })
+
+}
+loadWidgets();
 </script>
