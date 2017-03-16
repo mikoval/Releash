@@ -52,8 +52,8 @@ function saveLayout() {
     var str = JSON.stringify(arr);
     $.ajax({
 
-        url: "people/dashboardSave",
-        type: "GET",
+        url: "dashboard",
+        type: "PATCH",
         data: {"str": str},
        success: function(result){
        },
@@ -204,7 +204,7 @@ function loadWidgets(){
   console.log("loading widgets")
   $.ajax({
 
-        url: "people/dashboardGet",
+        url: "dashboard",
         type: "GET",
        success: function(result){
         console.log(result);

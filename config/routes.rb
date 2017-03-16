@@ -10,8 +10,8 @@ Rails.application.routes.draw do
 # handles it from there. 
 # for example post to animal should add an animal, get at animal should list animals or get a specific one, depending on how you want to do it. 
   get '/home', to: 'main#home'
-  get '/people/dashboardSave'
-  get '/people/dashboardGet'
+  patch '/dashboard', to: 'people#dashboardSave'
+  get '/dashboard', to: 'people#dashboardGet'
 
   get 'animals/query'
   get 'animals/search'
