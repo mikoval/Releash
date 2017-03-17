@@ -4,11 +4,11 @@
     <title><%= full_title(yield(:title)) %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= csrf_meta_tags %>
-    <%= stylesheet_link_tag    'application',  media: 'all', 'data-turbolinks-track'=> 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track' => 'reload' %>
+    <%= stylesheet_link_tag    'application',  media: 'all' %>
+    <%= javascript_include_tag 'application'  %>
     <%= render 'layouts/shim' %>
   </head>
-  <body>
+  <body <%= yield(:body_attributes) %>>
 
     <div id="wrapper">
       <%= render 'layouts/header' %>

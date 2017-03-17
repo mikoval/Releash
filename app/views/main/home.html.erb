@@ -1,5 +1,5 @@
 <% provide(:title, "Home") %>
-
+<%= content_for(:body_attributes, 'data-no-turbolink = "true"') %>
       
       <h1>Dashboard</h1>
 
@@ -207,16 +207,13 @@ function loadWidgets(){
         url: "dashboard",
         type: "GET",
        success: function(result){
-        console.log(result);
+
         str = result.str;
         obj = JSON.parse(str);
+        console.log(obj)
         for (i = 0; i < obj.length; i++){
           
-          console.log(obj[i].type)
 
-          console.log(obj[i].x)
-
-          console.log(obj[i].y)
 
           var el = $.parseHTML('<div class="grid-stack-item" widget-type = "' + obj[i].type + '" data-gs-x="'+ obj[i].x+'" data-gs-y="'+ obj[i].y +'" data-gs-width="' + obj[i].width + '" data-gs-height="' +obj[i].height+'"><div class="grid-stack-item-content '+obj[i].type+' panel panel-default"></div></div>');
           $("#grid").append(el);
