@@ -1,0 +1,7 @@
+namespace :utility do
+    desc "Send Alert Emails"
+    task :alert_emails => :environment do
+
+        Alert.where(:reference_date => Time.now..1.month.from_now)
+    end
+end

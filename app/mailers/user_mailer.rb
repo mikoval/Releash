@@ -5,6 +5,12 @@ class UserMailer < ApplicationMailer
   #
   #   en.user_mailer.account_activation.subject
   #
+
+  def alert_email(user, alert)
+    @user = user
+    @alert = alert
+    mail to: user.email, subject: "iShelter: " + alert.title
+  end
   def account_activation(user)
     @user = user
     mail to: user.email, subject: "Account activation"
