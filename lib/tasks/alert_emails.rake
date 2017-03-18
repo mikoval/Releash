@@ -7,11 +7,20 @@ namespace :utility do
             usersAlerts = UserAlert.where ("alert_id = " + alert.id.to_s)
 
             usersAlerts.each do |user|
-                if(user.email_date == nil || (Time.now.to_i - user.email_date.to_datetime.to_i) / 1.hour < 1)
+                if((alert.date.to_datetime.to_i - Time.now.to_i )  / 1.hour <= 1 &&  (alert.date.to_datetime.to_i - Time.now.to_i )  / 1.hour >=0&&  (Time.now.to_i - user.email_date.to_datetime.to_i)  / 1.hour >2
+                 )
                     
                     UserMailer.alert_email(user.user, alert).deliver_now
                     user.update_attributes(email_date: Time.now)
+                elsif (
+                    (alert.date.to_datetime.to_i - Time.now.to_i )/1.day < 0 &&  (Time.now.to_i - user.email_date.to_datetime.to_i)  / 1.day >=1)
+                    UserMailer.alert_email(user.user, alert).deliver_now
+                    user.update_attributes(email_date: Time.now)
+
                 end
+
+
+    
             end
 
         end
