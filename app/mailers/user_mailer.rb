@@ -16,6 +16,16 @@ class UserMailer < ApplicationMailer
     @alert = alert
     mail to: user.email, subject: "iShelter - OVERDUE: " + alert.title
   end
+  def alert_email_assigned(user, alert)
+    @user = user
+    @alert = alert
+    mail to: user.email, subject: "iShelter - Assigned: " + alert.title
+  end
+  def alert_email_edited(user, alert)
+    @user = user
+    @alert = alert
+    mail to: user.email, subject: "iShelter - OVERDUE: " + alert.title
+  end
   def account_activation(user)
     @user = user
     mail to: user.email, subject: "Account activation"
