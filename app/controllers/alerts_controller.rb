@@ -126,6 +126,8 @@ class AlertsController < ApplicationController
           
         @userAlert = UserAlert.new({alert_id: @alert.id, user_id: d})
         @userAlert.save
+        user = User.find(d)
+        UserMailer.alert_email_edited(user, @alert).deliver_now
         end
       end
       if params["animals"]
