@@ -1,4 +1,5 @@
 class AlertsController < ApplicationController
+  skip_before_filter :verify_authenticity_token, :only => :deleteAlert
   def date_format(date)
     return date.to_formatted_s(:long_ordinal)
   end
@@ -61,7 +62,7 @@ class AlertsController < ApplicationController
 
   end 
   def deleteAlert
-
+    debugger
 
     id = request["param"]
     AnimalAlert.where("alert_id =" + id.to_s).delete_all
