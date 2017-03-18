@@ -95,7 +95,7 @@ class AlertsController < ApplicationController
         @userAlert.save
         user = User.find(d)
         UserMailer.alert_email_assigned(user, @alert).deliver_now
-        user.update_attributes(email_date: Time.now)
+        @userAlert.update_attributes(email_date: Time.now)
         end
       end
       if params["animals"]
@@ -129,7 +129,7 @@ class AlertsController < ApplicationController
         @userAlert.save
         user = User.find(d)
         UserMailer.alert_email_edited(user, @alert).deliver_now
-        user.update_attributes(email_date: Time.now)
+        @userAlert.update_attributes(email_date: Time.now)
         end
       end
       if params["animals"]
