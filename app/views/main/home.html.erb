@@ -169,7 +169,7 @@ function widgetAlertList(){
         for (x in result){
     
                 str += "<tr> \
-                <td> <a> " + result[x].title + "</a></td>\
+                <td> <a href = '#' class = 'alert-event' id = 'alert-" + result[x].id + "'> " + result[x].title + "</a></td>\
                  <td>" + result[x].date + "</td>\
                 </tr>"
         }
@@ -179,6 +179,7 @@ function widgetAlertList(){
             $(this).html( str)
          })
          bindRemove();
+         bindAlertsModal();
     }});
 }
 
