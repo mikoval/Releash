@@ -218,7 +218,7 @@
                 </ul>
               </div>       
               <!-- create starting list --> 
-
+              <br>
               <div id = "attribute-list">
                 <% @attributes.each do |b| %>
 
@@ -232,6 +232,9 @@
 
               <%= text_field_tag 'attribute', "", class: "hidden-attribute", style: "display:none;"  %>
 
+              <br>
+              <%= label :notes, "Notes" %>
+             <%= f.text_area :notes, class: 'form-control' %>
 
             </div>
           </div>

@@ -428,10 +428,10 @@ class AnimalsController < ApplicationController
   def animal_params
 
     params.require(:animal).permit(:name, :primary_breed_id, :secondary_breed_id, :picture, :status_id, :color_primary, :color_secondary, :eye_color,
-      :adoption_fee, :animal_type, :birthday, :cage_number, :microchip_number, :tag_number, :neutered,  
+      :adoption_fee, :animal_type, :birthday, :cage_number, :microchip_number, :tag_number, :neutered,  :notes,
 
       :intake_document, :owner_surrender_document, :home_check_document, :match_application_document, :adoption_application_document, 
-      :adoption_contract_document, :vetting_document, :intake_date
+      :adoption_contract_document, :vetting_document, :intake_date, 
       )
 
   end

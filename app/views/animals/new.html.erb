@@ -191,7 +191,7 @@
               <div id = "behavior-list"></div>
 
               <%= text_field_tag 'behavior', "", class: "hidden-behavior", style: "display:none;"  %>
-
+              <br>
 
               <%= label :post, "attribute" %>
               <div class="dropdown">
@@ -206,7 +206,12 @@
               <div id = "attribute-list"></div>
 
               <%= text_field_tag 'attribute', "", class: "hidden-attribute", style: "display:none;"  %>
+              <br>
+              <%= label :notes, "Notes" %>
+             <%= f.text_area :notes, class: 'form-control' %>
             </div>
+
+
           </div>
         </div>
       </div>

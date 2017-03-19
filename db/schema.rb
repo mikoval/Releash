@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170317234511) do
+ActiveRecord::Schema.define(version: 20170319214748) do
 
   create_table "adopteds", force: :cascade do |t|
     t.string  "adopt_date"
@@ -108,6 +108,7 @@ ActiveRecord::Schema.define(version: 20170317234511) do
     t.string   "adoption_contract_document"
     t.string   "vetting_document"
     t.integer  "status_id"
+    t.string   "notes"
   end
 
   create_table "breeds", force: :cascade do |t|
