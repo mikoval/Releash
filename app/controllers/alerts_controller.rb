@@ -220,7 +220,7 @@ class AlertsController < ApplicationController
           "id" =>  a.id, 
           "title" => a.title,
           "description" => a.description,
-          "date" => a.date,
+          "date" => date_format(a.date),
 
         })
       end
