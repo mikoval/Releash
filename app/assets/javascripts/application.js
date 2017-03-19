@@ -24,7 +24,7 @@ function generateAnimals(arr){
   for (i in arr){
     var id = arr[i].id;
     var name = arr[i].name;
-    str = str + "<span><a href='/animals/profile?method=get&param=" + id + "'>" + name + "</a></span>";
+    str = str + "<span><a target='_blank' href='/animals/profile?method=get&param=" + id + "'>" + name + "</a></span>";
     if(i != arr.length -1){
       str = str + ", ";
     }
@@ -39,7 +39,7 @@ function generateUsers(arr){
   for (i in arr){
     var id = arr[i].id;
     var name = arr[i].name;
-    str = str + "<span><a href='/people/profile?method=get&param=" + id + "'>" + name + "</a></span>";
+    str = str + "<span><a target='_blank' href='/people/profile?method=get&param=" + id + "'>" + name + "</a></span>";
     if(i != arr.length -1){
       str = str + ", ";
     }
