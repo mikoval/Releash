@@ -5,8 +5,9 @@ class UserMailerPreview < ActionMailer::Preview
   # http://localhost:3000/rails/mailers/user_mailer/account_activation
   def account_activation
     user = User.first
+    current_user = User.last
     user.activation_token = User.new_token
-    UserMailer.account_activation(user)
+    UserMailer.account_activation(user,current_user)
   end
 
   # Preview this email at
