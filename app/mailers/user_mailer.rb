@@ -7,9 +7,10 @@ class UserMailer < ApplicationMailer
   #
 
   def alert_email(user, alert)
+
     @user = user
     @alert = alert
-    mail to: user.email, subject: "iShelter: " + alert.title
+    mail to: user.email, subject: "iShelter - Upcoming: " + alert.title
   end
   def alert_email_overdue(user, alert)
     @user = user
@@ -24,11 +25,12 @@ class UserMailer < ApplicationMailer
   def alert_email_edited(user, alert)
     @user = user
     @alert = alert
-    mail to: user.email, subject: "iShelter - OVERDUE: " + alert.title
+    mail to: user.email, subject: "iShelter - Edited: " + alert.title
   end
   def account_activation(user)
+    @current_user = current_user
     @user = user
-    mail to: user.email, subject: "Account activation"
+    mail to: user.email, subject: "iShelter - Account activation"
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
