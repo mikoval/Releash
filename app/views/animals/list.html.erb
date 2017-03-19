@@ -6,9 +6,31 @@
 <% if employee?(current_user) %>
 <%= link_to "<button>Add Animal</button>".html_safe,  :controller => "animals", :action => "new", :method => "get" %>
 <% end %>
+<br/><br/>
+Name <input type="text" class="textbox-filter" id="searchName" /><br/>
+Breed <input type="text" class="textbox-filter" id="searchPrimary" /><br/>
+Age from <input type="text" class="textbox-filter" id="searchLowAge" />
+to <input type="Age" class="textbox-filter" id="searchHighAge" /><br/>
+Gender <select id="selectGender" class="textbox-filter">
+  <option value="None">None
+  <option value="Male">Male
+  <option value="Female">Female
+  <option value="Undefined">Undefined
+</select><br/>
+Status <select id="selectStatus" class="textbox-filter">
+  <option value="None">None
+  <option value="Intake">Intake
+  <option value="Vetting">Vetting
+  <option value="Foster">Foster
+  <option value="Hold">Hold
+  <option value="Adopted">Adopted
+  <option value="Undefined">Undefined
+</select><br/>
+<button onclick="applyFilter()" type="btn-filter" id="buttonFilter"> Apply Filter </button><br/><br/>
+
 
 <div class = "container">
-   
+
   <div id = "list">
 
   </div>
@@ -17,17 +39,57 @@
 <script>
 
 $.ajax({url: "animals/query", success: function(result){
-        generateList(result);
+     generateList(result);
+  }});
 
+
+function applyFilter(){
+  $.ajax({url: "animals/query", success: function(result){
+        generateListAgain(result);
     }});
+}
 
+function SortByName(a, b){
+  var aName = a.name.toLowerCase();
+  var bName = b.name.toLowerCase();
+  return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
+}
+
+function filterGender() {
+  var x = document.getElementById("selectGender").value;
+  return x;
+}
 
 function generateList(arr){
   str = ""
   console.log(arr)
+  str+="<table id=\"animal-list-tbl\" class=\"table\"><thead><tr><th>Name</th><th>Breed</th><th>Gender</th><th>Status</th></tr></thead>"
+
   for (i in arr){
-    str += "<div>" + arr[i].name + " " +  arr[i].primary + "</div>";
+    str += "<tr id=\"animal\"-" + i + "\nclass=\"animal-list-row\"><td>" + arr[i].name + "</td><td>" + arr[i].primary + "</td><td>" + arr[i].gender + "</td><td>" + arr[i].status+ "</td></tr>";
   }
+  str+="</tbody></table>";
+  $("#list").html(str);
+}
+
+function generateListAgain(arr){
+  str = ""
+  console.log(arr)
+  str+="<table id=\"animal-list-tbl\" class=\"table\"><thead><tr><th>Name</th><th>Breed</th><th>Gender</th><th>Status</th></tr></thead>"
+
+  // Alpha-sort
+  // arr.sort(SortByName);
+
+  // Filter 
+  // animal.name == document.getElementById('searchName').value
+  var newArr = arr.filter(function(animal){
+    return (animal.primary == document.getElementById('searchPrimary').value);
+  });
+
+  for (i in newArr){
+    str += "<tr id=\"animal\"" + "\nclass=\"animal-list-row\"><td>" + arr[i].name + "</td><td>" + arr[i].primary + "</td><td>" + arr[i].gender + "</td><td>" + arr[i].status+ "</td></tr>";
+  }
+  str+="</tbody></table>";
   $("#list").html(str);
 }
 
@@ -39,4 +101,12 @@ $(".list-card").hover(
     $(this).find(".glyphicon-pencil").hide()
   }
 )
+
+$(document).ready(function() {     
+    $('.animal-list-row').on('click', function() {
+        alert( 'Clicked' );
+    });
+});
+
 </script>
+
