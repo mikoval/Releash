@@ -6,11 +6,58 @@
 <% if employee?(current_user) %>
 <%= link_to "<button>Add Animal</button>".html_safe,  :controller => "animals", :action => "new", :method => "get" %>
 <% end %>
+
+    <div class = "container" style = "width:100%">
+    <% @allAnimals.each do |a| %>
+   
+    <div class = "col-md-4 col-md-offset-1 col-sm-12 col-xs-12 list-card">
+      <div class = "row">
+        <div class = "col-md-4 col-sm-4 col-xs-4 list-pic" style = "padding: 5px">
+          <%= display_avatar(a, "100x100") %>
+        </div>
+        <div class = "col-md-6 col-sm-6 col-xs-6" style = "text-align: left; font-size: 25px;">
+          <%= link_to a.name, :controller => "animals", :action => "profile", :param => a, :method => "get" %>   
+        </div>
+        <% if employee?(current_user) %>
+        <%= link_to '<span class ="glyphicon glyphicon-pencil col-md-1 col-sm-1 col-xs-1" style = "float: left; cursor: pointer; display:none; margin:10px">
+          </span>'.html_safe, :controller => "animals", :action => "edit", :param => a, :method => "get" %>
+          
+        <% end %>
+        <div class = "col-md-8 col-sm-8 col-xs-8 list-info">
+          <%= a.primary_breed.name %>  <% if a.secondary_breed %> | <%= a.secondary_breed.name %> <%a.birthday%> <%a.gender%> <%= a.status%> <% end %>
+        </div>  
+      </div>
+      </span>
+    </div>
+    <div class = "col-md-1" style = "margin: 0px;">
+    </div>
+
+<% end %>
+</div>
+
+<script>
+$(".list-card").hover(
+  function(){
+    $(this).find(".glyphicon-pencil").show()
+  },
+  function(){
+    $(this).find(".glyphicon-pencil").hide()
+  }
+)
+</script> 
+
+
+<!-- comment -->
+<% provide(:title, "Animals") %>
+<!-- <h1>Animals</h1> -->
+
+
+<% if employee?(current_user) %>
+<%= link_to "<button>Add Animal</button>".html_safe,  :controller => "animals", :action => "new", :method => "get" %>
+<% end %>
 <br/><br/>
-Name <input type="text" class="textbox-filter" id="searchName" /><br/>
+<!-- Name <input type="text" class="textbox-filter" id="searchName" /><br/> -->
 Breed <input type="text" class="textbox-filter" id="searchPrimary" /><br/>
-Age from <input type="text" class="textbox-filter" id="searchLowAge" />
-to <input type="Age" class="textbox-filter" id="searchHighAge" /><br/>
 Gender <select id="selectGender" class="textbox-filter">
   <option value="None">None
   <option value="Male">Male
@@ -26,13 +73,13 @@ Status <select id="selectStatus" class="textbox-filter">
   <option value="Adopted">Adopted
   <option value="Undefined">Undefined
 </select><br/>
+
 <button onclick="applyFilter()" type="btn-filter" id="buttonFilter"> Apply Filter </button><br/><br/>
 
 
 <div class = "container">
 
   <div id = "list">
-
   </div>
 </div>
 
@@ -49,10 +96,10 @@ function applyFilter(){
     }});
 }
 
-function SortByName(a, b){
-  var aName = a.name.toLowerCase();
-  var bName = b.name.toLowerCase();
-  return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
+function sortByStatus(a, b){
+  var aStatus = a.status.toLowerCase();
+  var bStatus = b.status.toLowerCase();
+  return ((aStatus < bStatus) ? -1 : ((aStatus > bStatus) ? 1 : 0));
 }
 
 function filterGender() {
@@ -63,10 +110,25 @@ function filterGender() {
 function generateList(arr){
   str = ""
   console.log(arr)
-  str+="<table id=\"animal-list-tbl\" class=\"table\"><thead><tr><th>Name</th><th>Breed</th><th>Gender</th><th>Status</th></tr></thead>"
+  str+="<table id=\"animal-list-tbl\" class=\"table\"><thead><tr><th>#</th><th>Name</th><th>Breed</th><th>Status</th><th>Gender</th></tr></thead>"
+  num = 1;
+
+// sort animals by status
+  arr.sort(function(a, b){
+    if(a.status < b.status) return -1;
+    if(a.status > b.status) return 1;
+    return 0;
+  })
+ // // sub-status? 
+ //  arr.sort(function(a, b){
+ //    if(a.status2 < b.status2) return -1;
+ //    if(a.status2 > b.status2) return 1;
+ //    return 0;
+ //  })
 
   for (i in arr){
-    str += "<tr id=\"animal\"-" + i + "\nclass=\"animal-list-row\"><td>" + arr[i].name + "</td><td>" + arr[i].primary + "</td><td>" + arr[i].gender + "</td><td>" + arr[i].status+ "</td></tr>";
+    str += "<tr id=\"animal\"-" + num + "\nclass=\"animal-list-row\" onclick = \"clickRow(this)\"><td>" + num + "</td><td>" + arr[i].name + "</td><td>" + arr[i].primary + "</td><td>" + arr[i].status + "</td><td>" + arr[i].gender+ "</td></tr>";
+    num += 1;
   }
   str+="</tbody></table>";
   $("#list").html(str);
@@ -75,19 +137,36 @@ function generateList(arr){
 function generateListAgain(arr){
   str = ""
   console.log(arr)
-  str+="<table id=\"animal-list-tbl\" class=\"table\"><thead><tr><th>Name</th><th>Breed</th><th>Gender</th><th>Status</th></tr></thead>"
-
-  // Alpha-sort
-  // arr.sort(SortByName);
+  str+="<table id=\"animal-list-tbl\" class=\"table\"><thead><tr><th>#</th><th>Name</th><th>Breed</th><th>Status</th><th>Gender</th></tr></thead>"
+  num = 1;
+  
 
   // Filter 
-  // animal.name == document.getElementById('searchName').value
   var newArr = arr.filter(function(animal){
-    return (animal.primary == document.getElementById('searchPrimary').value);
+    if(document.getElementById('searchPrimary').value!=""){
+      return (animal.primary.toLowerCase() == document.getElementById('searchPrimary').value.toLowerCase());
+    }
+    else{
+      return animal;
+    }
   });
 
+  // sort animals by status
+  newArr.sort(function(a, b){
+    if(a.status < b.status) return -1;
+    if(a.status > b.status) return 1;
+    return 0;
+  })
+   // // sub-status? 
+   //  newArr.sort(function(a, b){
+   //    if(a.status2 < b.status2) return -1;
+   //    if(a.status2 > b.status2) return 1;
+   //    return 0;
+   //  })
+
   for (i in newArr){
-    str += "<tr id=\"animal\"" + "\nclass=\"animal-list-row\"><td>" + arr[i].name + "</td><td>" + arr[i].primary + "</td><td>" + arr[i].gender + "</td><td>" + arr[i].status+ "</td></tr>";
+    str += "<tr id=\"animal\"-" + num + "\nclass=\"animal-list-row\" onclick = \"clickRow(this)\"><td>" + num + "</td><td>" + newArr[i].name + "</td><td>" + newArr[i].primary + "</td><td>" + newArr[i].status + "</td><td>" + newArr[i].gender+ "</td></tr>";
+    num += 1;
   }
   str+="</tbody></table>";
   $("#list").html(str);
@@ -102,11 +181,9 @@ $(".list-card").hover(
   }
 )
 
-$(document).ready(function() {     
-    $('.animal-list-row').on('click', function() {
-        alert( 'Clicked' );
-    });
-});
+function clickRow(){
+  alert();
+}
 
 </script>
 
