@@ -27,7 +27,11 @@ class AlertsController < ApplicationController
   #for the new alerts
   def new
     update_referer(request.referer, request.original_url)
-    @animal = Animal.where(id=params["param"])
+    if(params["param"] != nil) 
+      @animal = Animal.where('id = ' + params["param"])
+    else
+      @animal = []
+    end
     @alert = Alert.new
     @types = AlertType.all
     @users = User.where(disabled: false)
