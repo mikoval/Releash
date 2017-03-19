@@ -37,6 +37,7 @@
       
 
       <span class="picture">
+        <%= f.label :Picture, "Profile Picture" %>
         <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
       </span>
       <%= f.submit "Submit changes", class: "btn btn-primary" %>

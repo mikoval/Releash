@@ -9,8 +9,18 @@ class AnimalsController < ApplicationController
     
     @status = StatusType.all
     @hold = HoldType.all
-    
-    @breed = Breed.order('name ASC')
+    @breed = Breed.where("name != 'Mixed'").order('name ASC')
+    @mixed = Breed.where("name = 'Mixed'")
+
+    @primary = []
+    @secondary = []
+    @secondary.push(@mixed[0])
+    @breed.each do |b|
+      @primary.push(b)
+      @secondary.push(b)
+    end
+
+
     @behavior = Characteristic.where("category = 'Behavior'")
     @attribute = Characteristic.where("category = 'Attribute'")
 
@@ -20,7 +30,18 @@ class AnimalsController < ApplicationController
   def edit
     @animal = Animal.find(params["param"])
     @status = StatusType.all
-    @breed = Breed.order('name ASC')
+
+    @breed = Breed.where("name != 'Mixed'").order('name ASC')
+    @mixed = Breed.where("name = 'Mixed'")
+
+    @primary = []
+    @secondary = []
+    @secondary.push(@mixed[0])
+    @breed.each do |b|
+      @primary.push(b)
+      @secondary.push(b)
+    end
+
     @breeds = AnimalBreed.where("animal_id = " + params["param"])
     @behavior = Characteristic.where("category = 'Behavior'")
     @attribute = Characteristic.where("category = 'Attribute'")
@@ -32,9 +53,10 @@ class AnimalsController < ApplicationController
     @characteristics.each do |d|
 
       if(d.characteristic.category == "Attribute")
-        @attributes.push(d)
+
+        @attributes.push(d.characteristic)
       else 
-        @behaviors.push(d)
+        @behaviors.push(d.characteristic)
       end
     end
 

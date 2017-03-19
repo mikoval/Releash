@@ -20,9 +20,11 @@ Characteristic.create(
 	[
 		{category: "Behavior", name: 'Fearful'}, {category: "Behavior", name: 'Good with Cats'},{category: "Behavior", name: 'Good with children'},
 		{category: "Behavior", name: 'Housebroken'},{category: "Behavior", name: 'Social'},
-		{category: "Attribute", name: 'Declawed'},{category: "Attribute", name: 'House Trained'},{category: "Attribute", name: 'Special Needs'}
+		{category: "Attribute", name: 'House Trained'},{category: "Attribute", name: 'Special Needs'}
 	])
-Breed.create([{name: 'Australian Cattle', species_id:1}, {name: 'Australian Shepherd', species_id:1},
+Breed.create([
+			{name: 'Mixed', species_id:1},
+	        {name: 'Australian Cattle', species_id:1}, {name: 'Australian Shepherd', species_id:1},
 			
 			{name: 'Bearded Collie', species_id:1}, {name: 'Beauceron', species_id:1}, {name: 'Bergamasco', species_id:1},
 			

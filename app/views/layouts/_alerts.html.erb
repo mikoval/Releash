@@ -108,10 +108,11 @@ $(".alert-unsubscribe").on("click", function(event){
     url: "/alerts/unsubscribeAlert",
     data: "param=" + $(this).attr("id").split("-")[1],
     success: function(msg){
-        
+        location.reload();
     },
-    error: function(){
+    error: function(e){
       alert("unable to delete alert")
+      console.log(e);
     }
   });
 });

@@ -1,5 +1,5 @@
 class AlertsController < ApplicationController
-  skip_before_filter :verify_authenticity_token, :only => :deleteAlert
+  skip_before_filter :verify_authenticity_token, :only => [:deleteAlert, :unsubscribeAlert]
   def date_format(date)
     return date.to_formatted_s(:long_ordinal)
   end
@@ -53,23 +53,26 @@ class AlertsController < ApplicationController
 
   end
   def unsubscribeAlert
-    session[:prev_url] = request.referer
+
 
      id = request["param"]
      UserAlert.where("alert_id =" + id.to_s + " and user_id = " + current_user.id.to_s).delete_all
-
-    redirect_to session[:prev_url]
+     render json: {"status" => "success"}
+    
 
   end 
   def deleteAlert
-    debugger
+    
 
     id = request["param"]
     AnimalAlert.where("alert_id =" + id.to_s).delete_all
     UserAlert.where("alert_id =" + id.to_s).delete_all
+  
     Alert.where("id =" + id.to_s).delete_all
 
-    redirect_to session[:prev_url]
+    render json: {"status" => "success"}
+  
+    
   end
   #for displaying alerts
   def display

@@ -28,6 +28,7 @@
       <%= f.collection_select :role_id, @roles, :id, :title, :prompt => "Select Role" %>
 
       <span class="picture">
+        <%= f.label :Picture, "Profile Picture" %>
         <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
       </span>
       <%= f.submit "Create my account", class: "btn btn-primary" %>

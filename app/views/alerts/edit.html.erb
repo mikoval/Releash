@@ -166,10 +166,11 @@ $(".alert-delete").on("click", function(event){
     url: "/alerts",
     data: "param=" + $(this).attr("id").split("-")[1],
     success: function(msg){
-        
+        window.location = "<%= session[:prev_url] %>"
     },
-    error: function(){
+    error: function(e){
       alert("unable to delete alert")
+
     }
   });
 });

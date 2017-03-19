@@ -108,9 +108,9 @@
               <%= f.text_field :name, class: 'form-control' %>
 
               <%= f.label :primary_breed_id %>
-              <%= f.collection_select :primary_breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
+              <%= f.collection_select :primary_breed_id, @primary, :id, :name, :prompt => "Select Breed" %>
               <%= label :post, "Additional Breeds" %>
-              <%= collection_select(:breed_id, 0, @breed, :id, :name, {:prompt => "Select Breed"}, {class: "breed-selecter"}) %>              
+              <%= collection_select(:breed_id, 0, @secondary, :id, :name, {:prompt => "Select Breed"}, {class: "breed-selecter"}) %>              
               <div id = "breeds-list">
                 <% @breeds.each do |b| %>
                 <div id = 'breed-<%= b.breed.id %>'   class = 'breed-item' style = 'position: relative; display: inline-block;'>
@@ -184,11 +184,19 @@
 
             <div id="pers-body" class="collapse col-md-12">
               <%= label :post, "behavior" %>
-              <%= collection_select(:behavior_id, 0, @behavior, :id, :name, {:prompt => "Select behavior"}, {class: "behavior-selecter"}) %>              
+              <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Select Behavior
+                <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <% @behavior.each do |b| %>
+                  <li  class = "behavior-dd-item" id = "behavior-dd-<%= b.id %>"><a href="#" class= "behavior-dd-item" value = '<%= b.id %>'> <%= b.name %></a>  </li> 
+                  <% end %>
+                </ul>
+              </div>           
               <div id = "behavior-list">
                 <% @behaviors.each do |b| %>
-                <div id = 'behavior-<%= b.characteristic.id %>'   class = 'select-item behavior-item' style = 'position: relative; display: inline-block;'>
-                  <p style = 'margin:0px; padding-right:15px'> <%= b.characteristic.name %> </p> 
+                <div id = 'behavior-<%= b.id %>'   class = 'select-item behavior-item' style = 'position: relative; display: inline-block;'>
+                  <p style = 'margin:0px; padding-right:15px'> <%= b.name %> </p> 
                   <span class = 'glyphicon glyphicon-remove remove-item remove-behavior' style='margin:2px; float:right;'></span>
                 </div>
 
@@ -199,9 +207,21 @@
               <%= text_field_tag 'behavior', "", class: "hidden-behavior", style: "display:none;"  %>
 
               <%= label :post, "attribute" %>
-              <%= collection_select(:attribute_id, 0, @attribute, :id, :name, {:prompt => "Select attribute"}, {class: "attribute-selecter"}) %>              
+              <!-- dropdown first --> 
+              <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Select Attribute
+                <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <% @attribute.each do |b| %>
+                  <li  class = "attribute-dd-item" id = "attribute-dd-<%= b.id %>"><a href="#" class= "attribute-dd-item" value = '<%= b.id %>'> <%= b.name %></a>  </li> 
+                  <% end %>
+                </ul>
+              </div>       
+              <!-- create starting list --> 
+
               <div id = "attribute-list">
                 <% @attributes.each do |b| %>
+
                 <div id = 'behavior-<%= b.id %>'   class = 'select-item attribute-item' style = 'position: relative; display: inline-block;'>
                   <p style = 'margin:0px; padding-right:15px'> <%= b.name %> </p> 
                   <span class = 'glyphicon glyphicon-remove remove-item remove-attribute' style='margin:2px; float:right;'></span>
@@ -438,9 +458,12 @@
       $(this).closest(".behavior-item").detach()
       setHiddenBehavior();
   })
-  $(".attribute-selecter").on("change", function(){
-    var text = $(".attribute-selecter option:selected").text();
-    var val = $(".attribute-selecter option:selected").val();
+  $(".attribute-dd-item").on("click", function(e){
+    
+    e.stopPropagation();
+    e.preventDefault();
+    var text = $(this).text();
+    var val = $(this).attr("value");
     if(text == "Select Attribute"){
       return
     }
@@ -460,17 +483,22 @@
   })
   function setHiddenAttribute(){
     str = ""
+    $(".attribute-dd-item").show();
     $(".attribute-item").each(function(){
       var id = this.id.split("-")[1]
+      $("#attribute-dd-" +id).hide();
       str += id + "|"
     })
     $(".hidden-attribute").val(str)
   }
 
   setHiddenAttribute();
-  $(".behavior-selecter").on("change", function(){
-    var text = $(".behavior-selecter option:selected").text();
-    var val = $(".behavior-selecter option:selected").val();
+  $(".behavior-dd-item").on("click", function(e){
+
+    e.stopPropagation();
+    e.preventDefault();
+    var text = $(this).text();
+    var val = $(this).attr("value");
     if(text == "Select Behavior"){
       return
     }
@@ -489,12 +517,17 @@
     setHiddenBehavior();
   })
   function setHiddenBehavior(){
+
     str = ""
+    $(".behavior-dd-item").show();
+
     $(".behavior-item").each(function(){
       var id = this.id.split("-")[1]
+      $("#behavior-dd-" +id).hide();
       str += id + "|"
     })
     $(".hidden-behavior").val(str)
   }
+
   setHiddenBehavior();
 </script>
