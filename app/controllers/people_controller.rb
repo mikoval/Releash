@@ -38,7 +38,7 @@ class PeopleController < ApplicationController
     
     
     if @employee.save
-      UserMailer.account_activation(@employee).deliver_now
+      UserMailer.account_activation(@employee, current_user).deliver_now
       flash[:success] = "Added employee"
       redirect_to people_url
     else

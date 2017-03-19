@@ -27,7 +27,7 @@ class UserMailer < ApplicationMailer
     @alert = alert
     mail to: user.email, subject: "iShelter - Edited: " + alert.title
   end
-  def account_activation(user)
+  def account_activation(user, current_user)
     @current_user = current_user
     @user = user
     mail to: user.email, subject: "iShelter - Account activation"
