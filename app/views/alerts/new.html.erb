@@ -38,7 +38,18 @@
 
 
       <%= label :post, "Assignees" %>
-      <%= collection_select(:assignee_id, 0, @users, :id, :name, {:prompt => "Select assignee"}, {class: "assignee-selecter"}) %>              
+      <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Select Assignee
+                <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <% @users.each do |b| %>
+                  <li  class = "assignee-dd-item" id = "assignee-dd-<%= b.id %>"><a href="#" class= "assignee-dd-item" value = '<%= b.id %>'> <%= b.name %></a>  </li> 
+                  <% end %>
+                </ul>
+              </div>           
+
+
+
       <div id = "assignee-list"></div>
 
       <%= text_field_tag 'assignees', "", class: "hidden-assignee", style: "display:none;"  %>
@@ -46,8 +57,17 @@
 
 
       <%= label :post, "Animals" %>
-      <%= collection_select(:animal_id, 0, @animals, :id, :name, {:prompt => "Select Animal"}, {class: "animal-selecter"}) %>              
-       <div id = "animal-list">
+        <div class="dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Select Animals
+          <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <% @animals.each do |b| %>
+            <li  class = "animal-dd-item" id = "animal-dd-<%= b.id %>"><a href="#" class= "animal-dd-item" value = '<%= b.id %>'> <%= b.name %></a>  </li> 
+            <% end %>
+          </ul>
+        </div>   
+
+           <div id = "animal-list">
         <% @animal.each do |b| %>
         <div id = 'animal-<%= b.id %>'   class = 'select-item animal-item' style = 'position: relative; display: inline-block;'>
           <p style = 'margin:0px; padding-right:15px'> <%= b.name %> </p> 
@@ -82,9 +102,12 @@
 
 
 
-$(".assignee-selecter").on("change", function(){
-    var text = $(".assignee-selecter option:selected").text();
-    var val = $(".assignee-selecter option:selected").val();
+  $(".assignee-dd-item").on("click", function(e){
+    
+    e.stopPropagation();
+    e.preventDefault();
+    var text = $(this).text();
+    var val = $(this).attr("value");
     if(text == "Select Assignee"){
       return
     }
@@ -104,8 +127,10 @@ $(".assignee-selecter").on("change", function(){
   })
   function setHiddenAssignee(){
     str = ""
+    $(".assignee-dd-item").show();
     $(".assignee-item").each(function(){
       var id = this.id.split("-")[1]
+      $("#assignee-dd-" +id).hide();
       str += id + "|"
     })
     $(".hidden-assignee").val(str)
@@ -114,9 +139,12 @@ $(".assignee-selecter").on("change", function(){
 
 
 
-$(".animal-selecter").on("change", function(){
-    var text = $(".animal-selecter option:selected").text();
-    var val = $(".animal-selecter option:selected").val();
+$(".animal-dd-item").on("click", function(e){
+
+    e.stopPropagation();
+    e.preventDefault();
+    var text = $(this).text();
+    var val = $(this).attr("value");
     if(text == "Select Animal"){
       return
     }
@@ -136,8 +164,11 @@ $(".animal-selecter").on("change", function(){
   })
   function setHiddenAnimal(){
     str = ""
+    $(".animal-dd-item").show();
+
     $(".animal-item").each(function(){
       var id = this.id.split("-")[1]
+      $("#animal-dd-" +id).hide();
       str += id + "|"
     })
     $(".hidden-animal").val(str)
