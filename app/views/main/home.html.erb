@@ -120,13 +120,13 @@ function widgetAnimalList(){
     $.ajax({url: "animals/query", success: function(result){
         var str = "<div class='panel-heading clearfix'> <div class='btn-group pull-right'> <button class= 'btn toggle-dropdown' data-toggle='dropdown' aria-expanded='false' aria-haspopup='true'> <span class='glyphicon glyphicon-cog'></span> </button> <ul class='dropdown-menu dropdown-menu-right'> <li> <a href='#' class='remove-item-btn' onclick='return false;'>Remove</a> </li> </ul> </div> <h3 class= 'panel-title pull-left' style='padding-top: 8.5px;'> Animals</h3> </div>"
 
-        str += "<div class='panel-body'> <div class='table-responsive'> <table class='table table-bordered table-hover table-striped'> <thead> <tr> <th>Name</th> <th>Primary Breed</th> <th>Secondary Breed</th> </tr> </thead>" 
+        str += "<div class='panel-body'> <div class='table-responsive'> <table class='table table-bordered table-hover table-striped'> <thead> <tr> <th>Name</th> <th>Primary Breed</th> <th>Age</th> </tr> </thead>" 
         for (x in result){
     
                 str += "<tr> \
-                <td> <a href='/animals/profile?method=get&param=" + result[x].id + "class= 'list-group-item' >" + result[x].name + "</a></td>\
+                <td> <a href='/animals/profile?method=get&param=" + result[x].id + " '  >" + result[x].name + "</a></td>\
                  <td>" + result[x].primary + "</td>\
-                <td>" + result[x].secondary + "</td>\
+                <td>" + result[x].age + "</td>\
                 </tr>"
         }
         str +=  " </table> </div> <div class='text-right'> <a href= animals>View all Animals</a> </div> </div>"

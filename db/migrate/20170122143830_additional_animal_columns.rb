@@ -3,7 +3,7 @@ class AdditionalAnimalColumns < ActiveRecord::Migration
     add_column :animals, :eye_color, :string
     add_column :animals, :adoption_fee, :string
     add_column :animals, :animal_type, :string
-    add_column :animals, :birthday, :string
+    add_column :animals, :birthday, :datetime
     add_column :animals, :gender, :string
     add_column :animals, :cage_number, :integer
     add_column :animals, :microchip_number, :integer

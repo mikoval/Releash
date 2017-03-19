@@ -28,8 +28,8 @@
 
       
       <% if admin?(current_user) %>
-        <%= f.label :disabled %>
-        <%= f.check_box :disabled, class: 'form-control' %>
+        <%= f.label :disabled , style: "display: inline-block" %>
+        <%= f.check_box :disabled, { class: 'form-control', style: "display: inline-block; width:auto;"} %>
         <br>
       <% end %>
 

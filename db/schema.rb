@@ -92,7 +92,7 @@ ActiveRecord::Schema.define(version: 20170319214748) do
     t.string   "eye_color"
     t.string   "adoption_fee"
     t.string   "animal_type"
-    t.string   "birthday"
+    t.datetime "birthday"
     t.string   "gender"
     t.integer  "cage_number"
     t.integer  "microchip_number"

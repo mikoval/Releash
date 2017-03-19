@@ -369,6 +369,7 @@ class AnimalsController < ApplicationController
         "primary" => d.primary_breed.name,
         "secondary" => sBreed,
         "picture" => d.picture,
+        "age" => getAge(d.birthday)
       })
     end
     render json: arr
