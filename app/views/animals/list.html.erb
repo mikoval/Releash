@@ -144,7 +144,7 @@ function generateListAgain(arr){
   // Filter 
   var newArr = arr.filter(function(animal){
     if(document.getElementById('searchPrimary').value!=""){
-      return (animal.primary.toLowerCase() == document.getElementById('searchPrimary').value.toLowerCase());
+      return (animal.primary.toLowerCase().includes(document.getElementById('searchPrimary').value.toLowerCase()));
     }
     else{
       return animal;
