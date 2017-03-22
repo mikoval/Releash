@@ -1,16 +1,12 @@
- <% provide(:title, 'New Employee') %>
-<h1>Add new employee</h1>
+ <% provide(:title, 'New Non User') %>
+<h1>Add new non user</h1>
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <!-- form for submitting employees. 
-    submits to /people path. that can be found in routes. 
-    passes in @employee that is defined by the form
-    thats what :name, :email,  etc is for 
 
-  --> 
-    <%= form_for(@employee, html: { multipart: true },  url: people_path(@employee)) do |f| %>
-      <%= render 'people/error_messages' %>
+    <%= form_for(@non_user, html: { multipart: true },  url: non_user_path(@non_user)) do |f| %>
+      
+      <%= render 'non_user/error_messages' %>
 
       <%= f.label :name %>
       <%= f.text_field :name, class: 'form-control' %>
@@ -26,15 +22,6 @@
 
       <%= f.label :email %>
       <%= f.email_field :email, class: 'form-control' %>
-
-      <%= f.label :password %>
-      <%= f.password_field :password, class: 'form-control' %>
-
-      <%= f.label :password_confirmation, "Confirmation" %>
-      <%= f.password_field :password_confirmation, class: 'form-control' %>
-
-      <%= f.label :role_id %>
-      <%= f.collection_select :role_id, @roles, :id, :title, :prompt => "Select Role" %>
 
       <span class="picture">
         <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>

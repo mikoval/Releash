@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class AniSleepTest < ActiveSupport::TestCase
+class NonUserTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

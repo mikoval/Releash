@@ -2,47 +2,107 @@
 <h1>People</h1>
 <% if admin?(current_user) %>
   <%= link_to "<button>Add Employee</button>".html_safe,  :controller => "people", :action => "new", :method => "get" %>
+  <%= link_to "<button>Add Non User</button>".html_safe,  :controller => "non_user", :action => "new", :method => "get" %>
 <% end %>
-<div class=" ">
-    <!-- 
-    loops over each person in @allPeople (defined in the people controller)
-    puts all of that in at plain html with values from the person in the for-each loop
-    -->
-<table id = "people-table" class="table table-bordered table-inverse table-hover people-table">
-  <thead>
-    <tr>
-      <th class= "col-md-1">#</th>
-      <th class= "col-md-1">Pic</th>
-      <th class= "col-md-3">Name</th>
-      <th class= "col-md-3">Role</th>
-    </tr>
-  </thead>
-  <tbody>
-<% @allPeople.each_with_index do |a, index| %>
-   <tr style = "height: 70px;" >
-      <th scope="row"><%= index %></th>
-      <td>
-       <%= display_avatar(a, "50x50") %>
 
-        </td>
+ <ul class="nav nav-tabs">
+    <li class="active"><a href="#user" data-toggle="tab">Users</a></li>
+    <li><a href="#non_user" data-toggle="tab">Non Users</a></li>
+</ul>
 
-      <td> 
-          <%= link_to a.name,  :controller => "people", :action => "profile", :param => a, :method => "get" %>
+<div class="tab-content">
 
-        <% if admin?(current_user) %>
-         <%= link_to ' <span class ="glyphicon glyphicon-pencil" style = "display:none; cursor: pointer;"></span>'.html_safe,  :controller => "people", :action => "edit", :param => a, :method => "get" %>
-         <% end %>
-     </td>
-      <td> <%= a.role.title %> </td>
-    </tr>
+  <div class="tab-pane active" id="user">
+    
+  <table id = "people-table" class="table table-bordered table-inverse table-hover people-table">
+    <thead>
+      <tr>
+        <th class= "col-md-1">#</th>
+        <th class= "col-md-1">Pic</th>
+        <th class= "col-md-3">Name</th>
+        <th class= "col-md-3">Role</th>
+      </tr>
+    </thead>
+    <tbody>
+
+  <% @allPeople.each_with_index do |a, index| %>
+     <tr style = "height: 70px;" >
+        <th scope="row"><%= index %></th>
+        <td>
+         <%= display_avatar(a, "50x50") %>
+
+          </td>
+
+        <td> 
+            <%= link_to a.name,  :controller => "people", :action => "profile", :param => a, :method => "get" %>
+
+          <% if admin?(current_user) %>
+           <%= link_to ' <span class ="glyphicon glyphicon-pencil" style = "display:none; cursor: pointer;"></span>'.html_safe,  :controller => "people", :action => "edit", :param => a, :method => "get" %>
+           <% end %>
+       </td>
+        <td> <%= a.role.title %> </td>
+        
+      </tr>
  
 
-<% end %>
+  <% end %>
   </tbody>
-</table>
+  </table>
+  </div>
+
+<div class="tab-pane" id="non_user">
+
+  <table id = "user-table" class="table table-bordered table-inverse table-hover user-table">
+    <thead>
+      <tr>
+        <th class= "col-md-1">#</th>
+        <th class= "col-md-1">Pic</th>
+        <th class= "col-md-3">Name</th>
+      </tr>
+    </thead>
+    <tbody>
+
+  <% @allNonUser.each_with_index do |a, index| %>
+     <tr style = "height: 70px;" >
+        <th scope="row"><%= index %></th>
+        <td>
+         <%= display_avatar(a, "50x50") %>
+
+          </td>
+
+        <td> 
+            <%= link_to a.name,  :controller => "non_user", :action => "profile", :param => a, :method => "get" %>
+
+          <% if admin?(current_user) %>
+           <%= link_to ' <span class ="glyphicon glyphicon-pencil" style = "display:none; cursor: pointer;"></span>'.html_safe,  :controller => "non_user", :action => "edit", :param => a, :method => "get" %>
+           <% end %>
+       </td>
+        
+      </tr>
+   
+
+  <% end %>
+  </tbody>
+  </table>
+  </div>
+
+
+
 </div>
 <script>
+
 $("#people-table tr").hover(
+  function(){
+    $(this).find(".glyphicon-pencil").show()
+  },
+  function(){
+    $(this).find(".glyphicon-pencil").hide()
+  }
+)
+</script>
+
+<script>
+$("#user-table tr").hover(
   function(){
     $(this).find(".glyphicon-pencil").show()
   },

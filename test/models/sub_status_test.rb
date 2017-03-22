@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class FosterStageTest < ActiveSupport::TestCase
+class SubStatusTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

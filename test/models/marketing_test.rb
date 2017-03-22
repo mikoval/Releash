@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class IllnessTest < ActiveSupport::TestCase
+class MarketingTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

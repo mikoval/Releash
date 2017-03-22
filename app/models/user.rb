@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
     has_secure_password
     validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
     validate  :picture_size
+    validates :role_id, presence: true
     mount_uploader :picture, PictureUploader
     belongs_to :role
  

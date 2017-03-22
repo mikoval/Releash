@@ -5,6 +5,7 @@ class PeopleController < ApplicationController
   def list
    
       @allPeople = User.all
+      @allNonUser = NonUser.all
       user = User.all
   end
 
@@ -22,12 +23,24 @@ class PeopleController < ApplicationController
   
    def profile
     @employee = User.find(params["param"])
+    
+    if @employee.address != nil and @employee.state != nil and @employee.zip_code != nil
+      @full_address = @employee.address + " " + @employee.state + " " + @employee.zip_code
+    else
+      @full_address = nil
+    end
+    @foster_ok = @employee.foster_check
+    
+    #Rails.logger.debug("My object: #{@foster_ok.inspect}")
+    
+    @adopt_ok = @employee.adopt_check
   end
   #require says the type it has to be, for this one it has to have a user parameter
   #says the fields that are allowed. have to match up with column names
   def people_params
       params.require(:user).permit(:name, :email, :password,
-                                   :password_confirmation, :role_id, :picture, :disabled)
+                                   :password_confirmation, :role_id, :picture, :disabled, :address,
+                                   :state, :zip_code, :foster_check, :adopt_check)
   end
   # the code that actually adds an employee. 
   def addEmployee

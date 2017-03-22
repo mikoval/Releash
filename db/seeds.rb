@@ -5,8 +5,8 @@ AlertType.create([{name: 'Medical'}, {name: 'Adoption'}, {name: 'Event'}, {name:
 User.create ({name: "Admin", email: "admin@releash.com", password: "password", password_confirmation: "password", role_id:3, activated: true,
              activated_at: Time.zone.now})
 Species.create([{kind: 'Dog'}, {kind: 'Cat'}])
-HoldType.create([{name: 'Illness'}, {name: 'Training'}, {name: 'Other'}])
-StatusType.create([{name: 'Intake'}, {name: 'Foster'}, {name: 'Vetting'}, {name: 'Adopted'}, {name: 'Sleep'}, {name: 'Transfer'}])
+SubStatusType.create([{name: 'Illness'}, {name: 'Training'}, {name: 'Other'}])
+StatusType.create([{name: 'Intake'}, {name: 'Foster'}, {name: 'Vetting'}, {name: 'Adopted'}, {name: 'Training'}])
 Veterinarian.create(
 	[
 		{name: 'Fayetteville Animal Hospital', street: '1145 GA-54', city: 'Fayetteville', state: 'GA', zip_code: 30214},
