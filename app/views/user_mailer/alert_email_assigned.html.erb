@@ -12,7 +12,7 @@
 
 <p>This alert is scheduled for <%= @alert.date %></p>
 
-<% if(@alert.required == "1") %>
+<% if(@alert.required == "1" || @alert.required == "true" || @alert.required == true) %>
 <p> Once the alert has been completed, click on the button below</p>
 
 <a  href = '<%= edit_alert_completion_url(id: @alert.id)%>'><img src="/images/SubmitComplete.png" alt="Activate" ></a>
