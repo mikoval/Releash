@@ -17,4 +17,7 @@ private
       redirect_to login_url
     end
   end
+  def date_format(date)
+    return date.to_formatted_s(:long_ordinal)
+  end
 end

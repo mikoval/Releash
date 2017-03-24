@@ -163,7 +163,7 @@ class AlertsController < ApplicationController
 
   def alert_params
     params.require(:alert).permit(:title, :description, :date, :alert_type_id, :assignee_id,
-                  :created_by_id, :animal_id, :location, :created_at)
+                  :created_by_id, :animal_id, :location, :created_at, :required)
   end
   def query
     @id = params["id"]

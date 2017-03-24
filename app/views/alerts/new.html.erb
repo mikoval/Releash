@@ -81,7 +81,12 @@
 
 
 
-
+      <br>
+      <%= f.label :required , "Spayed/Neutered" do %>
+        <p style = "display: inline-block">Completion Required</p>
+        <%= f.check_box :required, {style: "display: inline-block; width:auto;"} %>
+                 
+      <% end %>
       <%= f.submit "Create Alert", :onclick => "return validateform();", class: "btn btn-primary" %>
     <% end %>
     </div>
