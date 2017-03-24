@@ -1,12 +1,26 @@
-<h1>iShelter</h1>
+<bold><italic> Dear <%= @user.name %> </italic> </bold> 
 
-<p>Hi <%= @user.name %>,</p>
+<p>An alert you are assigned is about to be due.</p>
 
-You have an upcoming alert.
-
-<%= @alert.title %>
+Title: <%= @alert.title %>
 <br>
-<%= @alert.location %>
-<br>
+<% if (@alert.location != nil) %>
+<p>Location:  <%= @alert.location %>
+<% end %> 
 
+<p>This alert is scheduled for <%= @alert.date %></p>
+
+
+<p>Description: </p>
+<p>
 <%= @alert.description %>
+</p>
+
+
+
+<% if(( @alert.required == "1" || @alert.required == "true" || @alert.required == true) && (@alert.completed == "0"  || @alert.completed == false || @alert.completed == "false"))  %>
+<p> Once the alert has been completed, click on the button below</p>
+
+<a  href = '<%= edit_alert_completion_url(id: @alert.id)%>'><img src="https://s3.amazonaws.com/releashatlanta/uploads/non_user/picture/1/SubmitComplete.png" alt="Activate" ></a>
+
+<% end %> 

@@ -10,11 +10,14 @@ namespace :utility do
                 if((alert.date.to_datetime.to_i - Time.now.to_i )  / 1.hour <= 1 &&  (alert.date.to_datetime.to_i - Time.now.to_i )  / 1.hour >=0&&  (Time.now.to_i - user.email_date.to_datetime.to_i)  / 1.hour >2
                  )
                     
-                    UserMailer.alert_email(user.user, alert).deliver_now
+                    UserMailer.alert_email_upcoming(user.user, alert).deliver_now
                     user.update_attributes(email_date: Time.now)
                 elsif (
-                    (alert.date.to_datetime.to_i - Time.now.to_i )/1.day < 0 &&  (Time.now.to_i - user.email_date.to_datetime.to_i)  / 1.day >=1)
-                    UserMailer.alert_email(user.user, alert).deliver_now
+
+                    (alert.date.to_datetime.to_i - Time.now.to_i )/1.day < 0 &&  (Time.now.to_i - user.email_date.to_datetime.to_i)  / 1.day >=1 && 
+                    ( @alert.required == "1" || @alert.required == "true" || @alert.required == true) && (@alert.completed == "1"  || @alert.completed == true || @alert.completed == "true")) 
+
+                    UserMailer.alert_email_overdue(user.user, alert).deliver_now
                     user.update_attributes(email_date: Time.now)
 
                 end
