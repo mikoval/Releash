@@ -1,7 +1,11 @@
 class AlertsController < ApplicationController
-  skip_before_filter :verify_authenticity_token, :only => [:deleteAlert, :unsubscribeAlert]
+  skip_before_filter :verify_authenticity_token, :only => [:deleteAlert, :unsubscribeAlert, :completed]
+  layout "login", :only => :completed
   def date_format(date)
     return date.to_formatted_s(:long_ordinal)
+  end
+  def completed
+
   end
   #listing all the alerts
   def list
@@ -160,7 +164,7 @@ class AlertsController < ApplicationController
     end
 
   end
-
+ 
   def alert_params
     params.require(:alert).permit(:title, :description, :date, :alert_type_id, :assignee_id,
                   :created_by_id, :animal_id, :location, :created_at, :required)

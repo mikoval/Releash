@@ -7,7 +7,7 @@ class AlertCompletionsController < ApplicationController
     @alert.update_attribute(:completed, true)
       
     
-    redirect_to "/alert/success"
+    redirect_to "/alerts/completed"
     
   end
 end
