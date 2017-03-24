@@ -1,4 +1,4 @@
-class AccountActivationsController < ApplicationController
+class AlertCompletionsController < ApplicationController
   skip_before_filter :require_login
   def edit
     @alert = Alert.find_by(id: params[:id])
