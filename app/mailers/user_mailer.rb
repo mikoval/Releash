@@ -6,7 +6,7 @@ class UserMailer < ApplicationMailer
   #   en.user_mailer.account_activation.subject
   #
 
-  def alert_email(user, alert)
+  def alert_email_upcoming(user, alert)
 
     @user = user
     @alert = alert
