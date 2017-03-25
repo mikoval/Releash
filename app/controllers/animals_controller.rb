@@ -10,9 +10,7 @@ class AnimalsController < ApplicationController
     @status = StatusType.all
     
     @breed = Breed.order('name ASC')
-    @behavior = Characteristic.where("category = 'Behavior'")
-    @attribute = Characteristic.where("category = 'Attribute'")
-
+    @behavior = Characteristic.all.order('name ASC')
 
   end
 
@@ -21,21 +19,13 @@ class AnimalsController < ApplicationController
     @status = StatusType.all
     @breed = Breed.order('name ASC')
     @breeds = AnimalBreed.where("animal_id = " + params["param"])
-    @behavior = Characteristic.where("category = 'Behavior'")
-    @attribute = Characteristic.where("category = 'Attribute'")
+    @behavior = Characteristic.all.order('name ASC')
 
 
-    @characteristics = AnimalCharacteristic.where("animal_id = " + params["param"])
-    @attributes = []
-    @behaviors = []
-    @characteristics.each do |d|
 
-      if(d.characteristic.category == "Attribute")
-        @attributes.push(d)
-      else 
-        @behaviors.push(d)
-      end
-    end
+    @behaviors =  AnimalCharacteristic.where("animal_id = " + params["param"])
+    
+
 
   end
   
@@ -52,6 +42,8 @@ class AnimalsController < ApplicationController
     @status = StatusType.find(@animal.status_id)
     
     @status_name = @status.name
+    @behaviors =  AnimalCharacteristic.where("animal_id = " + params["param"])
+
     #Rails.logger.debug("My object: #{status_name.inspect}")
     
     if (@status_name.to_s == "Intake")
@@ -110,17 +102,9 @@ class AnimalsController < ApplicationController
     
     @breeds = AnimalBreed.where("animal_id = " + params["param"])
     @characteristics = AnimalCharacteristic.where("animal_id = " + params["param"])
-    @attributes = []
-    @behaviors = []
+    
 
-    @characteristics.each do |d|
-
-      if(d.characteristic.category == "Attribute")
-        @attributes.push(d)
-      else 
-        @behaviors.push(d)
-      end
-    end
+    
     @alerts = []
     @alertsRaw = AnimalAlert.where("animal_id = " + id)
     @alertsRaw.each do |a|
