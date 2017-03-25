@@ -8,7 +8,6 @@ class AnimalsController < ApplicationController
     @animal = Animal.new
     
     @status = StatusType.all
-    @hold = HoldType.all
     
     @breed = Breed.order('name ASC')
     @behavior = Characteristic.where("category = 'Behavior'")
@@ -64,8 +63,6 @@ class AnimalsController < ApplicationController
         
         @intake_vet = Veterinarian.find(@intake.vet_id).name
         
-        @intake_hold = HoldType.find(@intake.intake_hold_id).name
-        
         Rails.logger.debug("My object: #{@intake.inspect}")
       end
     end
@@ -74,8 +71,6 @@ class AnimalsController < ApplicationController
       @foster = FosterStage.find(@animal.id)
       if(@foster.curr_fost_id != nil)
         @fost_foster = User.find(@foster.curr_fost_id).name
-        
-        @foster_hold = HoldType.find(@foster.fost_hold_id).name
         
         Rails.logger.debug("My object: #{@foster.inspect}")
       end
@@ -89,8 +84,6 @@ class AnimalsController < ApplicationController
         @vetting_foster = User.find(@vetting.curr_fost_id).name
         
         @vetting_vet = Veterinarian.find(@vetting.curr_vet_id).name
-       
-        @vetting_hold = HoldType.find(@vetting.vet_hold_id).name
       end
       #Rails.logger.debug("My object: #{@vetting.inspect}")
     end
@@ -171,10 +164,9 @@ class AnimalsController < ApplicationController
         @vet = params[:intake_vet][:veterinarian_id]
 
         @comm = params[:intake_cm]
-        @hold = params[:intake_hold][:hold_type_id]
 
         @new_intake = Intake.new({intake_date: @intake, foster_id: @foster,
-                      vet_id: @vet, comments: @comm, intake_hold_id: @hold, animal_id: @animal.id})
+                      vet_id: @vet, comments: @comm, animal_id: @animal.id})
         @new_intake.save
 
         Rails.logger.debug("My object: #{@new_intake.inspect}")
@@ -190,9 +182,8 @@ class AnimalsController < ApplicationController
         @vet = params[:vet_vet][:veterinarian_id]
 
         @comm = params[:vet_cm]
-        @hold = params[:vet_hold][:hold_type_id]
 
-        @new_vet = Vetting.new({vet_date: @vetting, curr_vet_id: @vet, curr_fost_id: @foster, comments: @comm, vet_hold_id: @hold, animal_id: @animal.id})
+        @new_vet = Vetting.new({vet_date: @vetting, curr_vet_id: @vet, curr_fost_id: @foster, comments: @comm, animal_id: @animal.id})
         @new_vet.save
         
         Rails.logger.debug("My object: #{@new_vet.inspect}")
@@ -206,10 +197,9 @@ class AnimalsController < ApplicationController
         @foster = params[:fost_fost][:user_id]
  
         @comm = params[:fost_cm]
-        @hold = params[:fost_hold][:hold_type_id]
-
+        
         @new_foster = FosterStage.new({foster_date: @foster_date, curr_fost_id: @foster,
-                      comment: @comm, fost_hold_id: @hold, animal_id: @animal.id})
+                      comment: @comm, animal_id: @animal.id})
         @new_foster.save
 
         Rails.logger.debug("My object: #{@new_foster.inspect}")

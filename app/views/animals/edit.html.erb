@@ -126,6 +126,9 @@
               <%= f.label :date_of_birth %>
               <%= f.text_field :birthday, class: 'datepicker' %>
 
+              <%= f.label :microchip_number , "Microchip #"%>
+              <%= f.text_field :microchip_number, class: 'form-control' %>
+
               <%= f.label :status %>
               <%= f.collection_select :status_id, @status, :id, :name, {:prompt => "Select Status"} %>
             </div>
@@ -149,31 +152,10 @@
               <%= f.text_field :color_primary, class: 'form-control' %>
 
               <%= f.label :color_secondary %>
-              <%= f.text_field :color_secondary, class: 'form-control' %>
-
-              <%= f.label :eye_color %>
-              <%= f.text_field :eye_color, class: 'form-control' %>
-
-             
+              <%= f.text_field :color_secondary, class: 'form-control' %>             
             </div>
           </div>
 
-          <div class = "med col-md-12">
-            <!-- Vetting -->
-            <a class= "card-header doc-header" data-toggle="collapse" href="#doc-body">
-              <div>
-                <h4>Vetting</h4>
-              </div>
-            </a>
-
-            <div id="doc-body" class="collapse col-md-12">
-              <%= f.label :microchip_number , "Microchip #"%>
-              <%= f.text_field :microchip_number, class: 'form-control' %>
-
-              <%= f.label :neutered , "Spayed/Neutered" %>
-              <%= f.check_box :neutered, class: 'form-control' %>
-            </div>
-          </div>
            <div class = "med col-md-12">
             <!-- Personality -->
             <a class= "card-header doc-header" data-toggle="collapse" href="#pers-body">
@@ -320,7 +302,9 @@
 
       <!-- Tracking -->
       <div id="tracking-body" class="collapse inner-formdiv">
-        <p> Functions for Stages</p>
+        
+        <%= f.label :neutered , "Spayed/Neutered" %>
+        <%= f.check_box :neutered, class: 'form-control' %>
       </div>
 
       <!-- Alerts -->
