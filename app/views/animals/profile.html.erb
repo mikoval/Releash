@@ -33,6 +33,7 @@
             <div class="characteristics-info col-md-6">
               <h4>Name</h4>
               <%= @animal.name %>
+              <p> Microchip Number: <%= @animal.microchip_number %> </p> 
               <h4>Primary Breed</h4>
               <%= @animal.primary_breed.name %>
 
@@ -62,28 +63,6 @@
             <div id="phys-feat" class="collapse col-md-12">
               <p> Primary Color: <%= @animal.color_primary %> </p>
               <p> Secondary Color: <%= @animal.color_secondary %> </p>
-            </div>
-          </div>
-
-          <div class = "med col-md-12">
-            <!-- Medical -->
-            <a class= "card-header doc-header" data-toggle="collapse" href="#med-body">
-              <div>
-                <h4>Vetting</h4>
-              </div>
-            </a>
-
-            <div id="med-body" class="collapse col-md-12">
-              <p> Microchip Number: <%= @animal.microchip_number %> </p>
-
-
-                 <!-- Check if Spayed/ Neutered -->
-                <%if @animal_check == 0%>
-                  <p> Spayed / Neutered: No </p> 
-                <% else %>
-                  <p> Spayed / Neutered: Yes </p> 
-                <% end %> 
-            
             </div>
           </div>
 
@@ -184,6 +163,13 @@
         <p> Vet: <%=@vetting_vet%> </p>
         <p> Holds: <%=@vetting_hold%> </p>
         <p> Comments: <%= @vetting.comments%> </p>
+
+        <!-- Check if Spayed/ Neutered -->
+        <%if @animal_check == 0%>
+          <p> Spayed / Neutered: No </p> 
+        <% else %>
+          <p> Spayed / Neutered: Yes </p> 
+        <% end %> 
 
         <% end %> 
 

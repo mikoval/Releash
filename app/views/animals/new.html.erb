@@ -304,8 +304,7 @@
               <li role="presentation"><a href="#vetting" data-toggle="tab">Vetting</a></li>
               <li role="presentation"><a href="#foster" data-toggle="tab">Foster</a></li>
               <li role="presentation"><a href="#adopted" data-toggle="tab">Adopted</a></li>
-              <li role="presentation"><a href="#sleep" data-toggle="tab">Sleep</a></li>
-              <li role="presentation"><a href="#transfer" data-toggle="tab">Transfer</a></li>
+              <li role="presentation"><a href="#other" data-toggle="tab">Other</a></li>
             </ul>
 
             <!-- Information for Statuses in Tabs-->
@@ -383,21 +382,24 @@
               </div>
               
               <!-- SLEEP -->
-              <div id="sleep" role="tabpanel" class="tab-pane">
+              <div id="other" role="tabpanel" class="tab-pane">
+                <h4> Sleep </h4>
                 <%= f.label :sleep_date %>
                 <%= text_field_tag 'sleep_dt', "", class: 'form-control' %>
                 
-                <%= f.label :sleep_comm, "Details" %>
+                <%= f.label :sleep_comm, "Sleep Reason" %>
                 <%= text_field_tag 'sleep_cm', "", class: 'form-control' %>
-              </div>
               
-              <!-- TRANSFER -->
-              <div id="transfer" role="tabpanel" class="tab-pane">
-                <%= f.label :transfer_date %>
-                <%= text_field_tag 'transfer_dt', "", class: 'form-control' %>
-                
-                <%= f.label :transfer_comm, "Details" %>
-                <%= text_field_tag 'transfer_cm', "", class: 'form-control' %> 
+              
+                <!-- TRANSFER -->
+                <div id="transfer" role="tabpanel" class="tab-pane">
+                  <h4> Transfer </h4>
+                  <%= f.label :transfer_date %>
+                  <%= text_field_tag 'transfer_dt', "", class: 'form-control' %>
+                  
+                  <%= f.label :transfer_comm, "Details" %>
+                  <%= text_field_tag 'transfer_cm', "", class: 'form-control' %> 
+                </div>
               </div>
             </div>
           </div>
