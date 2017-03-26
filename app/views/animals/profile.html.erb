@@ -146,9 +146,7 @@
         <%if @status_name == "Intake"%>
         <%=@status_name%>
         <p> Date: <%= @intake.intake_date%> </p>
-        <p> Foster: <%=@intake_foster%> </p>
         <p> Vet: <%=@intake_vet%> </p>
-        <p> Holds: <%=@intake_hold%> </p>
         <p> Comments: <%= @intake.comments%> </p>
 
         <% end %> 
@@ -194,24 +192,6 @@
 
         <% end %>
 
-
-        <!-- Sleep -->
-
-        <%if @status_name == "Sleep"%>
-
-        <%=@status_name%>
-        <p> Date: <%= @sleep.sleep_date%> </p>
-
-        <% end %>
-
-        <!-- Transfer -->
-
-        <%if @status_name == "Transfer"%>
-
-        <%= @status_name%>
-        <p> Date: <%= @transfers.transfer_date%> </p>
-
-        <% end %>
 
         <% if @animal.secondary_breed %>
         <h4>Secondary Breed</h4>

@@ -63,6 +63,19 @@ def editEmployee
     @employee = User.find(params["format"])
 
     if @employee.update_attributes(people_params)
+
+      if @employee.foster_check = true
+          #if they weren't approved for a foster at first but now are
+          @new_foster = Foster.new({non_user_id: nil, user_id: @employee.id,})
+          @new_foster.save
+      end
+      
+      if @employee.adopt_check = true
+        #if they weren't approved for a adopter at first but now are
+        @new_adopter = Adopter.new({non_user_id: nil, user_id: @employee.id,})
+        @new_adopter.save
+      end 
+
       flash[:success] = "Saved employee"
       redirect_to people_url
     else

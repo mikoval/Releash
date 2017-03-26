@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170322131042) do
+ActiveRecord::Schema.define(version: 20170326014830) do
 
   create_table "adopteds", force: :cascade do |t|
     t.string  "adopt_date"
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 20170322131042) do
     t.string  "state"
     t.integer "zip_code"
     t.string  "email"
+    t.string  "city"
   end
 
   create_table "animals", force: :cascade do |t|
@@ -119,6 +120,17 @@ ActiveRecord::Schema.define(version: 20170322131042) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "foster_statuses", force: :cascade do |t|
+    t.string  "foster_date"
+    t.integer "foster_id"
+    t.integer "adopter_id"
+    t.integer "vet_id"
+    t.boolean "homecheck"
+    t.string  "comments"
+    t.integer "sub_status_id"
+    t.integer "animal_id"
+  end
+
   create_table "fosters", force: :cascade do |t|
     t.integer "non_user_id"
     t.integer "user_id"
@@ -132,6 +144,10 @@ ActiveRecord::Schema.define(version: 20170322131042) do
     t.integer "animal_id"
     t.integer "sub_status_id"
     t.integer "animal_facility_id"
+  end
+
+  create_table "marketing_types", force: :cascade do |t|
+    t.string "name"
   end
 
   create_table "marketings", force: :cascade do |t|
@@ -186,6 +202,7 @@ ActiveRecord::Schema.define(version: 20170322131042) do
     t.string  "state"
     t.integer "zip_code"
     t.string  "email"
+    t.string  "city"
   end
 
   create_table "trainings", force: :cascade do |t|
@@ -233,6 +250,7 @@ ActiveRecord::Schema.define(version: 20170322131042) do
     t.string  "city"
     t.string  "state"
     t.integer "zip_code"
+    t.string  "email"
   end
 
   create_table "vettings", force: :cascade do |t|
