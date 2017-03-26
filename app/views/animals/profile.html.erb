@@ -288,12 +288,11 @@ console.log( $("#behavior-list"))
 blist = blist.substr(0, (blist.length - 2));
 $("#behavior-list").text(blist);
 
+ $('.status-info').hide();
 
 $(document).on("ready", function(){
   /*========== TRACKING ============ */
   //Hide all statuses
-  $('.status-info').hide();
-
   //Hide and show info based on dot clicked
   $('.circle').click(function(){
     var clicked = $(this).attr('id');
