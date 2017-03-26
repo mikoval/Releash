@@ -1,6 +1,6 @@
 class Vetting < ActiveRecord::Base
-	belongs_to :curr_fost, :class_name => 'User'
-    belongs_to :curr_vet, :class_name => 'Veterinarian'
-    belongs_to :vet_hold, :class_name => 'HoldType'
-    belongs_to :animal, :class_name => 'Animal'
+	has_and_belongs_to_many :curr_fost, :class_name => 'Foster'
+    has_and_belongs_to_many :curr_vet, :class_name => 'Veterinarian'
+    has_and_belongs_to_many :sub_status, :class_name => 'SubStatusType'
+    has_and_belongs_to_many :animal, :class_name => 'Animal'
 end

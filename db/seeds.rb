@@ -1,19 +1,59 @@
 #  this is where you put in values that you want in the database when created. 
 # run 'rake db:seed'
 Role.create([{title: 'Volunteer'}, {title: 'Employee'}, {title: 'Administrator '}])
+
 AlertType.create([{name: 'Medical'}, {name: 'Adoption'}, {name: 'Event'}, {name: 'Organization'}, {name: 'Other'}])
+
 User.create ({name: "Admin", email: "admin@releash.com", password: "password", password_confirmation: "password", role_id:3, activated: true,
              activated_at: Time.zone.now})
+
 Species.create([{kind: 'Dog'}, {kind: 'Cat'}])
-SubStatusType.create([{name: 'Illness'}, {name: 'Training'}, {name: 'Other'}])
-StatusType.create([{name: 'Intake'}, {name: 'Foster'}, {name: 'Vetting'}, {name: 'Adopted'}, {name: 'Training'}])
+
+SubStatusType.create([{name: 'Medical'}, {name: 'Sleep'}, {name: 'Transfer'}, {name: 'Transfer'}, {name: 'Foster to Adopt'},
+						{name: 'Pending Application'}, {name: 'Not Available'}, {name: 'Pending Contract'}, {name: 'Other'} 
+					 ])
+
+StatusType.create([{name: 'Intake'}, {name: 'Foster'}, {name: 'Vetting'}, {name: 'Adopted'}, {name: 'In Training'}])
+
+MarketingType.create([{name: 'Need Picture/Bio'}, {name: 'Not Online'}, {name: 'Web & PF'}, {name: 'Web Only'}, {name: 'Needs Update'}, {name: 'Website'}])
+
 Veterinarian.create(
 	[
-		{name: 'Fayetteville Animal Hospital', street: '1145 GA-54', city: 'Fayetteville', state: 'GA', zip_code: 30214},
-		{name: 'Intown Animal Hospital', street: '1402 N Highland Ave NE # 3', city: 'Atlanta', state: 'GA', zip_code: 30306},
-		{name: 'Greater Atlanta Vet', street: '11093 Sandy Plains Rd', city: 'Marietta', state: 'GA', zip_code: 30066}, 
-		{name: 'Tritt Animal Hospital', street: '4349 Shallowford Rd', city: 'Marietta', state: 'GA', zip_code: 30062},
-		{name: 'North Georgia Veterinary', street: '1145 GA-54', city: 'Buford', state: 'GA', zip_code: 30518} 
+		{name: 'Fayetteville Animal Hospital', street: '1145 GA-54', city: 'Fayetteville', state: 'GA', zip_code: 30214, email: ''},
+		{name: 'Intown Animal Hospital', street: '1402 N Highland Ave NE # 3', city: 'Atlanta', state: 'GA', zip_code: 30306, email: ''},
+		{name: 'Greater Atlanta Vet', street: '11093 Sandy Plains Rd', city: 'Marietta', state: 'GA', zip_code: 30066, email: ''}, 
+		{name: 'Tritt Animal Hospital', street: '4349 Shallowford Rd', city: 'Marietta', state: 'GA', zip_code: 30062, email: ''},
+		{name: 'North Georgia Veterinary', street: '1145 GA-54', city: 'Buford', state: 'GA', zip_code: 30518, email: ''} 
+	])
+Trainer.create(
+	[
+		{name: 'Trainer 1', address: '', city: '', state: '', zip_code: 0, email: ''},
+		{name: 'Trainer 2', address: '', city: '', state: '', zip_code: 0, email: ''}
+
+	])
+AnimalFacility.create(
+	[
+		{name: 'Animal Control', address: '', city: '', state: '', zip_code: 0, email: ''},
+		{name: 'Athens AC', address: '', city: '', state: '', zip_code: 0, email: ''},
+		{name: 'Bartow County AC', address: '', city: '', state: '', zip_code: 0, email: ''},
+		{name: 'Clayton County AC', address: '', city: '', state: '', zip_code: 0, email: ''},
+		{name: 'Cobb County AC', address: '', city: '', state: '', zip_code: 0, email: ''},
+		{name: 'Dekalb County AC', address: '', city: '', state: '', zip_code: 0, email: ''},
+		{name: 'Douglas County AC', address: '', city: '', state: '', zip_code: 0, email: ''},
+		{name: 'Fitzgerald AC', address: '', city: '', state: '', zip_code: 0, email: ''},
+		{name: 'Frogs to Dogs', address: '', city: '', state: '', zip_code: 0, email: ''},
+		{name: 'Fulton County AC', address: '', city: '', state: '', zip_code: 0, email: ''},
+		{name: 'Gordon Co AC', address: '', city: '', state: '', zip_code: 0, email: ''},
+		{name: 'Gwinnett County AC', address: '', city: '', state: '', zip_code: 0, email: ''},
+		{name: 'Hall County AC', address: '', city: '', state: '', zip_code: 0, email: ''},
+		{name: 'Henry Co AC', address: '', city: '', state: '', zip_code: 0, email: ''},
+		{name: 'Hounds in Pounds', address: '', city: '', state: '', zip_code: 0, email: ''},
+		{name: 'Paulding Co AC', address: '', city: '', state: '', zip_code: 0, email: ''},
+		{name: 'Safe Harbor Animal Rescue', address: '', city: '', state: '', zip_code: 0, email: ''},
+		{name: 'Tift County AC', address: '', city: '', state: '', zip_code: 0, email: ''},
+		{name: 'Walker County AC', address: '', city: '', state: '', zip_code: 0, email: ''},
+		{name: 'White Co AC', address: '', city: '', state: '', zip_code: 0, email: ''},
+		{name: 'Whitfield County AC', address: '', city: '', state: '', zip_code: 0, email: ''}
 	])
 
 Characteristic.create(

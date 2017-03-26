@@ -30,6 +30,10 @@ class NonUserController < ApplicationController
     @non_user = NonUser.new(user_params)
 
     if @non_user.save
+      
+      if @non_user.foster_check = true
+        @new_adopter = Adopter.new({non_user_id: @non_user.id, user_id: nil})
+      end
       flash[:success] = "Added Non User"
       redirect_to :controller => "non_user", :action => "profile", :param => @non_user
     else
@@ -39,8 +43,24 @@ class NonUserController < ApplicationController
   
   def editUser
     @non_user = NonUser.find(params["format"])
-
+    #testing variables
+    @curr_fost = @non_user.foster_check
+    @curr_adopt = @non_user.adopt_check
+    
     if @non_user.update_attributes(user_params)
+      
+      if @non_user.foster_check = true
+          #if they weren't approved for a foster at first but now are
+          @new_foster = Foster.new({non_user_id: @non_user.id, user_id: nil})
+          @new_foster.save
+      end
+      
+      if @non_user.adopt_check = true
+        #if they weren't approved for a adopter at first but now are
+        @new_adopter = Adopter.new({non_user_id: @non_user.id, user_id: nil})
+        @new_adopter.save
+      end  
+
       flash[:success] = "Sucessful Edit"
       redirect_to :controller => "non_user", :action => "profile", :param => @non_user
     else

@@ -8,9 +8,21 @@ class AnimalsController < ApplicationController
     @animal = Animal.new
     
     @status = StatusType.all
-    
+    @sub_status = SubStatusType.all
+    @marketing = MarketingType.all
     @breed = Breed.order('name ASC')
     @behavior = Characteristic.all.order('name ASC')
+
+    #having fosters and adopter display
+    @fosters_user = User.where(foster_check: true)
+    @foster_non_user = NonUser.where(foster_check: true)
+    #Rails.logger.debug("My object: #{foster_non_user.inspect}")
+    @fosters = @fosters_user + @foster_non_user
+    Rails.logger.debug("My object: #{@fosters.inspect}")
+    @adopt_user = User.where(adopt_check: true)
+    @adopt_non_user = NonUser.where(adopt_check: true)
+    @adopters = @adopt_user + @adopt_non_user
+    # -----------------------------------
 
   end
 
@@ -47,16 +59,14 @@ class AnimalsController < ApplicationController
     #Rails.logger.debug("My object: #{status_name.inspect}")
     
     if (@status_name.to_s == "Intake")
-
-      @intake = Intake.find(@animal.id)
+      @test = Intake.all
+      #Rails.logger.debug("My object: #{@test.inspect}")
+      @intake = Intake.find_by animal_id: @animal.id
     
-      if(@intake.foster_id != nil)
-        @intake_foster = User.find(@intake.foster_id).name
         
-        @intake_vet = Veterinarian.find(@intake.vet_id).name
+      @intake_vet = Veterinarian.find(@intake.vet_id).name
         
-        Rails.logger.debug("My object: #{@intake.inspect}")
-      end
+      #Rails.logger.debug("My object: #{@intake.inspect}")
     end
 
     if (@status_name.to_s == "Foster")
@@ -88,16 +98,10 @@ class AnimalsController < ApplicationController
       Rails.logger.debug("My object: #{@adopted.inspect}")
     end
 
-    if (@status_name.to_s == "Sleep")
+    if (@status_name.to_s == "Training")
       @sleep = AniSleep.find(@animal.id)
       
       Rails.logger.debug("My object: #{@sleep.inspect}")
-    end
-    
-    if (@status_name.to_s == "Transfer")
-      @transfers = AniTransfer.find(@animal.id)
-      
-      Rails.logger.debug("My object: #{@transfers.inspect}")
     end
     
     @breeds = AnimalBreed.where("animal_id = " + params["param"])
@@ -124,14 +128,18 @@ class AnimalsController < ApplicationController
 
   def newAnimal
     @animal = Animal.new(animal_params)
+    
     @status = StatusType.all
+    @sub_status = SubStatusType.all
+    @marketing = Marketing.all
+
     @allAnimals = Animal.all
     @breed = Breed.all
     @users = User.all
 
-
+    
     if @animal.save
-      #this code was for old documents
+
       if params["breeds"]
         arr = params["breeds"].split("|")
         arr.each do |d|
@@ -144,16 +152,31 @@ class AnimalsController < ApplicationController
       if params["intake_dt"]
 
         @intake = params[:intake_dt]
-        @foster = params[:intake_fost][:user_id]
+        @foster = params[:intake_fost][:foster_id]
         @vet = params[:intake_vet][:veterinarian_id]
 
-        @comm = params[:intake_cm]
+        #Right now will accept both vet and foster as location
+        #!!!!!Need to make it so it only picks one
+        @intake_foster = nil
+        if User.where(email: @foster) != nil
+          @temp = User.where(email: @foster)
+          #Rails.logger.debug("temp: #{@temp.inspect}")
+          @intake_foster = Foster.where(user_id: @temp.ids)
+          #Rails.logger.debug("temp: #{@intake_foster.inspect}")
+        elsif NonUser.where(email: @foster) != nil
+          @temp = NonUser.where(email: @foster)
+          @intake_foster = Foster.where(non_user_id: @temp.ids)
+        end
 
-        @new_intake = Intake.new({intake_date: @intake, foster_id: @foster,
-                      vet_id: @vet, comments: @comm, animal_id: @animal.id})
+        @comm = params[:intake_cm]
+        @intake_sub = @animal.sub_status_id
+        @ani_faci = params[:intake_prev][:animal_facility_id]
+
+        @new_intake = Intake.new({intake_date: @intake, foster_id: @intake_foster.ids[0],
+                      vet_id: @vet, comments: @comm, animal_id: @animal.id, sub_status_id: @intake_sub, animal_facility_id: @ani_faci})
         @new_intake.save
 
-        Rails.logger.debug("My object: #{@new_intake.inspect}")
+        Rails.logger.debug("New Intake: #{@new_intake.inspect}")
 
 
       end
@@ -167,10 +190,8 @@ class AnimalsController < ApplicationController
 
         @comm = params[:vet_cm]
 
-        @new_vet = Vetting.new({vet_date: @vetting, curr_vet_id: @vet, curr_fost_id: @foster, comments: @comm, animal_id: @animal.id})
-        @new_vet.save
         
-        Rails.logger.debug("My object: #{@new_vet.inspect}")
+        #Rails.logger.debug("My object: #{@new_vet.inspect}")
 
 
       end
@@ -182,54 +203,20 @@ class AnimalsController < ApplicationController
  
         @comm = params[:fost_cm]
         
-        @new_foster = FosterStage.new({foster_date: @foster_date, curr_fost_id: @foster,
-                      comment: @comm, animal_id: @animal.id})
-        @new_foster.save
 
-        Rails.logger.debug("My object: #{@new_foster.inspect}")
+        #Rails.logger.debug("My object: #{@new_foster.inspect}")
 
 
       end
 
-      if params["sleep_dt"]
 
-        @sleep = params[:sleep_dt]
-
-        @comm = params[:sleep_cm]
-
-        @new_sleep = AniSleep.new({sleep_date: @sleep, comments: @comm, animal_id: @animal.id})
-        @new_sleep.save
-
-        Rails.logger.debug("My object: #{@new_sleep.inspect}")
-
-
-      end
-
-      if params["transfer_dt"]
-
-        @transfer = params[:transfer_dt]
-
-        @comm = params[:transfer_cm]
-
-
-        @new_transfer = AniTransfer.new({transfer_date: @transfer, comments: @comm, animal_id: @animal.id})
-
-        @new_transfer.save
-
-        Rails.logger.debug("My object: #{@new_transfer.inspect}")
-
-
-      end
-      
       if params["adopted_dt"]
 
         @adopt_date = params[:adopted_dt]
  
         @comm = params[:adopted_cm]
 
-        @new_adopt = Adopted.new({adopt_date: @adopt_date, comments: @comm, animal_id: @animal.id})
-        @new_adopt.save
-        Rails.logger.debug("My object: #{@new_adopt.inspect}")
+        #Rails.logger.debug("My object: #{@new_adopt.inspect}")
 
 
       end
