@@ -288,26 +288,25 @@ console.log( $("#behavior-list"))
 blist = blist.substr(0, (blist.length - 2));
 $("#behavior-list").text(blist);
 
- $('.status-info').hide();
+ 
+/*========== TRACKING ============ */
+//Hide all statuses
+$('.status-info').hide();
+//Hide and show info based on dot clicked
+$('.circle').click(function(){
+  var clicked = $(this).attr('id');
+  $(this).addClass('unSelected');
+  $('#' + clicked + '.circle').removeClass('unSelected');
+  //shade current and clear others
+  if (!$('.circle').hasClass('unSelected')) {
+      $('.circle').css('background-color', '#e1e1e1');
+      $('#' + clicked + '.circle').css('background-color',  '#2980b9');
+  }
+  $('.status-info').hide();
+  $('.status-info.' + clicked).fadeIn(200);
+});
 
 $(document).on("ready", function(){
-  /*========== TRACKING ============ */
-  //Hide all statuses
-  //Hide and show info based on dot clicked
-  $('.circle').click(function(){
-    var clicked = $(this).attr('id');
-    $(this).addClass('unSelected');
-    $('#' + clicked + '.circle').removeClass('unSelected');
-    //shade current and clear others
-    if (!$('.circle').hasClass('unSelected')) {
-        $('.circle').css('background-color', '#e1e1e1');
-        $('#' + clicked + '.circle').css('background-color',  '#2980b9');
-    }
-    $('.status-info').hide();
-    $('.status-info.' + clicked).fadeIn(200);
-  });
-
-  //Alerts
   bindAlertsModal();
 })
 bindAlertsModal();
