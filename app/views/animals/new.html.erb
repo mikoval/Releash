@@ -30,9 +30,9 @@
 
   <!-- Nav Bar Content -->
   
-  <div class="form-nav col-md-2">
+  <div class="form-nav col-md-10">
     <!-- Personal info tab -->
-    <div class="card form-div personal col-md-12">
+    <div class="card form-div personal col-md-3">
       <a class="card-header personal-header" data-toggle="collapse" href="#personal-body">
         <div style="background: white;">
           <h4>Characteristics</h4>
@@ -40,7 +40,7 @@
       </a>
     </div>
 
-    <div class= "card form-div personal col-md-12">
+    <div class= "card form-div personal col-md-3">
       <a class= "card-header paper-header" data-toggle="collapse" href="#paper-body">
         <div>
           <h4>Paperwork</h4>
@@ -48,7 +48,7 @@
       </a>
     </div>
 
-    <div class="form-div tracking col-md-12">
+    <div class="form-div tracking col-md-3">
       <a class= "card-header tracking-header" data-toggle="collapse" href="#tracking-body">
         <div>
           <h4>Tracking</h4>
@@ -56,10 +56,10 @@
       </a>
     </div>
 
-    <div class="form-div alerts col-md-12">
+    <div class="form-div alerts col-md-3">
       <a class= "card-header alert-header" data-toggle="collapse" href="#alerts-body">
         <div>
-         <h4>Alerts</h4>
+         <h4>Notes</h4>
         </div>
       </a>
     </div>
@@ -381,8 +381,9 @@
                 <%= text_field_tag 'adopted_cm', "", class: 'form-control' %>              
               </div>
               
-              <!-- SLEEP -->
+              <!-- OTHER -->
               <div id="other" role="tabpanel" class="tab-pane">
+                <!-- SLEEP -->
                 <h4> Sleep </h4>
                 <%= f.label :sleep_date %>
                 <%= text_field_tag 'sleep_dt', "", class: 'form-control' %>
@@ -470,9 +471,9 @@
         </div>  
       </div>
 
-      <!-- Alerts -->
-      <div id="alerts-body" class="collapse inner-formdiv">
-          <p> Functions for Alerts</p>
+      <!-- Notes -->
+      <div id="notes-body" class="collapse inner-formdiv">
+          <p> General notes</p>
       </div>
     
       <!-- Can i move this? -->

@@ -138,86 +138,111 @@
 
       <!-- Tracking -->
       <div id="tracking-body" class="collapse inner-formdiv">
+        <p> Current Status: <%=@status_name%> </p>
 
-        <!-- Status (Really Crude Way)-->
-        <h4>Current Status</h4>
+        <div id="timeline">
+          <div class="circle" id="intake">
+            <status>Intake</status>
+          </div>
+          <div class="circle" id="vetting">
+            <status>Vetting</status>
+          </div>
+          <div class="circle" id="foster">
+            <status>Foster</status>
+          </div>
+          <div class="circle" id="adopted">
+            <status>Adopted</status>
+          </div>
+           <div class="circle" id="other">
+            <status>Other</status>
+          </div>
+        </div>
 
-        <!-- Intake-->
-        <%if @status_name == "Intake"%>
-        <%=@status_name%>
-        <p> Date: <%= @intake.intake_date%> </p>
-        <p> Foster: <%=@intake_foster%> </p>
-        <p> Vet: <%=@intake_vet%> </p>
-        <p> Holds: <%=@intake_hold%> </p>
-        <p> Comments: <%= @intake.comments%> </p>
+        <!-- Will throw errors if not current status -->
+        <!-- Status Info -->
+        <article class='status-info intake'>
+          <p>
+            <%if @status_name == "Intake"%>
+            <%=@status_name%>
+            <p> Date: <%= @intake.intake_date%> </p>
+            <p> Foster: <%=@intake_foster%> </p>
+            <p> Vet: <%=@intake_vet%> </p>
+            <p> Holds: <%=@intake_hold%> </p>
+            <p> Comments: <%= @intake.comments%> </p>
+            <% else %>
+              <h2>Intake</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates magnam excepturi laboriosam minima soluta, quae. Sunt repellat totam non, et sed in veniam fuga odio eius! Nesciunt amet optio recusandae? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum sit dolor sint amet, corporis aperiam nihil, quas, accusantium enim suscipit rem non possimus </p>              
+            <% end %> 
+          </p>
+        </article>
 
-        <% end %> 
+        <article class='status-info vetting'>
+          <p>
+            <%if @status_name == "Vetting"%>
+            <%=@status_name%>
+            <p> Date: <%= @vetting.vet_date%> </p>
+            <p> Foster: <%=@vetting_foster%> </p>
+            <p> Vet: <%=@vetting_vet%> </p>
+            <p> Holds: <%=@vetting_hold%> </p>
+            <p> Comments: <%= @vetting.comments%> </p>
 
-        <!-- Vetting-->
+            <!-- Check if Spayed/ Neutered -->
+            <%if @animal_check == 0%>
+              <p> Spayed / Neutered: No </p> 
+            <% else %>
+              <p> Spayed / Neutered: Yes </p> 
+            <% end %> 
+            <% else %>
+              <h2>Vetting</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates magnam excepturi laboriosam minima soluta, quae. Sunt repellat totam non, et sed in veniam fuga odio eius! Nesciunt amet optio recusandae? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum sit dolor sint amet, corporis aperiam nihil, quas, accusantium enim suscipit rem non possimus </p>            
+            <% end %> 
+          </p>
+        </article>
 
-        <%if @status_name == "Vetting"%>
+        <article class='status-info foster'>
+          <p>
+            <%if @status_name == "Foster"%>
+            <%=@status_name%>
+            <p> Date: <%= @foster.foster_date%> </p>
+            <p> Foster: <%=@fost_foster%> </p>
+            <p> Holds: <%=@foster_hold%> </p>
+            <p> Comments: <%= @foster.comment%> </p>
+            <% else %>
+              <h2>Foster</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates magnam excepturi laboriosam minima soluta, quae. Sunt repellat totam non, et sed in veniam fuga odio eius! Nesciunt amet optio recusandae? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum sit dolor sint amet, corporis aperiam nihil, quas, accusantium enim suscipit rem non possimus officiis. Recusandae hic at, fugiat eos eveniet.</p>                          
+            <% end %>
+          </p>
+        </article>
 
-        <%=@status_name%>
-        <p> Date: <%= @vetting.vet_date%> </p>
-        <p> Foster: <%=@vetting_foster%> </p>
-        <p> Vet: <%=@vetting_vet%> </p>
-        <p> Holds: <%=@vetting_hold%> </p>
-        <p> Comments: <%= @vetting.comments%> </p>
+        <article class='status-info adopted'>
+          <p>
+            <%if @status_name == "Adopted"%>
+            <%= @status_name%>
+            <p> Date: <%= @adopted.adopt_date%> </p>
+            <% else %>
+              <h2>Adopted</h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates magnam excepturi laboriosam minima soluta, quae. Sunt repellat totam non, et sed in veniam fuga odio eius! Nesciunt amet optio recusandae? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum sit dolor sint amet, corporis aperiam nihil, quas, accusantium enim suscipit rem non possimus officiis. Recusandae hic at, fugiat eos eveniet.</p>            
+            <% end %>
 
-        <!-- Check if Spayed/ Neutered -->
-        <%if @animal_check == 0%>
-          <p> Spayed / Neutered: No </p> 
-        <% else %>
-          <p> Spayed / Neutered: Yes </p> 
-        <% end %> 
+        </article>
 
-        <% end %> 
-
-        <!-- Foster-->
-
-        <%if @status_name == "Foster"%>
-
-        <%=@status_name%>
-        <p> Date: <%= @foster.foster_date%> </p>
-        <p> Foster: <%=@fost_foster%> </p>
-        <p> Holds: <%=@foster_hold%> </p>
-        <p> Comments: <%= @foster.comment%> </p>
-
-        <% end %>
-
-        <!-- Adopted -->
-
-        <%if @status_name == "Adopted"%>
-
-        <%= @status_name%>
-        <p> Date: <%= @adopted.adopt_date%> </p>
-
-        <% end %>
-
-
-        <!-- Sleep -->
-
-        <%if @status_name == "Sleep"%>
-
-        <%=@status_name%>
-        <p> Date: <%= @sleep.sleep_date%> </p>
-
-        <% end %>
-
-        <!-- Transfer -->
-
-        <%if @status_name == "Transfer"%>
-
-        <%= @status_name%>
-        <p> Date: <%= @transfers.transfer_date%> </p>
-
-        <% end %>
-
-        <% if @animal.secondary_breed %>
-        <h4>Secondary Breed</h4>
-        <%= @animal.secondary_breed.name %>
-
-        <% end %> 
+        <article class='status-info other'>
+          <p>
+            <!-- Sleep -->
+            <%if @status_name == "Sleep"%>
+            <%=@status_name%>
+            <p> Date: <%= @sleep.sleep_date%> </p>
+            <!-- Tranfer -->
+            <% elsif @status_name == "Transfer"%>
+              <%= @status_name%>
+              <p> Date: <%= @transfers.transfer_date%> </p>
+            <% else %>
+              <h2>Sleep or Transfer</h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates magnam excepturi laboriosam minima soluta, quae. Sunt repellat totam non, et sed in veniam fuga odio eius! Nesciunt amet optio recusandae? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum sit dolor sint amet, corporis aperiam nihil, quas, accusantium enim suscipit rem non possimus officiis. Recusandae hic at, fugiat eos eveniet.</p>
+          <% end %>
+          </p>
+        </article>
+        <div class= "status-buffer col-md-12"></div>
       </div>
 
       <div class= "card form-div alerts col-md-12">
@@ -258,10 +283,6 @@
 
     
 <script>
-
-
-
-
 var blist = $("#behavior-list").text();
 console.log( $("#behavior-list"))
 blist = blist.substr(0, (blist.length - 2));
@@ -269,9 +290,32 @@ $("#behavior-list").text(blist);
 
 
 $(document).on("ready", function(){
+  /*========== TRACKING ============ */
+  //Hide all statuses
+  $('.status-info').hide();
+
+  //Hide and show info based on dot clicked
+  $('.circle').click(function(){
+    var clicked = $(this).attr('id');
+    $(this).addClass('unSelected');
+    $('#' + clicked + '.circle').removeClass('unSelected');
+    //shade current and clear others
+    if (!$('.circle').hasClass('unSelected')) {
+        $('.circle').css('background-color', '#e1e1e1');
+        $('#' + clicked + '.circle').css('background-color',  '#2980b9');
+    }
+    $('.status-info').hide();
+    $('.status-info.' + clicked).fadeIn(200);
+  });
+
+  //Alerts
   bindAlertsModal();
 })
 bindAlertsModal();
+
+
+
+
 </script>
 
 
