@@ -355,22 +355,33 @@ class AnimalsController < ApplicationController
   end
 
   def query
-    @animals = Animal.all.limit(10)
+    @animals = Animal.all
     arr = []
-    @animals.each do |d|
-      sBreed = '';
-      if(d.secondary_breed_id)
-        sBreed = d.secondary_breed.name
-      end
 
-      arr.push({
-        "id" =>  d.id, 
-        "name" => d.name,
-        "primary" => d.primary_breed.name,
-        "secondary" => sBreed,
-        "picture" => d.picture,
-        "age" => getAge(d.birthday)
-      })
+    @animals.each do |d|
+      add = true
+      # this should check all cases for name 
+      if(params["name"] != "" )
+        length = params["name"].length.to_i 
+        length = length -1 
+        if(params["name"].length > d.name.length)
+          add = false
+        elsif(params["name"] != d.name[0..length])
+          add = false
+        end
+      end 
+
+
+
+      if(add)
+        arr.push({
+          "id" =>  d.id, 
+          "name" => d.name,
+          "primary" => d.primary_breed.name,
+          "picture" => d.picture,
+          "age" => getAge(d.birthday)
+        })
+      end
     end
     render json: arr
   end

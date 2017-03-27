@@ -7,37 +7,21 @@
 <%= link_to "<button>Add Animal</button>".html_safe,  :controller => "animals", :action => "new", :method => "get" %>
 <% end %>
 
-    <div class = "container" style = "width:100%">
-    <% @allAnimals.each do |a| %>
-   
-    <div class = "col-md-4 col-md-offset-1 col-sm-12 col-xs-12 list-card">
-       <div class = "row">
-      <div class = "col-md-4 col-sm-4 col-xs-4 list-pic" style = "padding: 5px">
-        <%= display_avatar(a, "100x100") %>
-    </div>
-    <div class = "col-md-6 col-sm-6 col-xs-6" style = "text-align: left; font-size: 25px;">
-      <%= link_to a.name, :controller => "animals", :action => "profile", :param => a, :method => "get" %>
-      
-    </div>
-    <% if employee?(current_user) %>
-      <%= link_to '<span class ="glyphicon glyphicon-pencil col-md-1 col-sm-1 col-xs-1" style = "float: left; cursor: pointer; display:none; margin:10px">
-        </span>'.html_safe, :controller => "animals", :action => "edit", :param => a, :method => "get" %>
-        
-          <% end %>
-        <div class = "col-md-8 col-sm-8 col-xs-8 list-info">
-          <%= a.primary_breed.name %>  <% if a.secondary_breed %> | <%= a.secondary_breed.name %> <%a.birthday%> <%a.gender%> <%= a.status%> <% end %>
-        </div>
+    <br><br>
 
-        
-        
-        </div>
-    
-        </span>
-    </div>
-     <div class = "col-md-1" style = "margin: 0px;">
+    <div class = "filters col-md-3" style = "border-radius:1px; border:solid; margin:5px"> 
+    <p> Name:  </p> <input type = "text" id = "filter-name"/> 
+
+    <button id = "generate-button">Filter Animals</button>
     </div>
 
-<% end %>
+    <div id = "animals-list" class = "col-md-8" > 
+
+    </div>
+
+  
+     
+
 </div>
 
 <script>
@@ -49,4 +33,38 @@ $(".list-card").hover(
     $(this).find(".glyphicon-pencil").hide()
   }
 )
+
+function generateAnimalsList(){
+  params = {};
+  params.name = $("#filter-name").val();
+  console.log(params)
+  $.ajax({
+    url: "animals/query",
+    data: params,
+    success: function(result){
+      var str = "<table class='table table-bordered table-hover table-striped'> <thead> <tr> <th>Name</th> <th>Primary Breed</th> <th>Age</th> </tr> </thead>" 
+        for (x in result){
+    
+                str += "<tr> \
+                <td> <a href='/animals/profile?method=get&param=" + result[x].id + " '  >" + result[x].name + "</a></td>\
+                 <td>" + result[x].primary + "</td>\
+                <td>" + result[x].age + "</td>\
+                </tr>"
+        }
+        str +=  " </table>"
+
+        $("#animals-list").html(str);
+        console.log("done");
+
+
+    },
+  });
+
+  
+}
+$("#generate-button").on("click", function(){
+  generateAnimalsList();
+})
+generateAnimalsList();
 </script>
+
