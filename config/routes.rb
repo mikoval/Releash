@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+
+
   
 
 # the first part is what they are going to 
@@ -46,6 +48,18 @@ Rails.application.routes.draw do
   get 'non_user/list'
   post '/non_user', to: 'non_user#newUser'
   patch '/non_user', to: 'non_user#editUser'
+
+  get 'trainer/new'
+  get 'trainer/list'
+  get 'trainer/edit'
+  post '/trainer', to: 'non_user#newTrainer'
+  patch '/trainer', to: 'non_user#editTrainer'
+
+  get 'veterinarian/new'
+  get 'veterinarian/list'
+  get 'veterinarian/edit'
+  post '/veterinarian', to: 'non_user#newVeterinarian'
+  patch '/veterinarian', to: 'non_user#editVeterinarian'
 
   get  '/signup',  to: 'users#new'
   post '/signup',  to: 'users#create'

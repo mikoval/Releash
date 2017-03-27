@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170326014830) do
+ActiveRecord::Schema.define(version: 20170326214025) do
 
   create_table "adopteds", force: :cascade do |t|
     t.string  "adopt_date"
@@ -43,18 +43,6 @@ ActiveRecord::Schema.define(version: 20170326014830) do
     t.string   "location"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-  end
-
-  create_table "ani_sleeps", force: :cascade do |t|
-    t.string  "sleep_date"
-    t.string  "comments"
-    t.integer "animal_id"
-  end
-
-  create_table "ani_transfers", force: :cascade do |t|
-    t.string  "transfer_date"
-    t.string  "comments"
-    t.integer "animal_id"
   end
 
   create_table "animal_alerts", force: :cascade do |t|
@@ -89,8 +77,8 @@ ActiveRecord::Schema.define(version: 20170326014830) do
 
   create_table "animals", force: :cascade do |t|
     t.text     "name"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
     t.integer  "species_id"
     t.string   "picture"
     t.string   "color_primary"
@@ -116,6 +104,7 @@ ActiveRecord::Schema.define(version: 20170326014830) do
     t.integer  "status_id"
     t.integer  "sub_status_id"
     t.integer  "marketing_id"
+    t.boolean  "visibility",                    default: false
   end
 
   create_table "breeds", force: :cascade do |t|
@@ -132,14 +121,6 @@ ActiveRecord::Schema.define(version: 20170326014830) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "foster_stages", force: :cascade do |t|
-    t.string  "foster_date"
-    t.integer "curr_fost_id"
-    t.string  "comment"
-    t.integer "fost_hold_id"
-    t.integer "animal_id"
-  end
-
   create_table "foster_statuses", force: :cascade do |t|
     t.string  "foster_date"
     t.integer "foster_id"
@@ -154,19 +135,6 @@ ActiveRecord::Schema.define(version: 20170326014830) do
   create_table "fosters", force: :cascade do |t|
     t.integer "non_user_id"
     t.integer "user_id"
-  end
-
-  create_table "hold_types", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "illnesses", force: :cascade do |t|
-    t.string  "ill_date"
-    t.integer "ill_vet_id"
-    t.string  "ill_info"
-    t.string  "comments"
-    t.integer "animal_id"
   end
 
   create_table "intakes", force: :cascade do |t|
@@ -200,10 +168,12 @@ ActiveRecord::Schema.define(version: 20170326014830) do
     t.string  "picture"
   end
 
-  create_table "other_holds", force: :cascade do |t|
+  create_table "other_statuses", force: :cascade do |t|
     t.string  "other_date"
-    t.string  "comments"
+    t.integer "sub_status_id"
     t.integer "animal_id"
+    t.string  "comments"
+    t.string  "status_name"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -285,7 +255,7 @@ ActiveRecord::Schema.define(version: 20170326014830) do
 
   create_table "veterinarian", force: :cascade do |t|
     t.string  "name"
-    t.string  "street"
+    t.string  "address"
     t.string  "city"
     t.string  "state"
     t.integer "zip_code"

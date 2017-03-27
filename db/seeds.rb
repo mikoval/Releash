@@ -9,21 +9,21 @@ User.create ({name: "Admin", email: "admin@releash.com", password: "password", p
 
 Species.create([{kind: 'Dog'}, {kind: 'Cat'}])
 
-SubStatusType.create([{name: 'Medical'}, {name: 'Sleep'}, {name: 'Transfer'}, {name: 'Transfer'}, {name: 'Foster to Adopt'},
-						{name: 'Pending Application'}, {name: 'Not Available'}, {name: 'Pending Contract'}, {name: 'Other'} 
+SubStatusType.create([{name: 'Medical'}, {name: 'Sleep'}, {name: 'Transfer'}, {name: 'Foster to Adopt'},
+						{name: 'Pending Application'}, {name: 'Not Available'}, {name: 'Pending Contract'} 
 					 ])
 
-StatusType.create([{name: 'Intake'}, {name: 'Foster'}, {name: 'Vetting'}, {name: 'Adopted'}, {name: 'In Training'}])
+StatusType.create([{name: 'Intake'}, {name: 'Foster'}, {name: 'Vetting'}, {name: 'Adopted'}, {name: 'In Training'}, {name: 'Other'}])
 
 MarketingType.create([{name: 'Need Picture/Bio'}, {name: 'Not Online'}, {name: 'Web & PF'}, {name: 'Web Only'}, {name: 'Needs Update'}, {name: 'Website'}])
 
 Veterinarian.create(
 	[
-		{name: 'Fayetteville Animal Hospital', street: '1145 GA-54', city: 'Fayetteville', state: 'GA', zip_code: 30214, email: ''},
-		{name: 'Intown Animal Hospital', street: '1402 N Highland Ave NE # 3', city: 'Atlanta', state: 'GA', zip_code: 30306, email: ''},
-		{name: 'Greater Atlanta Vet', street: '11093 Sandy Plains Rd', city: 'Marietta', state: 'GA', zip_code: 30066, email: ''}, 
-		{name: 'Tritt Animal Hospital', street: '4349 Shallowford Rd', city: 'Marietta', state: 'GA', zip_code: 30062, email: ''},
-		{name: 'North Georgia Veterinary', street: '1145 GA-54', city: 'Buford', state: 'GA', zip_code: 30518, email: ''} 
+		{name: 'Fayetteville Animal Hospital', address: '1145 GA-54', city: 'Fayetteville', state: 'GA', zip_code: 30214, email: ''},
+		{name: 'Intown Animal Hospital', address: '1402 N Highland Ave NE # 3', city: 'Atlanta', state: 'GA', zip_code: 30306, email: ''},
+		{name: 'Greater Atlanta Vet', address: '11093 Sandy Plains Rd', city: 'Marietta', state: 'GA', zip_code: 30066, email: ''}, 
+		{name: 'Tritt Animal Hospital', address: '4349 Shallowford Rd', city: 'Marietta', state: 'GA', zip_code: 30062, email: ''},
+		{name: 'North Georgia Veterinary', address: '1145 GA-54', city: 'Buford', state: 'GA', zip_code: 30518, email: ''} 
 	])
 Trainer.create(
 	[

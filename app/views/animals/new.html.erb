@@ -312,6 +312,7 @@
               <li role="presentation"><a href="#foster" data-toggle="tab">Foster</a></li>
               <li role="presentation"><a href="#training" data-toggle="tab">Training</a></li>
               <li role="presentation"><a href="#adopted" data-toggle="tab">Adopted</a></li>
+              <li role="presentation"><a href="#other" data-toggle="tab">Other</a></li>
             </ul>
 
             <!-- Information for Statuses in Tabs-->
@@ -322,6 +323,9 @@
                 <%= f.label :intake_date, "Intake Date" %>
                 <%= text_field_tag 'intake_dt', "" ,class: 'datepicker' %>
                 
+                <%= f.label :intake_sub, "Sub Status"%>
+                <%= collection_select(:intake_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
+
                 <!-- Selecting Foster-->
                 <%= f.label :intake_fost, "Foster"%>
                 <%= collection_select(:intake_fost, :foster_id, @fosters, :email, :name, {:prompt => "Select foster"}) %>
@@ -345,19 +349,15 @@
               <div id="vetting" role="tabpanel" class="tab-pane">
                   <%= f.label :vetting_date %>
                   <%= text_field_tag 'vet_dt', "" ,class: 'datepicker' %>
-                
-
-                  <!-- Selecting Foster-->
-                  <%= f.label :vet_fost, "Foster"%>
-                  <%= collection_select(:vet_fost, :user_id, User.all, :id, :name, {:prompt => "Select foster"}) %>
                   
+                  <%= f.label :vet_sub, "Sub Status"%>
+                  <%= collection_select(:vet_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
+
                   <!-- Selecting Vets-->
                   <%= f.label :vet_vet, "Veterinarian"%>
                   <%= collection_select(:vet_vet, :veterinarian_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian"}) %>
                   
-                  <!-- Selecting Holds-->
-                  <%#= f.label :vet_hold, "Hold"%>
-                  <%#= collection_select(:vet_hold, :hold_type_id, HoldType.all, :id, :name, {:prompt => "Select a Hold"}) %>
+                  
                   <!-- Inputing Details-->
                   <%= f.label :vet_comm, "Details" %>
                   <%= text_field_tag 'vet_cm', "", class: 'form-control' %>
@@ -368,13 +368,19 @@
               <div id="foster" role="tabpanel" class="tab-pane">
                 <%= f.label :foster_date %>
                 <%= text_field_tag 'foster_dt', "" ,class: 'datepicker' %>
-                
-                <%= f.label :fost_fost, "Foster"%>
-                <%= collection_select(:fost_fost, :user_id, User.all, :id, :name, {:prompt => "Select foster"}) %>
 
-                <!-- Selecting Holds-->
-                <%#= f.label :fost_hold, "Hold"%>
-                <%#= collection_select(:fost_hold, :hold_type_id, HoldType.all, :id, :name, {:prompt => "Select a Hold"}) %>
+                <%= f.label :fost_sub, "Sub Status"%>
+                <%= collection_select(:fost_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
+
+                <%= f.label :fost_fost, "Foster"%>
+                <%= collection_select(:fost_fost, :foster_id, @fosters, :email, :name, {:prompt => "Select foster"}) %>
+                
+                <%= f.label :homecheck, "Home Check Completed"%>
+                <%= check_box_tag 'foster_check', value = "1"%>
+
+                <!-- Selecting Vet-->
+                <%= f.label :fost_vet, "Veterinarian"%>
+                <%= collection_select(:fost_vet, :veterinarian_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian"}) %>
 
                 <%= f.label :fost_comm, "Details" %>
                 <%= text_field_tag 'fost_cm', "", class: 'form-control' %>
@@ -382,24 +388,58 @@
               
               <!-- TRAINING -->
               <div id="training" role="tabpanel" class="tab-pane">
-                <%= f.label :adopt_date %>
-                <%= text_field_tag 'adopted_dt', "", class: 'form-control' %>
-                
-                <%= f.label :adopt_comm, "Details" %>
-                <%= text_field_tag 'adopted_cm', "", class: 'form-control' %>              
+                <%= f.label :training_date %>
+                <%= text_field_tag 'training_dt', "" ,class: 'datepicker' %>
+
+                <%= f.label :training_sub, "Sub Status"%>
+                <%= collection_select(:training_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
+
+                <%= f.label :train_comm, "Problem Information" %>
+                <%= text_field_tag 'training_cm', "", class: 'form-control' %> 
+
+                 <!-- Selecting Training-->
+                <%= f.label :trainer_train, "Trainer Location"%>
+                <%= collection_select(:trainer_train, :trainer_id, Trainer.all, :id, :name, {:prompt => "Select Trainer"}) %>
+
+                      
               </div>
               
 
               <!-- ADOPTED -->
               <div id="adopted" role="tabpanel" class="tab-pane">
                 <h4> Sleep </h4>
-                <%= f.label :sleep_date %>
+                <%= f.label :adopted_date%>
                 <%= text_field_tag 'sleep_dt', "", class: 'form-control' %>
                 
-                <%= f.label :sleep_comm, "Sleep Reason" %>
-                <%= text_field_tag 'sleep_cm', "", class: 'form-control' %>
+                <%= f.label :adopt_sub, "Sub Status"%>
+                <%= collection_select(:adopt_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
+
+                <!-- Selecting Foster-->
+                <%= f.label :adopt_adopter, "Adopter"%>
+                <%= collection_select(:adopt_adopter, :adopter_id, @adopters, :email, :name, {:prompt => "Select Adopter"}) %>
+
+                <%= f.label :adopt_comm, "Comments" %>
+                <%= text_field_tag 'adopt_cm', "", class: 'form-control' %>
               
               </div>
+
+              <!-- OTHER -->
+              <div id="other" role="tabpanel" class="tab-pane">
+                <h4> Sleep </h4>
+                <%= f.label :other_date%>
+                <%= text_field_tag 'other_dt', "", class: 'form-control' %>
+
+                <%= f.label :other_name, "Other Status Name" %>
+                <%= text_field_tag 'other_nm', "", class: 'form-control' %>
+
+                <%= f.label :other_sub, "Sub Status"%>
+                <%= collection_select(:other_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
+                
+                <%= f.label :other_comm, "Comments" %>
+                <%= text_field_tag 'other_cm', "", class: 'form-control' %>
+              
+              </div>
+
             </div>
           </div>
           <!--========== END TRACKING TABS =========-->
@@ -490,11 +530,6 @@
   //  document.getElementById('welcomeDiv').style.display = "block";
   // }
   // $("")
-
-
-
-
-
 
 
   $("#animal_species_id").change(function(){
