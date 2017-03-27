@@ -10,7 +10,11 @@
     <br><br>
 
     <div class = "filters col-md-3" style = "border-radius:1px; border:solid; margin:5px"> 
-    <p> Name:  </p> <input type = "text" id = "filter-name"/> 
+    <p> Name:  </p> <input type = "text" id = "filter-name"/>
+
+    <p> Age: <span id = "age-min"></span>-<span id = "age-max"> </span> </p>
+     <div id="age_slider"></div>
+
 
     <button id = "generate-button">Filter Animals</button>
     </div>
@@ -25,6 +29,22 @@
 </div>
 
 <script>
+var slider = $("#age_slider").slider({
+        range: true,
+        min: 0,
+        max: 25,
+        values: [0, 25],
+        slide: function(event, ui) {
+            $("#age-min").text(ui.values[0]);
+            $("#age-max").text(ui.values[1]);
+        }
+    });
+$("#age-min").text(slider.slider("values")[0]);
+$("#age-max").text(slider.slider("values")[1]);
+    
+
+
+
 $(".list-card").hover(
   function(){
     $(this).find(".glyphicon-pencil").show()
@@ -37,6 +57,9 @@ $(".list-card").hover(
 function generateAnimalsList(){
   params = {};
   params.name = $("#filter-name").val();
+  params.age_min = $("#age-min").text()
+  params.age_max = $("#age-max").text()
+
   console.log(params)
   $.ajax({
     url: "animals/query",

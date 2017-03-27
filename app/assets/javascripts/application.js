@@ -15,8 +15,10 @@
 //= require bootstrap
 //= require moment
 //= require bootstrap-datetimepicker
+//= require bootstrap-slider
 //= require gridstack-js-rails
 //= require_tree .
+
 
 
 function generateAnimals(arr){

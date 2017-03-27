@@ -12,12 +12,14 @@
  * files in this directory. It is generally better to create a new file per
  * style scope.
  *
- *= require_tree .
+
  *= require_self
  *= require bootstrap-datetimepicker
-
+ *= require bootstrap-slider
  *= require jquery-ui
  *= require gridstack-js-rails
+*= require_tree .
+
  */
 
 /*Change font everywhere */

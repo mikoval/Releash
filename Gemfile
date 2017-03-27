@@ -21,7 +21,7 @@ gem "simple_calendar", "~> 2.0"
 
 gem 'whenever', :require => false
 
-
+gem 'bootstrap-slider-rails'
 
 group :development, :test do
   gem 'sqlite3', '1.3.12'

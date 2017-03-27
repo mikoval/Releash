@@ -371,6 +371,18 @@ class AnimalsController < ApplicationController
         end
       end 
 
+      if(params["age_min"] != ""  && params["age_max"] != "")
+
+        ageMin = params["age_min"].to_i
+        ageMax = params["age_max"].to_i
+        age = getAge(d.birthday)
+        
+        if(age < ageMin || age > ageMax)
+          add = false
+        
+        end
+      end 
+
 
 
       if(add)
