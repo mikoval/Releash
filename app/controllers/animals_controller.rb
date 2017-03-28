@@ -274,7 +274,7 @@ class AnimalsController < ApplicationController
 
 
       #INTAKE -----------------------------
-      if params["intake_dt"] != "" or params["intake_dt"] != nil
+      if params["intake_dt"] != "" and params["intake_dt"] != nil
         Rails.logger.debug("Intake --------------------:")
         @intake = params[:intake_dt]
         @foster = params[:intake_fost][:foster_id]
@@ -289,11 +289,13 @@ class AnimalsController < ApplicationController
           @temp = User.where(email: @foster)
           #Rails.logger.debug("email------------: #{@temp.inspect}")
           @intake_foster = Foster.where(user_id: @temp.ids)
+          @intake_id = @intake_foster.ids[0]
           #Rails.logger.debug("temp: #{@intake_foster.inspect}")
         end
         if NonUser.where(email: @foster) != []
           @temp = NonUser.where(email: @foster)
           @intake_foster = Foster.where(non_user_id: @temp.ids)
+          @intake_id = @intake_foster.ids[0]
         end
 
         @comm = params[:intake_cm]
@@ -301,7 +303,7 @@ class AnimalsController < ApplicationController
         @ani_faci = params[:intake_prev][:animal_facility_id]
         @intake_sub = params[:intake_sub][:sub_status_id]
 
-        @new_intake = Intake.new({intake_date: @intake, foster_id: @intake_foster.ids[0],
+        @new_intake = Intake.new({intake_date: @intake, foster_id: @intake_id,
                       vet_id: @vet, comments: @comm, animal_id: @animal.id, sub_status_id: @intake_sub, animal_facility_id: @ani_faci})
         @new_intake.save
 
@@ -310,7 +312,7 @@ class AnimalsController < ApplicationController
 
       end
       #VETTING -----------------------------------
-      if params["vet_dt"] != "" or params["vet_dt"] != nil
+      if params["vet_dt"] != "" and params["vet_dt"] != nil
 
         @vetting = params[:vet_dt]
 
@@ -329,7 +331,7 @@ class AnimalsController < ApplicationController
       end
 
       #FOSTER ---------------------------------
-      if params["foster_dt"] != "" or params["foster_dt"] != nil
+      if params["foster_dt"] != "" and params["foster_dt"] != nil
 
         @foster_date = params[:foster_dt]
         
@@ -348,17 +350,19 @@ class AnimalsController < ApplicationController
         if User.where(email: @foster) != []
           @temp = User.where(email: @foster)
           @fost_foster = Foster.where(user_id: @temp.ids)
+          @foster_id = @fost_foster.ids[0]
           #Rails.logger.debug("temp: #{@fost_foster.inspect}")
         end
         if NonUser.where(email: @foster) != []
           @temp = NonUser.where(email: @foster)
           @fost_foster = Foster.where(non_user_id: @temp.ids)
+          @foster_id = @fost_foster.ids[0]
         end
  
 
         @comm = params[:fost_cm]
         
-        @new_foster = FosterStatus.new({foster_date: @foster_date,  foster_id: @fost_foster.ids[0], adopter_id: nil, vet_id: nil, homecheck: @fost_home, comments: @comm, sub_status_id: @fost_sub, animal_id: @animal.id})
+        @new_foster = FosterStatus.new({foster_date: @foster_date,  foster_id: @fost_id, adopter_id: nil, vet_id: nil, homecheck: @fost_home, comments: @comm, sub_status_id: @fost_sub, animal_id: @animal.id})
         @new_foster.save
         #Rails.logger.debug("My object: #{@new_foster.inspect}")
 
@@ -366,7 +370,7 @@ class AnimalsController < ApplicationController
       end
 
       #TRAINING --------------------------------
-      if params["training_dt"] != "" or params["training_dt"] != nil
+      if params["training_dt"] != "" and params["training_dt"] != nil
 
         @train_date = params[:training_dt]
         @trainer = params[:trainer_train][:trainer_id]
@@ -383,8 +387,8 @@ class AnimalsController < ApplicationController
       end
 
       #ADOPTED --------------------------------
-      if params["adopted_dt"] != "" or params["adopted_dt"] != nil
-
+      if params["adopted_dt"] != "" and params["adopted_dt"] != nil
+        Rails.logger.debug("Adopt------------------: #{params["adopted_dt"].inspect}")
         @adopt_date = params[:adopted_dt]
         @adopt_sub = params[:adopt_sub][:sub_status_id]
         @adopter = params[:adopt_adopter][:adopter_id]
@@ -392,23 +396,25 @@ class AnimalsController < ApplicationController
         if User.where(email: @adopter) != []
           @temp = User.where(email: @adopter)
           @adopt_adopter = Adopter.where(user_id: @temp.ids)
+          @adopt_id = @adopt_adopter.ids[0]
         end
 
         if NonUser.where(email: @adopter) != []
           @temp = NonUser.where(email: @adopter)
           @adopt_adopter = Adopter.where(non_user_id: @temp.ids)
+          @adopt_id = @adopt_adopter.ids[0]
         end
 
         @comm = params[:adopted_cm]
 
-        @new_adopt = Adopted.new({adopt_date: @adopt_date, adopter_id: @adopt_adopter.ids[0], comments: @comm, animal_id: @animal.id, sub_status_id: @adopt_sub})
+        @new_adopt = Adopted.new({adopt_date: @adopt_date, adopter_id: @adopt_id, comments: @comm, animal_id: @animal.id, sub_status_id: @adopt_sub})
 
         @new_adopt.save
         #Rails.logger.debug("My final obj: #{@adopter_adopt.ids.inspect}")
       end
 
       #OTHER -----------------------------------------
-      if params["other_dt"] != "" or params["other_dt"] != nil
+      if params["other_dt"] != "" and params["other_dt"] != nil
 
         @other_date = params[:other_dt]
  
