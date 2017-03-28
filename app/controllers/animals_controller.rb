@@ -63,36 +63,34 @@ class AnimalsController < ApplicationController
       #Rails.logger.debug("NonUser ---------------: #{@test.inspect}")
       @intake = Intake.find_by animal_id: @animal.id
       
-      # if @intake.foster_id != nil
-      #   @foster = Foster.find_by id: @intake.foster_id
+       if @intake.foster_id != nil
+         @foster = Foster.find_by id: @intake.foster_id
       #   Rails.logger.debug("Foster --------------------: #{@foster.inspect}")
         
-      #   if @foster.user_id == nil and @foster.non_user_id != nil
-      #     @intake_foster = NonUser.find(@foster.non_user_id).name
-      #   elsif @foster.user_id != nil and @foster.non_user_id == nil
-      #     @intake_foster = User.find(@foster.user_id).name
-      #   end
-      # end
+         if @foster.user_id == nil and @foster.non_user_id != nil
+           @intake_foster = NonUser.find(@foster.non_user_id).name
+         elsif @foster.user_id != nil and @foster.non_user_id == nil
+           @intake_foster = User.find(@foster.user_id).name
+         end
+       end
       
-      # if @intake.sub_status_id != nil
-      #   @intake_sub = SubStatusType.find(@intake.sub_status_id).name
-      #end
-      # if @intake.animal_facility_id != nil
-      #   @intake_prev = AnimalFacility.find(@intake.animal_facility_id).name
-      #   #Rails.logger.debug("Previous --------------------: #{@intake_prev.inspect}")
-      # end
-      # if @intake.vet_id != nil
-      #   @intake_vet = Veterinarian.find(@intake.vet_id).name
-      # end
+       if @intake.sub_status_id != nil
+         @intake_sub = SubStatusType.find(@intake.sub_status_id).name
+      end
+       if @intake.animal_facility_id != nil
+         @intake_prev = AnimalFacility.find(@intake.animal_facility_id).name
+         #Rails.logger.debug("Previous --------------------: #{@intake_prev.inspect}")
+       end
+       if @intake.vet_id != nil
+         @intake_vet = Veterinarian.find(@intake.vet_id).name
+       end
     end
 
     if (@status_name.to_s == "Foster")
       @foster_status = FosterStatus.find_by animal_id: @animal.id
-      Rails.logger.debug("Foster --------------------: #{@foster_status.inspect}")
+
       if @foster_status.foster_id != nil
-        @foster = Foster.find_by id: @foster_status.foster_id
-        Rails.logger.debug("Foster --------------------: #{@foster.inspect}")
-        
+        @foster = Foster.find_by id: @foster_status.foster_id    
         if @foster.user_id == nil and @foster.non_user_id != nil
           @fost_foster = NonUser.find(@foster.non_user_id).name
         elsif @foster.user_id != nil and @foster.non_user_id == nil
@@ -105,7 +103,7 @@ class AnimalsController < ApplicationController
       else
         @fost_home = "Incomplete"
       end
-      if @foster_status.sub_status_id != nil
+      if @foster_status.vet_id != nil
         @fost_vet = Veterinarian.find(@foster_status.vet_id).name
       end
       if @foster_status.sub_status_id != nil
@@ -356,15 +354,17 @@ class AnimalsController < ApplicationController
         if NonUser.where(email: @foster) != []
           @temp = NonUser.where(email: @foster)
           @fost_foster = Foster.where(non_user_id: @temp.ids)
+          Rails.logger.debug("temp: --------------#{@fost_foster.inspect}")
           @foster_id = @fost_foster.ids[0]
+          Rails.logger.debug("id: --------------#{@foster_id.inspect}")
         end
  
 
         @comm = params[:fost_cm]
         
-        @new_foster = FosterStatus.new({foster_date: @foster_date,  foster_id: @fost_id, adopter_id: nil, vet_id: nil, homecheck: @fost_home, comments: @comm, sub_status_id: @fost_sub, animal_id: @animal.id})
+        @new_foster = FosterStatus.new({foster_date: @foster_date,  foster_id: @foster_id, adopter_id: nil, vet_id: nil, homecheck: @fost_home, comments: @comm, sub_status_id: @fost_sub, animal_id: @animal.id})
         @new_foster.save
-        #Rails.logger.debug("My object: #{@new_foster.inspect}")
+        Rails.logger.debug("My new foster -----------: #{@new_foster.inspect}")
 
 
       end
