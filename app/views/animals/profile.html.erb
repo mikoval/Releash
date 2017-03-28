@@ -37,6 +37,7 @@
               <h4>Primary Breed</h4>
               <%= @animal.primary_breed.name %>
 
+              <!-- Breeds -->
               <h4>Additional Breeds</h4> 
               <p> 
                 <% @breeds.each do |b| %>
@@ -46,7 +47,13 @@
                     <%= b.breed.name  %> 
                   <% end %>
                 <% end %> 
-               </p>       	
+               </p> 
+
+              <!-- Status Info -->
+              <p> Current Status: <%= @animal.status.name%> </p>
+              <p> Current Substatus: <%= @animal.sub_status%> </p>
+              <p> Marketing: <%= @animal.marketing%> </p>
+
             </div>
           </div>
         </div>
@@ -166,13 +173,13 @@
         <article class='status-info intake'>
           <p>
             <%if @status_name == "Intake"%>
-            <%=@status_name%>
-            <p> Date: <%= @intake.intake_date%> </p>
-            <p> Foster: <%=@intake_foster%> </p>
-            <p> Previous Location: <%=@intake_prev%> </p>
-            <p> Vet: <%=@intake_vet%> </p>
-            <p> Holds: <%=@intake_sub%> </p>
-            <p> Comments: <%= @intake.comments%> </p>
+<!--             <%=@status_name%>
+            <p> Date: <%#= @intake.intake_date%> </p>
+            <p> Foster: <%#=@intake_foster%> </p>
+            <p> Previous Location: <%#=@intake_prev%> </p>
+            <p> Vet: <%#=@intake_vet%> </p>
+            <p> Holds: <%#=@intake_sub%> </p>
+            <p> Comments: <%#= @intake.comments%> </p> -->
             <% else %>
               <h2>Intake</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates magnam excepturi laboriosam minima soluta, quae. Sunt repellat totam non, et sed in veniam fuga odio eius! Nesciunt amet optio recusandae? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum sit dolor sint amet, corporis aperiam nihil, quas, accusantium enim suscipit rem non possimus </p>              
@@ -204,18 +211,17 @@
 
         <article class='status-info foster'>
           <p>
-            <%if @status_name == "Foster"%>
             <%=@status_name%>
-            <p> Date: <%= @foster_status.foster_date%> </p>
+            <p> Date: <%#= @foster_status.foster_date%> </p>
             <p> Foster: <%=@fost_foster%> </p>
             <p> Veterinarian: <%=@fost_vet%> </p>
             <p> Homecheck: <%=@fost_home%> </p>
             <p> Sub Status: <%=@foster_sub%> </p>
-            <p> Comments: <%= @foster_status.comments%> </p>
-            <% else %>
+            <p> Comments: <%#= @foster_status.comments%> </p>
+       
               <h2>Foster</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates magnam excepturi laboriosam minima soluta, quae. Sunt repellat totam non, et sed in veniam fuga odio eius! Nesciunt amet optio recusandae? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum sit dolor sint amet, corporis aperiam nihil, quas, accusantium enim suscipit rem non possimus officiis. Recusandae hic at, fugiat eos eveniet.</p>                          
-            <% end %>
+    
           </p>
         </article>
 
