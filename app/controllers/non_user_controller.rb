@@ -35,7 +35,7 @@ class NonUserController < ApplicationController
         @new_adopter = Adopter.new({non_user_id: @non_user.id, user_id: nil})
       end
       flash[:success] = "Added Non User"
-      redirect_to :controller => "non_user", :action => "profile", :param => @non_user
+      redirect_to :controller => "people", :action => "list", :param => @non_user
     else
       render 'new'
     end
@@ -62,7 +62,7 @@ class NonUserController < ApplicationController
       end  
 
       flash[:success] = "Sucessful Edit"
-      redirect_to :controller => "non_user", :action => "profile", :param => @non_user
+      redirect_to :controller => "people", :action => "list", :param => @non_user
     else
       render 'edit'
     end

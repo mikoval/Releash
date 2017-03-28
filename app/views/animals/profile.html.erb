@@ -150,6 +150,9 @@
           <div class="circle" id="foster">
             <status>Foster</status>
           </div>
+          <div class="circle" id="training">
+            <status>Training</status>
+          </div>
           <div class="circle" id="adopted">
             <status>Adopted</status>
           </div>
@@ -166,6 +169,7 @@
             <%=@status_name%>
             <p> Date: <%= @intake.intake_date%> </p>
             <p> Foster: <%=@intake_foster%> </p>
+            <p> Previous Location: <%=@intake_prev%> </p>
             <p> Vet: <%=@intake_vet%> </p>
             <p> Holds: <%=@intake_sub%> </p>
             <p> Comments: <%= @intake.comments%> </p>
@@ -181,9 +185,8 @@
             <%if @status_name == "Vetting"%>
             <%=@status_name%>
             <p> Date: <%= @vetting.vet_date%> </p>
-            <p> Foster: <%=@vetting_foster%> </p>
             <p> Vet: <%=@vetting_vet%> </p>
-            <p> Sub Status: <%=@vetting_hold%> </p>
+            <p> Sub Status: <%=@vet_sub%> </p>
             <p> Comments: <%= @vetting.comments%> </p>
 
             <!-- Check if Spayed/ Neutered -->
@@ -208,11 +211,25 @@
             <p> Veterinarian: <%=@fost_vet%> </p>
             <p> Homecheck: <%=@fost_home%> </p>
             <p> Sub Status: <%=@foster_sub%> </p>
-            <p> Comments: <%= @foster_status.comment%> </p>
+            <p> Comments: <%= @foster_status.comments%> </p>
             <% else %>
               <h2>Foster</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates magnam excepturi laboriosam minima soluta, quae. Sunt repellat totam non, et sed in veniam fuga odio eius! Nesciunt amet optio recusandae? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum sit dolor sint amet, corporis aperiam nihil, quas, accusantium enim suscipit rem non possimus officiis. Recusandae hic at, fugiat eos eveniet.</p>                          
             <% end %>
+          </p>
+        </article>
+
+        <article class='status-info training'>
+          <p>
+            <%if @status_name == "In Training"%>
+            <%=@status_name%>
+            <p> Date: <%= @training.train_date%> </p>
+            <p> Vet: <%=@training_trainer%> </p>
+            <p> Sub Status: <%=@train_sub%> </p>
+            <p> Problem Information: <%= @training.problem_info%> </p>
+              <h2>Training</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates magnam excepturi laboriosam minima soluta, quae. Sunt repellat totam non, et sed in veniam fuga odio eius! Nesciunt amet optio recusandae? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum sit dolor sint amet, corporis aperiam nihil, quas, accusantium enim suscipit rem non possimus </p>            
+            <% end %> 
           </p>
         </article>
 
@@ -221,6 +238,9 @@
             <%if @status_name == "Adopted"%>
             <%= @status_name%>
             <p> Date: <%= @adopted.adopt_date%> </p>
+            <p> Sub Status: <%= @adopt_sub%> </p>
+            <p> Adopted By: <%= @adopt_adopter%> </p>
+            <p> Comments: <%= @adopted.comments%> </p>
             <% else %>
               <h2>Adopted</h2>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates magnam excepturi laboriosam minima soluta, quae. Sunt repellat totam non, et sed in veniam fuga odio eius! Nesciunt amet optio recusandae? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum sit dolor sint amet, corporis aperiam nihil, quas, accusantium enim suscipit rem non possimus officiis. Recusandae hic at, fugiat eos eveniet.</p>            
@@ -229,20 +249,20 @@
 
         <article class='status-info other'>
           <p>
-            <!-- Sleep -->
-            <%if @status_name == "Sleep"%>
-            <%=@status_name%>
-            <p> Date: <%= @sleep.sleep_date%> </p>
-            <!-- Tranfer -->
-            <% elsif @status_name == "Transfer"%>
-              <%= @status_name%>
-              <p> Date: <%= @transfers.transfer_date%> </p>
-            <% else %>
-              <h2>Sleep or Transfer</h2>
+            <!-- Other -->
+            <%if @status_name == "Other"%>
+            <%=@other_name%>
+            <p> Date: <%= @other_status.other_date%> </p>
+            <p> Sub Status: <%=@other_sub%> </p>
+            <p> Comments: <%= @other_status.comments%> </p>
+              
+              <h2><%=@other_name%></h2>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates magnam excepturi laboriosam minima soluta, quae. Sunt repellat totam non, et sed in veniam fuga odio eius! Nesciunt amet optio recusandae? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum sit dolor sint amet, corporis aperiam nihil, quas, accusantium enim suscipit rem non possimus officiis. Recusandae hic at, fugiat eos eveniet.</p>
+
           <% end %>
           </p>
         </article>
+
         <div class= "status-buffer col-md-12" ></div>
       </div>
 

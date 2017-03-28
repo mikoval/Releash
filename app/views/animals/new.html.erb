@@ -407,14 +407,13 @@
 
               <!-- ADOPTED -->
               <div id="adopted" role="tabpanel" class="tab-pane">
-                <h4> Sleep </h4>
-                <%= f.label :adopted_date%>
-                <%= text_field_tag 'sleep_dt', "", class: 'form-control' %>
+                <%= f.label :adopted_date %>
+                <%= text_field_tag 'adopted_dt', "" ,class: 'datepicker' %>
                 
                 <%= f.label :adopt_sub, "Sub Status"%>
                 <%= collection_select(:adopt_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
 
-                <!-- Selecting Foster-->
+                <!-- Selecting Adopter-->
                 <%= f.label :adopt_adopter, "Adopter"%>
                 <%= collection_select(:adopt_adopter, :adopter_id, @adopters, :email, :name, {:prompt => "Select Adopter"}) %>
 
@@ -425,9 +424,8 @@
 
               <!-- OTHER -->
               <div id="other" role="tabpanel" class="tab-pane">
-                <h4> Sleep </h4>
                 <%= f.label :other_date%>
-                <%= text_field_tag 'other_dt', "", class: 'form-control' %>
+                <%= text_field_tag 'other_dt', "", class: 'datepicker' %>
 
                 <%= f.label :other_name, "Other Status Name" %>
                 <%= text_field_tag 'other_nm', "", class: 'form-control' %>

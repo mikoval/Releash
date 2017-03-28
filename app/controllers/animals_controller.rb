@@ -59,13 +59,14 @@ class AnimalsController < ApplicationController
     #Rails.logger.debug("My object: #{status_name.inspect}")
     
     if (@status_name.to_s == "Intake")
-      @test = Intake.all
-      #Rails.logger.debug("My object: #{@test.inspect}")
+      #@test = NonUser.all
+      #@test = NonUser.where(email: "test1@gmail.com")
+      #Rails.logger.debug("NonUser ---------------: #{@test.inspect}")
       @intake = Intake.find_by animal_id: @animal.id
       
       if @intake.foster_id != nil
         @foster = Foster.find_by id: @intake.foster_id
-        Rails.logger.debug("Foster --------------------: #{@foster.inspect}")
+        #Rails.logger.debug("Foster --------------------: #{@foster.inspect}")
         
         if @foster.user_id == nil and @foster.non_user_id != nil
           @intake_foster = NonUser.find(@foster.non_user_id).name
@@ -77,6 +78,10 @@ class AnimalsController < ApplicationController
       if @intake.sub_status_id != nil
         @intake_sub = SubStatusType.find(@intake.sub_status_id).name
       end
+      if @intake.animal_facility_id != nil
+        @intake_prev = AnimalFacility.find(@intake.animal_facility_id).name
+        #Rails.logger.debug("Previous --------------------: #{@intake_prev.inspect}")
+      end
       if @intake.vet_id != nil
         @intake_vet = Veterinarian.find(@intake.vet_id).name
       end
@@ -85,15 +90,15 @@ class AnimalsController < ApplicationController
 
     if (@status_name.to_s == "Foster")
       @foster_status = FosterStatus.find_by animal_id: @animal.id
-      
+      Rails.logger.debug("Foster --------------------: #{@foster_status.inspect}")
       if @foster_status.foster_id != nil
         @foster = Foster.find_by id: @foster_status.foster_id
         Rails.logger.debug("Foster --------------------: #{@foster.inspect}")
         
         if @foster.user_id == nil and @foster.non_user_id != nil
-          @intake_foster = NonUser.find(@foster.non_user_id).name
+          @fost_foster = NonUser.find(@foster.non_user_id).name
         elsif @foster.user_id != nil and @foster.non_user_id == nil
-          @intake_foster = User.find(@foster.user_id).name
+          @fost_foster = User.find(@foster.user_id).name
         end
       end
       
@@ -102,23 +107,24 @@ class AnimalsController < ApplicationController
       else
         @fost_home = "Incomplete"
       end
-
-      @fost_vet = Veterinarian.find(@foster_status.vet_id).name
-      @foster_sub = SubStatusType.find(@foster_status.sub_status_id).name
-        
+      if @foster_status.sub_status_id != nil
+        @fost_vet = Veterinarian.find(@foster_status.vet_id).name
+      end
+      if @foster_status.sub_status_id != nil
+        @foster_sub = SubStatusType.find(@foster_status.sub_status_id).name
+      end
       #Rails.logger.debug("My object: #{@foster.inspect}")
     end
 
     if (@status_name.to_s == "Vetting")
-      @test = Vetting.all
-      #Rails.logger.debug("My object: #{@test.inspect}")
       
       @vetting = Vetting.find_by animal_id: @animal.id
       
-      if(@vetting.curr_fost_id != nil)
-        @vetting_foster = User.find(@vetting.curr_fost_id).name
-        
+      if @vetting.curr_vet_id != nil
         @vetting_vet = Veterinarian.find(@vetting.curr_vet_id).name
+      end
+      if @vetting.sub_status_id != nil
+        @vet_sub = SubStatusType.find(@vetting.sub_status_id).name
       end
       #Rails.logger.debug("My object: #{@vetting.inspect}")
     end
@@ -126,20 +132,48 @@ class AnimalsController < ApplicationController
     if (@status_name.to_s == "Adopted")
       @adopted = Adopted.find_by animal_id: @animal.id
       
-      #@adopter = Adopter.find(@adopted.adopter_id).name
-      
+
+      if @adopted.adopter_id != nil
+        @adopter = Adopter.find_by id: @adopted.adopter_id
+        #Rails.logger.debug("Adopter --------------------: #{@adopter.inspect}")
+        
+        if @adopter.user_id == nil and @adopter.non_user_id != nil
+          @adopt_adopter = NonUser.find(@adopter.non_user_id).name
+        end
+        if @adopter.user_id != nil and @adopter.non_user_id == nil
+          @adopt_adopter = User.find(@adopter.user_id).name
+        end
+      end
+
+      if @adopted.sub_status_id != nil
+        @adopt_sub = SubStatusType.find(@adopted.sub_status_id).name
+      end
       #Rails.logger.debug("My object: #{@adopted.inspect}")
     end
 
-    if (@status_name.to_s == "Training")
-      @sleep = Training.find_by animal_id: @animal.id
+    if (@status_name.to_s == "In Training")
+      @training = Training.find_by animal_id: @animal.id
       
-      Rails.logger.debug("My object: #{@sleep.inspect}")
+      if @training.trainer_id != nil
+        @training_trainer = Trainer.find(@training.trainer_id).name
+        
+      end
+      if @training.sub_status_id != nil
+        @train_sub = SubStatusType.find(@training.sub_status_id).name
+      end
+      #Rails.logger.debug("My object: #{@vetting.inspect}")
     end
 
     if (@status_name.to_s == "Other")
-      @sleep = Other.find_by animal_id: @animal.id
-      
+      @other_status = OtherStatus.find_by animal_id: @animal.id
+      if @other_status.status_name != nil
+        @other_name = @other_status.status_name
+      else
+        @other_name = "Other"
+      end
+      if @other_status.sub_status_id != nil
+        @other_sub = SubStatusType.find(@other_status.sub_status_id).name
+      end
       #Rails.logger.debug("My object: #{@sleep.inspect}")
     end
     
@@ -179,21 +213,55 @@ class AnimalsController < ApplicationController
     
     if @animal.save
       #if they only select current status but don't make an entry in the tabs
+      #You can edit these entries in Edit Animal
+
       @status = StatusType.find(@animal.status_id)
       @status_name = @status.name
 
       @date_made = @animal.created_at.strftime("%m/%d/%Y")
-      @test = params["intake_dt"]
-      Rails.logger.debug("Here here--------------------: #{@date_made.inspect}")
-      Rails.logger.debug("Param here--------------------: #{@test.inspect}")
       
-      if params["intake_dt"] == "" and @status_name.to_s == "Intake"
+      if (params["intake_dt"] == "" or params["intake_dt"] == nil) and @status_name.to_s == "Intake"
 
         @new_intake = Intake.new({intake_date: @date_made, foster_id: nil,
                       vet_id: nil, comments: nil, animal_id: @animal.id, sub_status_id: @animal.sub_status_id, animal_facility_id: nil})
         @new_intake.save
-          
-        #Rails.logger.debug("My object: #{@intake.inspect}")
+      end
+      
+      if (params["vet_dt"] == "" or params["vet_dt"] == nil) and @status_name.to_s == "Vetting"
+
+        @new_vetting = Vetting.new({vet_date: @date_made, curr_vet_id: nil, curr_fost_id: nil, comments: nil, animal_id: @animal.id, sub_status_id: @animal.sub_status_id})
+        Rails.logger.debug("Vetting-----------------------: #{@new_vet.inspect}")
+        @new_vetting.save
+        #Rails.logger.debug("My object: #{@new_vet.inspect}")
+      end
+
+      if (params["foster_dt"] == "" or params["foster_dt"] == nil) and @status_name.to_s == "Foster"
+
+        @new_foster = FosterStatus.new({foster_date: @date_made,  foster_id: nil, adopter_id: nil, vet_id: nil, homecheck: nil, comments: nil, sub_status_id: @animal.sub_status_id, animal_id: @animal.id})
+        @new_foster.save
+        #Rails.logger.debug("My object: #{@new_foster.inspect}")
+      end
+
+      if (params["training_dt"] == "" or params["training_dt"] == nil) and @status_name.to_s == "In Training"
+
+        @new_train = Training.new({train_date: @date_made, problem_info: nil, expense: 0, animal_id: @animal.id, trainer_id: nil, sub_status_id: @animal.sub_status_id})
+
+        @new_train.save
+        #Rails.logger.debug("My object: #{@new_adopt.inspect}")
+      end
+
+      if (params["adopted_dt"] == "" or params["adopted_dt"] == nil) and @status_name.to_s == "Adopted"
+
+        @new_adopt = Adopted.new({adopt_date: @date_made, adopter_id: nil, comments: nil, animal_id: @animal.id, sub_status_id: @animal.sub_status_id})
+
+        @new_adopt.save
+        #Rails.logger.debug("My object: #{@new_adopt.inspect}")
+      end
+
+      if (params["other_dt"] == ""  or params["other_dt"] == nil) and @status_name.to_s == "Other"
+
+        @new_other = OtherStatus.new({other_date: @date_made, sub_status_id: @animal.sub_status_id, animal_id: @animal.id, comments: nil, status_name: nil})
+        @new_other.save
       end
 
       #---------------------------------------
@@ -208,7 +276,7 @@ class AnimalsController < ApplicationController
 
 
       #INTAKE -----------------------------
-      if params["intake_dt"] != ""
+      if params["intake_dt"] != "" or params["intake_dt"] != nil
         Rails.logger.debug("Intake --------------------:")
         @intake = params[:intake_dt]
         @foster = params[:intake_fost][:foster_id]
@@ -216,12 +284,16 @@ class AnimalsController < ApplicationController
 
         #Right now will accept both vet and foster as location
         #!!!!!Need to make it so it only picks one
-        if User.where(email: @foster) != nil
+        @test = NonUser.where(email: @foster)
+        Rails.logger.debug("NonUser ---------------: #{@test.inspect}")
+
+        if User.where(email: @foster) != []
           @temp = User.where(email: @foster)
-          Rails.logger.debug("email------------: #{@temp.inspect}")
+          #Rails.logger.debug("email------------: #{@temp.inspect}")
           @intake_foster = Foster.where(user_id: @temp.ids)
           #Rails.logger.debug("temp: #{@intake_foster.inspect}")
-        elsif NonUser.where(email: @foster) != nil
+        end
+        if NonUser.where(email: @foster) != []
           @temp = NonUser.where(email: @foster)
           @intake_foster = Foster.where(non_user_id: @temp.ids)
         end
@@ -235,12 +307,12 @@ class AnimalsController < ApplicationController
                       vet_id: @vet, comments: @comm, animal_id: @animal.id, sub_status_id: @intake_sub, animal_facility_id: @ani_faci})
         @new_intake.save
 
-        Rails.logger.debug("New Intake: #{@new_intake.inspect}")
+        #Rails.logger.debug("New Intake: #{@new_intake.inspect}")
 
 
       end
       #VETTING -----------------------------------
-      if params["vet_dt"] != ""
+      if params["vet_dt"] != "" or params["vet_dt"] != nil
 
         @vetting = params[:vet_dt]
 
@@ -252,13 +324,14 @@ class AnimalsController < ApplicationController
         @comm = params[:vet_cm]
         @vet_sub = params[:vet_sub][:sub_status_id]
 
-        @new_vettting = Vetting.new({vet_date: @vetting, curr_vet_id: @vet, curr_fost_id: @foster, comments: @comm, animal_id: @animal.id, sub_status_id: @vet_sub })
-        #Rails.logger.debug("My object: #{@new_vet.inspect}")
-
-
+        @new_vetting = Vetting.new({vet_date: @vetting, curr_vet_id: @vet, curr_fost_id: @foster, comments: @comm, animal_id: @animal.id, sub_status_id: @vet_sub})
+        #Rails.logger.debug("Vetting--------------: #{@new_vet.inspect}")
+        @new_vetting.save
+        
       end
+
       #FOSTER ---------------------------------
-      if params["foster_dt"] != ""
+      if params["foster_dt"] != "" or params["foster_dt"] != nil
 
         @foster_date = params[:foster_dt]
         
@@ -274,14 +347,12 @@ class AnimalsController < ApplicationController
           @fost_home = false
         end
 
-        #!!!!!Need to make it so it only picks one
-        @fost_foster = nil
-        if User.where(email: @foster) != nil
+        if User.where(email: @foster) != []
           @temp = User.where(email: @foster)
-          #Rails.logger.debug("temp: #{@temp.inspect}")
           @fost_foster = Foster.where(user_id: @temp.ids)
           #Rails.logger.debug("temp: #{@fost_foster.inspect}")
-        elsif NonUser.where(email: @foster) != nil
+        end
+        if NonUser.where(email: @foster) != []
           @temp = NonUser.where(email: @foster)
           @fost_foster = Foster.where(non_user_id: @temp.ids)
         end
@@ -297,7 +368,7 @@ class AnimalsController < ApplicationController
       end
 
       #TRAINING --------------------------------
-      if params["training_dt"] != ""
+      if params["training_dt"] != "" or params["training_dt"] != nil
 
         @train_date = params[:training_dt]
         @trainer = params[:trainer_train][:trainer_id]
@@ -314,33 +385,32 @@ class AnimalsController < ApplicationController
       end
 
       #ADOPTED --------------------------------
-      if params["adopted_dt"] != ""
+      if params["adopted_dt"] != "" or params["adopted_dt"] != nil
 
         @adopt_date = params[:adopted_dt]
         @adopt_sub = params[:adopt_sub][:sub_status_id]
         @adopter = params[:adopt_adopter][:adopter_id]
 
-        @adopt_adopter = nil
-
-        if User.where(email: @adopter) != nil
+        if User.where(email: @adopter) != []
           @temp = User.where(email: @adopter)
-          @adopter_adopt = Adopter.where(user_id: @temp.ids)
-        elsif NonUser.where(email: @adopter) != nil
+          @adopt_adopter = Adopter.where(user_id: @temp.ids)
+        end
+
+        if NonUser.where(email: @adopter) != []
           @temp = NonUser.where(email: @adopter)
-          @adopter_adopt = Adopter.where(non_user_id: @temp.ids)
+          @adopt_adopter = Adopter.where(non_user_id: @temp.ids)
         end
 
         @comm = params[:adopted_cm]
 
-        @new_adopt = Adopted.new({adopt_date: @adopt_date, adopter_id: @adopter_adopt, comments: @comm, animal_id: @animal.id, sub_status_id: @adopt_sub})
+        @new_adopt = Adopted.new({adopt_date: @adopt_date, adopter_id: @adopt_adopter.ids[0], comments: @comm, animal_id: @animal.id, sub_status_id: @adopt_sub})
 
         @new_adopt.save
-        #Rails.logger.debug("My object: #{@new_adopt.inspect}")
-
-
+        #Rails.logger.debug("My final obj: #{@adopter_adopt.ids.inspect}")
       end
+
       #OTHER -----------------------------------------
-      if params["other_dt"] != ""
+      if params["other_dt"] != "" or params["other_dt"] != nil
 
         @other_date = params[:other_dt]
  
@@ -354,8 +424,6 @@ class AnimalsController < ApplicationController
 
         @new_other.save
         #Rails.logger.debug("My object: #{@new_adopt.inspect}")
-
-
       end
 
       if params["behavior"]
