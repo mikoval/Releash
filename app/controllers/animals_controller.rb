@@ -371,6 +371,22 @@ class AnimalsController < ApplicationController
         end
       end 
 
+      if(params["breed"] != "")
+        if(params["breed"] != d.primary_breed.name)
+          add = false
+        end
+      end
+
+      if(params["color"] != "" )
+        length = params["color"].length.to_i 
+        length = length -1 
+        if(params["color"].length > d.color_primary.length)
+          add = false
+        elsif(params["color"] != d.color_primary[0..length])
+          add = false
+        end
+      end
+
       if(params["age_min"] != ""  && params["age_max"] != "")
 
         ageMin = params["age_min"].to_i

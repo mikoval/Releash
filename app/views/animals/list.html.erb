@@ -5,12 +5,22 @@
 
 <% if employee?(current_user) %>
 <%= link_to "<button>Add Animal</button>".html_safe,  :controller => "animals", :action => "new", :method => "get" %>
+<br><br>
+<a href='#' style="float: right; padding-right: 10%"
+        onclick='downloadCSV({ filename: "animals-data.csv" });'
+    >Download CSV</a>
+
 <% end %>
 
     <br><br>
 
     <div class = "filters col-md-3" style = "border-radius:1px; border:solid; margin:5px"> 
     <p> Name:  </p> <input type = "text" id = "filter-name"/>
+    <p> Breed:  </p> 
+    <select id = "filter-breed">
+
+    </select>
+    <p> Color:  </p> <input type = "text" id = "filter-color"/>
 
     <p> Age: <span id = "age-min"></span>-<span id = "age-max"> </span> </p>
      <div id="age_slider"></div>
@@ -54,9 +64,13 @@ $(".list-card").hover(
   }
 )
 
+var animalData
+
 function generateAnimalsList(){
   params = {};
   params.name = $("#filter-name").val();
+  params.color = $("#filter-color").val();
+  params.breed = $("#filter-breed").val();
   params.age_min = $("#age-min").text()
   params.age_max = $("#age-max").text()
 
@@ -65,26 +79,78 @@ function generateAnimalsList(){
     url: "animals/query",
     data: params,
     success: function(result){
-      var str = "<table class='table table-bordered table-hover table-striped'> <thead> <tr> <th>Name</th> <th>Primary Breed</th> <th>Age</th> </tr> </thead>" 
+      animalData = result
+      var str = "<table class='table table-bordered table-hover table-striped'> <thead> <tr> <th>Name</th> <th>Primary Breed</th> <th>Age</th> <th>Color</th> </tr> </thead>" 
         for (x in result){
     
                 str += "<tr> \
                 <td> <a href='/animals/profile?method=get&param=" + result[x].id + " '  >" + result[x].name + "</a></td>\
                  <td>" + result[x].primary + "</td>\
                 <td>" + result[x].age + "</td>\
+                <td>" + result[x].color + "</td>\
                 </tr>"
         }
         str +=  " </table>"
 
         $("#animals-list").html(str);
         console.log("done");
-
-
     },
+  });  
+}
+
+function convertArrayOfObjectsToCSV(args) {  
+  var result, ctr, keys, columnDelimiter, lineDelimiter, data;
+
+  data = args.data || null;
+  if (data == null || !data.length) {
+      return null;
+  }
+
+  columnDelimiter = args.columnDelimiter || ',';
+  lineDelimiter = args.lineDelimiter || '\n';
+
+  keys = Object.keys(data[0]);
+
+  result = '';
+  result += keys.join(columnDelimiter);
+  result += lineDelimiter;
+
+  data.forEach(function(item) {
+      ctr = 0;
+      keys.forEach(function(key) {
+          if (ctr > 0) result += columnDelimiter;
+
+          result += item[key];
+          ctr++;
+      });
+      result += lineDelimiter;
   });
 
-  
+  return result;
 }
+
+function downloadCSV(args) {
+    var data, filename, link;
+    var csv = convertArrayOfObjectsToCSV({
+        data: animalData
+    });
+
+    if (csv == null) return;
+
+    filename = args.filename || 'export.csv';
+
+    if (!csv.match(/^data:text\/csv/i)) {
+        csv = 'data:text/csv;charset=utf-8,' + csv;
+    }
+    data = encodeURI(csv);
+
+    link = document.createElement('a');
+    link.setAttribute('href', data);
+    link.setAttribute('download', filename);
+    link.click();
+}
+
+
 $("#generate-button").on("click", function(){
   generateAnimalsList();
 })
