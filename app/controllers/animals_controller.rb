@@ -409,9 +409,9 @@ class AnimalsController < ApplicationController
         if NonUser.where(email: @foster) != []
           @temp = NonUser.where(email: @foster)
           @fost_foster = Foster.where(non_user_id: @temp.ids)
-          Rails.logger.debug("temp: --------------#{@fost_foster.inspect}")
+          #Rails.logger.debug("temp: --------------#{@fost_foster.inspect}")
           @foster_id = @fost_foster.ids[0]
-          Rails.logger.debug("id: --------------#{@foster_id.inspect}")
+          #Rails.logger.debug("id: --------------#{@foster_id.inspect}")
         end
  
 
@@ -419,7 +419,7 @@ class AnimalsController < ApplicationController
         
         @new_foster = FosterStatus.new({foster_date: @foster_date,  foster_id: @foster_id, adopter_id: nil, vet_id: nil, homecheck: @fost_home, comments: @comm, sub_status_id: @fost_sub, animal_id: @animal.id})
         @new_foster.save
-        Rails.logger.debug("My new foster -----------: #{@new_foster.inspect}")
+        #Rails.logger.debug("My new foster -----------: #{@new_foster.inspect}")
 
 
       end
@@ -443,7 +443,7 @@ class AnimalsController < ApplicationController
 
       #ADOPTED --------------------------------
       if params["adopted_dt"] != "" and params["adopted_dt"] != nil
-        Rails.logger.debug("Adopt------------------: #{params["adopted_dt"].inspect}")
+        #Rails.logger.debug("Adopt------------------: #{params["adopted_dt"].inspect}")
         @adopt_date = params[:adopted_dt]
         @adopt_sub = params[:adopt_sub][:sub_status_id]
         @adopter = params[:adopt_adopter][:adopter_id]
@@ -607,7 +607,7 @@ class AnimalsController < ApplicationController
         @new_intake.save
 
         @allIntakes = Intake.all
-        Rails.logger.debug("Modal Add: #{@allIntakes.inspect}")
+        #Rails.logger.debug("Modal Add: #{@allIntakes.inspect}")
       end
 
       if params["breeds"]

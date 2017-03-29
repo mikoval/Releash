@@ -6,7 +6,7 @@
 
     <%= form_for(@trainer, html: { multipart: true },  url: trainer_path(@trainer)) do |f| %>
 
-
+      <%= render 'trainer/error_messages' %>
       <%= f.label :name %>
       <%= f.text_field :name, class: 'form-control' %>
 
