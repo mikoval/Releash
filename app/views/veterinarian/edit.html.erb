@@ -1,2 +1,25 @@
-<h1>Veterinarian#edit</h1>
-<p>Find me in app/views/veterinarian/edit.html.erb</p>
+<% provide(:title, 'Edit Vet') %>
+<h1>Editing <%= @vet.name%></h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@vet, html: { multipart: true },  url: veterinarian_path(@vet)) do |f| %>
+      <%= f.label :name %>
+      <%= f.text_field :name, class: 'form-control' %>
+
+      <%= f.label :address %>
+      <%= f.text_field :address, class: 'form-control' %>
+
+      <%= f.label :state %>
+      <%= f.text_field :state, class: 'form-control' %>
+
+      <%= f.label :zip_code %>
+      <%= f.text_field :zip_code, class: 'form-control' %>
+
+      <%= f.label :email %>
+      <%= f.email_field :email, class: 'form-control' %>
+
+      <%= f.submit "Save Vet Edit", class: "btn btn-primary" %>
+    <% end %>
+    </div>
+</div>

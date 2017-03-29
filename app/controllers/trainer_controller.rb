@@ -16,7 +16,7 @@ class TrainerController < ApplicationController
 
     if @trainer.save
       flash[:success] = "Added Trainer"
-      redirect_to :controller => "trainer", :action => "list", :param => @trainer
+      redirect_to :controller => "people", :action => "list", :param => @trainer
     else
       render 'new'
     end
@@ -27,7 +27,7 @@ class TrainerController < ApplicationController
     
     if @trainer.update_attributes(trainer_params)
       flash[:success] = "Added Trainer"
-      redirect_to :controller => "trainer", :action => "list", :param => @trainer
+      redirect_to :controller => "people", :action => "list", :param => @trainer
     else
       render 'edit'
     end

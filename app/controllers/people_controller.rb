@@ -6,6 +6,8 @@ class PeopleController < ApplicationController
    
       @allPeople = User.all
       @allNonUser = NonUser.all
+      @allVets = Veterinarian.all
+      @allTrainer = Trainer.all
       user = User.all
   end
 

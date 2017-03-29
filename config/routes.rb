@@ -52,14 +52,14 @@ Rails.application.routes.draw do
   get 'trainer/new'
   get 'trainer/list'
   get 'trainer/edit'
-  post '/trainer', to: 'non_user#newTrainer'
-  patch '/trainer', to: 'non_user#editTrainer'
+  post '/trainer', to: 'trainer#newTrainer'
+  patch '/trainer', to: 'trainer#editTrainer'
 
   get 'veterinarian/new'
   get 'veterinarian/list'
   get 'veterinarian/edit'
-  post '/veterinarian', to: 'non_user#newVeterinarian'
-  patch '/veterinarian', to: 'non_user#editVeterinarian'
+  post '/veterinarian', to: 'veterinarian#newVet'
+  patch '/veterinarian', to: 'veterinarian#editVet'
 
   get  '/signup',  to: 'users#new'
   post '/signup',  to: 'users#create'

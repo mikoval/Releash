@@ -4,7 +4,7 @@ class VeterinarianController < ApplicationController
   end
 
   def list
-  	@allVet - Veterinarian.all
+  	@allVets = Veterinarian.all
   end
 
   def edit
@@ -16,7 +16,7 @@ class VeterinarianController < ApplicationController
 
     if @vet.save
       flash[:success] = "Added Vet"
-      redirect_to :controller => "veterinarian", :action => "list", :param => @vet
+      redirect_to :controller => "people", :action => "list", :param => @vet
     else
       render 'new'
     end
@@ -27,7 +27,7 @@ class VeterinarianController < ApplicationController
     
     if @vet.update_attributes(vet_params)
       flash[:success] = "Added Vet"
-      redirect_to :controller => "veterinarian", :action => "list", :param => @vet
+      redirect_to :controller => "people", :action => "list", :param => @vet
     else
       render 'edit'
     end
