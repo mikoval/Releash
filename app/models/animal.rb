@@ -17,7 +17,7 @@ class Animal < ActiveRecord::Base
     
     belongs_to :status, :class_name => 'StatusType'
     belongs_to :sub_status, :class_name => 'SubStatusType'
-    belongs_to :marketing, :class_name => 'Marketing'
+    belongs_to :marketing, :class_name => 'MarketingType'
     
     belongs_to :secondary_breed, :class_name => 'Breed'
 end

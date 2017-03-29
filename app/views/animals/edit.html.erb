@@ -109,6 +109,7 @@
 
               <%= f.label :primary_breed_id %>
               <%= f.collection_select :primary_breed_id, @breed, :id, :name, :prompt => "Select Breed" %>
+
               <%= label :post, "Additional Breeds" %>
               <%= collection_select(:breed_id, 0, @breed, :id, :name, {:prompt => "Select Breed"}, {class: "breed-selecter"}) %>              
               <div id = "breeds-list">
@@ -130,9 +131,11 @@
               <%= f.text_field :microchip_number, class: 'form-control' %>
 
               <%= f.label :status %>
-              <%= f.collection_select :status_id, @status, :id, :name, {:prompt => "Select Status"} %>
-              <%= f.label :substatus %>
-              <%= f.collection_select :sub_status_id, @sub_status, :id, :name, {:prompt => "Select Current SubStatus"} %>
+              <%= f.collection_select :status_id, @status, :id, :name, {:prompt => "Select Status"} , class: 'form-control' %>
+              
+              <%= f.label :sub_status %>
+              <%= f.collection_select :sub_status_id, @sub_status, :id, :name, {:prompt => "Select Current SubStatus"}, class: 'form-control'%>
+              
               <%= f.label :marketing %>
               <%= f.collection_select :marketing_id, @marketing, :id, :name, {:prompt => "Select Current Marketing"}, class: 'required' %>
             </div>
@@ -320,26 +323,26 @@
                 <div id = "intake-content" class="col-md-10">
                   <!-- Selecting Date-->
                   <%= f.label :intake_date, "Intake Date" %>
-                  <%= text_field_tag 'intake_dt', "" ,class: 'datepicker' %>
+                  <%= text_field_tag 'intake_dt', @intake_date ,class: 'datepicker' %>
                   
                   <%= f.label :intake_sub, "Sub Status"%>
-                  <%= collection_select(:intake_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
+                  <%= collection_select(:intake_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status", :selected => @intake_subs}) %>
 
                   <!-- Selecting Foster-->
                   <%= f.label :intake_fost, "Foster"%>
-                  <%#= collection_select(:intake_fost, :foster_id, @fosters, :email, :name, {:prompt => "Select foster"}) %>
+                  <%=collection_select(:intake_fost, :foster_id, @fosters, :email, :name, {:prompt => "Select foster" ,:selected => @intake_foster}) %>
                   
                   <!-- Selecting Vets-->
                   <%= f.label :intake_vet, "Veterinarian"%>
-                  <%= collection_select(:intake_vet, :veterinarian_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian"}) %>
+                  <%= collection_select(:intake_vet, :veterinarian_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian", :selected => @intake_vets}) %>
 
                   <!-- Selecting Previous Location-->
                   <%= f.label :intake_prev, "Previous Location"%>
-                  <%= collection_select(:intake_prev, :animal_facility_id, AnimalFacility.all, :id, :name, {:prompt => "Select Previous Location"}) %>
+                  <%= collection_select(:intake_prev, :animal_facility_id, AnimalFacility.all, :id, :name, {:prompt => "Select Previous Location", :selected => @intake_prevs}) %>
 
                   <!-- Inputing Details-->
                   <%= f.label :intake_comm, "Details" %>
-                  <%= text_field_tag 'intake_cm', "", class: 'form-control' %>
+                  <%= text_field_tag 'intake_cm', @intake_comm, class: 'form-control' %>
                 </div>
 
                 <!--========== INTAKE NEW ENTRY MODAL =========-->
@@ -359,27 +362,27 @@
                         </div>
                         <div class="modal-body">
                           <!-- Selecting Date-->
-                          <%= f.label :intake_date, "Intake Date" %>
-                          <%= text_field_tag 'intake_dt', "" ,class: 'datepicker' %>
+                          <%= f.label :intake_date_modal, "Intake Date" %>
+                          <%= text_field_tag 'intake_dt_modal', "" ,class: 'datepicker' %>
                           
-                          <%= f.label :intake_sub, "Sub Status"%>
-                          <%= collection_select(:intake_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
+                          <%= f.label :intake_sub_modal, "Sub Status"%>
+                          <%= collection_select(:intake_sub_modal, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
 
                           <!-- Selecting Foster-->
-                          <%= f.label :intake_fost, "Foster"%>
-                          <%#= collection_select(:intake_fost, :foster_id, @fosters, :email, :name, {:prompt => "Select foster"}) %>
+                          <%= f.label :intake_fost_modal, "Foster"%>
+                          <%= collection_select(:intake_fost_modal, :foster_id, @fosters, :email, :name, {:prompt => "Select foster"}) %>
                           
                           <!-- Selecting Vets-->
-                          <%= f.label :intake_vet, "Veterinarian"%>
-                          <%= collection_select(:intake_vet, :veterinarian_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian"}) %>
+                          <%= f.label :intake_vet_modal, "Veterinarian"%>
+                          <%= collection_select(:intake_vet_modal, :veterinarian_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian"}) %>
 
                           <!-- Selecting Previous Location-->
-                          <%= f.label :intake_prev, "Previous Location"%>
-                          <%= collection_select(:intake_prev, :animal_facility_id, AnimalFacility.all, :id, :name, {:prompt => "Select Previous Location"}) %>
+                          <%= f.label :intake_prev_modal, "Previous Location"%>
+                          <%= collection_select(:intake_prev_modal, :animal_facility_id, AnimalFacility.all, :id, :name, {:prompt => "Select Previous Location"}) %>
 
                           <!-- Inputing Details-->
-                          <%= f.label :intake_comm, "Details" %>
-                          <%= text_field_tag 'intake_cm', "", class: 'form-control' %>
+                          <%= f.label :intake_comm_modal, "Details" %>
+                          <%= text_field_tag 'intake_cm_modal', "", class: 'form-control' %>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>

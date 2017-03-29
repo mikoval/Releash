@@ -51,8 +51,8 @@
 
               <!-- Status Info -->
               <p> Current Status: <%= @animal.status.name%> </p>
-              <p> Current Substatus: <%= @animal.sub_status%> </p>
-              <p> Marketing: <%= @animal.marketing%> </p>
+              <p> Current Substatus: <%= @animal.sub_status.name%> </p>
+              <p> Marketing: <%= @animal.marketing.name%> </p>
 
             </div>
           </div>
@@ -178,7 +178,7 @@
             <p> Foster: <%=@intake_foster%> </p>
             <p> Previous Location: <%=@intake_prev%> </p>
             <p> Vet: <%=@intake_vet%> </p>
-            <p> Holds: <%=@intake_sub%> </p>
+            <p> SubStatus: <%=@intake_sub%> </p>
             <p> Comments: <%= @intake.comments%> </p>
             <% else %>
               <h2>Intake</h2>

@@ -10,6 +10,7 @@ class AnimalsController < ApplicationController
     @status = StatusType.all
     @sub_status = SubStatusType.all
     @marketing = MarketingType.all
+
     @breed = Breed.order('name ASC')
     @behavior = Characteristic.all.order('name ASC')
 
@@ -31,12 +32,62 @@ class AnimalsController < ApplicationController
     @status = StatusType.all
     @sub_status = SubStatusType.all
     @marketing = MarketingType.all
+    
     @breed = Breed.order('name ASC')
     @breeds = AnimalBreed.where("animal_id = " + params["param"])
     @behavior = Characteristic.all.order('name ASC')
     @behaviors =  AnimalCharacteristic.where("animal_id = " + params["param"])
     
+    #having fosters and adopter display
+    @fosters_user = User.where(foster_check: true)
+    @foster_non_user = NonUser.where(foster_check: true)
+    #Rails.logger.debug("My object: #{foster_non_user.inspect}")
+    @fosters = @fosters_user + @foster_non_user
+    #Rails.logger.debug("My object: #{@fosters.inspect}")
+    @adopt_user = User.where(adopt_check: true)
+    @adopt_non_user = NonUser.where(adopt_check: true)
+    @adopters = @adopt_user + @adopt_non_user
+    # -----------------------------------
 
+    #STATUS STUFF--------------- SO MAGIC MUCH WOW SO COMPLICATED
+
+    #INTAKE
+    @if_intake = Intake.where(animal_id: @animal.id).exists?
+    
+    if @if_intake
+      
+      #@intake = Intake.where(animal_id: @animal.id)
+      #@intake = Intake.find_by animal_id: @animal.id
+      @intake = Intake.where(animal_id: @animal.id)
+
+      @intake_date = @intake[0].intake_date
+      @intake_comm = @intake[0].comments
+      Rails.logger.debug("Edit Intake --------------------: #{@intake.inspect}")
+      
+      if @intake[0].foster_id != nil
+         @foster = Foster.find_by id: @intake[0].foster_id
+      #   Rails.logger.debug("Foster --------------------: #{@foster.inspect}")
+        
+         if @foster.user_id == nil and @foster.non_user_id != nil
+           @intake_foster = NonUser.find(@foster.non_user_id).id
+         elsif @foster.user_id != nil and @foster.non_user_id == nil
+           @intake_foster = User.find(@foster.user_id).id
+         end
+       end
+      
+       if @intake[0].sub_status_id != nil
+         @intake_subs = SubStatusType.find(@intake[0].sub_status_id).id
+      end
+       if @intake[0].animal_facility_id != nil
+         @intake_prevs = AnimalFacility.find(@intake[0].animal_facility_id).id
+         Rails.logger.debug("Previous --------------------: #{@intake_prevs.inspect}")
+       end
+       if @intake[0].vet_id != nil
+         @intake_vets = Veterinarian.find(@intake[0].vet_id).id
+         Rails.logger.debug("Edit Vrt --------------------: #{@intake_vets.inspect}")
+       end
+    end
+    #----------------------------------------------------------
 
   end
   
@@ -55,6 +106,8 @@ class AnimalsController < ApplicationController
     @status_name = @status.name
     @behaviors =  AnimalCharacteristic.where("animal_id = " + params["param"])
 
+    
+
     #Rails.logger.debug("My object: #{status_name.inspect}")
     
     if (@status_name.to_s == "Intake")
@@ -62,8 +115,10 @@ class AnimalsController < ApplicationController
       #@test = NonUser.where(email: "test1@gmail.com")
       #Rails.logger.debug("NonUser ---------------: #{@test.inspect}")
       @intake = Intake.find_by animal_id: @animal.id
-      
-       if @intake.foster_id != nil
+      Rails.logger.debug("Current----------------------: #{@intake.inspect}")
+      @allIntakes = Intake.where(animal_id: @animal.id)
+      Rails.logger.debug("Alllll----------------------: #{@allIntakes.inspect}")
+      if @intake.foster_id != nil
          @foster = Foster.find_by id: @intake.foster_id
       #   Rails.logger.debug("Foster --------------------: #{@foster.inspect}")
         
@@ -297,7 +352,7 @@ class AnimalsController < ApplicationController
         end
 
         @comm = params[:intake_cm]
-        @intake_sub = @animal.sub_status_id
+        #@intake_sub = @animal.sub_status_id
         @ani_faci = params[:intake_prev][:animal_facility_id]
         @intake_sub = params[:intake_sub][:sub_status_id]
 
@@ -459,10 +514,101 @@ class AnimalsController < ApplicationController
   def editAnimal
     @animal = Animal.find(params["format"])
     
+      #INTAKE -----------------------------
+    @intake = Intake.where(animal_id: @animal.id)
+    #Rails.logger.debug("Edit animal ---------------: #{@intake[0].id.inspect}")
+    
+    if params[:intake_dt] != @intake[0].intake_date or params[:intake_fost][:foster_id] != @intake[0].foster_id or params[:intake_vet][:veterinarian_id] != @intake[0].vet_id or
+      params[:intake_cm] != @intake[0].comments or params[:intake_prev][:animal_facility_id] !=
+      @intake[0].animal_facility_id or params[:intake_sub][:sub_status_id] != @intake[0].sub_status_id
+
+
+      @intake_dates = params[:intake_dt]
+      @foster = params[:intake_fost][:foster_id]
+      @vet = params[:intake_vet][:veterinarian_id]
+      #Rails.logger.debug("Vet ID---------------: #{@vet.inspect}")
+
+      #Right now will accept both vet and foster as location
+      #!!!!!Need to make it so it only picks one
+      @test = NonUser.where(email: @foster)
+      #Rails.logger.debug("NonUser ---------------: #{@test.inspect}")
+
+      if User.where(email: @foster) != []
+        @temp = User.where(email: @foster)
+        #Rails.logger.debug("email------------: #{@temp.inspect}")
+        @intake_foster = Foster.where(user_id: @temp.ids)
+        @intake_id = @intake_foster.ids[0]
+        #Rails.logger.debug("temp: #{@intake_foster.inspect}")
+      end
+      if NonUser.where(email: @foster) != []
+        @temp = NonUser.where(email: @foster)
+        @intake_foster = Foster.where(non_user_id: @temp.ids)
+        @intake_id = @intake_foster.ids[0]
+      end
+
+      @comm = params[:intake_cm]
+      #@intake_subs = @animal.sub_status_id
+      @ani_faci = params[:intake_prev][:animal_facility_id]
+      @intake_subs = params[:intake_sub][:sub_status_id]
+
+
+      @new_intake = Intake.find_by id: @intake[0].id
+      #Rails.logger.debug("Intake ID---------------: #{@new_intake.inspect}")
+      
+      @new_intake.intake_date = @intake_dates
+      @new_intake.foster_id = @intake_id
+      @new_intake.vet_id = @vet
+      @new_intake.comments = @comm
+      #@new_intake.animal_id = @animal.id
+      @new_intake.sub_status_id = @intake_subs
+      @new_intake.animal_facility_id = @ani_faci
+      
+      @new_intake.save
+
+      #Rails.logger.debug("New Intake: #{@new_intake.inspect}")
+
+    end
 
     if @animal.update_attributes(animal_params)
        AnimalBreed.where("animal_id = " + @animal.id.to_s).delete_all
        AnimalCharacteristic.where("animal_id = " + @animal.id.to_s).delete_all
+       
+       if params["intake_dt_modal"] != "" and params["intake_dt_modal"] != nil
+        Rails.logger.debug("Intake --------------------:")
+        @intake = params[:intake_dt_modal]
+        @foster = params[:intake_fost_modal][:foster_id]
+        @vet = params[:intake_vet_modal][:veterinarian_id]
+
+        #Right now will accept both vet and foster as location
+        #!!!!!Need to make it so it only picks one
+        @test = NonUser.where(email: @foster)
+        #Rails.logger.debug("NonUser ---------------: #{@test.inspect}")
+
+        if User.where(email: @foster) != []
+          @temp = User.where(email: @foster)
+          #Rails.logger.debug("email------------: #{@temp.inspect}")
+          @intake_foster = Foster.where(user_id: @temp.ids)
+          @intake_id = @intake_foster.ids[0]
+          #Rails.logger.debug("temp: #{@intake_foster.inspect}")
+        end
+        if NonUser.where(email: @foster) != []
+          @temp = NonUser.where(email: @foster)
+          @intake_foster = Foster.where(non_user_id: @temp.ids)
+          @intake_id = @intake_foster.ids[0]
+        end
+
+        @comm = params[:intake_cm_modal]
+        #@intake_sub = @animal.sub_status_id
+        @ani_faci = params[:intake_prev_modal][:animal_facility_id]
+        @intake_sub = params[:intake_sub_modal][:sub_status_id]
+
+        @new_intake = Intake.new({intake_date: @intake, foster_id: @intake_id,
+                      vet_id: @vet, comments: @comm, animal_id: @animal.id, sub_status_id: @intake_sub, animal_facility_id: @ani_faci})
+        @new_intake.save
+
+        @allIntakes = Intake.all
+        Rails.logger.debug("Modal Add: #{@allIntakes.inspect}")
+      end
 
       if params["breeds"]
         arr = params["breeds"].split("|")
@@ -575,7 +721,7 @@ class AnimalsController < ApplicationController
       :adoption_fee, :animal_type, :birthday, :cage_number, :microchip_number, :tag_number, :neutered,  
 
       :intake_document, :owner_surrender_document, :home_check_document, :match_application_document, :adoption_application_document, 
-      :adoption_contract_document, :vetting_document, :intake_date
+      :adoption_contract_document, :vetting_document, :sub_status_id, :marketing_id
       )
 
   end
