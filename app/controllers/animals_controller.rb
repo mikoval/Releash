@@ -2,6 +2,9 @@ class AnimalsController < ApplicationController
   def list
     @animal = Animal.new
     @allAnimals = Animal.all
+    @breeds = Breed.where("name != 'Mixed'").order('name ASC')
+
+
   end
 
   def new
@@ -372,20 +375,12 @@ class AnimalsController < ApplicationController
       end 
 
       if(params["breed"] != "")
-        if(params["breed"] != d.primary_breed.name)
+        if(params["breed"].to_i != d.primary_breed_id)
           add = false
         end
       end
 
-      if(params["color"] != "" )
-        length = params["color"].length.to_i 
-        length = length -1 
-        if(params["color"].length > d.color_primary.length)
-          add = false
-        elsif(params["color"] != d.color_primary[0..length])
-          add = false
-        end
-      end
+      
 
       if(params["age_min"] != ""  && params["age_max"] != "")
 

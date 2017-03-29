@@ -18,9 +18,15 @@
     <p> Name:  </p> <input type = "text" id = "filter-name"/>
     <p> Breed:  </p> 
     <select id = "filter-breed">
+      <option value = "">Select Breed</option>
+
+
+      <% @breeds.each do |b|%>
+        <option value = "<%=  b.id %>"> <%= b.name %> </option>
+      <% end %>
+
 
     </select>
-    <p> Color:  </p> <input type = "text" id = "filter-color"/>
 
     <p> Age: <span id = "age-min"></span>-<span id = "age-max"> </span> </p>
      <div id="age_slider"></div>
@@ -69,7 +75,6 @@ var animalData
 function generateAnimalsList(){
   params = {};
   params.name = $("#filter-name").val();
-  params.color = $("#filter-color").val();
   params.breed = $("#filter-breed").val();
   params.age_min = $("#age-min").text()
   params.age_max = $("#age-max").text()
