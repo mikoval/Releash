@@ -145,6 +145,7 @@
 
       <!-- Tracking -->
       <div id="tracking-body" class="collapse inner-formdiv">
+        
         <table class='table' id='intake_table'>
             <thead>
               <tr>
@@ -165,6 +166,40 @@
             </tbody>
           </table>
         
+          <%# Added Bootstrap data modal attribute %>
+          <%= link_to 'New Intake', '#new_intake_modal', 'data-toggle' => 'modal' %>
+
+          <%# Bootstrap modal markup. @see: http://getbootstrap.com/javascript/#modals %>
+          <div class="modal fade" id="new_intake_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title" id="myModalLabel">Create intake person</h4>
+                </div>
+                <div class="modal-body">
+                  <%# Render the new person form (passing modal => true to enable remote => true) %>
+                  <%= render 'form', modal: true %>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
       </div>
 
       <div class= "card form-div alerts col-md-12">
