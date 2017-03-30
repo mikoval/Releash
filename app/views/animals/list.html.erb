@@ -119,14 +119,14 @@ function generateAnimalsList(){
       })
 
       animalData = result
-      var str = "<table class='table table-bordered table-hover table-striped'> <thead> <tr> <th>Name</th> <th>Primary Breed</th> <th>Status</th> <th>Color</th> </tr> </thead>" 
+      var str = "<table class='table table-bordered table-hover table-striped'> <thead> <tr> <th>Name</th> <th>Primary Breed</th> <th>Status</th> <th>Gender</th> </tr> </thead>" 
         for (x in result){
     
                 str += "<tr> \
                 <td> <a href='/animals/profile?method=get&param=" + result[x].id + " '  >" + result[x].name + "</a></td>\
                  <td>" + result[x].primary + "</td>\
                 <td>" + result[x].status + "</td>\
-                <td>" + result[x].color + "</td>\
+                <td>" + result[x].gender + "</td>\
                 </tr>"
         }
         str +=  " </table>"
