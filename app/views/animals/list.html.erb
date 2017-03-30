@@ -57,7 +57,7 @@
     <button id = "reset-button" onclick = "resetFilters(); generateAnimalsList()";>Reset Filters</button>
 
     </div>
-
+    <p id = "url"> URL: </p>
     <div id = "animals-list" class = "col-md-8" > 
 
     </div>
@@ -94,16 +94,39 @@ $(".list-card").hover(
 )
 
 var animalData
-
 function generateAnimalsList(){
+  var myURL = "";
+  myURL += document.location;
   params = {};
-  params.name = $("#filter-name").val();
-  params.breed = $("#filter-breed").val();
-  params.gender = $("#filter-gender").val();
-  params.status = $("#filter-status").val();
-  // params.neutered = $("#filter-neutered").val();
-  params.age_min = $("#age-min").text()
-  params.age_max = $("#age-max").text()
+
+  if(myURL.indexOf("?n=") == -1){
+    params.name = $("#filter-name").val();
+    params.breed = $("#filter-breed").val();
+    params.gender = $("#filter-gender").val();
+    params.status = $("#filter-status").val();
+    // params.neutered = $("#filter-neutered").val();
+    params.age_min = $("#age-min").text();
+    params.age_max = $("#age-max").text();
+  }
+  else{
+    params.name = "";
+    params.breed = "";
+    params.gender = "";
+    params.status = "";
+    params.age_min = 0;
+    params.age_max = 25;
+    if(myURL.charAt(myURL.indexOf("?n=")+3)!="?"){params.name = myURL.substring(myURL.indexOf("?n=")+3, myURL.indexOf("&?b="))}
+    if(myURL.charAt(myURL.indexOf("?b=")+3)!="?"){params.breed = myURL.substring(myURL.indexOf("?b=")+3, myURL.indexOf("&?g="))}
+    if(myURL.charAt(myURL.indexOf("?g=")+3)!="?"){params.gender = myURL.substring(myURL.indexOf("?g=")+3, myURL.indexOf("&?s="))}
+    if(myURL.charAt(myURL.indexOf("?s=")+3)!="?"){params.status = myURL.substring(myURL.indexOf("?s=")+3, myURL.indexOf("&?a="))}
+    if(myURL.charAt(myURL.indexOf("?a=")+3)!="?"){params.age_min = parseInt(myURL.substring(myURL.indexOf("?a=")+3, myURL.indexOf("&?A=")))}
+    if(myURL.charAt(myURL.indexOf("?A=")+3)!="?"){params.age_max = parseInt(myURL.substring(myURL.indexOf("?A=")+3, myURL.length))}
+
+    $("#age-min").text(params.age_min);
+    $("#age-max").text(params.age_max);
+    $("#age_slider").slider("values", 0, params.age_min);
+    $("#age_slider").slider("values", 1, params.age_max);
+  }
 
   console.log(params)
   $.ajax({
@@ -132,9 +155,10 @@ function generateAnimalsList(){
         str +=  " </table>"
 
         $("#animals-list").html(str);
-        console.log("done");
     },
   });  
+  myURL = document.location + "?n=" + params.name + "&?b=" + params.breed + "&?g=" + params.gender + "&?s=" + params.status + "&?a=" + params.age_min + "&?A=" + params.age_max;
+  document.getElementById("url").innerHTML = "URL: " + myURL;
 }
 
 function resetFilters(){
