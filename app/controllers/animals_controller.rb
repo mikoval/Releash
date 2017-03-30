@@ -417,7 +417,7 @@ class AnimalsController < ApplicationController
           "name" => d.name,
           "primary" => d.primary_breed.name,
           "gender" => d.gender,
-          "status" => d.status_id,
+          "status" => d.status.name,
           "picture" => d.picture,
           "age" => getAge(d.birthday)
         })
@@ -457,7 +457,7 @@ class AnimalsController < ApplicationController
           "id" =>  d.id, 
           "name" => d.name,
           "gender" => d.gender,
-          "status" => d.status_id,
+          "status" => d.status.name,
           "attribute" => d.primary_breed.name,
           "picture" => d.picture,
         })
