@@ -13,7 +13,7 @@
 
     <br><br>
 
-    <div class = "filters col-md-3" style = "border-radius:1px; margin:5px"> 
+    <div id='filterDiv' class = "filters col-md-3" style = "border-radius:1px; margin:5px";> 
     <p> Name:  </p> <input type = "text" id = "filter-name"/>
     <p> Breed:  </p> 
     <select id = "filter-breed">
@@ -99,7 +99,7 @@ function generateAnimalsList(){
   myURL += document.location;
   params = {};
 
-  if(myURL.indexOf("?n=") == -1){
+  if(myURL.charAt(myURL.indexOf("?n=")+3) == "&" || myURL.indexOf("?n=") == -1){
     params.name = $("#filter-name").val();
     params.breed = $("#filter-breed").val();
     params.gender = $("#filter-gender").val();
@@ -115,17 +115,18 @@ function generateAnimalsList(){
     params.status = "";
     params.age_min = 0;
     params.age_max = 25;
-    if(myURL.charAt(myURL.indexOf("?n=")+3)!="?"){params.name = myURL.substring(myURL.indexOf("?n=")+3, myURL.indexOf("&?b="))}
-    if(myURL.charAt(myURL.indexOf("?b=")+3)!="?"){params.breed = myURL.substring(myURL.indexOf("?b=")+3, myURL.indexOf("&?g="))}
-    if(myURL.charAt(myURL.indexOf("?g=")+3)!="?"){params.gender = myURL.substring(myURL.indexOf("?g=")+3, myURL.indexOf("&?s="))}
-    if(myURL.charAt(myURL.indexOf("?s=")+3)!="?"){params.status = myURL.substring(myURL.indexOf("?s=")+3, myURL.indexOf("&?a="))}
-    if(myURL.charAt(myURL.indexOf("?a=")+3)!="?"){params.age_min = parseInt(myURL.substring(myURL.indexOf("?a=")+3, myURL.indexOf("&?A=")))}
-    if(myURL.charAt(myURL.indexOf("?A=")+3)!="?"){params.age_max = parseInt(myURL.substring(myURL.indexOf("?A=")+3, myURL.length))}
+    if(myURL.charAt(myURL.indexOf("?n=")+3)!="&"){params.name = myURL.substring(myURL.indexOf("?n=")+3, myURL.indexOf("&?b="))}
+    if(myURL.charAt(myURL.indexOf("?b=")+3)!="&"){params.breed = myURL.substring(myURL.indexOf("?b=")+3, myURL.indexOf("&?g="))}
+    if(myURL.charAt(myURL.indexOf("?g=")+3)!="&"){params.gender = myURL.substring(myURL.indexOf("?g=")+3, myURL.indexOf("&?s="))}
+    if(myURL.charAt(myURL.indexOf("?s=")+3)!="&"){params.status = myURL.substring(myURL.indexOf("?s=")+3, myURL.indexOf("&?a="))}
+    if(myURL.charAt(myURL.indexOf("?a=")+3)!="&"){params.age_min = parseInt(myURL.substring(myURL.indexOf("?a=")+3, myURL.indexOf("&?A=")))}
+    if(myURL.charAt(myURL.indexOf("?A=")+3)!="&"){params.age_max = parseInt(myURL.substring(myURL.indexOf("?A=")+3, myURL.length))}
 
     $("#age-min").text(params.age_min);
     $("#age-max").text(params.age_max);
     $("#age_slider").slider("values", 0, params.age_min);
     $("#age_slider").slider("values", 1, params.age_max);
+    document.getElementById('filterDiv').style.display = "none";
   }
 
   console.log(params)
@@ -157,7 +158,9 @@ function generateAnimalsList(){
         $("#animals-list").html(str);
     },
   });  
+  if(!myURL.includes("?n=")){
   myURL = document.location + "?n=" + params.name + "&?b=" + params.breed + "&?g=" + params.gender + "&?s=" + params.status + "&?a=" + params.age_min + "&?A=" + params.age_max;
+  }
   document.getElementById("url").innerHTML = "URL: " + myURL;
 }
 
