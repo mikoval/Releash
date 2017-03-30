@@ -3,8 +3,7 @@ class AnimalsController < ApplicationController
     @animal = Animal.new
     @allAnimals = Animal.all
     @breeds = Breed.where("name != 'Mixed'").order('name ASC')
-
-
+    @status = StatusType.all
   end
 
   def new
@@ -380,7 +379,23 @@ class AnimalsController < ApplicationController
         end
       end
 
-      
+      if(params["gender"] != "")
+        if(params["gender"] != d.gender)
+          add = false
+        end
+      end
+
+      if(params["status"] != "")
+        if(params["status"] != d.status)
+          add = false
+        end
+      end
+
+      if(params["spayed"] != "")
+        if(params["spayed"] != d.spayed)
+          add = false
+        end
+      end
 
       if(params["age_min"] != ""  && params["age_max"] != "")
 
