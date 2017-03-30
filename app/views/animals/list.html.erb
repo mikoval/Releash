@@ -42,7 +42,7 @@
 
 
     <p> Spayed/Neutered:  </p> 
-    <select id = "filter-spayed">
+    <select id = "filter-neutered">
       <option value = "">Select option</option>
       <option value = "Yes">Yes</option>
       <option value = "No">No</option>
@@ -101,7 +101,7 @@ function generateAnimalsList(){
   params.breed = $("#filter-breed").val();
   params.gender = $("#filter-gender").val();
   params.status = $("#filter-status").val();
-  params.spayed = $("#filter-spayed").val();
+  params.neutered = $("#filter-neutered").val();
   params.age_min = $("#age-min").text()
   params.age_max = $("#age-max").text()
 
@@ -110,7 +110,7 @@ function generateAnimalsList(){
     url: "animals/query",
     data: params,
     success: function(result){
-      
+
       // sort animals by status
       result.sort(function(a, b){
       if(a.status < b.status) return -1;
@@ -142,7 +142,7 @@ function resetFilters(){
   $("#filter-breed").prop('selectedIndex',0)
   $("#filter-gender").prop('selectedIndex',0)
   $("#filter-status").prop('selectedIndex',0)
-  $("#filter-spayed").prop('selectedIndex',0)
+  $("#filter-neutered").prop('selectedIndex',0)
   $("#age-min").text(0);
   $("#age-max").text(25);
   $("#age_slider").slider("values", 0, 0);
