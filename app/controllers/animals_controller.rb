@@ -386,7 +386,7 @@ class AnimalsController < ApplicationController
       end
 
       if(params["status"] != "")
-        if(params["status"] != d.status)
+        if(params["status"].to_i != d.status_id)
           add = false
         end
       end
@@ -416,6 +416,8 @@ class AnimalsController < ApplicationController
           "id" =>  d.id, 
           "name" => d.name,
           "primary" => d.primary_breed.name,
+          "gender" => d.gender,
+          "status" => d.status_id,
           "picture" => d.picture,
           "age" => getAge(d.birthday)
         })
@@ -454,6 +456,8 @@ class AnimalsController < ApplicationController
           "check" => "animal",
           "id" =>  d.id, 
           "name" => d.name,
+          "gender" => d.gender,
+          "status" => d.status_id,
           "attribute" => d.primary_breed.name,
           "picture" => d.picture,
         })
