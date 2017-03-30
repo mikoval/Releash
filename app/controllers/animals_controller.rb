@@ -391,11 +391,11 @@ class AnimalsController < ApplicationController
         end
       end
 
-      if(params["spayed"] != "")
-        if(params["spayed"] != d.spayed)
-          add = false
-        end
-      end
+      # if(params["neutered"] != "")
+      #   if(params["neutered"] != d.neutered)
+      #     add = false
+      #   end
+      # end
 
       if(params["age_min"] != ""  && params["age_max"] != "")
 
