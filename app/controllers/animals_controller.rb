@@ -62,7 +62,7 @@ class AnimalsController < ApplicationController
 
       @intake_date = @intake[0].intake_date
       @intake_comm = @intake[0].comments
-      Rails.logger.debug("Edit Intake --------------------: #{@intake.inspect}")
+      #Rails.logger.debug("Edit Intake --------------------: #{@intake.inspect}")
       
       if @intake[0].foster_id != nil
          @foster = Foster.find_by id: @intake[0].foster_id
@@ -80,11 +80,11 @@ class AnimalsController < ApplicationController
       end
        if @intake[0].animal_facility_id != nil
          @intake_prevs = AnimalFacility.find(@intake[0].animal_facility_id).id
-         Rails.logger.debug("Previous --------------------: #{@intake_prevs.inspect}")
+         #Rails.logger.debug("Previous --------------------: #{@intake_prevs.inspect}")
        end
        if @intake[0].vet_id != nil
          @intake_vets = Veterinarian.find(@intake[0].vet_id).id
-         Rails.logger.debug("Edit Vrt --------------------: #{@intake_vets.inspect}")
+         #Rails.logger.debug("Edit Vrt --------------------: #{@intake_vets.inspect}")
        end
     end
     #----------------------------------------------------------
@@ -106,10 +106,49 @@ class AnimalsController < ApplicationController
     @status_name = @status.name
     @behaviors =  AnimalCharacteristic.where("animal_id = " + params["param"])
 
-    
+    @allIntakes = Intake.where(animal_id: @animal.id)
+    @allVetting = Vetting.where(animal_id: @animal.id)
+    @allTraining = Training.where(animal_id: @animal.id)
+    @allAdopt = Adopted.where(animal_id: @animal.id)
+    @allFoster = FosterStatus.where(animal_id: @animal.id)
+    @allHistory = @allIntakes + @allVetting + @allTraining + @allAdopt + @allFoster
 
-    #Rails.logger.debug("My object: #{status_name.inspect}")
-    
+    #Intake Status----------------
+    @intake_stats = []
+
+    @allIntakes.each do |a|
+      if a.foster_id != nil
+         @foster = Foster.find_by id: a.foster_id
+      #   Rails.logger.debug("Foster --------------------: #{@foster.inspect}")
+        
+         if @foster.user_id == nil and @foster.non_user_id != nil
+           @intake_loc = NonUser.find(@foster.non_user_id).id
+         elsif @foster.user_id != nil and @foster.non_user_id == nil
+           @intake_loc = User.find(@foster.user_id).id
+         end
+       end
+      
+       if a.sub_status_id != nil
+         @intake_subs = SubStatusType.find(a.sub_status_id).id
+      end
+       if a.animal_facility_id != nil
+         @intake_prevs = AnimalFacility.find(a.animal_facility_id).id
+         #Rails.logger.debug("Previous --------------------: #{@intake_prevs.inspect}")
+       end
+       if a.vet_id != nil
+         @intake_loc = Veterinarian.find(a.vet_id).id
+         #Rails.logger.debug("Edit Vrt --------------------: #{@intake_vets.inspect}")
+       end
+      @intake_stats.push({
+        "status" => "Intake",
+        "date" => a.intake_date,
+        "sub_status" => @intake_subs
+        "location" => @intake_loc
+
+        })
+    end
+
+
     if (@status_name.to_s == "Intake")
       #@test = NonUser.all
       #@test = NonUser.where(email: "test1@gmail.com")

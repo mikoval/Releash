@@ -1,0 +1,39 @@
+<% modal ||= false %>
+<% remote = modal ? true : false %>
+
+
+
+<%= form_for(@intake, remote: remote, html: {role: :form, 'data-model' => 'intake'}) do |f| %>
+
+  <% if @intake.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@intake.errors.count, "error") %> prohibited this intake from being saved:</h2>
+
+      <ul>
+      <% @intake.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%# Added Bootstrap classes, and help-block container for error messages %>
+  <div class="form-group">
+    <%= f.label :intake_date, "Intake Date" %>
+    <%= f.text_field :intake_date, class: 'datepicker' %>
+    <span class="help-block"></span>
+  </div>
+
+  <%# Added Bootstrap classes, and help-block container for error messages %>
+  <div class="form-group">
+    <%= f.label :sub_status, class: 'control-label' %><br>
+    <%= f.collection_select :sub_status_id, @sub_status, :id, :name, {:prompt => "Select SubStatus"}, class: 'form-control' %> 
+    <span class="help-block"></span>
+  </div>
+
+  <%# Added Bootstrap classes %>
+  <div class="actions">
+    <%= f.submit 'Submit', class: 'btn btn-default' %>
+  </div>
+
+<% end %>
