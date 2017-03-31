@@ -99,7 +99,7 @@ function generateAnimalsList(){
   myURL += document.location;
   params = {};
 
-  if(myURL.charAt(myURL.indexOf("?n=")+3) == "&" || myURL.indexOf("?n=") == -1){
+  if((myURL.charAt(myURL.indexOf("?n=")+3) == "&" && myURL.charAt(myURL.indexOf("?b=")+3) == "&" && myURL.charAt(myURL.indexOf("?g=")+3) == "&" && myURL.charAt(myURL.indexOf("?s=")+3) == "&" && myURL.charAt(myURL.indexOf("?a=")+3) == "&" && myURL.charAt(myURL.indexOf("?A=")+3) == "&")|| myURL.indexOf("?n=") == -1){
     params.name = $("#filter-name").val();
     params.breed = $("#filter-breed").val();
     params.gender = $("#filter-gender").val();
