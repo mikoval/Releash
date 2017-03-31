@@ -104,6 +104,10 @@ class AnimalsController < ApplicationController
     @status = StatusType.find(@animal.status_id)
     
     @status_name = @status.name
+    if @animal.sub_status_id != nil
+      @sub_status_name = SubStatusType.find(@animal.sub_status_id).name
+    end
+    
     @behaviors =  AnimalCharacteristic.where("animal_id = " + params["param"])
 
     @allIntakes = Intake.where(animal_id: @animal.id)
@@ -111,13 +115,13 @@ class AnimalsController < ApplicationController
     @allTraining = Training.where(animal_id: @animal.id)
     @allAdopt = Adopted.where(animal_id: @animal.id)
     @allFoster = FosterStatus.where(animal_id: @animal.id)
-    @allHistory = @allIntakes + @allVetting + @allTraining + @allAdopt + @allFoster
+    @allOther = OtherStatus.where(animal_id: @animal.id)
+    @allHistory = @allIntakes + @allVetting + @allTraining + @allAdopt + @allFoster + @allOther
 
     #Intake Status----------------
     @intake_stats = []
 
     if @allIntakes != [] 
-      @status_name = "Intake"
       @allIntakes.each do |a|
          @intake_loc = nil
          if a.foster_id != nil
@@ -143,6 +147,7 @@ class AnimalsController < ApplicationController
            #Rails.logger.debug("Edit Vrt --------------------: #{@intake_vets.inspect}")
          end
         @intake_stats.push({
+          "status" => "Intake",
           "date" => a.intake_date,
           "sub_status" => @intake_subs,
           "location" => @intake_loc,
@@ -152,91 +157,141 @@ class AnimalsController < ApplicationController
           })
       end
     end
+    
     if @allFoster != [] 
-      @foster_status = FosterStatus.find_by animal_id: @animal.id
 
-      if @foster_status.foster_id != nil
-        @foster = Foster.find_by id: @foster_status.foster_id    
-        if @foster.user_id == nil and @foster.non_user_id != nil
-          @fost_foster = NonUser.find(@foster.non_user_id).name
-        elsif @foster.user_id != nil and @foster.non_user_id == nil
-          @fost_foster = User.find(@foster.user_id).name
+      @foster_stats = []
+
+      @allFoster.each do |a|
+        if a.foster_id != nil
+          @foster = Foster.find_by id: a.foster_id    
+          if @foster.user_id == nil and @foster.non_user_id != nil
+            @fost_foster = NonUser.find(@foster.non_user_id).name
+          elsif @foster.user_id != nil and @foster.non_user_id == nil
+            @fost_foster = User.find(@foster.user_id).name
+          end
         end
-      end
       
-      if @foster_status.homecheck = true
-        @fost_home = "Completed"
-      else
-        @fost_home = "Incomplete"
+        if a.homecheck = true
+          @fost_home = "Completed"
+        else
+          @fost_home = "Incomplete"
+        end
+        if a.vet_id != nil
+          @fost_vet = Veterinarian.find(a.vet_id).name
+        end
+        if a.sub_status_id != nil
+          @foster_sub = SubStatusType.find(a.sub_status_id).name
+        end
+       
+        @foster_stats.push({
+          "status" => "Foster",
+          "date" => a.foster_date,
+          "foster" => @fost_foster,
+          "vet" => @fost_vet,
+          "homecheck" => @fost_home,
+          "sub_status" => @foster_sub,
+          "comm" => a.comments
+          })
       end
-      if @foster_status.vet_id != nil
-        @fost_vet = Veterinarian.find(@foster_status.vet_id).name
-      end
-      if @foster_status.sub_status_id != nil
-        @foster_sub = SubStatusType.find(@foster_status.sub_status_id).name
-      end
-      #Rails.logger.debug("My object: #{@foster.inspect}")
     end
 
     if @allVetting != [] 
+      @vet_stats = []
       
-      @vetting = Vetting.find_by animal_id: @animal.id
-      
-      if @vetting.curr_vet_id != nil
-        @vetting_vet = Veterinarian.find(@vetting.curr_vet_id).name
+      @allVetting.each do |a|
+
+        if a.curr_vet_id != nil
+          @vetting_vet = Veterinarian.find(a.curr_vet_id).name
+        end
+        if a.sub_status_id != nil
+          @vet_sub = SubStatusType.find(a.sub_status_id).name
+        end
+        
+        @vet_stats.push({
+          "status" => "Vetting",
+          "date" => a.vet_date,
+          "vet" => @vetting_vet,
+          "sub_status" => @vet_sub,
+          "comm" => a.comments
+
+          })
       end
-      if @vetting.sub_status_id != nil
-        @vet_sub = SubStatusType.find(@vetting.sub_status_id).name
-      end
-      #Rails.logger.debug("My object: #{@vetting.inspect}")
     end
 
     if @allAdopt != [] 
-      @adopted = Adopted.find_by animal_id: @animal.id
+      @adopt_stats = []
       
-
-      if @adopted.adopter_id != nil
-        @adopter = Adopter.find_by id: @adopted.adopter_id
-        #Rails.logger.debug("Adopter --------------------: #{@adopter.inspect}")
-        
-        if @adopter.user_id == nil and @adopter.non_user_id != nil
-          @adopt_adopter = NonUser.find(@adopter.non_user_id).name
+      @allAdopt.each do |a|
+        if a.adopter_id != nil
+          @adopter = Adopter.find_by id: a.adopter_id
+          
+          if @adopter.user_id == nil and @adopter.non_user_id != nil
+            @adopt_adopter = NonUser.find(@adopter.non_user_id).name
+          end
+          if @adopter.user_id != nil and @adopter.non_user_id == nil
+            @adopt_adopter = User.find(@adopter.user_id).name
+          end
         end
-        if @adopter.user_id != nil and @adopter.non_user_id == nil
-          @adopt_adopter = User.find(@adopter.user_id).name
-        end
-      end
 
-      if @adopted.sub_status_id != nil
-        @adopt_sub = SubStatusType.find(@adopted.sub_status_id).name
+        if a.sub_status_id != nil
+          @adopt_sub = SubStatusType.find(a.sub_status_id).name
+        end
+        @adopt_stats.push({
+            "status" => "Adopted",
+            "date" => a.adopt_date,
+            "adopt" => @adopt_adopter,
+            "sub_status" => @adopt_sub,
+            "comm" => a.comments
+
+            })
       end
-      #Rails.logger.debug("My object: #{@adopted.inspect}")
     end
 
     if @allTraining != [] 
-      @training = Training.find_by animal_id: @animal.id
+      @train_stats = []
       
-      if @training.trainer_id != nil
-        @training_trainer = Trainer.find(@training.trainer_id).name
-        
+      @allTraining.each do |a|
+       
+        if a.trainer_id != nil
+          @training_trainer = Trainer.find(a.trainer_id).name
+          
+        end
+        if a.sub_status_id != nil
+          @train_sub = SubStatusType.find(a.sub_status_id).name
+        end
+        @train_stats.push({
+              "status" => "In Training",
+              "date" => a.train_date,
+              "train" => @training_trainer,
+              "sub_status" => @train_sub,
+              "comm" => a.problem_info
+
+              })
       end
-      if @training.sub_status_id != nil
-        @train_sub = SubStatusType.find(@training.sub_status_id).name
-      end
-      #Rails.logger.debug("My object: #{@vetting.inspect}")
     end
 
-    if (@status_name.to_s == "Other")
-      @other_status = OtherStatus.find_by animal_id: @animal.id
-      if @other_status.status_name != nil
-        @other_name = @other_status.status_name
-      else
-        @other_name = "Other"
+    if @allOther != []
+      @other_stats = []
+      
+      @allOther.each do |a|
+        if a.status_name != nil
+          @other_name = a.status_name
+        else
+          @other_name = "Other"
+        end
+
+        if a.sub_status_id != nil
+          @other_sub = SubStatusType.find(@other_status.sub_status_id).name
+        end
+
+        @other_stats.push({
+                "status" => "Other",
+                "date" => a.other_date,
+                "sub_status" => @other_sub,
+                "comm" => a.comments
+                })
       end
-      if @other_status.sub_status_id != nil
-        @other_sub = SubStatusType.find(@other_status.sub_status_id).name
-      end
-      #Rails.logger.debug("My object: #{@sleep.inspect}")
     end
     
     @breeds = AnimalBreed.where("animal_id = " + params["param"])
@@ -256,7 +311,6 @@ class AnimalsController < ApplicationController
 
         })
     end
-    
 
   end
 
