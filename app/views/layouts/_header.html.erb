@@ -25,7 +25,7 @@
               </a>
               <ul class="dropdown-menu">
                 <li><i class="lnr lnr-user"></i><%= link_to "Profile",  :controller => "people", :action => "profile", :param => current_user, :method => "get" %></li>
-                <li><i class="lnr lnr-cog"></i><%= link_to "Settings", '#' %></li>
+                <li><i class="lnr lnr-cog"><%= link_to "Settings", '#' %></i></li>
                 
                 <li class="divider"></li>
                 <li><i class="lnr lnr-exit"></i><%= link_to "Log out", logout_path, method: "delete" %></li>

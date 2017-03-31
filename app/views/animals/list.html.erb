@@ -1,10 +1,10 @@
 <!-- comment -->
 <% provide(:title, "Animals") %>
 <h1>Animals</h1>
-
+<hr>
 
 <% if employee?(current_user) %>
-<%= link_to "<button>Add Animal</button>".html_safe,  :controller => "animals", :action => "new", :method => "get" %>
+<%= link_to "<button class='btn btn-default'>Add Animal</button>".html_safe,  :controller => "animals", :action => "new", :method => "get" %>
 <% end %>
 
     <div class = "container" style = "width:100%">
