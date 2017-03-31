@@ -127,11 +127,18 @@ class AnimalsController < ApplicationController
     @allAdopt = Adopted.where(animal_id: @animal.id)
     @allFoster = FosterStatus.where(animal_id: @animal.id)
     @allOther = OtherStatus.where(animal_id: @animal.id)
-    @allHistory = @allIntakes + @allVetting + @allTraining + @allAdopt + @allFoster + @allOther
+    #@allHistory = @allIntakes + @allVetting + @allTraining + @allAdopt + @allFoster + @allOther
 
+    #so we need this value to pass to intake modal so it knows we are creating a new Intake or whatever status
     @new_intake = Intake.new
-    @tester = Intake.all
-    Rails.logger.debug("Intake --------------------: #{@tester.inspect}")
+    @new_vet = Vetting.new
+    @new_train = Training.new
+    @new_adopt = Adopted.new
+    @new_fost = FosterStatus.new
+    @new_other = OtherStatus.new
+
+
+
     #Intake Status----------------
     @intake_stats = []
 
@@ -162,6 +169,7 @@ class AnimalsController < ApplicationController
          end
         @intake_stats.push({
           "status" => "Intake",
+          "id" => a.id,
           "date" => a.intake_date,
           "sub_status" => @intake_subs,
           "location" => @intake_loc,
@@ -182,7 +190,9 @@ class AnimalsController < ApplicationController
           if @foster.user_id == nil and @foster.non_user_id != nil
             @fost_foster = NonUser.find(@foster.non_user_id).name
           elsif @foster.user_id != nil and @foster.non_user_id == nil
+
             @fost_foster = User.find(@foster.user_id).name
+
           end
         end
       
@@ -197,7 +207,6 @@ class AnimalsController < ApplicationController
         if a.sub_status_id != nil
           @foster_sub = SubStatusType.find(a.sub_status_id).name
         end
-       
         @foster_stats.push({
           "status" => "Foster",
           "date" => a.foster_date,

@@ -1,10 +1,5 @@
 Rails.application.routes.draw do
-
-
-  
-
-
-
+ 
 # the first part is what they are going to 
 # for example localhost:3000/home, localhost:3000/people/new, localhost:3000/animal
 # if it says 'to:' that means forward that request to x#y with x being the controller and y being the action (which is kinda like a view)
@@ -31,6 +26,29 @@ Rails.application.routes.draw do
   post 'intake/new', to:'intake#newIntake'
   get 'intake/edit'
   get 'intake/list'
+  
+  get 'vetting/new'
+  post 'vetting/new', to:'vetting#newVetting'
+  get 'vetting/edit'
+  get 'vetting/list'
+
+  get 'foster/new'
+  post 'foster/new', to:'foster#newFoster'
+  get 'foster/edit'
+  get 'foster/list'
+
+  get 'training/new'
+  post 'training/new', to:'training#newTraining'
+  get 'training/edit'
+  get 'training/list'
+
+  get 'other/new'
+  get 'other/edit'
+  get 'other/list'
+
+  get 'adopted/new'
+  get 'adopted/edit'
+  get 'adopted/list'
 
   get 'alerts/new'
   get 'alerts/edit'

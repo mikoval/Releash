@@ -5,4 +5,5 @@ class Adopted < ActiveRecord::Base
 	has_and_belongs_to_many :adopter, :class_name => 'Adopter'
 	has_and_belongs_to_many :animal, :class_name => 'Animal'
 	has_and_belongs_to_many :sub_status, :class_name => 'SubStatusType'
+	validates :adopt_date, presence: true
 end
