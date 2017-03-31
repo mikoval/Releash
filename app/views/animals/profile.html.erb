@@ -26,7 +26,7 @@
           <div id = "characteristics-body" class="collapse show col-md-12">
             <!-- Profile Picture -->
             <div class="picture col-md-6">
-            	<%= display_avatar(@animal, "150x200") %>
+              <%= display_avatar(@animal, "150x200") %>
             </div>
 
             <!-- Basic Characteristics -->
@@ -145,61 +145,136 @@
 
       <!-- Tracking -->
       <div id="tracking-body" class="collapse inner-formdiv">
-        
-        <table class='table' id='intake_table'>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Sub Status</th>
-                <th>Location</th>
+        <p> Current Status: <%=@status_name%> </p>
 
-              </tr>
-            </thead>
-            <tbody>
-              <tbody>
-              <% @intake_stats.each do |intake| %>
-                <tr>
-                <%= render partial: 'table_row', locals: {intake: intake} %>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        
-          <%# Added Bootstrap data modal attribute %>
-          <%= link_to 'New Intake', '#new_intake_modal', 'data-toggle' => 'modal' %>
-
-          <%# Bootstrap modal markup. @see: http://getbootstrap.com/javascript/#modals %>
-          <div class="modal fade" id="new_intake_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                  <h4 class="modal-title" id="myModalLabel">Create intake person</h4>
-                </div>
-                <div class="modal-body">
-                  <%# Render the new person form (passing modal => true to enable remote => true) %>
-                  <%= render 'form', modal: true %>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-              </div>
-            </div>
+        <div id="timeline">
+          <div class="circle" id="intake">
+            <status>Intake</status>
           </div>
+          <div class="circle" id="vetting">
+            <status>Vetting</status>
+          </div>
+          <div class="circle" id="foster">
+            <status>Foster</status>
+          </div>
+          <div class="circle" id="training">
+            <status>Training</status>
+          </div>
+          <div class="circle" id="adopted">
+            <status>Adopted</status>
+          </div>
+           <div class="circle" id="other">
+            <status>Other</status>
+          </div>
+        </div>
+
+        <!-- Will throw errors if not current status -->
+        <!-- Status Info -->
+        <article class='status-info intake'>
+          <p>
+            <%if @allIntakes != []%>
+            <%=@status_name%>
+              <% @intake_stats.each do |a| %>
+                <p> Date: <%= a["date"]%> </p>
+                <p> Location: <%=a["location"]%> </p>
+                <p> Previous Location: <%=a["prev_location"]%> </p>
+                <p> SubStatus: <%=a["sub_status"]%> </p>
+                <p> Comments: <%= a["comm"]%> </p>
+
+                <% if employee?(current_user) %>
+                <%= link_to "<div class = 'col-md-2 col-md-offset-10 col-sm-4 col-sm-offset-8 col-xs-4 col-xs-offset-8'> <button>Edit profile</button></div>".html_safe,  :controller => "animals", :action => "edit", :param => @animal, :method => "get" %>
+                <% end %>
 
 
+              <% end %> 
+            <% end %> 
+          </p>
+        </article>
 
+        <article class='status-info vetting'>
+          <p>
+            <%if @status_name == "Vetting"%>
+            <%=@status_name%>
+            <p> Date: <%= @vetting.vet_date%> </p>
+            <p> Vet: <%=@vetting_vet%> </p>
+            <p> Sub Status: <%=@vet_sub%> </p>
+            <p> Comments: <%= @vetting.comments%> </p>
 
+            <!-- Check if Spayed/ Neutered -->
+            <%if @animal_check == 0%>
+              <p> Spayed / Neutered: No </p> 
+            <% else %>
+              <p> Spayed / Neutered: Yes </p> 
+            <% end %> 
+            <% else %>
+              <h2>Vetting</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates magnam excepturi laboriosam minima soluta, quae. Sunt repellat totam non, et sed in veniam fuga odio eius! Nesciunt amet optio recusandae? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum sit dolor sint amet, corporis aperiam nihil, quas, accusantium enim suscipit rem non possimus </p>            
+            <% end %> 
+          </p>
+        </article>
 
+        <article class='status-info foster'>
+          <p>
+            <%if @status_name == "Foster"%>
+            <%=@status_name%>
+            <p> Date: <%= @foster_status.foster_date%> </p>
+            <p> Foster: <%=@fost_foster%> </p>
+            <p> Veterinarian: <%=@fost_vet%> </p>
+            <p> Homecheck: <%=@fost_home%> </p>
+            <p> Sub Status: <%=@foster_sub%> </p>
+            <p> Comments: <%= @foster_status.comments%> </p>
+            <% end %> 
+              <h2>Foster</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates magnam excepturi laboriosam minima soluta, quae. Sunt repellat totam non, et sed in veniam fuga odio eius! Nesciunt amet optio recusandae? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum sit dolor sint amet, corporis aperiam nihil, quas, accusantium enim suscipit rem non possimus officiis. Recusandae hic at, fugiat eos eveniet.</p>                          
+    
+          </p>
+        </article>
 
+        <article class='status-info training'>
+          <p>
+            <%if @status_name == "In Training"%>
+            <%=@status_name%>
+            <p> Date: <%= @training.train_date%> </p>
+            <p> Vet: <%=@training_trainer%> </p>
+            <p> Sub Status: <%=@train_sub%> </p>
+            <p> Problem Information: <%= @training.problem_info%> </p>
+              <h2>Training</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates magnam excepturi laboriosam minima soluta, quae. Sunt repellat totam non, et sed in veniam fuga odio eius! Nesciunt amet optio recusandae? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum sit dolor sint amet, corporis aperiam nihil, quas, accusantium enim suscipit rem non possimus </p>            
+            <% end %> 
+          </p>
+        </article>
 
+        <article class='status-info adopted'>
+          <p>
+            <%if @status_name == "Adopted"%>
+            <%= @status_name%>
+            <p> Date: <%= @adopted.adopt_date%> </p>
+            <p> Sub Status: <%= @adopt_sub%> </p>
+            <p> Adopted By: <%= @adopt_adopter%> </p>
+            <p> Comments: <%= @adopted.comments%> </p>
+            <% else %>
+              <h2>Adopted</h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates magnam excepturi laboriosam minima soluta, quae. Sunt repellat totam non, et sed in veniam fuga odio eius! Nesciunt amet optio recusandae? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum sit dolor sint amet, corporis aperiam nihil, quas, accusantium enim suscipit rem non possimus officiis. Recusandae hic at, fugiat eos eveniet.</p>            
+            <% end %>
+        </article>
 
+        <article class='status-info other'>
+          <p>
+            <!-- Other -->
+            <%if @status_name == "Other"%>
+            <%=@other_name%>
+            <p> Date: <%= @other_status.other_date%> </p>
+            <p> Sub Status: <%=@other_sub%> </p>
+            <p> Comments: <%= @other_status.comments%> </p>
+              
+              <h2><%=@other_name%></h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates magnam excepturi laboriosam minima soluta, quae. Sunt repellat totam non, et sed in veniam fuga odio eius! Nesciunt amet optio recusandae? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum sit dolor sint amet, corporis aperiam nihil, quas, accusantium enim suscipit rem non possimus officiis. Recusandae hic at, fugiat eos eveniet.</p>
 
+          <% end %>
+          </p>
+        </article>
 
-
-
-
+        <div class= "status-buffer col-md-12" ></div>
       </div>
 
       <div class= "card form-div alerts col-md-12">
