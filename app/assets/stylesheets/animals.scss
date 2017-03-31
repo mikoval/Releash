@@ -84,6 +84,16 @@
     margin-left: 5px;
 }
 
+#fixedtipdiv{
+    position:absolute;
+    padding: 2px;
+    border:1px solid black;
+    font:normal 12px Verdana;
+    line-height:1000%;
+    z-index:100;
+}
+
+
 .list-pic {
     padding: 5px;
 }
@@ -91,3 +101,4 @@
 .list-info {
 
 }
+
