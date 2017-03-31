@@ -100,24 +100,17 @@ function generateAnimalsList(){
   myURL += document.location;
   params = {};
 
-  params.name = $("#filter-name").val();
-  params.breed = $("#filter-breed").val();
-  params.gender = $("#filter-gender").val();
-  params.status = $("#filter-status").val();
-  params.age_min = $("#age-min").text();
-  params.age_max = $("#age-max").text();
-
   if(params.name == "" || params.breed == "" || params.gender == "" || params.status == "" || params.age_min ==0 || params.age_max == 25){
     go = true;
+    params.name = $("#filter-name").val();
+    params.breed = $("#filter-breed").val();
+    params.gender = $("#filter-gender").val();
+    params.status = $("#filter-status").val();
+    params.age_min = $("#age-min").text();
+    params.age_max = $("#age-max").text();
   }
   // if(!(myURL.charAt(myURL.indexOf("?n=")+3) == "&" && myURL.charAt(myURL.indexOf("?b=")+3) == "&" && myURL.charAt(myURL.indexOf("?g=")+3) == "&" && myURL.charAt(myURL.indexOf("?s=")+3) == "&" && myURL.charAt(myURL.indexOf("?a=")+3) == "0" && myURL.charAt(myURL.indexOf("?A=")+3) == "2" && myURL.charAt(myURL.indexOf("?A=")+4) == "5") && myURL.indexOf("?")!=-1){
   if(!go){
-    params.name = "";
-    params.breed = "";
-    params.gender = "";
-    params.status = "";
-    params.age_min = 0;
-    params.age_max = 25;
     if(myURL.charAt(myURL.indexOf("?n=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.name = myURL.substring(myURL.indexOf("?n=")+3, myURL.indexOf("&?b="))}
     else{params.name = $("#filter-name").val();}
     if(myURL.charAt(myURL.indexOf("?b=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.breed = myURL.substring(myURL.indexOf("?b=")+3, myURL.indexOf("&?g="))}
@@ -131,6 +124,7 @@ function generateAnimalsList(){
     if(myURL.charAt(myURL.indexOf("?A=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.age_max = parseInt(myURL.substring(myURL.indexOf("?A=")+3, myURL.length))}
     else{params.age_max = $("#age-max").text();}
   }
+
   $("#age-min").text(params.age_min);
   $("#age-max").text(params.age_max);
   $("#age_slider").slider("values", 0, params.age_min);
@@ -187,7 +181,6 @@ function resetFilters(){
   $("#filter-breed").prop('selectedIndex',0)
   $("#filter-gender").prop('selectedIndex',0)
   $("#filter-status").prop('selectedIndex',0)
-  // $("#filter-neutered").prop('selectedIndex',0)
   $("#age-min").text(0);
   $("#age-max").text(25);
   $("#age_slider").slider("values", 0, 0);
