@@ -57,7 +57,6 @@
     <button id = "reset-button" onclick = "resetFilters(); generateAnimalsList()";>Reset Filters</button>
 
     </div>
-    <p id = "url"> URL: </p>
     <div id = "animals-list" class = "col-md-8" > 
 
     </div>
@@ -100,7 +99,7 @@ function generateAnimalsList(){
   myURL += document.location;
   params = {};
 
-  if(params.name == "" || params.breed == "" || params.gender == "" || params.status == "" || params.age_min ==0 || params.age_max == 25){
+  if((params.name == "" && params.breed == "" && params.gender == "" && params.status == "" && params.age_min ==0 && params.age_max == 25) || $("#filter-name").val()!="" || $("#filter-breed").val()!="" || $("#filter-gender").val()!="" || $("#filter-status").val()!="" || $("#age-min").text()!="0" || $("#age-max").text()!="25"){
     go = true;
     params.name = $("#filter-name").val();
     params.breed = $("#filter-breed").val();
@@ -109,7 +108,7 @@ function generateAnimalsList(){
     params.age_min = $("#age-min").text();
     params.age_max = $("#age-max").text();
   }
-  // if(!(myURL.charAt(myURL.indexOf("?n=")+3) == "&" && myURL.charAt(myURL.indexOf("?b=")+3) == "&" && myURL.charAt(myURL.indexOf("?g=")+3) == "&" && myURL.charAt(myURL.indexOf("?s=")+3) == "&" && myURL.charAt(myURL.indexOf("?a=")+3) == "0" && myURL.charAt(myURL.indexOf("?A=")+3) == "2" && myURL.charAt(myURL.indexOf("?A=")+4) == "5") && myURL.indexOf("?")!=-1){
+
   if(!go){
     if(myURL.charAt(myURL.indexOf("?n=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.name = myURL.substring(myURL.indexOf("?n=")+3, myURL.indexOf("&?b="))}
     else{params.name = $("#filter-name").val();}
@@ -130,7 +129,6 @@ function generateAnimalsList(){
   $("#age_slider").slider("values", 0, params.age_min);
   $("#age_slider").slider("values", 1, params.age_max);
 
-  console.log(params)
   $.ajax({
     url: "animals/query",
     data: params,
@@ -146,13 +144,12 @@ function generateAnimalsList(){
       animalData = result
       var str = "<table class='table table-bordered table-hover table-striped'> <thead> <tr> <th>Name</th> <th>Primary Breed</th> <th>Status</th> <th>Gender</th> </tr> </thead>" 
         for (x in result){
-    
-                str += "<tr> \
-                <td> <a href='/animals/profile?method=get&param=" + result[x].id + " '  >" + result[x].name + "</a></td>\
-                 <td>" + result[x].primary + "</td>\
-                <td>" + result[x].status + "</td>\
-                <td>" + result[x].gender + "</td>\
-                </tr>"
+          str += "<tr> \
+          <td> <a href='/animals/profile?method=get&param=" + result[x].id + " '  >" + result[x].name + "</a></td>\
+           <td>" + result[x].primary + "</td>\
+          <td>" + result[x].status + "</td>\
+          <td>" + result[x].gender + "</td>\
+          </tr>"
         }
         str +=  " </table>"
 
@@ -162,10 +159,8 @@ function generateAnimalsList(){
   str = ""
   str += document.location
   str = str.substring(0,str.indexOf("?n="))
-  console.log(str)
   myURL = str + "?n=" + params.name + "&?b=" + params.breed + "&?g=" + params.gender + "&?s=" + params.status + "&?a=" + params.age_min + "&?A=" + params.age_max;
 
-  document.getElementById("url").innerHTML = "URL: " + myURL;
   window.history.pushState('obj', 'newtitle', myURL)
 
 }
@@ -190,7 +185,6 @@ function resetFilters(){
   str = str.substring(0,str.indexOf("?n="))
   console.log(str)
   myURL = str + "?n=" + params.name + "&?b=" + params.breed + "&?g=" + params.gender + "&?s=" + params.status + "&?a=" + params.age_min + "&?A=" + params.age_max;
-  document.getElementById("url").innerHTML = "URL: " + myURL;
   window.history.pushState('obj', 'newtitle', myURL)
 }
 
