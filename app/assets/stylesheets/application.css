@@ -18,6 +18,8 @@
 
  *= require jquery-ui
  *= require gridstack-js-rails
+
+ *= require fullcalendar
  */
 
 /*Change font everywhere */
@@ -31,6 +33,7 @@
     border-color:red;
     border-size:2px;
 }
+
 
 @import "bootstrap-sprockets";
 @import "bootstrap";

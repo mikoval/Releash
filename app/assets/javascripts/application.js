@@ -18,6 +18,10 @@
 //= require gridstack-js-rails
 //= require_tree .
 
+//= require moment 
+//= require fullcalendar
+
+$('#calendar').fullCalendar({});
 
 function generateAnimals(arr){
   str = ""
