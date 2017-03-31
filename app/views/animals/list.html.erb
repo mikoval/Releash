@@ -99,7 +99,7 @@ function generateAnimalsList(){
   myURL += document.location;
   params = {};
 
-  if((params.name == "" && params.breed == "" && params.gender == "" && params.status == "" && params.age_min ==0 && params.age_max == 25) || $("#filter-name").val()!="" || $("#filter-breed").val()!="" || $("#filter-gender").val()!="" || $("#filter-status").val()!="" || $("#age-min").text()!="0" || $("#age-max").text()!="25"){
+  if((params.name == "" && params.breed == "" && params.gender == "" && params.status == "" && params.age_min ==0 && params.age_max == 25) || $("#filter-name").val()!="" || $("#filter-breed").val()!="Select Breed" || $("#filter-gender").val()!="Select Gender" || $("#filter-status").val()!="Select Status" || $("#age-min").text()!="0" || $("#age-max").text()!="25"){
     go = true;
     params.name = $("#filter-name").val();
     params.breed = $("#filter-breed").val();
