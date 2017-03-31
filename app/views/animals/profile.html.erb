@@ -9,7 +9,7 @@
 
 <!-- Inner form Content -->
   <div class="form col-md-12">
-    <%= form_for(@animal, url: animals_path(@animal))  do |f| %>
+
       
       <!-- Personal Inner Div -->
       <div id ="personal-body" class="collapse show inner-formdiv">
@@ -51,7 +51,7 @@
 
               <!-- Status Info -->
               <p> Current Status: <%= @animal.status.name%> </p>
-              <p> Current Substatus: <%= @animal.sub_status.name%> </p>
+              <p> Current Substatus: <%= @sub_status_name%> </p>
               <p> Marketing: <%= @animal.marketing.name%> </p>
 
             </div>
@@ -171,7 +171,7 @@
         <!-- Status Info -->
         <article class='status-info intake'>
           <%= link_to 'Add New Intake', '#intakeEntryModal', class: 'btn btn-default', 'data-toggle' => 'modal' %>
-          <!-- Modal -->
+          <!-- Add New Intake Modal -->
           <div class="modal entry-modal fade" id="intakeEntryModal" tabindex="-1" role="dialog" aria-labelledby="intakeEntryModalLabel">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
@@ -180,7 +180,7 @@
                   <h4 class="modal-title" id="myModalLabel">Create New Intake Entry</h4>
                 </div>
                 <div class="modal-body">
-                    <%= render 'intakeform_modal', modal: true %>
+                    <%= render 'intakeform_modal', modal: true, new_intake: @new_intake, animal_id: @animal.id, fosters: @fosters %>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
@@ -189,6 +189,26 @@
             </div>
           </div>
           <!-- End Modal -->
+
+           <!-- Modal -->
+          <div class="modal entry-modal fade" id="intakeEditEntryModal" tabindex="-1" role="dialog" aria-labelledby="intakeEditEntryModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Create New Intake Entry</h4>
+                </div>
+                <div class="modal-body">
+                    <%= render 'intakeform_edit_modal', modal: true, new_intake: @new_intake, animal_id: @animal.id, fosters: @fosters %>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Modal -->
+          
           
           <p>
             <%if @allIntakes != []%>
@@ -201,7 +221,7 @@
                 <p> Comments: <%= a["comm"]%> </p>
 
                 <% if employee?(current_user) %>
-                <%= link_to "<div class = 'col-md-2 col-md-offset-10 col-sm-4 col-sm-offset-8 col-xs-4 col-xs-offset-8'> <button>Edit profile</button></div>".html_safe,  :controller => "animals", :action => "edit", :param => @animal, :method => "get" %>
+                <%= link_to 'Edit Entry', '#intakeEditEntryModal', class: 'btn btn-default', 'data-toggle' => 'modal' %>
                 <% end %>
 
                 
@@ -291,19 +311,19 @@
 
         <article class='status-info other'>
           <p>
-            <%#if @allOther != []%>
+            <%if @allOther != []%>
               <%=@other_name%>
-              <%# @other_stats.each do |a| %>
-                <p> Date: <%#= a["date"]%> </p>
-                <p> Sub Status: <%#= a["sub_status"]%> </p>
-                <p> Comments: <%#= a["comm"]%> </p>
+              <% @other_stats.each do |a| %>
+                <p> Date: <%= a["date"]%> </p>
+                <p> Sub Status: <%= a["sub_status"]%> </p>
+                <p> Comments: <%= a["comm"]%> </p>
                 
                 
                 <% if employee?(current_user) %>
                 <%= link_to "<div class = 'col-md-2 col-md-offset-10 col-sm-4 col-sm-offset-8 col-xs-4 col-xs-offset-8'> <button>Edit profile</button></div>".html_safe,  :controller => "animals", :action => "edit", :param => @animal, :method => "get" %>
                 <% end %>
-              <%# end %> 
-            <%# end %>  
+              <% end %> 
+            <% end %>  
           </p>
         </article>
 
@@ -341,8 +361,6 @@
           <a href='/alerts/new?method=get&param=' + <%= @animal.id %> + ><button class = "button" >Add New Alert</button></a>
       </div>
     
-      <!-- Can i move this? -->
-    <% end %>
   </div>
 </div>
 

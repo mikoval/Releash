@@ -3,7 +3,7 @@
 
 <!-- Intake fill in information -->
 <!-- Is this going to throw an error because all the other stuff aren't in here = Check validations? --> 
-<%= form_for(new_intake, remote: remote, url: url_for(action: 'new', controller: 'intake', method: 'get'))      do |f| %>
+<%= form_for(edit_intake, remote: remote, url: url_for(action: 'new', controller: 'intake', method: 'get'))      do |f| %>
 
     <%= f.hidden_field :animal_id, value: animal_id%>
  

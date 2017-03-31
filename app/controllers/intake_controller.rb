@@ -1,9 +1,13 @@
 class IntakeController < ApplicationController
+  skip_before_filter :verify_authenticity_token, :only => :new
+  
   def new
+    Rails.logger.debug("My object:---------------------")
   	@intake = Intake.new
   	@fosters_user = User.where(foster_check: true)
     @foster_non_user = NonUser.where(foster_check: true)
-    #Rails.logger.debug("My object: #{foster_non_user.inspect}")
+    @sub_status = SubStatusType.all
+    
     @fosters = @fosters_user + @foster_non_user
     #Rails.logger.debug("My object: #{@fosters.inspect}")
     @adopt_user = User.where(adopt_check: true)
@@ -13,23 +17,28 @@ class IntakeController < ApplicationController
     @trainers = Trainer.all
     @vets = Veterinarian.all
   end
-
+  skip_before_filter :verify_authenticity_token, :only => :newIntake
+  
   def newIntake
+    @fosters_user = User.where(foster_check: true)
+    @foster_non_user = NonUser.where(foster_check: true)
+    @sub_status = SubStatusType.all
+    
+    @fosters = @fosters_user + @foster_non_user
+    #Rails.logger.debug("My object: #{@fosters.inspect}")
+    @adopt_user = User.where(adopt_check: true)
+    @adopt_non_user = NonUser.where(adopt_check: true)
+    @adopters = @adopt_user + @adopt_non_user
+
   	@intake = Intake.new(intake_params)
 
-  	respond_to do |format|
-	    if @non_user.save
-	      format.html { redirect_to @intake, notice: 'Entry Created Successfully' }
-	      format.json { render action: 'show', status: :created, location: @intake }
-	       # added:
-	      format.js   { render action: 'show', status: :created, location: @intake }
-	    else
-	      format.html { render action: 'new' }
-	      format.json { render json: @intake.errors, status: :unprocessable_entity }
-	      # added:
-	      format.js   { render json: @intake.errors, status: :unprocessable_entity }
-	    end
-	end
+    if @intake.save
+      flash[:success] = "Saved Intake Entry"
+      redirect_to :controller => "animals", :action => "profile", :param => @intake.animal_id
+    else
+      redirect_to :controller => "animals", :action => "profile", :param => @intake.animal_id
+    end
+
   end
 
   def intake_params

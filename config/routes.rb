@@ -3,11 +3,7 @@ Rails.application.routes.draw do
 
   
 
-  get 'intake/new'
 
-  get 'intake/edit'
-
-  get 'intake/list'
 
 # the first part is what they are going to 
 # for example localhost:3000/home, localhost:3000/people/new, localhost:3000/animal
@@ -26,9 +22,15 @@ Rails.application.routes.draw do
   get '/animals/new'
   get '/animals/profile'
   get '/animals/edit'
+
   get '/animals', to: 'animals#list'
   post  '/animals',   to: 'animals#newAnimal'
   patch  '/animals',   to: 'animals#editAnimal'
+
+  get 'intake/new'   
+  post 'intake/new', to:'intake#newIntake'
+  get 'intake/edit'
+  get 'intake/list'
 
   get 'alerts/new'
   get 'alerts/edit'
