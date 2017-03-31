@@ -93,24 +93,18 @@ $(".list-card").hover(
 )
 
 var animalData
+var queryNumber = 0;
 function generateAnimalsList(){
   var myURL = "";
-  var go = false;
   myURL += document.location;
   params = {};
-
-  if((params.name == "" && params.breed == "" && params.gender == "" && params.status == "" && params.age_min ==0 && params.age_max == 25) || $("#filter-name").val()!="" || $("#filter-breed").val()!="Select Breed" || $("#filter-gender").val()!="Select Gender" || $("#filter-status").val()!="Select Status" || $("#age-min").text()!="0" || $("#age-max").text()!="25"){
-    go = true;
-    params.name = $("#filter-name").val();
-    params.breed = $("#filter-breed").val();
-    params.gender = $("#filter-gender").val();
-    params.status = $("#filter-status").val();
-    params.age_min = $("#age-min").text();
-    params.age_max = $("#age-max").text();
+  if (queryNumber == 0){
+    if(myURL.charAt(myURL.indexOf("?n=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.name = myURL.substring(myURL.indexOf("?n=")+3, myURL.indexOf("&?b="))
+      while(params.name.indexOf("+")!=-1){
+        params.name = params.name.replace("+", " ");
+      }
+      console.log(params.name)
   }
-
-  if(!go){
-    if(myURL.charAt(myURL.indexOf("?n=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.name = myURL.substring(myURL.indexOf("?n=")+3, myURL.indexOf("&?b="))}
     else{params.name = $("#filter-name").val();}
     if(myURL.charAt(myURL.indexOf("?b=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.breed = myURL.substring(myURL.indexOf("?b=")+3, myURL.indexOf("&?g="))}
     else{params.breed = $("#filter-breed").val();}
@@ -122,6 +116,14 @@ function generateAnimalsList(){
     else{params.age_min = $("#age-min").text();}
     if(myURL.charAt(myURL.indexOf("?A=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.age_max = parseInt(myURL.substring(myURL.indexOf("?A=")+3, myURL.length))}
     else{params.age_max = $("#age-max").text();}
+  }
+  else{
+    params.name = $("#filter-name").val();
+    params.breed = $("#filter-breed").val();
+    params.gender = $("#filter-gender").val();
+    params.status = $("#filter-status").val();
+    params.age_min = $("#age-min").text();
+    params.age_max = $("#age-max").text();
   }
 
   $("#age-min").text(params.age_min);
@@ -159,7 +161,13 @@ function generateAnimalsList(){
   str = ""
   str += document.location
   str = str.substring(0,str.indexOf("?n="))
-  myURL = str + "?n=" + params.name + "&?b=" + params.breed + "&?g=" + params.gender + "&?s=" + params.status + "&?a=" + params.age_min + "&?A=" + params.age_max;
+  name = ""
+  name += params.name
+  while(name.indexOf(" ")!=-1){
+    name = name.replace(" ", "+")
+  }
+  queryNumber +=1
+  myURL = str + "?n=" + name + "&?b=" + params.breed + "&?g=" + params.gender + "&?s=" + params.status + "&?a=" + params.age_min + "&?A=" + params.age_max + "&?qn=" + queryNumber;
 
   window.history.pushState('obj', 'newtitle', myURL)
 
@@ -246,5 +254,6 @@ $("#generate-button").on("click", function(){
   generateAnimalsList();
 })
 generateAnimalsList();
+
 </script>
 
