@@ -1,8 +1,9 @@
 class Animal < ActiveRecord::Base
+
     validates :name, presence: true
     validates :primary_breed, presence: true
     validates :status, presence: true
-
+    
     mount_uploader :picture, AnimalPictureUploader
 
     mount_uploader :intake_document, FileUploader

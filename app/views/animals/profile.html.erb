@@ -170,6 +170,26 @@
 
         <!-- Status Info -->
         <article class='status-info intake'>
+          <%= link_to 'Add New Intake', '#intakeEntryModal', class: 'btn btn-default', 'data-toggle' => 'modal' %>
+          <!-- Modal -->
+          <div class="modal entry-modal fade" id="intakeEntryModal" tabindex="-1" role="dialog" aria-labelledby="intakeEntryModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Create New Intake Entry</h4>
+                </div>
+                <div class="modal-body">
+                    <%= render 'intakeform_modal', modal: true %>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Modal -->
+          
           <p>
             <%if @allIntakes != []%>
               <p>Intake Status </p>
@@ -183,6 +203,8 @@
                 <% if employee?(current_user) %>
                 <%= link_to "<div class = 'col-md-2 col-md-offset-10 col-sm-4 col-sm-offset-8 col-xs-4 col-xs-offset-8'> <button>Edit profile</button></div>".html_safe,  :controller => "animals", :action => "edit", :param => @animal, :method => "get" %>
                 <% end %>
+
+                
 
               <% end %> 
             <% end %> 
@@ -269,39 +291,19 @@
 
         <article class='status-info other'>
           <p>
-          <%if @allOther != []%>
+            <%#if @allOther != []%>
               <%=@other_name%>
-              <% @other_stats.each do |a| %>
-                <p> Date: <%= a["date"]%> </p>
-                <p> Sub Status: <%= a["sub_status"]%> </p>
-                <p> Comments: <%= a["comm"]%> </p>
+              <%# @other_stats.each do |a| %>
+                <p> Date: <%#= a["date"]%> </p>
+                <p> Sub Status: <%#= a["sub_status"]%> </p>
+                <p> Comments: <%#= a["comm"]%> </p>
                 
                 
                 <% if employee?(current_user) %>
                 <%= link_to "<div class = 'col-md-2 col-md-offset-10 col-sm-4 col-sm-offset-8 col-xs-4 col-xs-offset-8'> <button>Edit profile</button></div>".html_safe,  :controller => "animals", :action => "edit", :param => @animal, :method => "get" %>
                 <% end %>
-
-              <% end %> 
-            <% end %>  
-          </p>
-        </article>
-
-        <article class='status-info other'>
-          <p>
-          <%if @allOther != []%>
-              <%=@other_name%>
-              <% @other_stats.each do |a| %>
-                <p> Date: <%= a["date"]%> </p>
-                <p> Sub Status: <%= a["sub_status"]%> </p>
-                <p> Comments: <%= a["comm"]%> </p>
-                
-                
-                <% if employee?(current_user) %>
-                <%= link_to "<div class = 'col-md-2 col-md-offset-10 col-sm-4 col-sm-offset-8 col-xs-4 col-xs-offset-8'> <button>Edit profile</button></div>".html_safe,  :controller => "animals", :action => "edit", :param => @animal, :method => "get" %>
-                <% end %>
-
-              <% end %> 
-            <% end %>  
+              <%# end %> 
+            <%# end %>  
           </p>
         </article>
 
@@ -373,9 +375,6 @@ $(document).on("ready", function(){
   bindAlertsModal();
 })
 bindAlertsModal();
-
-
-
 
 </script>
 

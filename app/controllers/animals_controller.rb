@@ -51,7 +51,7 @@ class AnimalsController < ApplicationController
 
     #STATUS STUFF--------------- SO MAGIC MUCH WOW SO COMPLICATED
 
-    #INTAKE
+    # #INTAKE
     @if_intake = Intake.where(animal_id: @animal.id).exists?
     
     if @if_intake
@@ -88,7 +88,6 @@ class AnimalsController < ApplicationController
        end
     end
     #----------------------------------------------------------
-
   end
   
   def profile
@@ -104,10 +103,6 @@ class AnimalsController < ApplicationController
     @status = StatusType.find(@animal.status_id)
     
     @status_name = @status.name
-    if @animal.sub_status_id != nil
-      @sub_status_name = SubStatusType.find(@animal.sub_status_id).name
-    end
-    
     @behaviors =  AnimalCharacteristic.where("animal_id = " + params["param"])
 
     @allIntakes = Intake.where(animal_id: @animal.id)
@@ -115,13 +110,13 @@ class AnimalsController < ApplicationController
     @allTraining = Training.where(animal_id: @animal.id)
     @allAdopt = Adopted.where(animal_id: @animal.id)
     @allFoster = FosterStatus.where(animal_id: @animal.id)
-    @allOther = OtherStatus.where(animal_id: @animal.id)
-    @allHistory = @allIntakes + @allVetting + @allTraining + @allAdopt + @allFoster + @allOther
+    @allHistory = @allIntakes + @allVetting + @allTraining + @allAdopt + @allFoster
 
     #Intake Status----------------
     @intake_stats = []
 
     if @allIntakes != [] 
+      @status_name = "Intake"
       @allIntakes.each do |a|
          @intake_loc = nil
          if a.foster_id != nil
@@ -147,7 +142,6 @@ class AnimalsController < ApplicationController
            #Rails.logger.debug("Edit Vrt --------------------: #{@intake_vets.inspect}")
          end
         @intake_stats.push({
-          "status" => "Intake",
           "date" => a.intake_date,
           "sub_status" => @intake_subs,
           "location" => @intake_loc,
@@ -157,141 +151,91 @@ class AnimalsController < ApplicationController
           })
       end
     end
-    
     if @allFoster != [] 
+      @foster_status = FosterStatus.find_by animal_id: @animal.id
 
-      @foster_stats = []
-
-      @allFoster.each do |a|
-        if a.foster_id != nil
-          @foster = Foster.find_by id: a.foster_id    
-          if @foster.user_id == nil and @foster.non_user_id != nil
-            @fost_foster = NonUser.find(@foster.non_user_id).name
-          elsif @foster.user_id != nil and @foster.non_user_id == nil
-            @fost_foster = User.find(@foster.user_id).name
-          end
+      if @foster_status.foster_id != nil
+        @foster = Foster.find_by id: @foster_status.foster_id    
+        if @foster.user_id == nil and @foster.non_user_id != nil
+          @fost_foster = NonUser.find(@foster.non_user_id).name
+        elsif @foster.user_id != nil and @foster.non_user_id == nil
+          @fost_foster = User.find(@foster.user_id).name
         end
-      
-        if a.homecheck = true
-          @fost_home = "Completed"
-        else
-          @fost_home = "Incomplete"
-        end
-        if a.vet_id != nil
-          @fost_vet = Veterinarian.find(a.vet_id).name
-        end
-        if a.sub_status_id != nil
-          @foster_sub = SubStatusType.find(a.sub_status_id).name
-        end
-       
-        @foster_stats.push({
-          "status" => "Foster",
-          "date" => a.foster_date,
-          "foster" => @fost_foster,
-          "vet" => @fost_vet,
-          "homecheck" => @fost_home,
-          "sub_status" => @foster_sub,
-          "comm" => a.comments
-          })
       end
+      
+      if @foster_status.homecheck = true
+        @fost_home = "Completed"
+      else
+        @fost_home = "Incomplete"
+      end
+      if @foster_status.vet_id != nil
+        @fost_vet = Veterinarian.find(@foster_status.vet_id).name
+      end
+      if @foster_status.sub_status_id != nil
+        @foster_sub = SubStatusType.find(@foster_status.sub_status_id).name
+      end
+      #Rails.logger.debug("My object: #{@foster.inspect}")
     end
 
     if @allVetting != [] 
-      @vet_stats = []
       
-      @allVetting.each do |a|
-
-        if a.curr_vet_id != nil
-          @vetting_vet = Veterinarian.find(a.curr_vet_id).name
-        end
-        if a.sub_status_id != nil
-          @vet_sub = SubStatusType.find(a.sub_status_id).name
-        end
-        
-        @vet_stats.push({
-          "status" => "Vetting",
-          "date" => a.vet_date,
-          "vet" => @vetting_vet,
-          "sub_status" => @vet_sub,
-          "comm" => a.comments
-
-          })
+      @vetting = Vetting.find_by animal_id: @animal.id
+      
+      if @vetting.curr_vet_id != nil
+        @vetting_vet = Veterinarian.find(@vetting.curr_vet_id).name
       end
+      if @vetting.sub_status_id != nil
+        @vet_sub = SubStatusType.find(@vetting.sub_status_id).name
+      end
+      #Rails.logger.debug("My object: #{@vetting.inspect}")
     end
 
     if @allAdopt != [] 
-      @adopt_stats = []
+      @adopted = Adopted.find_by animal_id: @animal.id
       
-      @allAdopt.each do |a|
-        if a.adopter_id != nil
-          @adopter = Adopter.find_by id: a.adopter_id
-          
-          if @adopter.user_id == nil and @adopter.non_user_id != nil
-            @adopt_adopter = NonUser.find(@adopter.non_user_id).name
-          end
-          if @adopter.user_id != nil and @adopter.non_user_id == nil
-            @adopt_adopter = User.find(@adopter.user_id).name
-          end
-        end
 
-        if a.sub_status_id != nil
-          @adopt_sub = SubStatusType.find(a.sub_status_id).name
+      if @adopted.adopter_id != nil
+        @adopter = Adopter.find_by id: @adopted.adopter_id
+        #Rails.logger.debug("Adopter --------------------: #{@adopter.inspect}")
+        
+        if @adopter.user_id == nil and @adopter.non_user_id != nil
+          @adopt_adopter = NonUser.find(@adopter.non_user_id).name
         end
-        @adopt_stats.push({
-            "status" => "Adopted",
-            "date" => a.adopt_date,
-            "adopt" => @adopt_adopter,
-            "sub_status" => @adopt_sub,
-            "comm" => a.comments
-
-            })
+        if @adopter.user_id != nil and @adopter.non_user_id == nil
+          @adopt_adopter = User.find(@adopter.user_id).name
+        end
       end
+
+      if @adopted.sub_status_id != nil
+        @adopt_sub = SubStatusType.find(@adopted.sub_status_id).name
+      end
+      #Rails.logger.debug("My object: #{@adopted.inspect}")
     end
 
     if @allTraining != [] 
-      @train_stats = []
+      @training = Training.find_by animal_id: @animal.id
       
-      @allTraining.each do |a|
-       
-        if a.trainer_id != nil
-          @training_trainer = Trainer.find(a.trainer_id).name
-          
-        end
-        if a.sub_status_id != nil
-          @train_sub = SubStatusType.find(a.sub_status_id).name
-        end
-        @train_stats.push({
-              "status" => "In Training",
-              "date" => a.train_date,
-              "train" => @training_trainer,
-              "sub_status" => @train_sub,
-              "comm" => a.problem_info
-
-              })
+      if @training.trainer_id != nil
+        @training_trainer = Trainer.find(@training.trainer_id).name
+        
       end
+      if @training.sub_status_id != nil
+        @train_sub = SubStatusType.find(@training.sub_status_id).name
+      end
+      #Rails.logger.debug("My object: #{@vetting.inspect}")
     end
 
-    if @allOther != []
-      @other_stats = []
-      
-      @allOther.each do |a|
-        if a.status_name != nil
-          @other_name = a.status_name
-        else
-          @other_name = "Other"
-        end
-
-        if a.sub_status_id != nil
-          @other_sub = SubStatusType.find(@other_status.sub_status_id).name
-        end
-
-        @other_stats.push({
-                "status" => "Other",
-                "date" => a.other_date,
-                "sub_status" => @other_sub,
-                "comm" => a.comments
-                })
+    if (@status_name.to_s == "Other")
+      @other_status = OtherStatus.find_by animal_id: @animal.id
+      if @other_status.status_name != nil
+        @other_name = @other_status.status_name
+      else
+        @other_name = "Other"
       end
+      if @other_status.sub_status_id != nil
+        @other_sub = SubStatusType.find(@other_status.sub_status_id).name
+      end
+      #Rails.logger.debug("My object: #{@sleep.inspect}")
     end
     
     @breeds = AnimalBreed.where("animal_id = " + params["param"])
@@ -312,7 +256,148 @@ class AnimalsController < ApplicationController
         })
     end
 
-  end
+#=====================================trying to get it to edit on profile ===================================#
+#===================================== code from Edit ===================================#
+    # # #INTAKE
+    # @if_intake = Intake.where(animal_id: @animal.id).exists?
+    
+    # if @if_intake
+      
+    #   #@intake = Intake.where(animal_id: @animal.id)
+    #   #@intake = Intake.find_by animal_id: @animal.id
+    #   @intake = Intake.where(animal_id: @animal.id)
+
+    #   @intake_date = @intake[0].intake_date
+    #   @intake_comm = @intake[0].comments
+    #   #Rails.logger.debug("Edit Intake --------------------: #{@intake.inspect}")
+      
+    #   if @intake[0].foster_id != nil
+    #      @foster = Foster.find_by id: @intake[0].foster_id
+    #   #   Rails.logger.debug("Foster --------------------: #{@foster.inspect}")
+        
+    #      if @foster.user_id == nil and @foster.non_user_id != nil
+    #        @intake_foster = NonUser.find(@foster.non_user_id).id
+    #      elsif @foster.user_id != nil and @foster.non_user_id == nil
+    #        @intake_foster = User.find(@foster.user_id).id
+    #      end
+    #    end
+      
+    #    if @intake[0].sub_status_id != nil
+    #      @intake_subs = SubStatusType.find(@intake[0].sub_status_id).id
+    #   end
+    #    if @intake[0].animal_facility_id != nil
+    #      @intake_prevs = AnimalFacility.find(@intake[0].animal_facility_id).id
+    #      #Rails.logger.debug("Previous --------------------: #{@intake_prevs.inspect}")
+    #    end
+    #    if @intake[0].vet_id != nil
+    #      @intake_vets = Veterinarian.find(@intake[0].vet_id).id
+    #      #Rails.logger.debug("Edit Vrt --------------------: #{@intake_vets.inspect}")
+    #    end
+    # end
+    #---------------------------------------------------------- end code from edit
+
+#===================================== code from editAnimal ===================================#
+
+    # @animal = Animal.find(params["param"])
+    
+    # #INTAKE -----------------------------
+    # @intake = Intake.where(animal_id: @animal.id)
+    # #Rails.logger.debug("Edit animal ---------------: #{@intake[0].id.inspect}")
+    
+    # if params[:intake_dt] != @intake[0].intake_date or params[:intake_fost][:foster_id] != @intake[0].foster_id or params[:intake_vet][:veterinarian_id] != @intake[0].vet_id or
+    #   params[:intake_cm] != @intake[0].comments or params[:intake_prev][:animal_facility_id] !=
+    #   @intake[0].animal_facility_id or params[:intake_sub][:sub_status_id] != @intake[0].sub_status_id
+
+
+    #   @intake_dates = params[:intake_dt]
+    #   @foster = params[:intake_fost][:foster_id]
+    #   @vet = params[:intake_vet][:veterinarian_id]
+    #   #Rails.logger.debug("Vet ID---------------: #{@vet.inspect}")
+
+    #   #Right now will accept both vet and foster as location
+    #   #!!!!!Need to make it so it only picks one
+    #   @test = NonUser.where(email: @foster)
+    #   #Rails.logger.debug("NonUser ---------------: #{@test.inspect}")
+
+    #   if User.where(email: @foster) != []
+    #     @temp = User.where(email: @foster)
+    #     #Rails.logger.debug("email------------: #{@temp.inspect}")
+    #     @intake_foster = Foster.where(user_id: @temp.ids)
+    #     @intake_id = @intake_foster.ids[0]
+    #     #Rails.logger.debug("temp: #{@intake_foster.inspect}")
+    #   end
+    #   if NonUser.where(email: @foster) != []
+    #     @temp = NonUser.where(email: @foster)
+    #     @intake_foster = Foster.where(non_user_id: @temp.ids)
+    #     @intake_id = @intake_foster.ids[0]
+    #   end
+
+    #   @comm = params[:intake_cm]
+    #   #@intake_subs = @animal.sub_status_id
+    #   @ani_faci = params[:intake_prev][:animal_facility_id]
+    #   @intake_subs = params[:intake_sub][:sub_status_id]
+
+
+    #   @new_intake = Intake.find_by id: @intake[0].id
+    #   #Rails.logger.debug("Intake ID---------------: #{@new_intake.inspect}")
+      
+    #   @new_intake.intake_date = @intake_dates
+    #   @new_intake.foster_id = @intake_id
+    #   @new_intake.vet_id = @vet
+    #   @new_intake.comments = @comm
+    #   #@new_intake.animal_id = @animal.id
+    #   @new_intake.sub_status_id = @intake_subs
+    #   @new_intake.animal_facility_id = @ani_faci
+      
+    #   @new_intake.save
+
+    #   #Rails.logger.debug("New Intake: #{@new_intake.inspect}")
+    # end
+
+    # if @animal.update_attributes(animal_params)
+    #    AnimalBreed.where("animal_id = " + @animal.id.to_s).delete_all
+    #    AnimalCharacteristic.where("animal_id = " + @animal.id.to_s).delete_all
+       
+    #    if params["intake_dt_modal"] != "" and params["intake_dt_modal"] != nil
+    #     Rails.logger.debug("Intake --------------------:")
+    #     @intake = params[:intake_dt_modal]
+    #     @foster = params[:intake_fost_modal][:foster_id]
+    #     @vet = params[:intake_vet_modal][:veterinarian_id]
+
+    #     #Right now will accept both vet and foster as location
+    #     #!!!!!Need to make it so it only picks one
+    #     @test = NonUser.where(email: @foster)
+    #     #Rails.logger.debug("NonUser ---------------: #{@test.inspect}")
+
+    #     if User.where(email: @foster) != []
+    #       @temp = User.where(email: @foster)
+    #       #Rails.logger.debug("email------------: #{@temp.inspect}")
+    #       @intake_foster = Foster.where(user_id: @temp.ids)
+    #       @intake_id = @intake_foster.ids[0]
+    #       #Rails.logger.debug("temp: #{@intake_foster.inspect}")
+    #     end
+    #     if NonUser.where(email: @foster) != []
+    #       @temp = NonUser.where(email: @foster)
+    #       @intake_foster = Foster.where(non_user_id: @temp.ids)
+    #       @intake_id = @intake_foster.ids[0]
+    #     end
+
+    #     @comm = params[:intake_cm_modal]
+    #     #@intake_sub = @animal.sub_status_id
+    #     @ani_faci = params[:intake_prev_modal][:animal_facility_id]
+    #     @intake_sub = params[:intake_sub_modal][:sub_status_id]
+
+    #     @new_intake = Intake.new({intake_date: @intake, foster_id: @intake_id,
+    #                   vet_id: @vet, comments: @comm, animal_id: @animal.id, sub_status_id: @intake_sub, animal_facility_id: @ani_faci})
+    #     @new_intake.save
+
+    #     @allIntakes = Intake.all
+    #     #Rails.logger.debug("Modal Add: #{@allIntakes.inspect}")
+    #   end
+    # end
+
+#===================================== end code from editAnimal ===================================#
+  end #---------end def profile
 
 
   def newAnimal
