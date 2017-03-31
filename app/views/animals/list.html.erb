@@ -96,38 +96,45 @@ $(".list-card").hover(
 var animalData
 function generateAnimalsList(){
   var myURL = "";
+  var go = false;
   myURL += document.location;
   params = {};
 
-  if((myURL.charAt(myURL.indexOf("?n=")+3) == "&" && myURL.charAt(myURL.indexOf("?b=")+3) == "&" && myURL.charAt(myURL.indexOf("?g=")+3) == "&" && myURL.charAt(myURL.indexOf("?s=")+3) == "&" && myURL.charAt(myURL.indexOf("?a=")+3) == "&" && myURL.charAt(myURL.indexOf("?A=")+3) == "&")|| myURL.indexOf("?n=") == -1){
-    params.name = $("#filter-name").val();
-    params.breed = $("#filter-breed").val();
-    params.gender = $("#filter-gender").val();
-    params.status = $("#filter-status").val();
-    // params.neutered = $("#filter-neutered").val();
-    params.age_min = $("#age-min").text();
-    params.age_max = $("#age-max").text();
+  params.name = $("#filter-name").val();
+  params.breed = $("#filter-breed").val();
+  params.gender = $("#filter-gender").val();
+  params.status = $("#filter-status").val();
+  params.age_min = $("#age-min").text();
+  params.age_max = $("#age-max").text();
+
+  if(params.name == "" || params.breed == "" || params.gender == "" || params.status == "" || params.age_min ==0 || params.age_max == 25){
+    go = true;
   }
-  else{
+  // if(!(myURL.charAt(myURL.indexOf("?n=")+3) == "&" && myURL.charAt(myURL.indexOf("?b=")+3) == "&" && myURL.charAt(myURL.indexOf("?g=")+3) == "&" && myURL.charAt(myURL.indexOf("?s=")+3) == "&" && myURL.charAt(myURL.indexOf("?a=")+3) == "0" && myURL.charAt(myURL.indexOf("?A=")+3) == "2" && myURL.charAt(myURL.indexOf("?A=")+4) == "5") && myURL.indexOf("?")!=-1){
+  if(!go){
     params.name = "";
     params.breed = "";
     params.gender = "";
     params.status = "";
     params.age_min = 0;
     params.age_max = 25;
-    if(myURL.charAt(myURL.indexOf("?n=")+3)!="&"){params.name = myURL.substring(myURL.indexOf("?n=")+3, myURL.indexOf("&?b="))}
-    if(myURL.charAt(myURL.indexOf("?b=")+3)!="&"){params.breed = myURL.substring(myURL.indexOf("?b=")+3, myURL.indexOf("&?g="))}
-    if(myURL.charAt(myURL.indexOf("?g=")+3)!="&"){params.gender = myURL.substring(myURL.indexOf("?g=")+3, myURL.indexOf("&?s="))}
-    if(myURL.charAt(myURL.indexOf("?s=")+3)!="&"){params.status = myURL.substring(myURL.indexOf("?s=")+3, myURL.indexOf("&?a="))}
-    if(myURL.charAt(myURL.indexOf("?a=")+3)!="&"){params.age_min = parseInt(myURL.substring(myURL.indexOf("?a=")+3, myURL.indexOf("&?A=")))}
-    if(myURL.charAt(myURL.indexOf("?A=")+3)!="&"){params.age_max = parseInt(myURL.substring(myURL.indexOf("?A=")+3, myURL.length))}
-
-    $("#age-min").text(params.age_min);
-    $("#age-max").text(params.age_max);
-    $("#age_slider").slider("values", 0, params.age_min);
-    $("#age_slider").slider("values", 1, params.age_max);
-    document.getElementById('filterDiv').style.display = "none";
+    if(myURL.charAt(myURL.indexOf("?n=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.name = myURL.substring(myURL.indexOf("?n=")+3, myURL.indexOf("&?b="))}
+    else{params.name = $("#filter-name").val();}
+    if(myURL.charAt(myURL.indexOf("?b=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.breed = myURL.substring(myURL.indexOf("?b=")+3, myURL.indexOf("&?g="))}
+    else{params.breed = $("#filter-breed").val();}
+    if(myURL.charAt(myURL.indexOf("?g=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.gender = myURL.substring(myURL.indexOf("?g=")+3, myURL.indexOf("&?s="))}
+    else{params.gender = $("#filter-gender").val();}
+    if(myURL.charAt(myURL.indexOf("?s=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.status = myURL.substring(myURL.indexOf("?s=")+3, myURL.indexOf("&?a="))}
+    else{params.status = $("#filter-status").val();}
+    if(myURL.charAt(myURL.indexOf("?a=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.age_min = parseInt(myURL.substring(myURL.indexOf("?a=")+3, myURL.indexOf("&?A=")))}
+    else{params.age_min = $("#age-min").text();}
+    if(myURL.charAt(myURL.indexOf("?A=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.age_max = parseInt(myURL.substring(myURL.indexOf("?A=")+3, myURL.length))}
+    else{params.age_max = $("#age-max").text();}
   }
+  $("#age-min").text(params.age_min);
+  $("#age-max").text(params.age_max);
+  $("#age_slider").slider("values", 0, params.age_min);
+  $("#age_slider").slider("values", 1, params.age_max);
 
   console.log(params)
   $.ajax({
@@ -157,14 +164,25 @@ function generateAnimalsList(){
 
         $("#animals-list").html(str);
     },
-  });  
-  if(!myURL.includes("?n=")){
-  myURL = document.location + "?n=" + params.name + "&?b=" + params.breed + "&?g=" + params.gender + "&?s=" + params.status + "&?a=" + params.age_min + "&?A=" + params.age_max;
-  }
+  });
+  str = ""
+  str += document.location
+  str = str.substring(0,str.indexOf("?n="))
+  console.log(str)
+  myURL = str + "?n=" + params.name + "&?b=" + params.breed + "&?g=" + params.gender + "&?s=" + params.status + "&?a=" + params.age_min + "&?A=" + params.age_max;
+
   document.getElementById("url").innerHTML = "URL: " + myURL;
+  window.history.pushState('obj', 'newtitle', myURL)
+
 }
 
 function resetFilters(){
+  params.name = "";
+  params.breed = "";
+  params.gender = "";
+  params.status = "";
+  params.age_min = 0;
+  params.age_max = 25;
   $("#filter-name").val('')
   $("#filter-breed").prop('selectedIndex',0)
   $("#filter-gender").prop('selectedIndex',0)
@@ -174,6 +192,13 @@ function resetFilters(){
   $("#age-max").text(25);
   $("#age_slider").slider("values", 0, 0);
   $("#age_slider").slider("values", 1, 25);
+  str = ""
+  str += document.location
+  str = str.substring(0,str.indexOf("?n="))
+  console.log(str)
+  myURL = str + "?n=" + params.name + "&?b=" + params.breed + "&?g=" + params.gender + "&?s=" + params.status + "&?a=" + params.age_min + "&?A=" + params.age_max;
+  document.getElementById("url").innerHTML = "URL: " + myURL;
+  window.history.pushState('obj', 'newtitle', myURL)
 }
 
 
