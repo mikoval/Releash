@@ -2,12 +2,10 @@
 <%= content_for(:body_attributes, 'data-no-turbolink = "true"') %>
       
       <h1>Dashboard</h1>
+      <hr>
 
       <div id = "grid" class="grid-stack">
-        
       </div>
-   
-
 
         <div id="widgetsList" class="modal fade" role="dialog">
           <div class="modal-dialog">
@@ -68,7 +66,7 @@ function saveLayout() {
 
 
 function addAnimalWidget() {
-    var el = $.parseHTML('<div class="grid-stack-item" widget-type = "animal-list" data-gs-x="0" data-gs-y="0" data-gs-width="5" data-gs-height="4"><div class="grid-stack-item-content animal-list panel panel-default"></div></div>');
+    var el = $.parseHTML('<div class="grid-stack-item" widget-type = "animal-list" data-gs-x="0" data-gs-y="0" data-gs-width="5" data-gs-height="4"><div class="grid-stack-item-content animal-list panel"></div></div>');
     grid.addWidget(el, 0, 0, 5, 4, true);
     widgetAnimalList()
 }
@@ -118,9 +116,9 @@ function widgetNewWidgets(){
 }
 function widgetAnimalList(){
     $.ajax({url: "animals/query", success: function(result){
-        var str = "<div class='panel-heading clearfix'> <div class='btn-group pull-right'> <button class= 'btn toggle-dropdown' data-toggle='dropdown' aria-expanded='false' aria-haspopup='true'> <span class='glyphicon glyphicon-cog'></span> </button> <ul class='dropdown-menu dropdown-menu-right'> <li> <a href='#' class='remove-item-btn' onclick='return false;'>Remove</a> </li> </ul> </div> <h3 class= 'panel-title pull-left' style='padding-top: 8.5px;'> Animals</h3> </div>"
+        var str = "<div class='panel-heading'> <h3 class= 'panel-title pull-left'> Animals</h3><div class='right'><button type='button' class='btn-toggle-collapse'><i class='lnr lnr-chevron-up'></i></button><button type='button' class='remove-item-btn' onclick='return false;'><i class='lnr lnr-cross'></i></button></div></div>"
 
-        str += "<div class='panel-body'> <div class='table-responsive'> <table class='table table-bordered table-hover table-striped'> <thead> <tr> <th>Name</th> <th>Primary Breed</th> <th>Age</th> </tr> </thead>" 
+        str += "<div class='panel-body no-padding'> <div class='table-responsive'> <table class='table table-hover table-striped'> <thead> <tr> <th>Name</th> <th>Primary Breed</th> <th>Age</th> </tr> </thead>" 
         for (x in result){
     
                 str += "<tr> \
@@ -129,7 +127,7 @@ function widgetAnimalList(){
                 <td>" + result[x].age + "</td>\
                 </tr>"
         }
-        str +=  " </table> </div> <div class='text-right'> <a href= animals>View all Animals</a> </div> </div>"
+        str +=  " </table> </div> <div class='text-right panel-footer'> <div class='row text-right'><a href= animals class='btn btn-primary'>View all Animals</a> </div></div>"
 
          $(".animal-list").each(function(){
             $(this).html( str)
@@ -140,9 +138,9 @@ function widgetAnimalList(){
 
 function widgetUserList(){
     $.ajax({url: "people/query", success: function(result){
-        var str = "<div class='panel-heading clearfix'> <div class='btn-group pull-right'> <button class= 'btn toggle-dropdown' data-toggle='dropdown' aria-expanded='false' aria-haspopup='true'> <span class='glyphicon glyphicon-cog'></span> </button> <ul class='dropdown-menu dropdown-menu-right'> <li> <a href='#' class='remove-item-btn' onclick='return false;'>Remove</a> </li> </ul> </div> <h3 class= 'panel-title pull-left' style='padding-top: 8.5px;'> Users</h3> </div>"
+        var str = "<div class='panel-heading'> <h3 class= 'panel-title pull-left'> Users</h3><div class='right'><button type='button' class='btn-toggle-collapse'><i class='lnr lnr-chevron-up'></i></button><button type='button' class='remove-item-btn' onclick='return false;'><i class='lnr lnr-cross'></i></button></div></div>"
 
-        str += "<div class='panel-body'> <div class='table-responsive'> <table class='table table-bordered table-hover table-striped'> <thead> <tr> <th>Name</th> <th>Email</th> </tr> </thead>" 
+        str += "<div class='panel-body no-padding'> <div class='table-responsive'> <table class='table table-hover table-striped'> <thead> <tr> <th>Name</th> <th>Email</th> </tr> </thead>" 
 
         for (x in result){
     
@@ -151,7 +149,7 @@ function widgetUserList(){
                  <td>" + result[x].email + "</td>\
                 </tr>"
         }
-        str +=  " </table> </div> <div class='text-right'> <a href= people>View all Users</a> </div> </div>"
+        str +=  " </table> </div> <div class='text-right panel-footer'> <div class='row text-right'><a href= people class='btn btn-primary'>View all Users</a> </div></div>"
 
          $(".user-list").each(function(){
             $(this).html( str)
@@ -162,9 +160,9 @@ function widgetUserList(){
 
 function widgetAlertList(){
     $.ajax({url: "/alerts/query", success: function(result){
-        var str = "<div class='panel-heading clearfix'> <div class='btn-group pull-right'> <button class= 'btn toggle-dropdown' data-toggle='dropdown' aria-expanded='false' aria-haspopup='true'> <span class='glyphicon glyphicon-cog'></span> </button> <ul class='dropdown-menu dropdown-menu-right'> <li> <a href='#' class='remove-item-btn' onclick='return false;'>Remove</a> </li> </ul> </div> <h3 class= 'panel-title pull-left' style='padding-top: 8.5px;' <h3 class= 'panel-title'> Alerts</h3> </div>"
+        var str = "<div class='panel-heading'> <h3 class= 'panel-title pull-left'> Alerts</h3><div class='right'><button type='button' class='btn-toggle-collapse'><i class='lnr lnr-chevron-up'></i></button><button type='button' class='remove-item-btn' onclick='return false;'><i class='lnr lnr-cross'></i></button></div></div>"
 
-        str += "<div class='panel-body'> <div class='table-responsive'> <table class='table table-bordered table-hover table-striped'> <thead> <tr> <th>Title</th> <th>Date</th> </tr> </thead>" 
+        str += "<div class='panel-body no-padding'> <div class='table-responsive'> <table class='table table-hover table-striped'> <thead> <tr> <th>Title</th> <th>Date</th> </tr> </thead>" 
 
         for (x in result){
     
@@ -173,7 +171,7 @@ function widgetAlertList(){
                  <td>" + result[x].date + "</td>\
                 </tr>"
         }
-        str +=  " </table> </div> <div class='text-right'> <a href= alerts>View all Alerts</a> </div> </div>"
+        str +=  " </table> </div> <div class='text-right panel-footer'> <div class='row text-right'><a href= alerts class='btn btn-warning'>View all Alerts</a> </div></div>"
 
          $(".alert-list").each(function(){
             $(this).html( str)
