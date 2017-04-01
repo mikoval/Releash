@@ -13,13 +13,28 @@
     <%= f.label :sub_status, class: 'control-label' %><br>
     <%= f.collection_select :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select SubStatus"}, class: 'form-control' %> 
 
-    <!-- Selecting Foster-->
-     <%= f.label :intake_fost, "Foster"%>
-    <%=collection_select(:intake_fost, :foster_id, fosters, :email, :name, {:prompt => "Select foster"}) %>
+    <div id="fosterOrvet">
+        <p style="margin-left: auto" class="fost-header"> Select Current Location </p>
+            <div class="radio" id="foster-checkbox">
+              <label><input type="radio" name="radiobtn" id="fosterCheck">Foster</label>
+            </div>
+            <div class="radio" id="vet-checkbox">
+              <label><input type="radio" name="radiobtn" id="vetCheck">Veterinarian</label>
+            </div>
+    </div>
 
-    <!-- Selecting Vets-->
-    <%= f.label :vet_id, "Veterinarian"%>
-    <%= f.collection_select(:vet_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian"}) %>
+
+    <div id="fost-dropdown" class="col-md-12">
+        <!-- Selecting Foster-->
+        <%= f.label :intake_fost, "Foster"%>
+        <%=collection_select(:intake_fost, :foster_id, fosters, :email, :name, {:prompt => "Select foster"}) %>
+    </div>
+
+    <div id="vet-dropdown" class="col-md-12">
+        <!-- Selecting Vets--> 
+        <%= f.label :vet_id, "Veterinarian"%>
+        <%= f.collection_select(:vet_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian"}) %>
+    </div>
 
     <!-- Selecting Previous Location-->
     <%= f.label :animal_facility_id, "Previous Location"%>
@@ -33,7 +48,24 @@
 <% end %>
 
 <script>
-  $('.datepicker').datepicker({
+    $('.datepicker').datepicker({
     endDate: '-0d'
-  });
+    });
+    
+    $("#fost-dropdown").hide();
+    $("#vet-dropdown").hide();    
+
+    //Check if any is clicked
+    $('#fosterCheck').on('change', function() {
+        $("#vet-dropdown").hide();
+        $("#fost-dropdown").show();
+    });
+
+    //Check if any is clicked
+    $('#vetCheck').on('change', function() {
+        $("#fost-dropdown").hide();
+        $("#vet-dropdown").show();
+    });
+
+    
 </script>
