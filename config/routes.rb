@@ -23,32 +23,34 @@ Rails.application.routes.draw do
   patch  '/animals',   to: 'animals#editAnimal'
 
   get 'intake/new'   
-  post 'intake/new', to:'intake#newIntake'
   get 'intake/edit'
   get 'intake/list'
+  post 'intake/new', to:'intake#newIntake'
   
   get 'vetting/new'
-  post 'vetting/new', to:'vetting#newVetting'
   get 'vetting/edit'
   get 'vetting/list'
+  post 'vetting/new', to:'vetting#newVetting'
 
   get 'foster/new'
-  post 'foster/new', to:'foster#newFoster'
   get 'foster/edit'
   get 'foster/list'
+  post 'foster/new', to:'foster#newFoster'
 
   get 'training/new'
-  post 'training/new', to:'training#newTraining'
   get 'training/edit'
   get 'training/list'
+  post 'training/new', to:'training#newTraining'
 
   get 'other/new'
   get 'other/edit'
   get 'other/list'
+  post 'other/new', to: 'other#newOther'
 
   get 'adopted/new'
   get 'adopted/edit'
   get 'adopted/list'
+  post 'adopted/new', to: 'adopted#newAdopted'
 
   get 'alerts/new'
   get 'alerts/edit'

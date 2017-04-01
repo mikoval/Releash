@@ -148,6 +148,9 @@
         <p> Current Status: <%=@status_name%> </p>
 
         <div id="timeline">
+          <div class="circle" id="all">
+            <status>All</status>
+          </div>
           <div class="circle" id="intake">
             <status>Intake</status>
           </div>
@@ -168,7 +171,34 @@
           </div>
         </div>
 
-        <!-- Status Info -->
+        <!--=================== ALL =======================-->  
+        <article class='status-info all'>
+          <!-- Add New OTHER Modal -->
+           <%= link_to 'Add New Entry', '#allModal', class: 'btn btn-default', 'data-toggle' => 'modal' %>
+          <div class="modal entry-modal fade" id="allModal" tabindex="-1" role="dialog" aria-labelledby="allModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="allModalLabel">Add A New Entry</h4>
+                </div>
+                <div class="modal-body">
+                  <p> Form to Add a New Entry </p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Modal -->
+          
+          <p>
+            All Statuses Information
+          </p>
+        </article>
+
+        <!--=================== INTAKE =======================--> 
         <article class='status-info intake'>
           <%= link_to 'Add New Intake', '#intakeEntryModal', class: 'btn btn-default', 'data-toggle' => 'modal' %>
           <!-- Add New Intake Modal -->
@@ -228,7 +258,9 @@
             <% end %> 
           </p>
         </article>
+        <!--=================== END INTAKE =======================-->
 
+        <!--=================== VETTING =======================-->        
         <article class='status-info vetting'>
            <!-- Add New Vetting Modal -->
            <%= link_to 'Add New Vetting', '#vettingEntryModal', class: 'btn btn-default', 'data-toggle' => 'modal' %>
@@ -267,6 +299,7 @@
           </p>
         </article>
 
+        <!--=================== FOSTER =======================-->  
         <article class='status-info foster'>
           <!-- Add New Foster Modal -->
            <%= link_to 'Add New Foster', '#fosterEntryModal', class: 'btn btn-default', 'data-toggle' => 'modal' %>
@@ -308,6 +341,7 @@
           </p>
         </article>
 
+        <!--=================== TRAINING =======================-->  
         <article class='status-info training'>
           <p>
             <!-- Add New Training Modal -->
@@ -346,9 +380,12 @@
           </p>
         </article>
 
+        <!--=================== ADOPTED =======================-->  
         <article class='status-info adopted'>
-          <!-- Add New Adopted Modal -->
+          <!-- Modal Button New Adopted-->
            <%= link_to 'Add New Adopted', '#adoptEntryModal', class: 'btn btn-default', 'data-toggle' => 'modal' %>
+
+           <!-- Begin New Modal -->
           <div class="modal entry-modal fade" id="adoptEntryModal" tabindex="-1" role="dialog" aria-labelledby="adoptEntryModalLabel">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
@@ -357,7 +394,7 @@
                   <h4 class="modal-title" id="myModalLabel">Create New Adopted Entry</h4>
                 </div>
                 <div class="modal-body">
-                    <%= render 'adoptform_modal', modal: true, new_adopt: @new_train,animal_id: @animal.id%>
+                    <%= render 'adoptedform_modal', modal: true, new_adopt: @new_adopt,animal_id: @animal.id, adopters: @adopters%>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
@@ -365,7 +402,7 @@
               </div>
             </div>
           </div>
-          <!-- End Modal -->
+          <!-- End New Modal -->
           <p>            
             <%if @allAdopt != []%>
               <p>Adopted Status </p>
@@ -383,18 +420,19 @@
             <% end %>  
         </article>
 
+        <!--=================== OTHER =======================-->  
         <article class='status-info other'>
-          <!-- Add New Training Modal -->
-           <%= link_to 'Add New Foster', '#fosterEntryModal', class: 'btn btn-default', 'data-toggle' => 'modal' %>
-          <div class="modal entry-modal fade" id="fosterEntryModal" tabindex="-1" role="dialog" aria-labelledby="fosterEntryModalLabel">
+          <!-- Add New OTHER Modal -->
+           <%= link_to 'Add New Other', '#otherEntryModal', class: 'btn btn-default', 'data-toggle' => 'modal' %>
+          <div class="modal entry-modal fade" id="otherEntryModal" tabindex="-1" role="dialog" aria-labelledby="otherEntryModalLabel">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title" id="myModalLabel">Create New Training Entry</h4>
+                  <h4 class="modal-title" id="myModalLabel">Create New Other Entry</h4>
                 </div>
                 <div class="modal-body">
-                    <%= render 'trainform_modal', modal: true, new_train: @new_train,animal_id: @animal.id%>
+                    <%= render 'otherform_modal', modal: true, new_other: @new_other,animal_id: @animal.id%>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>

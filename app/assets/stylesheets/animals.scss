@@ -114,31 +114,39 @@ div#timeline {
     box-shadow: 0 0 5px rgba(0,0,0,0.2) inset;
     z-index: 1; //Place dots infront on timeline line
     //transition : 0.3s ease-in-out; //idk
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 100%; //Dot
     position: absolute;
-    top: -20px;
+    top: -18px;
     //text-align: center;
     //cursor: pointer;
     &:nth-child(1){
-      left: 20%;
+      left: 5%;
       background-color: $neutral;
     }
     &:nth-child(2){
-      left: 35%;
+      left: 18%;
       background-color: $neutral;
     }
     &:nth-child(3){
-      left: 50%;
+      left: 33%;
       background-color: $neutral;
     }
     &:nth-child(4){
-      left: 65%;
+      left: 48%;
       background-color: $neutral;
     }
     &:nth-child(5){
-      left: 80%;
+      left: 63%;
+      background-color: $neutral;
+    }
+    &:nth-child(6){
+      left: 78%;
+      background-color: $neutral;
+    }
+    &:nth-child(7){
+      left: 91%;
       background-color: $neutral;
     }
     &:hover {

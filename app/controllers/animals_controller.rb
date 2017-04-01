@@ -305,7 +305,7 @@ class AnimalsController < ApplicationController
         end
 
         if a.sub_status_id != nil
-          @other_sub = SubStatusType.find(@other_status.sub_status_id).name
+          @other_sub = SubStatusType.find(a.sub_status_id).name
         end
 
         @other_stats.push({

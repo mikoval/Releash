@@ -11,7 +11,7 @@ class TrainingController < ApplicationController
     end
   end
   def train_params
-  	params.require(:vetting).permit(:train_date, :problem_info, :animal_id, :trainer_id, :sub_status_id)
+  	params.require(:training).permit(:train_date, :problem_info, :animal_id, :trainer_id, :sub_status_id)
   end
   def edit
   end
