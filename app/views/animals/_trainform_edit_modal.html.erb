@@ -7,6 +7,9 @@
 
     <%= f.hidden_field :animal_id, value: animal_id%>
     <%= hidden_field_tag "train_id", train_id%>
+
+    <%= f.label :current_entry, "Current Entry" %>
+    <%= f.check_box :current_entry, class: 'form-control' %>
  
     <%= f.label :train_date, "In Training Date" %>
     <%= f.text_field :train_date, class: 'datepicker' %>

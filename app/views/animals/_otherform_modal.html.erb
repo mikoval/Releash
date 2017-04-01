@@ -6,6 +6,9 @@
 <%= form_for(new_other, remote: remote, url: url_for(action: 'new', controller: 'other', method: 'get'))      do |f| %>
 
     <%= f.hidden_field :animal_id, value: animal_id%>
+
+    <%= f.label :current_entry, "Current Entry" %>
+    <%= f.check_box :current_entry, class: 'form-control' %>
   
     <%= f.label :other_date, "Other Date" %>
     <%= f.text_field :other_date, class: 'datepicker' %>

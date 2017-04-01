@@ -5,6 +5,21 @@ class AdoptedController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => :newAdopted
   def newAdopted
     @adopted = Adopted.new(adopted_params)
+
+    if @adopted.current_entry?
+      Adopted.update_all "current_entry = 'false'"
+      @new_status = StatusType.find_by(name: "Adopter").id
+      @adopted_animal = Animal.find_by(id: @adopted.animal_id)
+      
+      if @adopted.sub_status_id != nil
+        @adopted = SubStatusType.find_by(id: @adopted.sub_status_id).id
+      end
+      
+      @adopted_animal.status_id = @new_status
+      @adopted_animal.sub_status_id = @new_sub_status
+      @adopted_animal.save
+    end
+
     @adopter = params[:adopt_adopter][:adopter_id]
 
     if User.where(email: @adopter) != []
@@ -39,6 +54,20 @@ class AdoptedController < ApplicationController
     #Rails.logger.debug("Params -----------------------------------: #{params.inspect}")
     @adopted = Adopted.find(params[:adopt_id])
     
+    if @adopted.current_entry?
+      Adopted.update_all "current_entry = 'false'"
+      @new_status = StatusType.find_by(name: "Adopter").id
+      @adopted_animal = Animal.find_by(id: @adopted.animal_id)
+      
+      if @adopted.sub_status_id != nil
+        @adopted = SubStatusType.find_by(id: @adopted.sub_status_id).id
+      end
+      
+      @adopted_animal.status_id = @new_status
+      @adopted_animal.sub_status_id = @new_sub_status
+      @adopted_animal.save
+    end
+
     @adopter = params[:adopt_adopter][:adopter_id]
 
     if User.where(email: @adopter) != []

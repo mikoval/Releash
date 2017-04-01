@@ -7,6 +7,9 @@
 
     <%= f.hidden_field :animal_id, value: animal_id%>
     <%= hidden_field_tag "adopt_id", adopt_id%>
+
+    <%= f.label :current_entry, "Current Entry" %>
+    <%= f.check_box :current_entry, class: 'form-control' %>
  
     <%= f.label :adopt_date, "Adopt Date" %>
     <%= f.text_field :adopt_date, class: 'datepicker' %>

@@ -3,6 +3,20 @@ class TrainingController < ApplicationController
   def newTraining
   	@training = Training.new(train_params)
 
+    if @training.current_entry?
+      Training.update_all "current_entry = 'false'"
+      @new_status = StatusType.find_by(name: "In Training").id
+      @trained_animal = Animal.find_by(id: @training.animal_id)
+      
+      if @training.sub_status_id != nil
+        @training = SubStatusType.find_by(id: @training.sub_status_id).id
+      end
+      
+      @trained_animal.status_id = @new_status
+      @trained_animal.sub_status_id = @new_sub_status
+      @trained_animal.save
+    end
+
     if @training.save
       flash[:success] = "Saved Training Entry"
       redirect_to :controller => "animals", :action => "profile", :param => @training.animal_id
@@ -19,6 +33,20 @@ class TrainingController < ApplicationController
     #Rails.logger.debug("Params -----------------------------------: #{params.inspect}")
     @training = Training.find(params[:train_id])
     
+    if @training.current_entry?
+      Training.update_all "current_entry = 'false'"
+      @new_status = StatusType.find_by(name: "In Training").id
+      @trained_animal = Animal.find_by(id: @training.animal_id)
+      
+      if @training.sub_status_id != nil
+        @training = SubStatusType.find_by(id: @training.sub_status_id).id
+      end
+      
+      @trained_animal.status_id = @new_status
+      @trained_animal.sub_status_id = @new_sub_status
+      @trained_animal.save
+    end
+
     if @training.update_attributes(train_params)
       
       flash[:success] = "Sucessful Edit"

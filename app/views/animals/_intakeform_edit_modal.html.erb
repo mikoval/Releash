@@ -5,9 +5,12 @@
 <!-- Is this going to throw an error because all the other stuff aren't in here = Check validations? --> 
 <%= form_for(edit_intake, remote: remote, url: url_for(action: 'editIntake', intake_id: intake_id, controller: 'intake', method: 'patch')) do |f| %>
 
-    <%= f.text_field :animal_id, value: animal_id%>
+    <%= f.hidden_field :animal_id, value: animal_id%>
     <%= hidden_field_tag "intake_id", intake_id%>
- 
+    
+    <%= f.label :current_entry, "Current Entry" %>
+    <%= f.check_box :current_entry, class: 'form-control' %>
+    
     <%= f.label :intake_date, "Intake Date" %>
     <%= f.text_field :intake_date, class: 'datepicker' %>
 
@@ -18,7 +21,6 @@
     <%= f.label :intake_fost, "Foster"%>
     <%=collection_select(:intake_fost, :foster_id, fosters, :email, :name, {:prompt => "Select foster" ,:selected => curr_foster}) %>
 
-    <!-- Selecting Vets-->
     <%= f.label :vet_id, "Veterinarian"%>
     <%= f.collection_select :vet_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian"}, class: 'form-control'  %>
 

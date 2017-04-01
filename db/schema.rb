@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170326214025) do
+ActiveRecord::Schema.define(version: 20170401214838) do
 
   create_table "adopteds", force: :cascade do |t|
     t.string  "adopt_date"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20170326214025) do
     t.string  "comments"
     t.integer "animal_id"
     t.integer "sub_status_id"
+    t.boolean "current_entry", default: false
   end
 
   create_table "adopters", force: :cascade do |t|
@@ -43,6 +44,18 @@ ActiveRecord::Schema.define(version: 20170326214025) do
     t.string   "location"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+  end
+
+  create_table "ani_sleeps", force: :cascade do |t|
+    t.string  "sleep_date"
+    t.string  "comments"
+    t.integer "animal_id"
+  end
+
+  create_table "ani_transfers", force: :cascade do |t|
+    t.string  "transfer_date"
+    t.string  "comments"
+    t.integer "animal_id"
   end
 
   create_table "animal_alerts", force: :cascade do |t|
@@ -121,6 +134,14 @@ ActiveRecord::Schema.define(version: 20170326214025) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "foster_stages", force: :cascade do |t|
+    t.string  "foster_date"
+    t.integer "curr_fost_id"
+    t.string  "comment"
+    t.integer "fost_hold_id"
+    t.integer "animal_id"
+  end
+
   create_table "foster_statuses", force: :cascade do |t|
     t.string  "foster_date"
     t.integer "foster_id"
@@ -130,11 +151,25 @@ ActiveRecord::Schema.define(version: 20170326214025) do
     t.string  "comments"
     t.integer "sub_status_id"
     t.integer "animal_id"
+    t.boolean "current_entry", default: false
   end
 
   create_table "fosters", force: :cascade do |t|
     t.integer "non_user_id"
     t.integer "user_id"
+  end
+
+  create_table "hold_types", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "illnesses", force: :cascade do |t|
+    t.string  "ill_date"
+    t.integer "ill_vet_id"
+    t.string  "ill_info"
+    t.string  "comments"
+    t.integer "animal_id"
   end
 
   create_table "intakes", force: :cascade do |t|
@@ -145,6 +180,7 @@ ActiveRecord::Schema.define(version: 20170326214025) do
     t.integer "animal_id"
     t.integer "sub_status_id"
     t.integer "animal_facility_id"
+    t.boolean "current_entry",      default: false
   end
 
   create_table "marketing_types", force: :cascade do |t|
@@ -168,12 +204,19 @@ ActiveRecord::Schema.define(version: 20170326214025) do
     t.string  "picture"
   end
 
+  create_table "other_holds", force: :cascade do |t|
+    t.string  "other_date"
+    t.string  "comments"
+    t.integer "animal_id"
+  end
+
   create_table "other_statuses", force: :cascade do |t|
     t.string  "other_date"
     t.integer "sub_status_id"
     t.integer "animal_id"
     t.string  "comments"
     t.string  "status_name"
+    t.boolean "current_entry", default: false
   end
 
   create_table "roles", force: :cascade do |t|
@@ -221,6 +264,7 @@ ActiveRecord::Schema.define(version: 20170326214025) do
     t.integer "animal_id"
     t.integer "trainer_id"
     t.integer "sub_status_id"
+    t.boolean "current_entry", default: false
   end
 
   create_table "user_alerts", force: :cascade do |t|
@@ -269,6 +313,7 @@ ActiveRecord::Schema.define(version: 20170326214025) do
     t.string  "comments"
     t.integer "animal_id"
     t.integer "sub_status_id"
+    t.boolean "current_entry", default: false
   end
 
 end

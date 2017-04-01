@@ -4,6 +4,20 @@ class FosterController < ApplicationController
   def newFoster
   	@new_foster = FosterStatus.new(foster_params)
     
+    if @new_foster.current_entry?
+      FosterStatus.update_all "current_entry = 'false'"
+      @new_status = StatusType.find_by(name: "Foster").id
+      @foster_animal = Animal.find_by(id: @new_foster.animal_id)
+      
+      if @new_foster.sub_status_id != nil
+        @new_sub_status = SubStatusType.find_by(id: @new_foster.sub_status_id).id
+      end
+      
+      @foster_animal.status_id = @new_status
+      @foster_animal.sub_status_id = @new_sub_status
+      @foster_animal.save
+    end
+
     @foster = params[:fost_fost][:foster_id]
 
     if User.where(email: @foster) != []
@@ -36,6 +50,20 @@ class FosterController < ApplicationController
     #Rails.logger.debug("Params -----------------------------------: #{params.inspect}")
     @edit_foster = FosterStatus.find(params[:fost_id])
     
+    if @edit_foster.current_entry?
+      FosterStatus.update_all "current_entry = 'false'"
+      @new_status = StatusType.find_by(name: "Foster").id
+      @foster_animal = Animal.find_by(id: @edit_foster.animal_id)
+      
+      if @edit_foster.sub_status_id != nil
+        @new_sub_status = SubStatusType.find_by(id: @edit_foster.sub_status_id).id
+      end
+      
+      @foster_animal.status_id = @new_status
+      @foster_animal.sub_status_id = @new_sub_status
+      @foster_animal.save
+    end
+
     @foster = params[:fost_fost][:foster_id]
 
     if User.where(email: @foster) != []

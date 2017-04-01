@@ -6,7 +6,10 @@
 <%= form_for(new_vet, remote: remote, url: url_for(action: 'new', controller: 'vetting', method: 'get'))      do |f| %>
 
     <%= f.hidden_field :animal_id, value: animal_id%>
- 
+    
+    <%= f.label :current_entry, "Current Entry" %>
+    <%= f.check_box :current_entry, class: 'form-control' %>
+    
     <%= f.label :vet_date, "Vetting Date" %>
     <%= f.text_field :vet_date, class: 'datepicker' %>
 

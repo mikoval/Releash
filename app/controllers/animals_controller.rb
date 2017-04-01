@@ -175,7 +175,7 @@ class AnimalsController < ApplicationController
         if a.sub_status_id != nil
           @foster_sub = SubStatusType.find(a.sub_status_id).name
         end
-
+        
         @foster_stats.push({
           "status" => "Foster",
           "id" => a.id,
