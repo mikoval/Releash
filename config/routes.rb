@@ -26,31 +26,37 @@ Rails.application.routes.draw do
   get 'intake/edit'
   get 'intake/list'
   post 'intake/new', to:'intake#newIntake'
+  patch 'intake/edit', to: 'intake#editIntake'
   
   get 'vetting/new'
   get 'vetting/edit'
   get 'vetting/list'
   post 'vetting/new', to:'vetting#newVetting'
+  patch 'vetting/edit', to: 'vetting#editVetting'
 
   get 'foster/new'
   get 'foster/edit'
   get 'foster/list'
   post 'foster/new', to:'foster#newFoster'
+  patch 'foster/edit', to: 'foster#editFoster'
 
   get 'training/new'
   get 'training/edit'
   get 'training/list'
   post 'training/new', to:'training#newTraining'
+  patch 'training/edit', to: 'training#editTraining'
 
   get 'other/new'
   get 'other/edit'
   get 'other/list'
   post 'other/new', to: 'other#newOther'
+  patch 'other/edit', to: 'other#editOther'
 
   get 'adopted/new'
   get 'adopted/edit'
   get 'adopted/list'
   post 'adopted/new', to: 'adopted#newAdopted'
+  patch 'adopted/edit', to: 'adopted#editAdopted'
 
   get 'alerts/new'
   get 'alerts/edit'

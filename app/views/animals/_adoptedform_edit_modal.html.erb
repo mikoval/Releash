@@ -3,19 +3,21 @@
 
 <!-- Intake fill in information -->
 <!-- Is this going to throw an error because all the other stuff aren't in here = Check validations? --> 
-<%= form_for(new_other, remote: remote, url: url_for(action: 'new', controller: 'other', method: 'get'))      do |f| %>
+<%= form_for(edit_adopt, remote: remote, url: url_for(action: 'editAdopted', adopt_id: adopt_id,controller: 'adopted', method: 'patch'))      do |f| %>
 
     <%= f.hidden_field :animal_id, value: animal_id%>
-  
-    <%= f.label :other_date, "Other Date" %>
-    <%= f.text_field :other_date, class: 'datepicker' %>
-
-    <%= f.label :status_name, "Status Name" %>
-    <%= f.text_field :status_name, class: 'form-control' %>
+    <%= hidden_field_tag "adopt_id", adopt_id%>
+ 
+    <%= f.label :adopt_date, "Adopt Date" %>
+    <%= f.text_field :adopt_date, class: 'datepicker' %>
 
     <%= f.label :sub_status, class: 'control-label' %><br>
     <%= f.collection_select :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select SubStatus"}, class: 'form-control' %> 
     
+    <%= f.label :adopt_adopter, "Adopter"%>
+    <%= collection_select(:adopt_adopter, :adopter_id, adopters, :email, :name, {:prompt => "Select Adopter" ,:selected => curr_adopter}) %>
+    
+    <!-- Inputing Details-->
     <%= f.label :comments, "Comments" %>
     <%= f.text_field :comments, class: 'form-control' %>
 

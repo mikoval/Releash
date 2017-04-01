@@ -7,14 +7,14 @@
 
     <%= f.hidden_field :animal_id, value: animal_id%>
  
-    <%= f.label :adopt_date, "Vetting Date" %>
+    <%= f.label :adopt_date, "Adopt Date" %>
     <%= f.text_field :adopt_date, class: 'datepicker' %>
 
     <%= f.label :sub_status, class: 'control-label' %><br>
     <%= f.collection_select :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select SubStatus"}, class: 'form-control' %> 
 
-    <%= f.label :adopter_id, "Adopter"%>
-    <%= f.collection_select(:adopter_id, adopters, :id, :name, {:prompt => "Select Adopter"}) %>
+    <%= f.label :adopt_adopter, "Adopter"%>
+    <%=collection_select(:adopt_adopter, :adopter_id, adopters, :email, :name, {:prompt => "Select Adopter"}) %>
 
     <!-- Inputing Details-->
     <%= f.label :comments, "Comments" %>

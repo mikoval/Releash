@@ -3,9 +3,10 @@
 
 <!-- Intake fill in information -->
 <!-- Is this going to throw an error because all the other stuff aren't in here = Check validations? --> 
-<%= form_for(new_other, remote: remote, url: url_for(action: 'new', controller: 'other', method: 'get'))      do |f| %>
+<%= form_for(edit_other, remote: remote, url: url_for(action: 'editOther', other_id: other_id, controller: 'other', method: 'patch'))      do |f| %>
 
     <%= f.hidden_field :animal_id, value: animal_id%>
+    <%= hidden_field_tag "other_id", other_id%>
   
     <%= f.label :other_date, "Other Date" %>
     <%= f.text_field :other_date, class: 'datepicker' %>

@@ -2,17 +2,21 @@ class IntakeController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => :newIntake
   
   def newIntake
-    @fosters_user = User.where(foster_check: true)
-    @foster_non_user = NonUser.where(foster_check: true)
-    @sub_status = SubStatusType.all
-    
-    @fosters = @fosters_user + @foster_non_user
-    #Rails.logger.debug("My object: #{@fosters.inspect}")
-    @adopt_user = User.where(adopt_check: true)
-    @adopt_non_user = NonUser.where(adopt_check: true)
-    @adopters = @adopt_user + @adopt_non_user
 
   	@intake = Intake.new(intake_params)
+    #Rails.logger.debug("Params -----------------------------------: #{params[:intake_fost].inspect}")
+    @foster = params[:intake_fost][:foster_id]
+
+    if User.where(email: @foster) != []
+      @temp = User.where(email: @foster)
+      @intake_foster = Foster.where(user_id: @temp.ids)
+      @intake.foster_id = @intake_foster.ids[0]
+    end
+    if NonUser.where(email: @foster) != []
+      @temp = NonUser.where(email: @foster)
+      @intake_foster = Foster.where(non_user_id: @temp.ids)
+      @intake.foster_id = @intake_foster.ids[0]
+    end
 
     if @intake.save
       flash[:success] = "Saved Intake Entry"
@@ -27,7 +31,32 @@ class IntakeController < ApplicationController
   	params.require(:intake).permit(:intake_date, :foster_id, :vet_id, :comments, :animal_id, :sub_status_id, :animal_facility_id)
   end
   
-  def edit
+  skip_before_filter :verify_authenticity_token, :only => :editIntake
+  
+  def editIntake
+    #Rails.logger.debug("Params -----------------------------------: #{params.inspect}")
+    @intake = Intake.find(params[:intake_id])
+    
+    @foster = params[:intake_fost][:foster_id]
+
+    if User.where(email: @foster) != []
+      @temp = User.where(email: @foster)
+      @intake_foster = Foster.where(user_id: @temp.ids)
+      @intake.foster_id = @intake_foster.ids[0]
+    end
+    if NonUser.where(email: @foster) != []
+      @temp = NonUser.where(email: @foster)
+      @intake_foster = Foster.where(non_user_id: @temp.ids)
+      @intake.foster_id = @intake_foster.ids[0]
+    end
+    
+    if @intake.update_attributes(intake_params)
+      
+      flash[:success] = "Sucessful Edit"
+      redirect_to :controller => "animals", :action => "profile", :param => @intake.animal_id
+    else
+      redirect_to :controller => "animals", :action => "profile", :param => @intake.animal_id
+    end
   end
 
   def list

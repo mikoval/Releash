@@ -14,8 +14,8 @@
     <%= f.collection_select :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select SubStatus"}, class: 'form-control' %> 
 
     <!-- Selecting Foster-->
-    <%= f.label :foster_id, "Foster"%>
-    <%= f.collection_select(:foster_id, fosters, :id, :name, {:prompt => "Select foster"}) %>
+     <%= f.label :intake_fost, "Foster"%>
+    <%=collection_select(:intake_fost, :foster_id, fosters, :email, :name, {:prompt => "Select foster"}) %>
 
     <!-- Selecting Vets-->
     <%= f.label :vet_id, "Veterinarian"%>

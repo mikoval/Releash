@@ -58,14 +58,6 @@
     </a>
   </div>
 
-  <div class="form-div tracking col-md-12">
-    <a class= "card-header tracking-header" data-toggle="collapse" href="#tracking-body">
-      <div>
-        <h4>Tracking</h4>
-      </div>
-    </a>
-  </div>
-
   <div class="form-div alerts col-md-12">
     <a class= "card-header alert-header" data-toggle="collapse" href="#alerts-body">
       <div>
@@ -138,6 +130,9 @@
               
               <%= f.label :marketing %>
               <%= f.collection_select :marketing_id, @marketing, :id, :name, {:prompt => "Select Current Marketing"}, class: 'required' %>
+              
+              <%= f.label :visibility %>
+              <%= f.check_box :visibility, class: 'form-control' %>
             </div>
           </div>
         </div>
@@ -294,205 +289,6 @@
 
         </div>
       </div>
-
-      <!-- TRACKING BODY -->
-      <div id="tracking-body" class="collapse in inner-formdiv">
-
-
-    
-        <!--========== BEGIN TRACKING TABS =========-->
-        <div id= "trackingInner-div" class="col-md-12">
-          
-          <div id="status-tabs" class="trackingInner-div1 col-md-12">
-            <!-- Tab headers for each status -->
-            <ul class="nav nav-tabs" role="tablist">
-              <li role="presentation"><a href="#intake" data-toggle="tab">Intake</a></li>
-              <li role="presentation"><a href="#vetting" data-toggle="tab">Vetting</a></li>
-              <li role="presentation"><a href="#foster" data-toggle="tab">Foster</a></li>
-              <li role="presentation"><a href="#training" data-toggle="tab">Training</a></li>
-              <li role="presentation"><a href="#adopted" data-toggle="tab">Adopted</a></li>
-              <li role="presentation"><a href="#other" data-toggle="tab">Other</a></li>
-            </ul>
-
-            <!-- Information for Statuses in Tabs-->
-            <div class="status-tabsInner tab-content">
-              
-              <!-- INTAKE -->
-              <div id = "intake" role="tabpanel" class="tab-pane fade in col-sm-12">
-                
-                <div id = "intake-content" class="col-md-10">
-                  <!-- Selecting Date-->
-                  <%= f.label :intake_date, "Intake Date" %>
-                  <%= text_field_tag 'intake_dt', @intake_date ,class: 'datepicker' %>
-                  
-                  <%= f.label :intake_sub, "Sub Status"%>
-                  <%= collection_select(:intake_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status", :selected => @intake_subs}) %>
-
-                  <!-- Selecting Foster-->
-                  <%= f.label :intake_fost, "Foster"%>
-                  <%=collection_select(:intake_fost, :foster_id, @fosters, :email, :name, {:prompt => "Select foster" ,:selected => @intake_foster}) %>
-                  
-                  <!-- Selecting Vets-->
-                  <%= f.label :intake_vet, "Veterinarian"%>
-                  <%= collection_select(:intake_vet, :veterinarian_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian", :selected => @intake_vets}) %>
-
-                  <!-- Selecting Previous Location-->
-                  <%= f.label :intake_prev, "Previous Location"%>
-                  <%= collection_select(:intake_prev, :animal_facility_id, AnimalFacility.all, :id, :name, {:prompt => "Select Previous Location", :selected => @intake_prevs}) %>
-
-                  <!-- Inputing Details-->
-                  <%= f.label :intake_comm, "Details" %>
-                  <%= text_field_tag 'intake_cm', @intake_comm, class: 'form-control' %>
-                </div>
-
-                <!--========== INTAKE NEW ENTRY MODAL =========-->
-                <div class="intake_entry_modal col-sm-2">
-                  <!-- Button trigger modal -->
-                  <button type="button" id="intake_entry_btn" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#intakeEntryModal">
-                    New Intake Entry
-                  </button>
-
-                  <!-- Modal -->
-                  <div class="modal entry-modal fade" id="intakeEntryModal" tabindex="-1" role="dialog" aria-labelledby="intakeEntryModalLabel">
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          <h4 class="modal-title" id="myModalLabel">Create New Intake Entry</h4>
-                        </div>
-                        <div class="modal-body">
-                          <!-- Selecting Date-->
-                          <%= f.label :intake_date_modal, "Intake Date" %>
-                          <%= text_field_tag 'intake_dt_modal', "" ,class: 'datepicker' %>
-                          
-                          <%= f.label :intake_sub_modal, "Sub Status"%>
-                          <%= collection_select(:intake_sub_modal, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
-
-                          <!-- Selecting Foster-->
-                          <%= f.label :intake_fost_modal, "Foster"%>
-                          <%= collection_select(:intake_fost_modal, :foster_id, @fosters, :email, :name, {:prompt => "Select foster"}) %>
-                          
-                          <!-- Selecting Vets-->
-                          <%= f.label :intake_vet_modal, "Veterinarian"%>
-                          <%= collection_select(:intake_vet_modal, :veterinarian_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian"}) %>
-
-                          <!-- Selecting Previous Location-->
-                          <%= f.label :intake_prev_modal, "Previous Location"%>
-                          <%= collection_select(:intake_prev_modal, :animal_facility_id, AnimalFacility.all, :id, :name, {:prompt => "Select Previous Location"}) %>
-
-                          <!-- Inputing Details-->
-                          <%= f.label :intake_comm_modal, "Details" %>
-                          <%= text_field_tag 'intake_cm_modal', "", class: 'form-control' %>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
-                          <button type="button"  id="intake-entry-savebtn" class="btn btn-primary enry-savebtn">Save changes</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                  <!--========== END INTAKE NEW ENTRY MODAL =========-->
-              </div> 
-
-
-              <!-- VETTING -->
-              <div id="vetting" role="tabpanel" class="tab-pane">
-                  <%= f.label :vetting_date %>
-                  <%= text_field_tag 'vet_dt', "" ,class: 'datepicker' %>
-                  
-                  <%= f.label :vet_sub, "Sub Status"%>
-                  <%#= collection_select(:vet_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
-
-                  <!-- Selecting Vets-->
-                  <%= f.label :vet_vet, "Veterinarian"%>
-                  <%= collection_select(:vet_vet, :veterinarian_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian"}) %>
-                  
-                  
-                  <!-- Inputing Details-->
-                  <%= f.label :vet_comm, "Details" %>
-                  <%= text_field_tag 'vet_cm', "", class: 'form-control' %>
-
-              </div>
-              
-              <!-- FOSTER -->
-              <div id="foster" role="tabpanel" class="tab-pane">
-                <%= f.label :foster_date %>
-                <%= text_field_tag 'foster_dt', "" ,class: 'datepicker' %>
-
-                <%= f.label :fost_sub, "Sub Status"%>
-                <%#= collection_select(:fost_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
-
-                <%= f.label :fost_fost, "Foster"%>
-                <%#= collection_select(:fost_fost, :foster_id, @fosters, :email, :name, {:prompt => "Select foster"}) %>
-                
-                <%= f.label :homecheck, "Home Check Completed"%>
-                <%= check_box_tag 'foster_check', value = "1"%>
-
-                <!-- Selecting Vet-->
-                <%= f.label :fost_vet, "Veterinarian"%>
-                <%= collection_select(:fost_vet, :veterinarian_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian"}) %>
-
-                <%= f.label :fost_comm, "Details" %>
-                <%= text_field_tag 'fost_cm', "", class: 'form-control' %>
-              </div>
-              
-              <!-- TRAINING -->
-              <div id="training" role="tabpanel" class="tab-pane">
-                <%= f.label :training_date %>
-                <%= text_field_tag 'training_dt', "" ,class: 'datepicker' %>
-
-                <%= f.label :training_sub, "Sub Status"%>
-                <%#= collection_select(:training_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
-
-                <%= f.label :train_comm, "Problem Information" %>
-                <%= text_field_tag 'training_cm', "", class: 'form-control' %> 
-
-                 <!-- Selecting Training-->
-                <%= f.label :trainer_train, "Trainer Location"%>
-                <%= collection_select(:trainer_train, :trainer_id, Trainer.all, :id, :name, {:prompt => "Select Trainer"}) %>   
-              </div>
-              
-
-              <!-- ADOPTED -->
-              <div id="adopted" role="tabpanel" class="tab-pane">
-                <%= f.label :adopted_date %>
-                <%= text_field_tag 'adopted_dt', "" ,class: 'datepicker' %>
-                
-                <%= f.label :adopt_sub, "Sub Status"%>
-                <%= collection_select(:adopt_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
-
-                <!-- Selecting Adopter-->
-                <%= f.label :adopt_adopter, "Adopter"%>
-                <%#= collection_select(:adopt_adopter, :adopter_id, @adopters, :email, :name, {:prompt => "Select Adopter"}) %>
-
-                <%= f.label :adopt_comm, "Comments" %>
-                <%= text_field_tag 'adopt_cm', "", class: 'form-control' %>
-              
-              </div>
-
-              <!-- OTHER -->
-              <div id="other" role="tabpanel" class="tab-pane">
-                <%= f.label :other_date%>
-                <%= text_field_tag 'other_dt', "", class: 'datepicker' %>
-
-                <%= f.label :other_name, "Other Status Name" %>
-                <%= text_field_tag 'other_nm', "", class: 'form-control' %>
-
-                <%= f.label :other_sub, "Sub Status"%>
-                <%= collection_select(:other_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
-                
-                <%= f.label :other_comm, "Comments" %>
-                <%= text_field_tag 'other_cm', "", class: 'form-control' %>
-              
-              </div>
-
-            </div>
-          </div>
-          <!--========== END TRACKING TABS =========-->
-      </div>
-    </div>
 
       <!-- Alerts -->
       <div id="alerts-body" class="collapse inner-formdiv">

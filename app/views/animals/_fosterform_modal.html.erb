@@ -10,9 +10,9 @@
     <%= f.label :foster_date, "Foster Date" %>
     <%= f.text_field :foster_date, class: 'datepicker' %>
     
-    <%= f.label :foster_id, "Foster"%>
-    <%= f.collection_select(:foster_id, fosters, :id, :name, {:prompt => "Select foster"}) %>
-    
+     <%= f.label :fost_fost, "Foster"%>
+    <%= collection_select(:fost_fost, :foster_id, fosters, :email, :name, {:prompt => "Select foster"}) %>
+     
     <%= f.label :homecheck %>
     <%= f.check_box :homecheck, class: 'form-control' %>
 
