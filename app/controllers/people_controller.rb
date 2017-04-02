@@ -17,12 +17,12 @@ class PeopleController < ApplicationController
   end
 
   def edit
-    @employee = User.find(params["param"])
+    @employee = User.find(params["param"].to_s)
     @roles = Role.all
   end
   
    def profile
-    @employee = User.find(params["param"])
+    @employee = User.find(params["param"].to_s)
   end
   #require says the type it has to be, for this one it has to have a user parameter
   #says the fields that are allowed. have to match up with column names
