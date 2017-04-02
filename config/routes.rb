@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
-  get 'password_resets/new'
 
-  get 'password_resets/edit'
+
 
 # the first part is what they are going to 
 # for example localhost:3000/home, localhost:3000/people/new, localhost:3000/animal
@@ -13,6 +12,9 @@ Rails.application.routes.draw do
 # If you dont know what that means, then look up what makes an api RESTful. Basically it means that pages accept post/get requests at the same url 
 # handles it from there. 
 # for example post to animal should add an animal, get at animal should list animals or get a specific one, depending on how you want to do it. 
+ 
+
+
   get '/home', to: 'main#home'
   patch '/dashboard', to: 'people#dashboardSave'
   get '/dashboard', to: 'people#dashboardGet'
@@ -23,9 +25,46 @@ Rails.application.routes.draw do
   get '/animals/new'
   get '/animals/profile'
   get '/animals/edit'
+
   get '/animals', to: 'animals#list'
   post  '/animals',   to: 'animals#newAnimal'
   patch  '/animals',   to: 'animals#editAnimal'
+
+  get 'intake/new'   
+  get 'intake/edit'
+  get 'intake/list'
+  post 'intake/new', to:'intake#newIntake'
+  patch 'intake/edit', to: 'intake#editIntake'
+  
+  get 'vetting/new'
+  get 'vetting/edit'
+  get 'vetting/list'
+  post 'vetting/new', to:'vetting#newVetting'
+  patch 'vetting/edit', to: 'vetting#editVetting'
+
+  get 'foster/new'
+  get 'foster/edit'
+  get 'foster/list'
+  post 'foster/new', to:'foster#newFoster'
+  patch 'foster/edit', to: 'foster#editFoster'
+
+  get 'training/new'
+  get 'training/edit'
+  get 'training/list'
+  post 'training/new', to:'training#newTraining'
+  patch 'training/edit', to: 'training#editTraining'
+
+  get 'other/new'
+  get 'other/edit'
+  get 'other/list'
+  post 'other/new', to: 'other#newOther'
+  patch 'other/edit', to: 'other#editOther'
+
+  get 'adopted/new'
+  get 'adopted/edit'
+  get 'adopted/list'
+  post 'adopted/new', to: 'adopted#newAdopted'
+  patch 'adopted/edit', to: 'adopted#editAdopted'
 
   get 'alerts/new'
   get 'alerts/edit'
@@ -47,6 +86,31 @@ Rails.application.routes.draw do
 
   post '/people', to: 'people#addEmployee'
   patch '/people', to: 'people#editEmployee'
+
+  get 'password_resets/new'
+
+  get 'password_resets/edit'
+
+
+
+  get 'non_user/profile'
+  get 'non_user/edit'
+  get 'non_user/new'
+  get 'non_user/list'
+  post '/non_user', to: 'non_user#newUser'
+  patch '/non_user', to: 'non_user#editUser'
+
+  get 'trainer/new'
+  get 'trainer/list'
+  get 'trainer/edit'
+  post '/trainer', to: 'trainer#newTrainer'
+  patch '/trainer', to: 'trainer#editTrainer'
+
+  get 'veterinarian/new'
+  get 'veterinarian/list'
+  get 'veterinarian/edit'
+  post '/veterinarian', to: 'veterinarian#newVet'
+  patch '/veterinarian', to: 'veterinarian#editVet'
 
   get  '/signup',  to: 'users#new'
   post '/signup',  to: 'users#create'

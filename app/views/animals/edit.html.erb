@@ -58,14 +58,6 @@
     </a>
   </div>
 
-  <div class="form-div tracking col-md-12">
-    <a class= "card-header tracking-header" data-toggle="collapse" href="#tracking-body">
-      <div>
-        <h4>Tracking</h4>
-      </div>
-    </a>
-  </div>
-
   <div class="form-div alerts col-md-12">
     <a class= "card-header alert-header" data-toggle="collapse" href="#alerts-body">
       <div>
@@ -108,7 +100,9 @@
               <%= f.text_field :name, class: 'form-control' %>
 
               <%= f.label :primary_breed_id %>
+
               <%= f.collection_select :primary_breed_id, @primary, :id, :name, :prompt => "Select Breed" %>
+
               <%= label :post, "Additional Breeds" %>
               <%= collection_select(:breed_id, 0, @secondary, :id, :name, {:prompt => "Select Breed"}, {class: "breed-selecter"}) %>              
               <div id = "breeds-list">
@@ -126,8 +120,20 @@
               <%= f.label :date_of_birth %>
               <%= f.text_field :birthday, class: 'datepicker' %>
 
+              <%= f.label :microchip_number , "Microchip #"%>
+              <%= f.text_field :microchip_number, class: 'form-control' %>
+
               <%= f.label :status %>
-              <%= f.collection_select :status_id, @status, :id, :name, {:prompt => "Select Status"} %>
+              <%= f.collection_select :status_id, @status, :id, :name, {:prompt => "Select Status"} , class: 'form-control' %>
+              
+              <%= f.label :sub_status %>
+              <%= f.collection_select :sub_status_id, @sub_status, :id, :name, {:prompt => "Select Current SubStatus"}, class: 'form-control'%>
+              
+              <%= f.label :marketing %>
+              <%= f.collection_select :marketing_id, @marketing, :id, :name, {:prompt => "Select Current Marketing"}, class: 'required' %>
+              
+              <%= f.label :visibility %>
+              <%= f.check_box :visibility, class: 'form-control' %>
             </div>
           </div>
         </div>
@@ -143,37 +149,16 @@
 
             <div id="phys-feat" class="collapse col-md-12">
               <%= f.label :gender %>
-              <%= f.select :gender, [ 'Male','Female', 'Unknown'], :prompt => 'Select Gender' %>    
+              <%= f.select :gender, [ 'Male','Female'], :prompt => 'Select Gender' %>    
 
               <%= f.label :color_primary %>
               <%= f.text_field :color_primary, class: 'form-control' %>
 
               <%= f.label :color_secondary %>
-              <%= f.text_field :color_secondary, class: 'form-control' %>
-
-              <%= f.label :eye_color %>
-              <%= f.text_field :eye_color, class: 'form-control' %>
-
-             
+              <%= f.text_field :color_secondary, class: 'form-control' %>             
             </div>
           </div>
 
-          <div class = "med col-md-12">
-            <!-- Vetting -->
-            <a class= "card-header doc-header" data-toggle="collapse" href="#doc-body">
-              <div>
-                <h4>Vetting</h4>
-              </div>
-            </a>
-
-            <div id="doc-body" class="collapse col-md-12">
-              <%= f.label :microchip_number , "Microchip #"%>
-              <%= f.text_field :microchip_number, class: 'form-control' %>
-
-              <%= f.label :neutered , "Spayed/Neutered" %>
-              <%= f.check_box :neutered, class: 'form-control' %>
-            </div>
-          </div>
            <div class = "med col-md-12">
             <!-- Personality -->
             <a class= "card-header doc-header" data-toggle="collapse" href="#pers-body">
@@ -206,31 +191,7 @@
 
               <%= text_field_tag 'behavior', "", class: "hidden-behavior", style: "display:none;"  %>
 
-              <%= label :post, "attribute" %>
-              <!-- dropdown first --> 
-              <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Select Attribute
-                <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                  <% @attribute.each do |b| %>
-                  <li  class = "attribute-dd-item" id = "attribute-dd-<%= b.id %>"><a href="#" class= "attribute-dd-item" value = '<%= b.id %>'> <%= b.name %></a>  </li> 
-                  <% end %>
-                </ul>
-              </div>       
-              <!-- create starting list --> 
-              <br>
-              <div id = "attribute-list">
-                <% @attributes.each do |b| %>
 
-                <div id = 'behavior-<%= b.id %>'   class = 'select-item attribute-item' style = 'position: relative; display: inline-block;'>
-                  <p style = 'margin:0px; padding-right:15px'> <%= b.name %> </p> 
-                  <span class = 'glyphicon glyphicon-remove remove-item remove-attribute' style='margin:2px; float:right;'></span>
-                </div>
-
-                <% end %>
-              </div>
-
-              <%= text_field_tag 'attribute', "", class: "hidden-attribute", style: "display:none;"  %>
 
               <br>
               <%= label :notes, "Notes" %>
@@ -341,11 +302,6 @@
         </div>
       </div>
 
-      <!-- Tracking -->
-      <div id="tracking-body" class="collapse inner-formdiv">
-        <p> Functions for Stages</p>
-      </div>
-
       <!-- Alerts -->
       <div id="alerts-body" class="collapse inner-formdiv">
           <p> Functions for Alerts</p>
@@ -356,11 +312,25 @@
     <% end %>
   </div>
 </div>  
-
-
-
 </div> <!-- If this is not there there is a line across the screen. Not sure why - J -->
+
+
 <script>
+  //Tracking modal save
+  $('#intake-entry-savebtn').click(function() {
+    $('.modal').modal('hide');
+    //Take information stored in modal and save
+    //$('intake_cm').html();
+    var value = $('.animal.name').val();
+    var show = $('h1').html(value);
+
+    //insert information into newly created div & display div in edit
+    $("#intake-content").append('<div>' + show + '</div>');
+    
+  });
+
+
+
   $("#animal_species_id").change(function(){
     console.log($("#animal_breed_id"))
     if ($("#animal_species_id").val() == 1) {
@@ -455,72 +425,12 @@
       $(this).closest(".breed-item").detach()
       setHiddenBreeds();
   })
-  $(".remove-attribute").on("click", function(){
-      $(this).closest(".attribute-item").detach()
-      setHiddenAttribute();
-  })
-  $(".remove-behavior").on("click", function(){
+
+  
       $(this).closest(".behavior-item").detach()
       setHiddenBehavior();
   })
-  $(".attribute-dd-item").on("click", function(e){
-    
-    e.stopPropagation();
-    e.preventDefault();
-    var text = $(this).text();
-    var val = $(this).attr("value");
-    if(text == "Select Attribute"){
-      return
-    }
-    html = $("#attribute-list").html();
-    html += "<div id = 'attribute-" + val + "'' class = 'attribute-item select-item' style = 'position: relative; display: inline-block;'>" 
-        + "<p style = 'margin:0px; padding-right:15px'>" + text + "</p>" + 
-       "<span class = 'glyphicon glyphicon-remove remove-attribute remove-item' style='margin:2px; float:right;'>" +"</span>" + 
-       " </div>"
-    $("#attribute-list").html(html);
-    $(".remove-attribute").on("click", function(){
-      $(this).closest(".attribute-item").detach()
-      setHiddenAttribute();
-    })
-    //just for now while im setting up the new breeds
-    $(this).get(0).selectedIndex = 0;
-    setHiddenAttribute();
-  })
-  function setHiddenAttribute(){
-    str = ""
-    $(".attribute-dd-item").show();
-    $(".attribute-item").each(function(){
-      var id = this.id.split("-")[1]
-      $("#attribute-dd-" +id).hide();
-      str += id + "|"
-    })
-    $(".hidden-attribute").val(str)
-  }
-
-  setHiddenAttribute();
-  $(".behavior-dd-item").on("click", function(e){
-
-    e.stopPropagation();
-    e.preventDefault();
-    var text = $(this).text();
-    var val = $(this).attr("value");
-    if(text == "Select Behavior"){
-      return
-    }
-    html = $("#behavior-list").html();
-    html += "<div id = 'behavior-" + val + "'' class = 'behavior-item select-item' style = 'position: relative; display: inline-block;'>" 
-        + "<p style = 'margin:0px; padding-right:15px'>" + text + "</p>" + 
-       "<span class = 'glyphicon glyphicon-remove remove-behavior remove-item' style='margin:2px; float:right;'>" +"</span>" + 
-       " </div>"
-    $("#behavior-list").html(html);
-    $(".remove-behavior").on("click", function(){
-      $(this).closest(".behavior-item").detach()
-      setHiddenBehavior();
-    })
-    //just for now while im setting up the new breeds
-    $(this).get(0).selectedIndex = 0;
-    setHiddenBehavior();
-  })
+  
   function setHiddenBehavior(){
 
     str = ""

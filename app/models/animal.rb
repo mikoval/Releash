@@ -1,7 +1,9 @@
 class Animal < ActiveRecord::Base
+
     validates :name, presence: true
     validates :primary_breed, presence: true
-
+    validates :status, presence: true
+    
     mount_uploader :picture, AnimalPictureUploader
 
     mount_uploader :intake_document, FileUploader
@@ -13,6 +15,10 @@ class Animal < ActiveRecord::Base
     mount_uploader :vetting_document, FileUploader
 
     belongs_to :primary_breed, :class_name => 'Breed'
+    
     belongs_to :status, :class_name => 'StatusType'
+    belongs_to :sub_status, :class_name => 'SubStatusType'
+    belongs_to :marketing, :class_name => 'MarketingType'
+    
     belongs_to :secondary_breed, :class_name => 'Breed'
 end

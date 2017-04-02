@@ -1,0 +1,37 @@
+<% provide(:title, "Vets") %>
+<h1> Veterinarians </h1>
+<!-- TAB NAV LINKS-->
+<ul class="nav nav-tabs">
+    <li><a href="#vet" data-toggle="tab">Veterinarians</a></li>
+</ul>
+
+
+<!-- TAB CONTENT -->
+<div class="tab-content">
+  <!-- VET TAB CONTENT -->
+  <div class="tab-pane fade in active" id="vet">
+    <table id = "user-table" class="table table-bordered table-inverse table-hover user-table">
+      <thead>
+        <tr>
+          <th class= "col-md-1">#</th>
+          <th class= "col-md-1">Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @allVets.each_with_index do |a, index| %>
+           <tr style = "height: 70px;" >
+              <th scope="row"><%= index %></th>
+
+              <td> 
+                  <%= link_to a.name,  :controller => "veterinarian", :action => "edit", :param => a, :method => "get" %>
+
+                <% if admin?(current_user) %>
+                 <%= link_to ' <span class ="glyphicon glyphicon-pencil" style = "display:none; cursor: pointer;"></span>'.html_safe,  :controller => "veterinarian", :action => "edit", :param => a, :method => "get" %>
+                 <% end %>
+              </td>
+            </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
