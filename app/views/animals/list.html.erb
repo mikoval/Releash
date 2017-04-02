@@ -5,42 +5,84 @@
 
 <% if employee?(current_user) %>
 <%= link_to "<button>Add Animal</button>".html_safe,  :controller => "animals", :action => "new", :method => "get" %>
+<a href='#' style="float: right; padding-right: 10%"
+        onclick='downloadCSV({ filename: "animals-data.csv" });'
+    >Download CSV</a>
+
 <% end %>
 
-    <div class = "container" style = "width:100%">
-    <% @allAnimals.each do |a| %>
-   
-    <div class = "col-md-4 col-md-offset-1 col-sm-12 col-xs-12 list-card">
-       <div class = "row">
-      <div class = "col-md-4 col-sm-4 col-xs-4 list-pic" style = "padding: 5px">
-        <%= display_avatar(a, "100x100") %>
-    </div>
-    <div class = "col-md-6 col-sm-6 col-xs-6" style = "text-align: left; font-size: 25px;">
-      <%= link_to a.name, :controller => "animals", :action => "profile", :param => a, :method => "get" %>
-      
-    </div>
-    <% if employee?(current_user) %>
-      <%= link_to '<span class ="glyphicon glyphicon-pencil col-md-1 col-sm-1 col-xs-1" style = "float: left; cursor: pointer; display:none; margin:10px">
-        </span>'.html_safe, :controller => "animals", :action => "edit", :param => a, :method => "get" %>
-        
-          <% end %>
-        <div class = "col-md-8 col-sm-8 col-xs-8 list-info">
-          <%= a.primary_breed.name %>  <% if a.secondary_breed %> | <%= a.secondary_breed.name %> <%a.birthday%> <%a.gender%> <%= a.status%> <% end %>
-        </div>
+    <br><br>
 
-        
-        
-        </div>
+    <div id='filterDiv' class = "filters col-md-3" style = "border-radius:1px; margin:5px";> 
+    <p> Name:  </p> <input type = "text" id = "filter-name"/>
+    <p> Breed:  </p> 
+    <select id = "filter-breed">
+      <option value = "">Select Breed</option>
+
+      <% @breeds.each do |b|%>
+        <option value = "<%=  b.id %>"> <%= b.name %> </option>
+      <% end %>
+
+    </select>
+
+    <p> Gender:  </p> 
+    <select id = "filter-gender">
+      <option value = "">Select Gender</option>
+      <option value = "Male">Male</option>
+      <option value = "Female">Female</option>
+    </select>
+
+    <p> Status:  </p> 
+    <select id = "filter-status">
+      <option value = "">Select Status</option>
+      <% @status.each do |b|%>
+        <option value = "<%=  b.id %>"> <%= b.name %> </option>
+      <% end %>
+    </select>
+
+
+    <!-- <p> Spayed/Neutered:  </p> 
+    <select id = "filter-neutered">
+      <option value = "">Select option</option>
+      <option value = "Yes">Yes</option>
+      <option value = "No">No</option>
+    </select> -->
     
-        </span>
+
+    <p> Age: <span id = "age-min"></span>-<span id = "age-max"> </span> </p>
+     <div id="age_slider"></div>
+
+    <br>
+    <button id = "generate-button">Filter Animals</button>
+    <button id = "reset-button" onclick = "resetFilters(); generateAnimalsList()";>Reset Filters</button>
+
     </div>
-     <div class = "col-md-1" style = "margin: 0px;">
+    <div id = "animals-list" class = "col-md-8" > 
+
     </div>
 
-<% end %>
+  
+     
+
 </div>
 
 <script>
+var slider = $("#age_slider").slider({
+        range: true,
+        min: 0,
+        max: 25,
+        values: [0, 25],
+        slide: function(event, ui) {
+            $("#age-min").text(ui.values[0]);
+            $("#age-max").text(ui.values[1]);
+        }
+    });
+$("#age-min").text(slider.slider("values")[0]);
+$("#age-max").text(slider.slider("values")[1]);
+    
+
+
+
 $(".list-card").hover(
   function(){
     $(this).find(".glyphicon-pencil").show()
@@ -49,4 +91,169 @@ $(".list-card").hover(
     $(this).find(".glyphicon-pencil").hide()
   }
 )
+
+var animalData
+var queryNumber = 0;
+function generateAnimalsList(){
+  var myURL = "";
+  myURL += document.location;
+  params = {};
+  if (queryNumber == 0){
+    if(myURL.charAt(myURL.indexOf("?n=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.name = myURL.substring(myURL.indexOf("?n=")+3, myURL.indexOf("&?b="))
+      while(params.name.indexOf("+")!=-1){
+        params.name = params.name.replace("+", " ");
+      }
+      console.log(params.name)
+  }
+    else{params.name = $("#filter-name").val();}
+    if(myURL.charAt(myURL.indexOf("?b=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.breed = myURL.substring(myURL.indexOf("?b=")+3, myURL.indexOf("&?g="))}
+    else{params.breed = $("#filter-breed").val();}
+    if(myURL.charAt(myURL.indexOf("?g=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.gender = myURL.substring(myURL.indexOf("?g=")+3, myURL.indexOf("&?s="))}
+    else{params.gender = $("#filter-gender").val();}
+    if(myURL.charAt(myURL.indexOf("?s=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.status = myURL.substring(myURL.indexOf("?s=")+3, myURL.indexOf("&?a="))}
+    else{params.status = $("#filter-status").val();}
+    if(myURL.charAt(myURL.indexOf("?a=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.age_min = parseInt(myURL.substring(myURL.indexOf("?a=")+3, myURL.indexOf("&?A=")))}
+    else{params.age_min = $("#age-min").text();}
+    if(myURL.charAt(myURL.indexOf("?A=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.age_max = parseInt(myURL.substring(myURL.indexOf("?A=")+3, myURL.length))}
+    else{params.age_max = $("#age-max").text();}
+  }
+  else{
+    params.name = $("#filter-name").val();
+    params.breed = $("#filter-breed").val();
+    params.gender = $("#filter-gender").val();
+    params.status = $("#filter-status").val();
+    params.age_min = $("#age-min").text();
+    params.age_max = $("#age-max").text();
+  }
+
+  $("#age-min").text(params.age_min);
+  $("#age-max").text(params.age_max);
+  $("#age_slider").slider("values", 0, params.age_min);
+  $("#age_slider").slider("values", 1, params.age_max);
+
+  $.ajax({
+    url: "animals/query",
+    data: params,
+    success: function(result){
+
+      // sort animals by status
+      result.sort(function(a, b){
+      if(a.status < b.status) return -1;
+      if(a.status > b.status) return 1;
+      return 0;
+      })
+
+      animalData = result
+      var str = "<table class='table table-bordered table-hover table-striped'> <thead> <tr> <th>Name</th> <th>Primary Breed</th> <th>Status</th> <th>Gender</th> </tr> </thead>" 
+        for (x in result){
+          str += "<tr> \
+          <td> <a href='/animals/profile?method=get&param=" + result[x].id + " '  >" + result[x].name + "</a></td>\
+           <td>" + result[x].primary + "</td>\
+          <td>" + result[x].status + "</td>\
+          <td>" + result[x].gender + "</td>\
+          </tr>"
+        }
+        str +=  " </table>"
+
+        $("#animals-list").html(str);
+    },
+  });
+  str = ""
+  str += document.location
+  str = str.substring(0,str.indexOf("?n="))
+  name = ""
+  name += params.name
+  while(name.indexOf(" ")!=-1){
+    name = name.replace(" ", "+")
+  }
+  queryNumber +=1
+  myURL = str + "?n=" + name + "&?b=" + params.breed + "&?g=" + params.gender + "&?s=" + params.status + "&?a=" + params.age_min + "&?A=" + params.age_max + "&?qn=" + queryNumber;
+
+  window.history.pushState('obj', 'newtitle', myURL)
+
+}
+
+function resetFilters(){
+  params.name = "";
+  params.breed = "";
+  params.gender = "";
+  params.status = "";
+  params.age_min = 0;
+  params.age_max = 25;
+  $("#filter-name").val('')
+  $("#filter-breed").prop('selectedIndex',0)
+  $("#filter-gender").prop('selectedIndex',0)
+  $("#filter-status").prop('selectedIndex',0)
+  $("#age-min").text(0);
+  $("#age-max").text(25);
+  $("#age_slider").slider("values", 0, 0);
+  $("#age_slider").slider("values", 1, 25);
+  str = ""
+  str += document.location
+  str = str.substring(0,str.indexOf("?n="))
+  console.log(str)
+  myURL = str + "?n=" + params.name + "&?b=" + params.breed + "&?g=" + params.gender + "&?s=" + params.status + "&?a=" + params.age_min + "&?A=" + params.age_max;
+  window.history.pushState('obj', 'newtitle', myURL)
+}
+
+
+function convertArrayOfObjectsToCSV(args) {  
+  var result, ctr, keys, columnDelimiter, lineDelimiter, data;
+
+  data = args.data || null;
+  if (data == null || !data.length) {
+      return null;
+  }
+
+  columnDelimiter = args.columnDelimiter || ',';
+  lineDelimiter = args.lineDelimiter || '\n';
+
+  keys = Object.keys(data[0]);
+
+  result = '';
+  result += keys.join(columnDelimiter);
+  result += lineDelimiter;
+
+  data.forEach(function(item) {
+      ctr = 0;
+      keys.forEach(function(key) {
+          if (ctr > 0) result += columnDelimiter;
+
+          result += item[key];
+          ctr++;
+      });
+      result += lineDelimiter;
+  });
+
+  return result;
+}
+
+function downloadCSV(args) {
+    var data, filename, link;
+    var csv = convertArrayOfObjectsToCSV({
+        data: animalData
+    });
+
+    if (csv == null) return;
+
+    filename = args.filename || 'export.csv';
+
+    if (!csv.match(/^data:text\/csv/i)) {
+        csv = 'data:text/csv;charset=utf-8,' + csv;
+    }
+    data = encodeURI(csv);
+
+    link = document.createElement('a');
+    link.setAttribute('href', data);
+    link.setAttribute('download', filename);
+    link.click();
+}
+
+
+$("#generate-button").on("click", function(){
+  generateAnimalsList();
+})
+generateAnimalsList();
+
 </script>
+

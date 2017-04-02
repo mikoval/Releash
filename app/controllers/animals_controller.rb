@@ -2,6 +2,8 @@ class AnimalsController < ApplicationController
   def list
     @animal = Animal.new
     @allAnimals = Animal.all
+    @breeds = Breed.where("name != 'Mixed'").order('name ASC')
+    @status = StatusType.all
   end
 
   def new
@@ -353,24 +355,90 @@ class AnimalsController < ApplicationController
       render 'edit'
     end
   end
-
-  def query
-    @animals = Animal.all.limit(10)
+  def querySimple 
+    @animals = Animal.all
     arr = []
     @animals.each do |d|
-      sBreed = '';
-      if(d.secondary_breed_id)
-        sBreed = d.secondary_breed.name
+      arr.push({
+          "id" =>  d.id, 
+          "name" => d.name,
+          "primary" => d.primary_breed.name,
+          "gender" => d.gender,
+          "status" => d.status.name,
+          "picture" => d.picture,
+          "age" => getAge(d.birthday)
+        })
+    end
+    render json: arr
+  end
+
+
+  def query
+    @animals = Animal.all
+    arr = []
+    
+    @animals.each do |d|
+      add = true
+      # this should check all cases for name 
+      if(params["name"] != "" )
+        length = params["name"].length.to_i 
+        length = length -1 
+        if(params["name"].length > d.name.length)
+          add = false
+        elsif(params["name"] != d.name[0..length])
+          add = false
+        end
+      end 
+
+      if(params["breed"] != "")
+        if(params["breed"].to_i != d.primary_breed_id)
+          add = false
+        end
       end
 
-      arr.push({
-        "id" =>  d.id, 
-        "name" => d.name,
-        "primary" => d.primary_breed.name,
-        "secondary" => sBreed,
-        "picture" => d.picture,
-        "age" => getAge(d.birthday)
-      })
+      if(params["gender"] != "")
+        if(params["gender"] != d.gender)
+          add = false
+        end
+      end
+
+      if(params["status"] != "")
+        if(params["status"].to_i != d.status_id)
+          add = false
+        end
+      end
+
+      # if(params["neutered"] != "")
+      #   if(params["neutered"] != d.neutered)
+      #     add = false
+      #   end
+      # end
+
+      if(params["age_min"] != ""  && params["age_max"] != "")
+
+        ageMin = params["age_min"].to_i
+        ageMax = params["age_max"].to_i
+        age = getAge(d.birthday)
+        
+        if(age < ageMin || age > ageMax)
+          add = false
+        
+        end
+      end 
+
+
+
+      if(add)
+        arr.push({
+          "id" =>  d.id, 
+          "name" => d.name,
+          "primary" => d.primary_breed.name,
+          "gender" => d.gender,
+          "status" => d.status.name,
+          "picture" => d.picture,
+          "age" => getAge(d.birthday)
+        })
+      end
     end
     render json: arr
   end
@@ -405,6 +473,8 @@ class AnimalsController < ApplicationController
           "check" => "animal",
           "id" =>  d.id, 
           "name" => d.name,
+          "gender" => d.gender,
+          "status" => d.status.name,
           "attribute" => d.primary_breed.name,
           "picture" => d.picture,
         })
@@ -428,7 +498,7 @@ class AnimalsController < ApplicationController
 
   def animal_params
 
-    params.require(:animal).permit(:name, :primary_breed_id, :secondary_breed_id, :picture, :status_id, :color_primary, :color_secondary, :eye_color,
+    params.require(:animal).permit(:name, :primary_breed_id, :secondary_breed_id, :picture, :status_id, :gender, :color_primary, :color_secondary, :eye_color,
       :adoption_fee, :animal_type, :birthday, :cage_number, :microchip_number, :tag_number, :neutered,  :notes,
 
       :intake_document, :owner_surrender_document, :home_check_document, :match_application_document, :adoption_application_document, 
