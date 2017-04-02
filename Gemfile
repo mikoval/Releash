@@ -17,7 +17,7 @@ gem 'rails_12factor'
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
 
-gem 'fullcalendar-rails'
+gem "simple_calendar", "~> 2.0"
 
 gem 'whenever', :require => false
 
