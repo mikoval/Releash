@@ -28,7 +28,7 @@ class PeopleController < ApplicationController
     @employee = User.find(params["param"])
     
     if @employee.address != nil and @employee.state != nil and @employee.zip_code != nil
-      @full_address = @employee.address + " " + @employee.state + " " + @employee.zip_code
+      @full_address = @employee.address.to_s + " " + @employee.state.to_s + " " + @employee.zip_code.to_s
     else
       @full_address = nil
     end
