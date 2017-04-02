@@ -33,8 +33,18 @@ ActiveRecord::Schema.define(version: 20170402025100) do
     t.datetime "updated_at", null: false
   end
 
-# Could not dump table "alerts" because of following NoMethodError
-#   undefined method `[]' for nil:NilClass
+  create_table "alerts", force: :cascade do |t|
+    t.string   "title"
+    t.string   "description"
+    t.datetime "date"
+    t.integer  "alert_type_id"
+    t.integer  "assignee_id"
+    t.integer  "created_by_id"
+    t.integer  "animal_id"
+    t.string   "location"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
 
   create_table "animal_alerts", force: :cascade do |t|
     t.integer  "animal_id"

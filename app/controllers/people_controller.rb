@@ -97,7 +97,7 @@ def dashboardSave
 
 end
 def dashboardGet
-  json = {"str": current_user.dashboard}
+  json = {"str" => current_user.dashboard}
   render json: json
 end
 
