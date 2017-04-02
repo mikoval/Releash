@@ -1,6 +1,6 @@
 class AddRequiredToAlerts < ActiveRecord::Migration
   def change
-    add_column :alerts, :required, :bool, default: false
-    add_column :alerts, :completed, :bool, default: false
+    add_column :alerts, :required, :boolean, default: false
+    add_column :alerts, :completed, :boolean, default: false
   end
 end

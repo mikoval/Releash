@@ -42,6 +42,8 @@ ActiveRecord::Schema.define(version: 20170402025100) do
     t.integer  "created_by_id"
     t.integer  "animal_id"
     t.string   "location"
+    t.boolean "required", default: false
+    t.boolean "completed", default: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end
