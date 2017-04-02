@@ -8,8 +8,7 @@ class SessionsController < ApplicationController
   def create
 
     user = User.find_by(email: params[:session][:email].downcase)
-    if (user)
-      #if (user && user.authenticate(params[:session][:password]))
+    if (user && user.authenticate(params[:session][:password]))
        if user.activated?
         if(!user.disabled)
           log_in user
