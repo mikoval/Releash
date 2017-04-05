@@ -1,0 +1,34 @@
+<% modal ||= false %>
+<% remote = modal ? true : false %>
+
+<!-- Intake fill in information -->
+<!-- Is this going to throw an error because all the other stuff aren't in here = Check validations? --> 
+<%= form_for(new_train, remote: remote, url: url_for(action: 'new', controller: 'training', method: 'get'))      do |f| %>
+
+    <%= f.hidden_field :animal_id, value: animal_id%>
+    
+    <%= f.label :current_entry, "Current Entry" %>
+    <%= f.check_box :current_entry, class: 'form-control' %>
+    
+    <%= f.label :train_date, "In Training Date" %>
+    <%= f.text_field :train_date, class: 'datepicker' %>
+
+    <%= f.label :sub_status, class: 'control-label' %><br>
+    <%= f.collection_select :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select SubStatus"}, class: 'form-control' %> 
+
+    <!-- Selecting Vets-->
+    <%= f.label :trainer_id, "Trainer Location"%>
+    <%= f.collection_select(:trainer_id, Trainer.all, :id, :name, {:prompt => "Select Current Trainer"}) %>
+
+    <!-- Inputing Details-->
+    <%= f.label :problem_info, "Problem Information" %>
+    <%= f.text_field :problem_info, class: 'form-control' %>
+
+    <%= f.submit 'Submit', class: 'btn btn-primary' %>
+<% end %>
+
+<script>
+  $('.datepicker').datepicker({
+    endDate: '-0d'
+  });
+</script>

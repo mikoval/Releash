@@ -1,0 +1,27 @@
+ <% provide(:title, 'New Vet') %>
+<h1>Add new veterinarian</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@vet, html: { multipart: true },  url: veterinarian_path(@vet)) do |f| %>
+      <%= f.label :name %>
+      <%= f.text_field :name, class: 'form-control' %>
+
+      <%= f.label :address %>
+      <%= f.text_field :address, class: 'form-control' %>
+
+      <%= f.label :state %>
+      <%= f.text_field :state, class: 'form-control' %>
+
+      <%= f.label :zip_code %>
+      <%= f.text_field :zip_code, class: 'form-control' %>
+
+      <%= f.label :email %>
+      <%= f.email_field :email, class: 'form-control' %>
+
+      <%= f.submit "Add Vet Info", class: "btn btn-primary" %>
+    <% end %>
+    </div>
+</div>
+
+

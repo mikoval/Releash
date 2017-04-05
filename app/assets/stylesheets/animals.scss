@@ -2,6 +2,11 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+//Style for tracking in profile
+$neutral: #e1e1e1;
+$blue : #2980b9;
+
+
 
 //Style for new & edit pages & profile
 .pg-title {
@@ -84,16 +89,6 @@
     margin-left: 5px;
 }
 
-#fixedtipdiv{
-    position:absolute;
-    padding: 2px;
-    border:1px solid black;
-    font:normal 12px Verdana;
-    line-height:1000%;
-    z-index:100;
-}
-
-
 .list-pic {
     padding: 5px;
 }
@@ -102,3 +97,94 @@
 
 }
 
+
+body {
+  font-family: arial, sans-serif;
+}
+
+//timeline inner
+div#timeline {
+  background-color: lighten($blue,20%);
+  margin-top: 10%;
+  height: 2px;
+  width: 100%;
+  position: relative;
+  //box-shadow: 0 0 5px rgba(0,0,0,0.2) inset;
+  .circle {
+    box-shadow: 0 0 5px rgba(0,0,0,0.2) inset;
+    z-index: 1; //Place dots infront on timeline line
+    //transition : 0.3s ease-in-out; //idk
+    width: 36px;
+    height: 36px;
+    border-radius: 100%; //Dot
+    position: absolute;
+    top: -18px;
+    //text-align: center;
+    //cursor: pointer;
+    &:nth-child(1){
+      left: 5%;
+      background-color: $neutral;
+    }
+    &:nth-child(2){
+      left: 18%;
+      background-color: $neutral;
+    }
+    &:nth-child(3){
+      left: 33%;
+      background-color: $neutral;
+    }
+    &:nth-child(4){
+      left: 48%;
+      background-color: $neutral;
+    }
+    &:nth-child(5){
+      left: 63%;
+      background-color: $neutral;
+    }
+    &:nth-child(6){
+      left: 78%;
+      background-color: $neutral;
+    }
+    &:nth-child(7){
+      left: 91%;
+      background-color: $neutral;
+    }
+    &:hover {
+      transform: scale(1.2);
+    }
+    status {
+      font-size: 1.2rem;
+      //display: block;
+      position: relative;
+      top: -30px;
+      text-align: center;
+    }
+  }
+}
+
+
+article {
+  //display: none;
+  //position: relative;
+  //top: 30px;
+  max-width : 90%;
+  padding: 60px;
+  margin: auto;
+  // h2 {
+  //   font-family: merriweather, sans-serif;
+  //   font-size: 5rem;
+  //   padding: 10px 0;
+  //   border-bottom: solid #111 2px;
+  //   margin-bottom: 20px;
+  // }
+  p {
+    line-height: 130%;
+    text-align: left;
+    margin-left: 20%;
+    margin-right: 20%;
+  }
+}
+
+.status-buffer {
+    height: 20px;
+}

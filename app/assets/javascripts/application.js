@@ -19,6 +19,9 @@
 //= require gridstack-js-rails
 //= require_tree .
 
+//= require moment 
+
+
 
 
 function generateAnimals(arr){

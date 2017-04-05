@@ -6,6 +6,9 @@ class PeopleController < ApplicationController
   def list
    
       @allPeople = User.all
+      @allNonUser = NonUser.all
+      @allVets = Veterinarian.all
+      @allTrainer = Trainer.all
       user = User.all
   end
 
@@ -23,12 +26,24 @@ class PeopleController < ApplicationController
   
    def profile
     @employee = User.find(params["param"])
+    
+    if @employee.address != nil and @employee.state != nil and @employee.zip_code != nil
+      @full_address = @employee.address.to_s + " " + @employee.state.to_s + " " + @employee.zip_code.to_s
+    else
+      @full_address = nil
+    end
+    @foster_ok = @employee.foster_check
+    
+    #Rails.logger.debug("My object: #{@foster_ok.inspect}")
+    
+    @adopt_ok = @employee.adopt_check
   end
   #require says the type it has to be, for this one it has to have a user parameter
   #says the fields that are allowed. have to match up with column names
   def people_params
       params.require(:user).permit(:name, :email, :password,
-                                   :password_confirmation, :role_id, :picture, :disabled)
+                                   :password_confirmation, :role_id, :picture, :disabled, :address,
+                                   :state, :zip_code, :foster_check, :adopt_check)
   end
   # the code that actually adds an employee. 
   def addEmployee
@@ -51,6 +66,19 @@ def editEmployee
     @employee = User.find(params["format"])
 
     if @employee.update_attributes(people_params)
+
+      if @employee.foster_check = true
+          #if they weren't approved for a foster at first but now are
+          @new_foster = Foster.new({non_user_id: nil, user_id: @employee.id,})
+          @new_foster.save
+      end
+      
+      if @employee.adopt_check = true
+        #if they weren't approved for a adopter at first but now are
+        @new_adopter = Adopter.new({non_user_id: nil, user_id: @employee.id,})
+        @new_adopter.save
+      end 
+
       flash[:success] = "Saved employee"
       redirect_to people_url
     else
@@ -69,7 +97,7 @@ def dashboardSave
 
 end
 def dashboardGet
-  json = {"str": current_user.dashboard}
+  json = {"str" => current_user.dashboard}
   render json: json
 end
 

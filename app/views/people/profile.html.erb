@@ -13,7 +13,22 @@
     thats what :name, :email,  etc is for 
 
   --> 
-          <%= display_avatar(@employee, "500x500") %>
+          <%= display_avatar(@employee, "150x150") %>
+        	<p> Name: <%= @employee.name%> </p>
+        	<p> Email: <%=@employee.email%> </p>
+        	<p> Address: <%=@full_address%> </p>
+
+        	<%if @foster_ok == false %>
+                  <p> Approved Foster:  No </p> 
+                <% else %>
+                  <p> Approved Foster:  Yes </p> 
+            <% end %> 
+            <%if @adopt_ok == false %>
+                  <p> Approved Adoption:  No </p> 
+                <% else %>
+                  <p> Approved Adoption:  Yes </p> 
+            <% end %> 
+
     </div>
 </div>
 

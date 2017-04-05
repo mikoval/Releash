@@ -14,6 +14,15 @@
       <%= f.label :name %>
       <%= f.text_field :name, class: 'form-control' %>
 
+      <%= f.label :address %>
+      <%= f.text_field :address, class: 'form-control' %>
+
+      <%= f.label :state %>
+      <%= f.text_field :state, class: 'form-control' %>
+
+      <%= f.label :zip_code %>
+      <%= f.text_field :zip_code, class: 'form-control' %>
+
       <%= f.label :email %>
       <%= f.email_field :email, class: 'form-control' %>
 
@@ -28,8 +37,16 @@
 
       
       <% if admin?(current_user) %>
-        <%= f.label :disabled , style: "display: inline-block" %>
-        <%= f.check_box :disabled, { class: 'form-control', style: "display: inline-block; width:auto;"} %>
+
+        <%= f.label :foster %>
+        <%= f.check_box :foster_check, class: 'form-control' %>
+
+        <%= f.label :adopt %>
+        <%= f.check_box :adopt_check, class: 'form-control' %>
+        
+        <%= f.label :disabled %>
+        <%= f.check_box :disabled, class: 'form-control' %>
+
         <br>
       <% end %>
 

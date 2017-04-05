@@ -9,8 +9,7 @@
 
 <!-- Inner form Content -->
   <div class="form col-md-12">
-    
-      
+
       <!-- Personal Inner Div -->
       <div id ="personal-body" class="collapse show inner-formdiv">
         
@@ -26,16 +25,18 @@
           <div id = "characteristics-body" class="collapse show col-md-12">
             <!-- Profile Picture -->
             <div class="picture col-md-6">
-            	<%= display_avatar(@animal, "150x200") %>
+              <%= display_avatar(@animal, "150x200") %>
             </div>
 
             <!-- Basic Characteristics -->
             <div class="characteristics-info col-md-6">
               <h4>Name</h4>
               <%= @animal.name %>
+              <p> Microchip Number: <%= @animal.microchip_number %> </p> 
               <h4>Primary Breed</h4>
               <%= @animal.primary_breed.name %>
 
+              <!-- Breeds -->
               <h4>Additional Breeds</h4> 
               <p> 
                 <% @breeds.each do |b| %>
@@ -45,7 +46,14 @@
                     <%= b.breed.name  %> 
                   <% end %>
                 <% end %> 
-               </p>       	
+               </p> 
+
+              <!-- Status Info -->
+              <p> Current Status: <%= @animal.status.name%> </p>
+              <p> Current Substatus: <%= @sub_status_name%> </p>
+              <p> Marketing: <%= @animal.marketing.name%> </p>
+              <p> Visibility: <%= @hidden%> </p>
+
             </div>
           </div>
         </div>
@@ -62,28 +70,6 @@
             <div id="phys-feat" class="collapse col-md-12">
               <p> Primary Color: <%= @animal.color_primary %> </p>
               <p> Secondary Color: <%= @animal.color_secondary %> </p>
-            </div>
-          </div>
-
-          <div class = "med col-md-12">
-            <!-- Medical -->
-            <a class= "card-header doc-header" data-toggle="collapse" href="#med-body">
-              <div>
-                <h4>Vetting</h4>
-              </div>
-            </a>
-
-            <div id="med-body" class="collapse col-md-12">
-              <p> Microchip Number: <%= @animal.microchip_number %> </p>
-
-
-                 <!-- Check if Spayed/ Neutered -->
-                <%if @animal_check == 0%>
-                  <p> Spayed / Neutered: No </p> 
-                <% else %>
-                  <p> Spayed / Neutered: Yes </p> 
-                <% end %> 
-            
             </div>
           </div>
 
@@ -108,22 +94,6 @@
 
                </p>   
 
-               <h4>Attribute</h4> 
-              <p id = "attribute-list">  
-                <% @attributes.each do |b| %>
-                  
-                  <% if b != @attributes.last %>
-                    <%= b.characteristic.name + "," %> 
-                  <% else %>
-                    <%= b.characteristic.name  %> 
-                  <% end %>
-                   
-
-
-                <% end %> 
-               </p>         
-               <h4>Notes</h4>
-               <%= @animal.notes %>
             </div>
           </div>
 
@@ -174,79 +144,483 @@
 
       <!-- Tracking -->
       <div id="tracking-body" class="collapse inner-formdiv">
+        <p> Current Status: <%=@status_name%> </p>
 
-        <!-- Status (Really Crude Way)-->
-        <h4>Current Status</h4>
+        <div id="timeline">
+          <div class="circle" id="all">
+            <status>All</status>
+          </div>
+          <div class="circle" id="intake">
+            <status>Intake</status>
+          </div>
+          <div class="circle" id="vetting">
+            <status>Vetting</status>
+          </div>
+          <div class="circle" id="foster">
+            <status>Foster</status>
+          </div>
+          <div class="circle" id="training">
+            <status>Training</status>
+          </div>
+          <div class="circle" id="adopted">
+            <status>Adopted</status>
+          </div>
+           <div class="circle" id="other">
+            <status>Other</status>
+          </div>
+        </div>
 
-        <!-- Intake-->
-        <%if @status_name == "Intake"%>
-        <%=@status_name%>
-        <p> Date: <%= @intake.intake_date%> </p>
-        <p> Foster: <%=@intake_foster%> </p>
-        <p> Vet: <%=@intake_vet%> </p>
-        <p> Holds: <%=@intake_hold%> </p>
-        <p> Comments: <%= @intake.comments%> </p>
+        <!--=================== ALL =======================-->  
+        <article class='status-info all'>
+          <!-- Add New OTHER Modal -->
+           <%#= link_to 'Add New Entry', '#allModal', class: 'btn btn-default', 'data-toggle' => 'modal' %>
+          <div class="modal entry-modal fade" id="allModal" tabindex="-1" role="dialog" aria-labelledby="allModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="allModalLabel">Add A New Entry</h4>
+                </div>
+                <div class="modal-body">
+                  <p> Form to Add a New Entry </p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Modal -->
+          
+          <p>
+            <p>Animal Complete History</p>
+            <table>
+            <thead>
+              <tr>
+                <th class= "col-md-3">Date</th>
+                <th class= "col-md-3">Status</th>
+                <th class= "col-md-3">Sub Status</th>
+                <th class= "col-md-3">Location</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @intake_stats.each do |a| %>
+                <tr>
+                <td><%= a["date"] %></td>
+                <td><%= a["status"] %></td>
+                <td><%= a["sub_status"] %></td>
+                <td><%= a["location"] %></td>
+                </tr>
+              <% end %>
 
-        <% end %> 
+              <% @vet_stats.each do |a| %>
+                <tr>
+                <td><%= a["date"] %></td>
+                <td><%= a["status"] %></td>
+                <td><%= a["sub_status"] %></td>
+                <td><%= a["vet"] %></td>
+                </tr>
+              <% end %>
 
-        <!-- Vetting-->
+              <% @foster_stats.each do |a| %>
+                <tr>
+                <td><%= a["date"] %></td>
+                <td><%= a["status"] %></td>
+                <td><%= a["sub_status"] %></td>
+                <td><%= a["foster"] %></td>
+                </tr>
+              <% end %>
 
-        <%if @status_name == "Vetting"%>
+              <% @train_stats.each do |a| %>
+                <tr>
+                <td><%= a["date"] %></td>
+                <td><%= a["status"] %></td>
+                <td><%= a["sub_status"] %></td>
+                <td><%= a["train"] %></td>
+                </tr>
+              <% end %>
 
-        <%=@status_name%>
-        <p> Date: <%= @vetting.vet_date%> </p>
-        <p> Foster: <%=@vetting_foster%> </p>
-        <p> Vet: <%=@vetting_vet%> </p>
-        <p> Holds: <%=@vetting_hold%> </p>
-        <p> Comments: <%= @vetting.comments%> </p>
+              <% @adopt_stats.each do |a| %>
+                <tr>
+                <td><%= a["date"] %></td>
+                <td><%= a["status"] %></td>
+                <td><%= a["sub_status"] %></td>
+                <td><%= a["adopt"] %></td>
+                </tr>
+              <% end %>
 
-        <% end %> 
+              <% @other_stats.each do |a| %>
+                <tr>
+                <td><%= a["date"] %></td>
+                <td><%= a["status"] %></td>
+                <td><%= a["sub_status"] %></td>
+                <td><%= a["comm"] %></td>
+                </tr>
+              <% end %>
 
-        <!-- Foster-->
+            </tbody>
+          </table>
 
-        <%if @status_name == "Foster"%>
+          </p>
+        </article>
 
-        <%=@status_name%>
-        <p> Date: <%= @foster.foster_date%> </p>
-        <p> Foster: <%=@fost_foster%> </p>
-        <p> Holds: <%=@foster_hold%> </p>
-        <p> Comments: <%= @foster.comment%> </p>
+        <!--=================== INTAKE =======================--> 
+        <article class='status-info intake'>
+          <%= link_to 'Add New Intake', '#intakeEntryModal', class: 'btn btn-default', 'data-toggle' => 'modal' %>
+          <!-- Add New Intake Modal -->
+          <div class="modal entry-modal fade" id="intakeEntryModal" tabindex="-1" role="dialog" aria-labelledby="intakeEntryModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Create New Intake Entry</h4>
+                </div>
+                <div class="modal-body">
+                    <%= render 'intakeform_modal', modal: true, new_intake: @new_intake, animal_id: @animal.id, fosters: @fosters %>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Modal -->
+          
+          <p>
+            <%if @allIntakes != []%>
+              <p>Intake Status </p>
+              <% @intake_stats.each  do |a| %>
+                <p> Date: <%= a["date"]%> </p>
+                <p> Location: <%=a["location"]%> </p>
+                <p> Previous Location: <%=a["prev_location"]%> </p>
+                <p> SubStatus: <%=a["sub_status"]%> </p>
+                <p> Comments: <%= a["comm"]%> </p>
 
-        <% end %>
+                <% if employee?(current_user) %>
+                <%= link_to 'Edit Entry', '#', class: 'btn btn-default', 'data-toggle' => 'modal', 'data-target' => "#intake_#{a["id"]}"  %>
 
-        <!-- Adopted -->
+                <!-- Edit Modal -->
+                  <div class="modal entry-modal fade" id = <%= "intake_#{a["id"]}" %> tabindex="-1" role="dialog" aria-labelledby="intakeEditEntryModalLabel">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title" id="myModalLabel">Add New Intake Entry</h4>
+                        </div>
+                        <div class="modal-body">
+                            <%= render 'intakeform_edit_modal', modal: true, edit_intake: Intake.find_by(id: a["id"]), animal_id: @animal.id, fosters: @fosters, curr_foster: a["email"], intake_id: a["id"]%>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <!-- End Modal -->
+                <% end %>
 
-        <%if @status_name == "Adopted"%>
+              <% end %> 
+            <% end %> 
+          </p>
+        </article>
+        <!--=================== END INTAKE =======================-->
 
-        <%= @status_name%>
-        <p> Date: <%= @adopted.adopt_date%> </p>
+        <!--=================== VETTING =======================-->        
+        <article class='status-info vetting'>
+           <!-- Add New Vetting Modal -->
+           <%= link_to 'Add New Vetting', '#vettingEntryModal', class: 'btn btn-default', 'data-toggle' => 'modal' %>
+          <div class="modal entry-modal fade" id="vettingEntryModal" tabindex="-1" role="dialog" aria-labelledby="vettingEntryModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Create New Vetting Entry</h4>
+                </div>
+                <div class="modal-body">
+                    <%= render 'vettingform_modal', modal: true, new_vet: @new_vet, animal_id: @animal.id%>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Modal -->
+          <p>
+            <%if @allVetting != []%>
+              <p>Vetting Status </p>
+              <% @vet_stats.each do |a| %>
+                <p> Date: <%= a["date"]%> </p>
+                <p> Vet: <%=a["vet"]%> </p>
+                <p> Sub Status: <%=a["sub_status"]%> </p>
+                <p> Comments: <%= a["comm"]%> </p>
 
-        <% end %>
+                <% if employee?(current_user) %>
+                <%= link_to 'Edit Entry', '#', class: 'btn btn-default', 'data-toggle' => 'modal', 'data-target' => "#vetting_#{a["id"]}"  %>
 
+                <!-- Edit Modal -->
+                  <div class="modal entry-modal fade" id = <%= "vetting_#{a["id"]}" %> tabindex="-1" role="dialog" aria-labelledby="vettingEntryModalLabel">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title" id="myModalLabel">Add New Vetting Entry</h4>
+                        </div>
+                        <div class="modal-body">
+                            <%= render 'vettingform_edit_modal', modal: true, edit_vet: Vetting.find_by(id: a["id"]), animal_id: @animal.id, vet_id: a["id"]%>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <!-- End Modal -->
+                <% end %>
 
-        <!-- Sleep -->
+              <% end %>
+            <% end %>  
+          </p>
+        </article>
 
-        <%if @status_name == "Sleep"%>
+        <!--=================== FOSTER =======================-->  
+        <article class='status-info foster'>
+          <!-- Add New Foster Modal -->
+           <%= link_to 'Add New Foster', '#fosterEntryModal', class: 'btn btn-default', 'data-toggle' => 'modal' %>
+          <div class="modal entry-modal fade" id="fosterEntryModal" tabindex="-1" role="dialog" aria-labelledby="fosterEntryModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Create New Foster Entry</h4>
+                </div>
+                <div class="modal-body">
+                    <%= render 'fosterform_modal', modal: true, new_fost: @new_fost, fosters: @fosters, animal_id: @animal.id%>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Modal -->
+          <p>
+            <%if @allFoster != []%>
+              <p>Foster Status </p>
+              <% @foster_stats.each do |a| %>
+                <p> Date: <%= a["date"]%> </p>
+                <p> Foster: <%= a["foster"]%> </p>
+                <p> Veterinarian: <%=a["vet"]%> </p>
+                <p> Homecheck: <%=a["homecheck"]%> </p>
+                <p> Sub Status: <%=a["sub_status"]%> </p>
+                <p> Comments: <%= a["comm"]%> </p>
 
-        <%=@status_name%>
-        <p> Date: <%= @sleep.sleep_date%> </p>
+                <% if employee?(current_user) %>
+                <%= link_to 'Edit Entry', '#', class: 'btn btn-default', 'data-toggle' => 'modal', 'data-target' => "#foster_#{a["id"]}"  %>
 
-        <% end %>
+                <!-- Edit Modal -->
+                  <div class="modal entry-modal fade" id = <%= "foster_#{a["id"]}" %> tabindex="-1" role="dialog" aria-labelledby="fosterEntryModalLabel">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title" id="myModalLabel">Add New Foster Entry</h4>
+                        </div>
+                        <div class="modal-body">
+                            <%= render 'fosterform_edit_modal', modal: true, edit_fost: FosterStatus.find_by(id: a["id"]), animal_id: @animal.id, fosters: @fosters, curr_foster: a["email"], fost_id: a["id"]%>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <!-- End Modal -->
+                <% end %>
 
-        <!-- Transfer -->
+              <% end %>
+            <% end %>                       
+    
+          </p>
+        </article>
 
-        <%if @status_name == "Transfer"%>
+        <!--=================== TRAINING =======================-->  
+        <article class='status-info training'>
+          <p>
+            <!-- Add New Training Modal -->
+           <%= link_to 'Add New Training', '#trainingEntryModal', class: 'btn btn-default', 'data-toggle' => 'modal' %>
+          <div class="modal entry-modal fade" id="trainingEntryModal" tabindex="-1" role="dialog" aria-labelledby="trainingEntryModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Create New Training Entry</h4>
+                </div>
+                <div class="modal-body">
+                    <%= render 'trainform_modal', modal: true, new_train: @new_train,animal_id: @animal.id%>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Modal -->
+            <p>In Training Status </p>
+            <%if @allTraining != []%>
+              <% @train_stats.each do |a| %>
+                <p> Date: <%= a["date"]%> </p>
+                <p> Trainer: <%=a["train"]%> </p>
+                <p> Sub Status: <%=a["sub_status"]%> </p>
+                <p> Problem Information: <%=a["comm"]%> </p>
+                
+                <% if employee?(current_user) %>
+                <%= link_to 'Edit Entry', '#', class: 'btn btn-default', 'data-toggle' => 'modal', 'data-target' => "#train_#{a["id"]}"  %>
 
-        <%= @status_name%>
-        <p> Date: <%= @transfers.transfer_date%> </p>
+                <!-- Edit Modal -->
+                  <div class="modal entry-modal fade" id = <%= "train_#{a["id"]}" %> tabindex="-1" role="dialog" aria-labelledby="trainingEntryModalLabel">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title" id="myModalLabel">Add New In Training Entry</h4>
+                        </div>
+                        <div class="modal-body">
+                            <%= render 'trainform_edit_modal', modal: true, edit_train: Training.find_by(id: a["id"]), animal_id: @animal.id, train_id: a["id"]%>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <!-- End Modal -->
+                <% end %>
 
-        <% end %>
+              <% end %>
+            <% end %>  
+          </p>
+        </article>
 
-        <% if @animal.secondary_breed %>
-        <h4>Secondary Breed</h4>
-        <%= @animal.secondary_breed.name %>
+        <!--=================== ADOPTED =======================-->  
+        <article class='status-info adopted'>
+          <!-- Modal Button New Adopted-->
+           <%= link_to 'Add New Adopted', '#adoptEntryModal', class: 'btn btn-default', 'data-toggle' => 'modal' %>
 
-        <% end %> 
+           <!-- Begin New Modal -->
+          <div class="modal entry-modal fade" id="adoptEntryModal" tabindex="-1" role="dialog" aria-labelledby="adoptEntryModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Create New Adopted Entry</h4>
+                </div>
+                <div class="modal-body">
+                    <%= render 'adoptedform_modal', modal: true, new_adopt: @new_adopt,animal_id: @animal.id, adopters: @adopters%>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End New Modal -->
+          <p>            
+            <%if @allAdopt != []%>
+              <p>Adopted Status </p>
+              <% @adopt_stats.each do |a| %>
+                <p> Date: <%= a["date"]%> </p>
+                <p> Sub Status: <%= a["sub_status"]%> </p>
+                <p> Adopted By: <%= a["adopt"]%> </p>
+                <p> Comments: <%= a["comm"]%> </p>
+                
+                <% if employee?(current_user) %>
+                <%= link_to 'Edit Entry', '#', class: 'btn btn-default', 'data-toggle' => 'modal', 'data-target' => "#adopted_#{a["id"]}"  %>
+
+                <!-- Edit Modal -->
+                  <div class="modal entry-modal fade" id = <%= "adopted_#{a["id"]}" %> tabindex="-1" role="dialog" aria-labelledby="adoptEntryModalLabel">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title" id="myModalLabel">Add New Intake Entry</h4>
+                        </div>
+                        <div class="modal-body">
+                            <%= render 'adoptedform_edit_modal', modal: true, edit_adopt: Adopted.find_by(id: a["id"]), animal_id: @animal.id, adopters: @adopters, curr_adopter: a["email"], adopt_id: a["id"]%>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <!-- End Modal -->
+                <% end %>
+
+              <% end %>
+            <% end %>  
+        </article>
+
+        <!--=================== OTHER =======================-->  
+        <article class='status-info other'>
+          <!-- Add New OTHER Modal -->
+           <%= link_to 'Add New Other', '#otherEntryModal', class: 'btn btn-default', 'data-toggle' => 'modal' %>
+          <div class="modal entry-modal fade" id="otherEntryModal" tabindex="-1" role="dialog" aria-labelledby="otherEntryModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Create New Other Entry</h4>
+                </div>
+                <div class="modal-body">
+                    <%= render 'otherform_modal', modal: true, new_other: @new_other,animal_id: @animal.id%>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Modal -->
+          <p>
+            <%if @allOther != []%>
+              <p>Other Status</p>
+              <% @other_stats.each do |a| %>
+                <p> Date: <%= a["date"]%> </p>
+                <p> Name: <%= a["sub_status"]%> </p>
+                <p> Sub Status: <%= a["name"]%> </p>
+                <p> Comments: <%= a["comm"]%> </p>
+                
+                
+                <% if employee?(current_user) %>
+                <%= link_to 'Edit Entry', '#', class: 'btn btn-default', 'data-toggle' => 'modal', 'data-target' => "#other_#{a["id"]}"  %>
+
+                <!-- Edit Modal -->
+                  <div class="modal entry-modal fade" id = <%= "other_#{a["id"]}" %> tabindex="-1" role="dialog" aria-labelledby="otherEntryModalLabel">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title" id="myModalLabel">Add New Intake Entry</h4>
+                        </div>
+                        <div class="modal-body">
+                            <%= render 'otherform_edit_modal', modal: true, edit_other: OtherStatus.find_by(id: a["id"]), animal_id: @animal.id, other_id: a["id"]%>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <!-- End Modal -->
+                <% end %>
+
+              <% end %>
+            <% end %>  
+          </p>
+        </article>
+
+        <div class= "status-buffer col-md-12" ></div>
       </div>
 
       <div class= "card form-div alerts col-md-12">
@@ -280,27 +654,41 @@
           <a href='/alerts/new?method=get&param= <%= @animal.id %> '><button class = "button" >Add New Alert</button></a>
       </div>
     
-      <!-- Can i move this? -->
-    
+
   </div>
 </div>
 
     
 <script>
-
-
-
-
 var blist = $("#behavior-list").text();
 console.log( $("#behavior-list"))
 blist = blist.substr(0, (blist.length - 2));
 $("#behavior-list").text(blist);
 
+ 
+/*========== TRACKING ============ */
+//Hide all statuses
+$('.status-info').hide();
+//Hide and show info based on dot clicked
+$('.circle').click(function(){
+  var clicked = $(this).attr('id');
+  $(this).addClass('unSelected');
+  $('#' + clicked + '.circle').removeClass('unSelected');
+  //shade current and clear others
+  if (!$('.circle').hasClass('unSelected')) {
+      $('.circle').css('background-color', '#e1e1e1');
+      $('#' + clicked + '.circle').css('background-color',  '#2980b9');
+  }
+  $('.status-info').hide();
+  $('.status-info.' + clicked).fadeIn(200);
+});
 
 $(document).on("ready", function(){
   bindAlertsModal();
 })
-bindAlertsModal();
+//this shouldn't be needed anymore
+//bindAlertsModal();
+
 </script>
 
 

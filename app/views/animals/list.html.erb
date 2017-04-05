@@ -13,14 +13,14 @@
 
     <br><br>
 
-    <div id='filterDiv' class = "filters col-md-3" style = "border-radius:1px; margin:5px";> 
-    <p> Name:  </p> <input type = "text" id = "filter-name"/>
+    <div id='filterDiv' class = "filters col-md-3" style = "border-radius:1px; margin:5px; border:solid;";> 
+    <p> Name:  </p> <input type = "text" id = "filter-name" value = "<%= @name %> "/>
     <p> Breed:  </p> 
     <select id = "filter-breed">
       <option value = "">Select Breed</option>
 
       <% @breeds.each do |b|%>
-        <option value = "<%=  b.id %>"> <%= b.name %> </option>
+        <option value = "<%=  b.id %>"  <% if( b.id.to_s == @breed) %>selected <% end %> > <%= b.name %> </option>
       <% end %>
 
     </select>
@@ -28,15 +28,15 @@
     <p> Gender:  </p> 
     <select id = "filter-gender">
       <option value = "">Select Gender</option>
-      <option value = "Male">Male</option>
-      <option value = "Female">Female</option>
+      <option value = "Male" <% if(@gender == "Male") %> selected <% end %>>Male</option>
+      <option value = "Female"<% if(@gender == "Female") %> selected <% end %>>Female</option>
     </select>
 
     <p> Status:  </p> 
     <select id = "filter-status">
       <option value = "">Select Status</option>
-      <% @status.each do |b|%>
-        <option value = "<%=  b.id %>"> <%= b.name %> </option>
+      <% @statuses.each do |b|%>
+        <option value = "<%=  b.id %>" <% if( b.id.to_s == @status) %>selected <% end %> > <%= b.name %> </option>
       <% end %>
     </select>
 
@@ -70,8 +70,8 @@
 var slider = $("#age_slider").slider({
         range: true,
         min: 0,
-        max: 25,
-        values: [0, 25],
+        max: 15,
+        values: [<%= @ageMin %>, <%= @ageMax %>],
         slide: function(event, ui) {
             $("#age-min").text(ui.values[0]);
             $("#age-max").text(ui.values[1]);
@@ -179,15 +179,15 @@ function resetFilters(){
   params.gender = "";
   params.status = "";
   params.age_min = 0;
-  params.age_max = 25;
+  params.age_max = 15;
   $("#filter-name").val('')
   $("#filter-breed").prop('selectedIndex',0)
   $("#filter-gender").prop('selectedIndex',0)
   $("#filter-status").prop('selectedIndex',0)
   $("#age-min").text(0);
-  $("#age-max").text(25);
+  $("#age-max").text(15);
   $("#age_slider").slider("values", 0, 0);
-  $("#age_slider").slider("values", 1, 25);
+  $("#age_slider").slider("values", 1, 15);
   str = ""
   str += document.location
   str = str.substring(0,str.indexOf("?n="))
@@ -229,9 +229,10 @@ function convertArrayOfObjectsToCSV(args) {
 }
 
 function downloadCSV(args) {
+    animalData2 = formatData(animalData)
     var data, filename, link;
     var csv = convertArrayOfObjectsToCSV({
-        data: animalData
+        data: animalData2
     });
 
     if (csv == null) return;
@@ -351,5 +352,22 @@ function clearhidetip(){
     clearTimeout(delayhide)
 }
 
+function formatData(data){
+
+  arr =  []
+
+  for(i = 0; i < data.length; i++){
+    json = {}
+    json.ID = i
+    json.Name = data[i]["name"]
+    json.Age = data[i]["age"]
+ //   json.Birthday = data[i]["birthday"]
+    json.Gender = data[i]["gender"]
+    json["Primary Breed"] = data[i]["primary"]
+    json.Status = data[i]["status"]
+    arr.push(json)
+  }
+  return arr
+}
 </script>
 

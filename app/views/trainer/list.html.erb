@@ -1,0 +1,41 @@
+<% provide(:title, "Trainers") %>
+<h1>Trainers</h1>
+
+
+<!-- TAB NAV LINKS-->
+<ul class="nav nav-tabs">
+    <li><a href="#trainer" data-toggle="tab">Trainers</a></li>
+</ul>
+
+
+<!-- TAB CONTENT -->
+<div class="tab-content">
+  <!-- TRAINER TAB CONTENT -->
+  <div class="tab-pane fade in active" id="trainer">
+    <table id = "user-table" class="table table-bordered table-inverse table-hover user-table">
+      <thead>
+        <tr>
+          <th class= "col-md-1">#</th>
+          <th class= "col-md-3">Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @allTrainer.each_with_index do |a, index| %>
+           <tr style = "height: 70px;" >
+              <th scope="row"><%= index %></th>
+
+              <td> 
+                  <%= link_to a.name,  :controller => "trainer", :action => "edit", :param => a, :method => "get" %>
+
+                <% if admin?(current_user) %>
+                 <%= link_to ' <span class ="glyphicon glyphicon-pencil" style = "display:none; cursor: pointer;"></span>'.html_safe,  :controller => "trainer", :action => "edit", :param => a, :method => "get" %>
+                 <% end %>
+              </td>
+            </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
