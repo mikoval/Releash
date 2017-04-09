@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-
-
 # the first part is what they are going to 
 # for example localhost:3000/home, localhost:3000/people/new, localhost:3000/animal
 # if it says 'to:' that means forward that request to x#y with x being the controller and y being the action (which is kinda like a view)
@@ -60,6 +58,11 @@ Rails.application.routes.draw do
   post 'other/new', to: 'other#newOther'
   patch 'other/edit', to: 'other#editOther'
 
+  get 'animal_application/new'
+  get 'animal_application/edit'
+  post 'animal_application/new', to: 'animal_application#newApp'
+  patch 'animal_application/edit', to: 'animal_application#editApp'
+
   get 'adopted/new'
   get 'adopted/edit'
   get 'adopted/list'
@@ -101,6 +104,7 @@ Rails.application.routes.draw do
   patch '/non_user', to: 'non_user#editUser'
 
   get 'trainer/new'
+  get 'trainer/profile'
   get 'trainer/list'
   get 'trainer/edit'
   post '/trainer', to: 'trainer#newTrainer'
@@ -109,8 +113,15 @@ Rails.application.routes.draw do
   get 'veterinarian/new'
   get 'veterinarian/list'
   get 'veterinarian/edit'
+  get 'veterinarian/profile'
   post '/veterinarian', to: 'veterinarian#newVet'
   patch '/veterinarian', to: 'veterinarian#editVet'
+
+  get 'animal_facility/new'
+  get 'animal_facility/edit'
+  get 'animal_facility/profile'
+  post '/animal_facility', to: 'animal_facility#newAnifaci'
+  patch '/animal_facility', to: 'animal_facility#editAnifaci'
 
   get  '/signup',  to: 'users#new'
   post '/signup',  to: 'users#create'

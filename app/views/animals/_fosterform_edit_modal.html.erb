@@ -1,32 +1,24 @@
 <% modal ||= false %>
 <% remote = modal ? true : false %>
 
-<!-- Intake fill in information -->
-<!-- Is this going to throw an error because all the other stuff aren't in here = Check validations? --> 
 <%= form_for(edit_fost, remote: remote, url: url_for(action: 'editFoster', fost_id: fost_id, controller: 'foster', method: 'patch'))      do |f| %>
 
     <%= f.hidden_field :animal_id, value: animal_id%>
     <%= hidden_field_tag "fost_id", fost_id%>
 
-    <%= f.label :current_entry, "Current Entry" %>
+    <%= f.label :current_entry, "Make it Current Entry" %>
     <%= f.check_box :current_entry, class: 'form-control' %>
  
-    <%= f.label :foster_date, "Foster Date" %>
+    <%= f.label :foster_date, "Date" %>
     <%= f.text_field :foster_date, class: 'datepicker' %>
     
     <!-- Selecting Foster-->
     <%= f.label :fost_fost, "Foster"%>
     <%=collection_select(:fost_fost, :foster_id, fosters, :email, :name, {:prompt => "Select foster" ,:selected => curr_foster}) %>
     
-    <%= f.label :homecheck %>
-    <%= f.check_box :homecheck, class: 'form-control' %>
 
     <%= f.label :sub_status, class: 'control-label' %><br>
     <%= f.collection_select :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select SubStatus"}, class: 'form-control' %> 
-
-    <!-- Selecting Vets-->
-    <%= f.label :vet_id, "Veterinarian"%>
-    <%= f.collection_select :vet_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian"}, class: 'form-control'  %>
 
     <!-- Inputing Details-->
     <%= f.label :comments, "Comments" %>

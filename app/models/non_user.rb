@@ -10,6 +10,7 @@ class NonUser < ActiveRecord::Base
                     uniqueness: { case_sensitive: false }
     validate  :picture_size
     mount_uploader :picture, PictureUploader
+    mount_uploader :nonuser_document, FileUploader
      
     private
         # Validates the size of an uploaded picture.

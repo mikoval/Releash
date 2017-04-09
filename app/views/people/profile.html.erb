@@ -1,4 +1,4 @@
-<% provide(:title, 'New Employee') %>
+<% provide(:title, 'Profile') %>
 <h1><%= @employee.email%>
     <% if admin?(current_user) || @employee.id == current_user.id %>
  <%= link_to ' <span class ="glyphicon glyphicon-pencil" style = "cursor: pointer; font-size:25px;"></span>'.html_safe,  :controller => "people", :action => "edit", :param => @employee, :method => "get" %>
@@ -7,30 +7,95 @@
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <!-- form for submitting employees. 
-    submits to /people path. that can be found in routes. 
-    passes in @employee that is defined by the form
-    thats what :name, :email,  etc is for 
+    <%= display_avatar(@employee, "150x150") %>
+  	<p> Name: <%= @employee.name%> </p>
+  	<p> Email: <%=@employee.email%> </p>
+  	<p> Address: <%=@full_address%> </p>
+    <p> Phone Number: <%=@employee.phone_number%> </p>
+    <p> Comments: <%=@employee.comments%> </p>
+    <p> Homecheck Comments: <%=@employee.home_comm%> </p>
+      <%if @employee.homecheck == false %>
+            <p> Homecheck Completed:  No </p> 
+          <% else %>
+            <p> Homecheck Completed:  Yes </p> 
+      <% end %> 
+  	  <%if @foster_ok == false %>
+            <p> Approved Foster:  No </p> 
+          <% else %>
+            <p> Approved Foster:  Yes </p> 
+      <% end %> 
+      <%if @adopt_ok == false %>
+            <p> Approved Adoption:  No </p> 
+          <% else %>
+            <p> Approved Adoption:  Yes </p> 
+      <% end %> 
 
-  --> 
-          <%= display_avatar(@employee, "150x150") %>
-        	<p> Name: <%= @employee.name%> </p>
-        	<p> Email: <%=@employee.email%> </p>
-        	<p> Address: <%=@full_address%> </p>
-
-        	<%if @foster_ok == false %>
-                  <p> Approved Foster:  No </p> 
-                <% else %>
-                  <p> Approved Foster:  Yes </p> 
-            <% end %> 
-            <%if @adopt_ok == false %>
-                  <p> Approved Adoption:  No </p> 
-                <% else %>
-                  <p> Approved Adoption:  Yes </p> 
-            <% end %> 
+      <% if @employee.user_document.length > 0 %>
+          <p style = "text-align: center">Homecheck Document: <%= link_to @employee.user_document.file.filename, @employee.user_document.url %> </p>
+          <% end %>
 
     </div>
 </div>
 
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#foster" data-toggle="tab">Animals Fostered</a></li>
+    <li><a href="#adopt" data-toggle="tab">Animals Adopted</a></li>
+    <li><a href="#applied" data-toggle="tab">Animals Applied For</a></li>
+</ul>
 
-</script>
+<div class="tab-content">
+  <!-- Foster TAB CONTENT -->
+  <div class="tab-pane active" id="foster">
+    <table id = "foster-table" class="table table-bordered table-inverse table-hover foster-table">
+      <thead>
+        <tr>
+          <th class= "col-md-1">Date</th>
+          <th class= "col-md-2">Animal Name</th>
+        </tr>
+      </thead>
+      <% if @allFosters != nil%>
+        <tbody>
+          <% @allFosters.each do |a| %>
+             <tr style = "height: 70px;" >
+                <td><%= a.foster_date%></td>
+                <td> 
+                  <%= Animal.find_by(id: a.animal_id).name%>
+                </td>
+              </tr>
+          <% end %>
+        </tbody>
+      <% end %>
+
+    </table>
+  </div>
+
+    <!-- Adopt TAB CONTENT -->
+  <div class="tab-pane" id="adopt">
+    <table id = "adopt-table" class="table table-bordered table-inverse table-hover adopt-table">
+      <thead>
+        <tr>
+          <th class= "col-md-1">Date</th>
+          <th class= "col-md-2">Animal Name</th>
+        </tr>
+      </thead>
+      
+      <% if @allAdoptions != nil%>
+        <tbody>
+          <% @allAdoptions.each do |a| %>
+             <tr style = "height: 70px;" >
+                <td><%= a.adopt_date%></td>
+                <td> 
+                  <%= Animal.find_by(id: a.animal_id).name%>
+                </td>
+              </tr>
+          <% end %>
+        </tbody>
+      <% end %>
+
+    </table>
+  </div>
+
+
+
+
+</div>  

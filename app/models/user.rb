@@ -12,12 +12,8 @@ class User < ActiveRecord::Base
     validate  :picture_size
     validates :role_id, presence: true
     mount_uploader :picture, PictureUploader
+    mount_uploader :user_document, FileUploader
     belongs_to :role
- 
-
-
-
-
     
     def self.digest(string)
         cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :

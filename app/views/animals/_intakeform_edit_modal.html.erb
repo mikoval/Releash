@@ -8,7 +8,7 @@
     <%= f.hidden_field :animal_id, value: animal_id%>
     <%= hidden_field_tag "intake_id", intake_id%>
     
-    <%= f.label :current_entry, "Current Entry" %>
+    <%= f.label :current_entry, "Make it Current Entry" %>
     <%= f.check_box :current_entry, class: 'form-control' %>
     
     <%= f.label :intake_date, "Intake Date" %>
@@ -17,16 +17,12 @@
     <%= f.label :sub_status, class: 'control-label' %><br>
     <%= f.collection_select :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select SubStatus"}, class: 'form-control' %> 
 
-    <!-- Selecting Foster-->
-    <%= f.label :intake_fost, "Foster"%>
-    <%=collection_select(:intake_fost, :foster_id, fosters, :email, :name, {:prompt => "Select foster" ,:selected => curr_foster}) %>
-
-    <%= f.label :vet_id, "Veterinarian"%>
-    <%= f.collection_select :vet_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian"}, class: 'form-control'  %>
+    <%= f.label :intake_reason_id, "Previous Location"%>
+    <%= f.collection_select(:intake_reason_id, IntakeReason.all, :id, :name, {:prompt => "Select Previous Location"}) %>
 
     <!-- Selecting Previous Location-->
-    <%= f.label :animal_facility_id, "Previous Location"%>
-    <%= f.collection_select :animal_facility_id, AnimalFacility.all, :id, :name, {:prompt => "Select Previous Location"} , class: 'form-control' %>
+    <%= f.label :animal_facility_id, "Animal Facility"%>
+    <%= f.collection_select(:animal_facility_id, AnimalFacility.all, :id, :name, {:prompt => "Select Animal Facility"}) %>
 
     <!-- Inputing Details-->
     <%= f.label :comments, "Comments" %>
