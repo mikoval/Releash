@@ -16,7 +16,7 @@ SubStatusType.create([{name: 'Medical'}, {name: 'Boarding'}, {name: 'Transfer'},
 StatusType.create([{name: 'Intake'}, {name: 'Foster'}, {name: 'Vetting'}, {name: 'With Adopter'}, {name: 'In Training'}])
 
 IntakeReason.create([{name: 'Owner Surrender'}, {name: 'Return'}, {name: 'Shelter'}, {name: 'Born into Rescue'}])
-
+MarketingType.create([{name: 'Need Picture/Bio'}, {name: 'Not Online'}, {name: 'Web & PF'}, {name: 'Needs Update'}, {name: 'Website'}])
 Veterinarian.create(
 	[
 		{name: 'Fayetteville Animal Hospital', address: '1145 GA-54', city: 'Fayetteville', state: 'GA', zip_code: 30214, email: ''},
