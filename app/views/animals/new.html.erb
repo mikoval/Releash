@@ -295,7 +295,7 @@
                 <%= collection_select(:intake_loc, :intake_reason_id, IntakeReason.all, :id, :name, {:prompt => "Select Previous Location"}) %>
 
                 <!-- Selecting Previous Location-->
-                <%= f.label :intake_prev, "animal Facility"%>
+                <%= f.label :intake_prev, "Animal Facility"%>
                 <%= collection_select(:intake_prev, :animal_facility_id, AnimalFacility.all, :id, :name, {:prompt => "Select Animal Facility"}) %>
 
                 <!-- Inputing Details-->

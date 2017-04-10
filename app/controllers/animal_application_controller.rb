@@ -33,7 +33,7 @@ class AnimalApplicationController < ApplicationController
   end
 
   def app_params
-      params.require(:animal_application).permit(:app_date,:animal_id, :adoption_document, :comments, :adopter_id)
+      params.require(:animal_application).permit(:app_date,:animal_id, :adoption_document, :comments, :adopter_id, :text_app)
   end
 
   skip_before_filter :verify_authenticity_token, :only => :editApp

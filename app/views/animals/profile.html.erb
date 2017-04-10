@@ -37,6 +37,8 @@
               <p> Microchip Number: <%= @animal.microchip_number %> </p> 
               <h4>Primary Breed</h4>
               <%= @animal.primary_breed.name %>
+              <h4>Primary Breed</h4>
+              <%= @animal.primary_breed.name %>
 
               <!-- Breeds -->
               <h4>Additional Breeds</h4> 
@@ -54,6 +56,7 @@
               <p> Current Status: <%= @animal.status.name%> </p>
               <p> Current Substatus: <%= @sub_status_name%> </p>
               <p> Marketing: <%= @animal.marketing.name%> </p>
+              <p> Coordinator: <%= @animal.coordinator.name%> </p>
               <p> Visibility: <%= @hidden%> </p>
 
             </div>
@@ -173,8 +176,9 @@
                 <th class= "col-md-1">Application Number</th>
                 <th class= "col-md-1">Date</th>
                 <th class= "col-md-1">Applicant Name</th>
-                <th class= "col-md-3">Application</th>
+                <th class= "col-md-3">Application File</th>
                 <th class= "col-md-3">Comments</th>
+                <th class= "col-md-3">Text Application</th>
               </tr>
             </thead>
               <tbody>
@@ -215,6 +219,30 @@
 
                       </td>
                       <td><%= simple_format(a["comm"])%></td>
+                      <td>
+
+                        <%= link_to 'View', '#', class: 'btn btn-default', 'data-toggle' => 'modal', 'data-target' => "#adoptedtextapp_#{a["id"]}"  %>
+
+                        <!-- Edit Modal -->
+                          <div class="modal entry-modal fade" id = <%= "adoptedtextapp_#{a["id"]}" %> tabindex="-1" role="dialog" aria-labelledby="adoptedtextappModalLabel">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                  <h4 class="modal-title" id="myModalLabel">Application</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <%= render 'adoptertextform_modal', modal: true,text_app: a["text_app"]%>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        <!-- End Modal -->
+
+                      </td>
                     </tr>
                 <% end %>
                 <% end %>

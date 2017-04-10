@@ -46,6 +46,7 @@ class PeopleController < ApplicationController
     #Rails.logger.debug("My adopter--------------: #{@adoptions.inspect}")
     if @adoptions != nil
       @allAdoptions = Adopted.where(adopter_id: @adoptions.id)
+      @allApps = AnimalApplication.where(adopter_id: @adoptions.id)
       #Rails.logger.debug("My adopter--------------: #{@allAdoptions.inspect}")
     end
   end
