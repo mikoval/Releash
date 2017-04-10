@@ -4,9 +4,7 @@ class IntakeController < ApplicationController
   def newIntake
 
   	@intake = Intake.new(intake_params)
-    #Rails.logger.debug("Params -----------------------------------: #{params[:intake_fost].inspect}")
     @foster = params[:intake_fost][:foster_id]
-    #Rails.logger.debug("Current Entry -----------------------------------: #{@intake.current_entry.inspect}")
     
     if @intake.current_entry?
 
@@ -45,7 +43,7 @@ class IntakeController < ApplicationController
   end
 
   def intake_params
-  	params.require(:intake).permit(:intake_date, :foster_id, :vet_id, :comments, :animal_id, :sub_status_id, :animal_facility_id, :current_entry)
+  	params.require(:intake).permit(:intake_date, :foster_id, :vet_id, :comments, :animal_id, :sub_status_id, :animal_facility_id, :current_entry, :intake_reason_id)
   end
   
   skip_before_filter :verify_authenticity_token, :only => :editIntake

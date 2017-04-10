@@ -5,11 +5,12 @@ class TrainingController < ApplicationController
 
     if @training.current_entry?
       Training.update_all "current_entry = 'false'"
+      @training.current_entry = true
       @new_status = StatusType.find_by(name: "In Training").id
       @trained_animal = Animal.find_by(id: @training.animal_id)
       
       if @training.sub_status_id != nil
-        @training = SubStatusType.find_by(id: @training.sub_status_id).id
+        @new_sub_status = SubStatusType.find_by(id: @training.sub_status_id).id
       end
       
       @trained_animal.status_id = @new_status
@@ -25,21 +26,21 @@ class TrainingController < ApplicationController
     end
   end
   def train_params
-  	params.require(:training).permit(:train_date, :problem_info, :animal_id, :trainer_id, :sub_status_id)
+  	params.require(:training).permit(:train_date, :problem_info, :animal_id, :trainer_id, :sub_status_id, :current_entry)
   end
   skip_before_filter :verify_authenticity_token, :only => :editTraining
   
   def editTraining
-    #Rails.logger.debug("Params -----------------------------------: #{params.inspect}")
     @training = Training.find(params[:train_id])
     
     if @training.current_entry?
       Training.update_all "current_entry = 'false'"
+      @training.current_entry = true
       @new_status = StatusType.find_by(name: "In Training").id
       @trained_animal = Animal.find_by(id: @training.animal_id)
       
       if @training.sub_status_id != nil
-        @training = SubStatusType.find_by(id: @training.sub_status_id).id
+        @new_sub_status = SubStatusType.find_by(id: @training.sub_status_id).id
       end
       
       @trained_animal.status_id = @new_status

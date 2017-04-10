@@ -8,10 +8,18 @@ class NonUserController < ApplicationController
       @full_address = nil
     end
     @foster_ok = @non_user.foster_check
-    
-    #Rails.logger.debug("My object: #{@foster_ok.inspect}")
-    
+    Rails.logger.debug("Foster Check--------------: #{@foster_ok.inspect}")
     @adopt_ok = @non_user.adopt_check
+
+    @foster = Foster.find_by non_user_id: @non_user.id
+    if @foster != nil
+      @allFosters = FosterStatus.where(foster_id: @foster.id)
+    end
+
+    @adoptions = Adopter.find_by non_user_id: @non_user.id
+    if @adoptions != nil
+      @allAdoptions = Adopted.where(adopter_id: @adoptions.id)
+    end
   end
 
   def edit
@@ -31,9 +39,6 @@ class NonUserController < ApplicationController
 
     if @non_user.save
       
-      if @non_user.foster_check = true
-        @new_adopter = Adopter.new({non_user_id: @non_user.id, user_id: nil})
-      end
       flash[:success] = "Added Non User"
       redirect_to :controller => "people", :action => "list", :param => @non_user
     else
@@ -84,7 +89,7 @@ class NonUserController < ApplicationController
   
   def user_params
   	params.require(:non_user).permit(:name,:address,:state, :zip_code, :email, :picture, 
-                                    :foster_check, :adopt_check)
+                                    :foster_check, :adopt_check, :nonuser_document, :comments, :home_comm, :homecheck, :disable, :phone_number)
   end
 
 end

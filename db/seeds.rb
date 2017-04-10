@@ -1,7 +1,7 @@
 #  this is where you put in values that you want in the database when created. 
 # run 'rake db:seed'
 
-Role.create([{title: 'Volunteer'}, {title: 'Coordinator'}, {title: 'Administrator '}])
+Role.create([{title: 'Volunteer'}, {title: 'Coordinator'}, {title: 'Administrator'}])
 
 AlertType.create([{name: 'Medical'}, {name: 'Adoption'}, {name: 'Event'}, {name: 'Organization'}, {name: 'Other'}])
 
@@ -10,13 +10,12 @@ User.create ({name: "Admin", email: "admin@releash.com", password: "password", p
 
 Species.create([{kind: 'Dog'}, {kind: 'Cat'}])
 
-SubStatusType.create([{name: 'Medical'}, {name: 'Sleep'}, {name: 'Transfer'}, {name: 'Foster to Adopt'},
-						{name: 'Pending Application'}, {name: 'Not Available'}, {name: 'Pending Contract'} 
-					 ])
+SubStatusType.create([{name: 'Medical'}, {name: 'Boarding'}, {name: 'Transfer'}, {name: 'Foster to Adopt'},
+						{name: 'Pending Application'}, {name: 'Not Available'}, {name: 'Pending Contract'}])
 
-StatusType.create([{name: 'Intake'}, {name: 'Foster'}, {name: 'Vetting'}, {name: 'Adopted'}, {name: 'In Training'}, {name: 'Other'}])
+StatusType.create([{name: 'Intake'}, {name: 'Foster'}, {name: 'Vetting'}, {name: 'With Adopter'}, {name: 'In Training'}])
 
-MarketingType.create([{name: 'Need Picture/Bio'}, {name: 'Not Online'}, {name: 'Web & PF'}, {name: 'Web Only'}, {name: 'Needs Update'}, {name: 'Website'}])
+IntakeReason.create([{name: 'Owner Surrender'}, {name: 'Return'}, {name: 'Shelter'}, {name: 'Born into Rescue'}])
 
 Veterinarian.create(
 	[

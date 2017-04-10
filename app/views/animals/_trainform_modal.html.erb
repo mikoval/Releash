@@ -1,16 +1,14 @@
 <% modal ||= false %>
 <% remote = modal ? true : false %>
 
-<!-- Intake fill in information -->
-<!-- Is this going to throw an error because all the other stuff aren't in here = Check validations? --> 
 <%= form_for(new_train, remote: remote, url: url_for(action: 'new', controller: 'training', method: 'get'))      do |f| %>
 
     <%= f.hidden_field :animal_id, value: animal_id%>
     
-    <%= f.label :current_entry, "Current Entry" %>
+    <%= f.label :current_entry, "Make it Current Entry" %>
     <%= f.check_box :current_entry, class: 'form-control' %>
     
-    <%= f.label :train_date, "In Training Date" %>
+    <%= f.label :train_date, "Date" %>
     <%= f.text_field :train_date, class: 'datepicker' %>
 
     <%= f.label :sub_status, class: 'control-label' %><br>

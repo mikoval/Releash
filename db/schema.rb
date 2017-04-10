@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170402025100) do
+ActiveRecord::Schema.define(version: 20170409203717) do
 
   create_table "adopteds", force: :cascade do |t|
     t.string  "adopt_date"
@@ -42,10 +42,10 @@ ActiveRecord::Schema.define(version: 20170402025100) do
     t.integer  "created_by_id"
     t.integer  "animal_id"
     t.string   "location"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
     t.boolean  "required",      default: false
     t.boolean  "completed",     default: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   create_table "animal_alerts", force: :cascade do |t|
@@ -53,6 +53,14 @@ ActiveRecord::Schema.define(version: 20170402025100) do
     t.integer  "alert_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "animal_applications", force: :cascade do |t|
+    t.integer "animal_id"
+    t.integer "adopter_id"
+    t.string  "comments"
+    t.string  "adoption_document"
+    t.string  "app_date"
   end
 
   create_table "animal_breeds", force: :cascade do |t|
@@ -76,6 +84,7 @@ ActiveRecord::Schema.define(version: 20170402025100) do
     t.integer "zip_code"
     t.string  "email"
     t.string  "city"
+    t.string  "phone_number"
   end
 
   create_table "animals", force: :cascade do |t|
@@ -108,7 +117,22 @@ ActiveRecord::Schema.define(version: 20170402025100) do
     t.string   "notes"
     t.integer  "sub_status_id"
     t.integer  "marketing_id"
-    t.boolean  "visibility",                    default: false
+    t.boolean  "inactive_animal",               default: false
+    t.string   "input_date"
+    t.string   "date_death"
+    t.string   "date_adopted"
+    t.boolean  "vetting_completed",             default: false
+    t.integer  "coordinator_id"
+  end
+
+  create_table "breed_nonusers", force: :cascade do |t|
+    t.integer "breed_id"
+    t.integer "non_user_id"
+  end
+
+  create_table "breed_users", force: :cascade do |t|
+    t.integer "breed_id"
+    t.integer "user_id"
   end
 
   create_table "breeds", force: :cascade do |t|
@@ -128,9 +152,6 @@ ActiveRecord::Schema.define(version: 20170402025100) do
   create_table "foster_statuses", force: :cascade do |t|
     t.string  "foster_date"
     t.integer "foster_id"
-    t.integer "adopter_id"
-    t.integer "vet_id"
-    t.boolean "homecheck"
     t.string  "comments"
     t.integer "sub_status_id"
     t.integer "animal_id"
@@ -147,15 +168,18 @@ ActiveRecord::Schema.define(version: 20170402025100) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "intake_reasons", force: :cascade do |t|
+    t.string "name"
+  end
+
   create_table "intakes", force: :cascade do |t|
     t.string  "intake_date"
-    t.integer "foster_id"
-    t.integer "vet_id"
     t.string  "comments"
     t.integer "sub_status_id"
     t.integer "animal_facility_id"
     t.boolean "current_entry",      default: false
     t.integer "animal_id"
+    t.integer "intake_reason_id"
   end
 
   create_table "marketing_types", force: :cascade do |t|
@@ -173,10 +197,16 @@ ActiveRecord::Schema.define(version: 20170402025100) do
     t.string  "state"
     t.integer "zip_code"
     t.string  "email"
-    t.boolean "foster_check"
-    t.boolean "adopt_check"
-    t.boolean "is_non_user"
+    t.boolean "foster_check",     default: false
+    t.boolean "adopt_check",      default: false
     t.string  "picture"
+    t.string  "nonuser_document"
+    t.string  "comments"
+    t.string  "home_comm"
+    t.boolean "homecheck",        default: false
+    t.boolean "disabled",         default: false
+    t.string  "phone_number"
+    t.string  "city"
   end
 
   create_table "other_statuses", force: :cascade do |t|
@@ -219,12 +249,14 @@ ActiveRecord::Schema.define(version: 20170402025100) do
     t.integer "zip_code"
     t.string  "email"
     t.string  "city"
+    t.string  "phone_number"
+    t.string  "person_contact"
+    t.string  "comments"
   end
 
   create_table "trainings", force: :cascade do |t|
     t.string  "train_date"
     t.string  "problem_info"
-    t.decimal "expense"
     t.integer "trainer_id"
     t.integer "sub_status_id"
     t.boolean "current_entry", default: false
@@ -260,7 +292,12 @@ ActiveRecord::Schema.define(version: 20170402025100) do
     t.integer  "zip_code"
     t.boolean  "foster_check",      default: false
     t.boolean  "adopt_check",       default: false
-    t.boolean  "is_user",           default: false
+    t.string   "user_document"
+    t.string   "comments"
+    t.string   "home_comm"
+    t.boolean  "homecheck",         default: false
+    t.string   "phone_number"
+    t.string   "city"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
@@ -272,12 +309,15 @@ ActiveRecord::Schema.define(version: 20170402025100) do
     t.string  "state"
     t.integer "zip_code"
     t.string  "email"
+    t.string  "phone_number"
+    t.string  "person_contact"
+    t.string  "comments"
+    t.boolean "credit_card",    default: false
   end
 
   create_table "vettings", force: :cascade do |t|
     t.string  "vet_date"
     t.integer "curr_vet_id"
-    t.integer "curr_fost_id"
     t.string  "comments"
     t.integer "sub_status_id"
     t.boolean "current_entry", default: false

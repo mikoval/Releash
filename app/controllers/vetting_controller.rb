@@ -5,6 +5,7 @@ class VettingController < ApplicationController
 
     if @vetting.current_entry?
       Vetting.update_all "current_entry = 'false'"
+      @vetting.current_entry = true
       @new_status = StatusType.find_by(name: "Vetting").id
       @vetting_animal = Animal.find_by(id: @vetting.animal_id)
       
@@ -25,17 +26,17 @@ class VettingController < ApplicationController
     end
   end
   def vet_params
-  	params.require(:vetting).permit(:vet_date, :curr_vet_id, :comments, :animal_id, :sub_status_id)
+  	params.require(:vetting).permit(:vet_date, :curr_vet_id, :comments, :animal_id, :sub_status_id, :current_entry)
   end
 
   skip_before_filter :verify_authenticity_token, :only => :editVetting
   
   def editVetting
-    #Rails.logger.debug("Params -----------------------------------: #{params.inspect}")
     @vetting = Vetting.find(params[:vet_id])
     
     if @vetting.current_entry?
       Vetting.update_all "current_entry = 'false'"
+      @vetting.current_entry = true
       @new_status = StatusType.find_by(name: "Vetting").id
       @vetting_animal = Animal.find_by(id: @vetting.animal_id)
     

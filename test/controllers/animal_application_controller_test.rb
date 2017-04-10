@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class OtherControllerTest < ActionController::TestCase
+class AnimalApplicationControllerTest < ActionController::TestCase
   test "should get new" do
     get :new
     assert_response :success
@@ -8,11 +8,6 @@ class OtherControllerTest < ActionController::TestCase
 
   test "should get edit" do
     get :edit
-    assert_response :success
-  end
-
-  test "should get list" do
-    get :list
     assert_response :success
   end
 

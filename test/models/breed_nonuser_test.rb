@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class OtherStatusTest < ActiveSupport::TestCase
+class BreedNonuserTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
