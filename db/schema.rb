@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170409203717) do
+ActiveRecord::Schema.define(version: 20170410002143) do
 
   create_table "adopteds", force: :cascade do |t|
     t.string  "adopt_date"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20170409203717) do
     t.string  "comments"
     t.string  "adoption_document"
     t.string  "app_date"
+    t.string  "text_app"
   end
 
   create_table "animal_breeds", force: :cascade do |t|

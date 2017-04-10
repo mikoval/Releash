@@ -371,7 +371,7 @@ class AnimalsController < ApplicationController
 
       if (params["training_dt"] == "" or params["training_dt"] == nil) and @status_name.to_s == "In Training"
 
-        @new_train = Training.new({train_date: @date_made, problem_info: nil, expense: 0, animal_id: @animal.id, trainer_id: nil, sub_status_id: @animal.sub_status_id})
+        @new_train = Training.new({train_date: @date_made, problem_info: nil, animal_id: @animal.id, trainer_id: nil, sub_status_id: @animal.sub_status_id})
 
         @new_train.save
       end
@@ -458,7 +458,7 @@ class AnimalsController < ApplicationController
         
         @train_sub  = params[:training_sub][:sub_status_id]
 
-        @new_train = Training.new({train_date: @train_date, problem_info: @problem_info, expense: 0, animal_id: @animal.id, trainer_id: @trainer, sub_status_id: @train_sub})
+        @new_train = Training.new({train_date: @train_date, problem_info: @problem_info, animal_id: @animal.id, trainer_id: @trainer, sub_status_id: @train_sub})
 
         @new_train.save
 
