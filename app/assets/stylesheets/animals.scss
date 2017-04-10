@@ -188,3 +188,40 @@ article {
 .status-buffer {
     height: 20px;
 }
+
+.tooltip2 {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip2 .tooltiptext2 {
+    visibility: hidden;
+    width: 400px;
+    background-color: #F7CBC5;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    text-align: left;
+    padding-left: 10px;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: -10px;
+    left: 55px;
+}
+
+.tooltip2 .tooltiptext2::after {
+    content: " ";
+    position: absolute;
+    top: 10px;
+    right: 300px; /* To the left of the tooltip */
+    margin-top: 5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #F7CBC5 transparent transparent;
+}
+
+.tooltip2:hover .tooltiptext2 {
+    visibility: visible;
+}
