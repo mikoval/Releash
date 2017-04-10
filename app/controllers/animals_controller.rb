@@ -163,7 +163,8 @@ class AnimalsController < ApplicationController
             "id" => a.id,
             "date" => a.app_date,
             "adopt" => @adopt_adopt,
-            "comm" => a.comments
+            "comm" => a.comments,
+            "text_app" => a.text_app
             })
       end
     end

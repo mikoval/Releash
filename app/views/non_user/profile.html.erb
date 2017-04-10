@@ -48,7 +48,7 @@
 <ul class="nav nav-tabs">
     <li class="active"><a href="#foster" data-toggle="tab">Animals Fostered</a></li>
     <li><a href="#adopt" data-toggle="tab">Animals Adopted</a></li>
-    <li><a href="#applied" data-toggle="tab">Animals Applied For</a></li>
+    <li><a href="#app" data-toggle="tab">Animals Applied For</a></li>
 </ul>
 
 <div class="tab-content">
@@ -103,6 +103,31 @@
     </table>
   </div>
 
+   <!-- App history TAB CONTENT -->
+  <div class="tab-pane" id="app">
+    <table id = "app-table" class="table table-bordered table-inverse table-hover app-table">
+      <thead>
+        <tr>
+          <th class= "col-md-1">Date</th>
+          <th class= "col-md-2">Animal Name</th>
+        </tr>
+      </thead>
+      
+      <% if @allApps != nil%>
+        <tbody>
+          <% @allApps.each do |a| %>
+             <tr style = "height: 70px;" >
+                <td><%= a.app_date%></td>
+                <td> 
+                  <%= Animal.find_by(id: a.animal_id).name%>
+                </td>
+              </tr>
+          <% end %>
+        </tbody>
+      <% end %>
+
+    </table>
+  </div>
 
 
 
