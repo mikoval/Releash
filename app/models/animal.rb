@@ -27,4 +27,25 @@ class Animal < ActiveRecord::Base
         return ((Time.now.to_i  - birthday.to_datetime.to_i )  / 1.year).to_i
 
     end
+    def location()
+
+
+        if(status.name == "Intake")
+            current = Intake.where("animal_id = " +  id.to_s + " & current_entry = 'true'" )[0]
+            
+            return "current"
+        elsif(status.name == "Foster")
+
+        elsif(status.name == "Vetting")
+
+        elsif(status.name == "With Adopter")
+
+        elsif(status.name == "In Training")
+
+        else
+            return "UNDEFINED"
+
+        end 
+
+    end
 end
