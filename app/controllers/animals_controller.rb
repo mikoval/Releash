@@ -353,32 +353,32 @@ class AnimalsController < ApplicationController
       
       if (params["intake_dt"] == "" or params["intake_dt"] == nil) and @status_name.to_s == "Intake"
 
-        @new_intake = Intake.new({intake_date: @date_made, comments: nil, animal_id: @animal.id, sub_status_id: @animal.sub_status_id, animal_facility_id: nil, intake_reason_id: nil})
+        @new_intake = Intake.new({intake_date: @date_made, comments: nil, animal_id: @animal.id, sub_status_id: @animal.sub_status_id, animal_facility_id: nil, intake_reason_id: nil, current_entry: true})
         @new_intake.save
       end
       
       if (params["vet_dt"] == "" or params["vet_dt"] == nil) and @status_name.to_s == "Vetting"
 
-        @new_vetting = Vetting.new({vet_date: @date_made, curr_vet_id: nil, comments: nil, animal_id: @animal.id, sub_status_id: @animal.sub_status_id})
+        @new_vetting = Vetting.new({vet_date: @date_made, curr_vet_id: nil, comments: nil, animal_id: @animal.id, sub_status_id: @animal.sub_status_id, current_entry: true})
         @new_vetting.save
       end
 
       if (params["foster_dt"] == "" or params["foster_dt"] == nil) and @status_name.to_s == "Foster"
 
-        @new_foster = FosterStatus.new({foster_date: @date_made, foster_id: nil, comments: nil, sub_status_id: @animal.sub_status_id, animal_id: @animal.id})
+        @new_foster = FosterStatus.new({foster_date: @date_made, foster_id: nil, comments: nil, sub_status_id: @animal.sub_status_id, animal_id: @animal.id, current_entry: true})
         @new_foster.save
       end
 
       if (params["training_dt"] == "" or params["training_dt"] == nil) and @status_name.to_s == "In Training"
 
-        @new_train = Training.new({train_date: @date_made, problem_info: nil, animal_id: @animal.id, trainer_id: nil, sub_status_id: @animal.sub_status_id})
+        @new_train = Training.new({train_date: @date_made, problem_info: nil, animal_id: @animal.id, trainer_id: nil, sub_status_id: @animal.sub_status_id, current_entry: true})
 
         @new_train.save
       end
 
       if (params["adopted_dt"] == "" or params["adopted_dt"] == nil) and @status_name.to_s == "With Adopter"
 
-        @new_adopt = Adopted.new({adopt_date: @date_made, adopter_id: nil, comments: nil, animal_id: @animal.id, sub_status_id: @animal.sub_status_id})
+        @new_adopt = Adopted.new({adopt_date: @date_made, adopter_id: nil, comments: nil, animal_id: @animal.id, sub_status_id: @animal.sub_status_id, current_entry: true})
 
         @new_adopt.save
       end
@@ -403,7 +403,7 @@ class AnimalsController < ApplicationController
         @ani_faci = params[:intake_prev][:animal_facility_id]
         @intake_sub = params[:intake_sub][:sub_status_id]
 
-        @new_intake = Intake.new({intake_date: @intake, comments: @comm, animal_id: @animal.id, sub_status_id: @intake_sub, animal_facility_id: @ani_faci, intake_reason_id: @intake_loc})
+        @new_intake = Intake.new({intake_date: @intake, comments: @comm, animal_id: @animal.id, sub_status_id: @intake_sub, animal_facility_id: @ani_faci, intake_reason_id: @intake_loc, current_entry: true})
         @new_intake.save
 
       end
@@ -417,7 +417,7 @@ class AnimalsController < ApplicationController
         @comm = params[:vet_cm]
         @vet_sub = params[:vet_sub][:sub_status_id]
 
-        @new_vetting = Vetting.new({vet_date: @vetting, curr_vet_id: @vet, comments: @comm, animal_id: @animal.id, sub_status_id: @vet_sub})
+        @new_vetting = Vetting.new({vet_date: @vetting, curr_vet_id: @vet, comments: @comm, animal_id: @animal.id, sub_status_id: @vet_sub, current_entry: true})
         @new_vetting.save
         
       end
@@ -444,7 +444,7 @@ class AnimalsController < ApplicationController
  
         @comm = params[:fost_cm]
         
-        @new_foster = FosterStatus.new({foster_date: @foster_date,  foster_id: @foster_id, comments: @comm, sub_status_id: @fost_sub, animal_id: @animal.id})
+        @new_foster = FosterStatus.new({foster_date: @foster_date,  foster_id: @foster_id, comments: @comm, sub_status_id: @fost_sub, animal_id: @animal.id,current_entry: true})
         @new_foster.save
       end
 
@@ -458,7 +458,7 @@ class AnimalsController < ApplicationController
         
         @train_sub  = params[:training_sub][:sub_status_id]
 
-        @new_train = Training.new({train_date: @train_date, problem_info: @problem_info, animal_id: @animal.id, trainer_id: @trainer, sub_status_id: @train_sub})
+        @new_train = Training.new({train_date: @train_date, problem_info: @problem_info, animal_id: @animal.id, trainer_id: @trainer, sub_status_id: @train_sub, current_entry: true})
 
         @new_train.save
 
@@ -484,7 +484,7 @@ class AnimalsController < ApplicationController
 
         @comm = params[:adopted_cm]
 
-        @new_adopt = Adopted.new({adopt_date: @adopt_date, adopter_id: @adopt_id, comments: @comm, animal_id: @animal.id, sub_status_id: @adopt_sub})
+        @new_adopt = Adopted.new({adopt_date: @adopt_date, adopter_id: @adopt_id, comments: @comm, animal_id: @animal.id, sub_status_id: @adopt_sub, current_entry: true})
 
         @new_adopt.save
       end
