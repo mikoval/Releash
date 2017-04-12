@@ -12,7 +12,7 @@ class RemoveTrackingColumns < ActiveRecord::Migration
   	remove_column :foster_statuses, :homecheck
 
   	drop_table :sub_statuses
-  	drop_table :other_statuses
+  	#drop_table :other_statuses
   	drop_table :marketings
   	drop_table :hold_types
 
