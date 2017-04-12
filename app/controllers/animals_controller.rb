@@ -657,7 +657,9 @@ class AnimalsController < ApplicationController
           "picture" => d.picture,
           "age" => d.age(),
           "birthday" => d.birthday.to_formatted_s(:long_ordinal),
-          "location" =>d.location()
+          "location" =>d.location(),
+          "sub_status" =>d.sub_status.name,
+          "marketing" => d.marketing.name
         })
       end
     end

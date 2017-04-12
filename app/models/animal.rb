@@ -32,7 +32,7 @@ class Animal < ActiveRecord::Base
 
         if(status.name == "Intake")
             current = Intake.where(:animal_id => id, :current_entry  => true)[0]
-            if(current == nil)
+            if(current.animal_facility_id == nil)
                 return "At Intake but no location"
             end
             return AnimalFacility.find(current.animal_facility_id).name
@@ -60,6 +60,7 @@ class Animal < ActiveRecord::Base
 
         elsif(status.name == "Vetting")
             current = Vetting.where(:animal_id => id, :current_entry  => true)[0]
+
             if(current == nil)
                 return "At Vetting but no location"
             end
