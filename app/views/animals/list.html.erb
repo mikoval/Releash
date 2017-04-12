@@ -155,11 +155,13 @@ function generateAnimalsList(){
         for (x in result){
           str += "<tr>"
 
-          str += "<td> <div class=\"tooltip2\"><a href='/animals/profile?method=get&param=" + result[x].id + " '  >" + result[x].name + "</a><span class=\"tooltiptext2\"><div style = \"float: left\"><p class=\"two\">" 
+          str += "<td> <div class=\"tooltip2\"><a href='/animals/profile?method=get&param=" + result[x].id + " '  >" + result[x].name + "</a><span class=\"tooltiptext2\"><div class= \"tooltiptext3\"><p class=\"two\">" 
 
-          str += "Name: " + result[x].name + "<br>Breed: "+ result[x].primary 
-          str += "<br>Gender: " + result[x].gender + "<br>Status: " + result[x].status
-          str += "</div><div style = \"float: left\"><img src=" +  result[x].picture + "/></p></div></span></div></td>"
+          str += "<div class=\"header\">" + result[x].name + "</div><b>Breed: </b>"+ result[x].primary
+          str += "<br><b>Birthday: </b>" + result[x].birthday.slice(0,result[x].birthday.length-6)  + "<br><b>Age: </b>" + result[x].age +"<br><b>Gender: </b>" + result[x].gender 
+          str += "<br><b>Spayed/Neutered: </b>" + result[x].neutered + "<br><b>Adoption Fee: </b>" + result[x].adoption_free 
+          str += "<br><b> Notes: </b>" + result[x].notes 
+          str += "</div><div class = \"tooltiptext4\"><img src=" +  result[x].picture.picture.url +" "+ "height=\"150px\" width=\"150px\" align=\"right\"></p></div></span></div></td>"
 
           str += "<td>" + result[x].status + "</td>"
           str += "<td>" + result[x].sub_status + "</td>"
@@ -167,9 +169,9 @@ function generateAnimalsList(){
           str += "<td>" + result[x].marketing + "</td>"
           str += "</tr>"
 
+        console.log(result[x].picture.picture.url);
         }
         str +=  " </table>"
-
         $("#animals-list").html(str);
     },
   });
