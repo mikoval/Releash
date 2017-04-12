@@ -21,7 +21,7 @@
 
 //= require moment 
 
-
+$('#calendar').fullCalendar({});
 
 
 function generateAnimals(arr){

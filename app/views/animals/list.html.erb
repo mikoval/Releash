@@ -103,15 +103,25 @@ function generateAnimalsList(){
       while(params.name.indexOf("+")!=-1){
         params.name = params.name.replace("+", " ");
       }
-      console.log(params.name)
-  }
+      document.getElementById("filter-name").value = params.name
+    }
     else{params.name = $("#filter-name").val();}
-    if(myURL.charAt(myURL.indexOf("?b=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.breed = myURL.substring(myURL.indexOf("?b=")+3, myURL.indexOf("&?g="))}
+
+    if(myURL.charAt(myURL.indexOf("?b=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.breed = myURL.substring(myURL.indexOf("?b=")+3, myURL.indexOf("&?g="))
+      document.getElementById("filter-breed").value = params.breed
+    }
     else{params.breed = $("#filter-breed").val();}
-    if(myURL.charAt(myURL.indexOf("?g=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.gender = myURL.substring(myURL.indexOf("?g=")+3, myURL.indexOf("&?s="))}
+
+    if(myURL.charAt(myURL.indexOf("?g=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.gender = myURL.substring(myURL.indexOf("?g=")+3, myURL.indexOf("&?s="))
+      document.getElementById("filter-gender").value = params.gender
+    }
     else{params.gender = $("#filter-gender").val();}
-    if(myURL.charAt(myURL.indexOf("?s=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.status = myURL.substring(myURL.indexOf("?s=")+3, myURL.indexOf("&?a="))}
+
+    if(myURL.charAt(myURL.indexOf("?s=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.status = myURL.substring(myURL.indexOf("?s=")+3, myURL.indexOf("&?a="))
+      document.getElementById("filter-status").value = params.status
+    }
     else{params.status = $("#filter-status").val();}
+
     if(myURL.charAt(myURL.indexOf("?a=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.age_min = parseInt(myURL.substring(myURL.indexOf("?a=")+3, myURL.indexOf("&?A=")))}
     else{params.age_min = $("#age-min").text();}
     if(myURL.charAt(myURL.indexOf("?A=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.age_max = parseInt(myURL.substring(myURL.indexOf("?A=")+3, myURL.length))}
