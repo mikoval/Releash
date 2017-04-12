@@ -31,16 +31,56 @@ class Animal < ActiveRecord::Base
 
 
         if(status.name == "Intake")
-            current = Intake.where("animal_id = " +  id.to_s + " & current_entry = 'true'" )[0]
-            
-            return "current"
+            current = Intake.where(:animal_id => id, :current_entry  => true)[0]
+            return AnimalFacility.find(current.animal_facility_id).name
+         
         elsif(status.name == "Foster")
+            @foster = FosterStatus.where(:animal_id => id, :current_entry => true)[0]
+            
+            if @foster.foster_id != nil
+              @foster = Foster.find_by id: @foster.foster_id    
+              if @foster.user_id == nil and @foster.non_user_id != nil
+                @fost_foster = NonUser.find(@foster.non_user_id).name
+                @fost_email = NonUser.find(@foster.non_user_id).email
+                return @fost_foster
+              elsif @foster.user_id != nil and @foster.non_user_id == nil
+                @fost_foster = User.find(@foster.user_id).name
+                @fost_email = User.find(@foster.user_id).email
+                return @fost_foster
+              end
+
+            else
+                return "Foster but not assigned"
+            end
 
         elsif(status.name == "Vetting")
+            current = Vetting.where(:animal_id => id, :current_entry  => true)[0]
+            return Veterinarian.find(current.curr_vet_id).name
 
         elsif(status.name == "With Adopter")
+            a = Adopted.where(:animal_id => id, :current_entry => true)[0]
+            
+            if a.adopter_id != nil
+              @adopter = Adopter.find_by id: a.adopter_id
+              
+              if @adopter.user_id == nil and @adopter.non_user_id != nil
+                @adopt_adopt = NonUser.find(@adopter.non_user_id).name
+                @adopt_email = NonUser.find(@adopter.non_user_id).email
+                @adopt_adopt
+              end
+              if @adopter.user_id != nil and @adopter.non_user_id == nil
+                @adopt_adopt = User.find(@adopter.user_id).name
+                @adopt_email = User.find(@adopter.user_id).email
+                return @adopt_adopt
+              end
+            else
+
+                return "Adopted but adopter not set"
+            end
 
         elsif(status.name == "In Training")
+            current = Training.where(:animal_id => id, :current_entry  => true)[0]
+            return Trainer.find(current.trainer_id).name
 
         else
             return "UNDEFINED"
