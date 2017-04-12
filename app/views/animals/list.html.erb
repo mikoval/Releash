@@ -156,8 +156,8 @@ function generateAnimalsList(){
           str += "<tr> \
           <td> <div class=\"tooltip2\"><a href='/animals/profile?method=get&param=" + result[x].id + " '  >" + result[x].name + "</a><span class=\"tooltiptext2\"><div style = \"float: left\"><p class=\"two\">" 
 
-          + "Name: " + result[x].name + "<br>Breed: "+ result[x].primary 
-          + "<br>Gender: " + result[x].gender + "<br>Status: " + result[x].status
+          + "<b>Name: </b>" + result[x].name + "<br><b>Breed:</b> "+ result[x].primary 
+          + "<br><b>Gender: </b>" + result[x].gender + "<br><b>Status: </b>" + result[x].status
           + "</div><div style = \"float: left\"><img src=" +  result[x].picture + "/></p></div></span></div></td>\
            <td>" + result[x].primary + "</td>\
           <td>" + result[x].status + "</td>\
