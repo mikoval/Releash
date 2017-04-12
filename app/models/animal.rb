@@ -32,11 +32,16 @@ class Animal < ActiveRecord::Base
 
         if(status.name == "Intake")
             current = Intake.where(:animal_id => id, :current_entry  => true)[0]
+            if(current == nil)
+                return "At Intake but no location"
+            end
             return AnimalFacility.find(current.animal_facility_id).name
          
         elsif(status.name == "Foster")
             @foster = FosterStatus.where(:animal_id => id, :current_entry => true)[0]
-            
+            if(@foster == nil)
+                return "At Foster but no location"
+            end
             if @foster.foster_id != nil
               @foster = Foster.find_by id: @foster.foster_id    
               if @foster.user_id == nil and @foster.non_user_id != nil
@@ -55,11 +60,16 @@ class Animal < ActiveRecord::Base
 
         elsif(status.name == "Vetting")
             current = Vetting.where(:animal_id => id, :current_entry  => true)[0]
+            if(current == nil)
+                return "At Vetting but no location"
+            end
             return Veterinarian.find(current.curr_vet_id).name
 
         elsif(status.name == "With Adopter")
             a = Adopted.where(:animal_id => id, :current_entry => true)[0]
-            
+            if(a == nil)
+                return "At Adopter but no location"
+            end
             if a.adopter_id != nil
               @adopter = Adopter.find_by id: a.adopter_id
               
@@ -80,6 +90,9 @@ class Animal < ActiveRecord::Base
 
         elsif(status.name == "In Training")
             current = Training.where(:animal_id => id, :current_entry  => true)[0]
+            if(current == nil)
+                return "At Training but no location"
+            end
             return Trainer.find(current.trainer_id).name
 
         else
