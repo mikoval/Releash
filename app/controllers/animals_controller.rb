@@ -650,7 +650,7 @@ class AnimalsController < ApplicationController
         arr.push({
           "id" => d.id,
           "#" =>  index, 
-          "name" => d.name,
+          "name" => d.name.downcase,
           "primary" => d.primary_breed.name,
           "gender" => d.gender,
           "status" => d.status.name,
