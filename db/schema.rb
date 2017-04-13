@@ -42,10 +42,10 @@ ActiveRecord::Schema.define(version: 20170410002143) do
     t.integer  "created_by_id"
     t.integer  "animal_id"
     t.string   "location"
-    t.boolean  "required",      default: false
-    t.boolean  "completed",     default: false
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+    t.boolean  "required",      default: false
+    t.boolean  "completed",     default: false
   end
 
   create_table "animal_alerts", force: :cascade do |t|
@@ -164,11 +164,6 @@ ActiveRecord::Schema.define(version: 20170410002143) do
     t.integer "user_id"
   end
 
-  create_table "hold_types", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "updated_at", null: false
-  end
-
   create_table "intake_reasons", force: :cascade do |t|
     t.string "name"
   end
@@ -185,11 +180,6 @@ ActiveRecord::Schema.define(version: 20170410002143) do
 
   create_table "marketing_types", force: :cascade do |t|
     t.string "name"
-  end
-
-  create_table "marketings", force: :cascade do |t|
-    t.string  "name"
-    t.integer "animal_id"
   end
 
   create_table "non_users", force: :cascade do |t|
@@ -210,15 +200,6 @@ ActiveRecord::Schema.define(version: 20170410002143) do
     t.string  "city"
   end
 
-  create_table "other_statuses", force: :cascade do |t|
-    t.string  "other_date"
-    t.integer "sub_status_id"
-    t.integer "animal_id"
-    t.string  "comments"
-    t.string  "status_name"
-    t.boolean "current_entry", default: false
-  end
-
   create_table "roles", force: :cascade do |t|
     t.string "title"
   end
@@ -235,12 +216,6 @@ ActiveRecord::Schema.define(version: 20170410002143) do
 
   create_table "sub_status_types", force: :cascade do |t|
     t.string "name"
-  end
-
-  create_table "sub_statuses", force: :cascade do |t|
-    t.integer "name_id"
-    t.integer "animal_id"
-    t.string  "comments"
   end
 
   create_table "trainers", force: :cascade do |t|

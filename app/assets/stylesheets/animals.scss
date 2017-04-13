@@ -196,30 +196,51 @@ article {
 
 .tooltip2 .tooltiptext2 {
     visibility: hidden;
-    width: 400px;
-    background-color: #F7CBC5;
+    width: 370px;
+    background-color: #505050;
     color: #fff;
     text-align: center;
-    border-radius: 6px;
+    border-radius: 10px;
     padding: 5px 0;
     text-align: left;
-    padding-left: 10px;
+    padding-left: 5px;
     /* Position the tooltip */
     position: absolute;
     z-index: 1;
     top: -10px;
     left: 55px;
+    font-family: "Times New Roman", Times, serif;
+}
+
+.tooltip2 .header {
+  height: 40px;
+  background-color: #F16D6D;
+  font-size: 200%;
+  font-family: Arial, Helvetica, serif;
+}
+
+.tooltip2 .tooltiptext3 {
+  float: left;
+  width: 60%;
+  font-size: 110%;
+}
+
+.tooltip2 .tooltiptext4 {
+  float: left;
+  width: 40%;
+  padding-top: 28px;
+  padding-right: 5px;
 }
 
 .tooltip2 .tooltiptext2::after {
     content: " ";
     position: absolute;
     top: 10px;
-    right: 400px; /* To the left of the tooltip */
+    right: 370px; /* To the left of the tooltip */
     margin-top: 5px;
     border-width: 5px;
     border-style: solid;
-    border-color: transparent #F7CBC5 transparent transparent;
+    border-color: transparent #505050 transparent transparent;
 }
 
 .tooltip2:hover .tooltiptext2 {
