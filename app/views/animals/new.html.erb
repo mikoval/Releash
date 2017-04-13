@@ -110,12 +110,17 @@
 
               <%= text_field_tag 'breeds', "", class: "hidden-breeds", style: "display:none;"  %>
              
-
               <%= f.label :date_of_birth %>
               <%= f.text_field :birthday, class: 'datepicker required' %>
 
+              <%= f.label :input_date %>
+              <%= f.text_field :input_date, class: 'datepicker' %>
+
               <%= f.label :microchip_number , "Microchip #"%>
               <%= f.text_field :microchip_number, class: 'form-control' %>
+
+              <%= f.label :coordinator, "Assigned Coordinator"%>
+              <%= f.collection_select :coordinator_id, @coordinators, :id, :name, {:prompt => "Select Coordinator"}, class: 'required' %>
 
               <%= f.label :status %>
               <%= f.collection_select :status_id, @status, :id, :name, {:prompt => "Select Status"}, class: 'required' %> 
@@ -271,8 +276,7 @@
               <li role="presentation"><a href="#vetting" data-toggle="tab">Vetting</a></li>
               <li role="presentation"><a href="#foster" data-toggle="tab">Foster</a></li>
               <li role="presentation"><a href="#training" data-toggle="tab">Training</a></li>
-              <li role="presentation"><a href="#adopted" data-toggle="tab">Adopted</a></li>
-              <li role="presentation"><a href="#other" data-toggle="tab">Other</a></li>
+              <li role="presentation"><a href="#adopted" data-toggle="tab">With Adopter</a></li>
             </ul>
 
             <!-- Information for Statuses in Tabs-->
@@ -285,25 +289,20 @@
                 
                 <%= f.label :intake_sub, "Sub Status"%>
                 <%= collection_select(:intake_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
-
-                <!-- Selecting Foster-->
-                <%= f.label :intake_fost, "Foster"%>
-                <%= collection_select(:intake_fost, :foster_id, @fosters, :email, :name, {:prompt => "Select foster"}) %>
                 
-                <!-- Selecting Vets-->
-                <%= f.label :intake_vet, "Veterinarian"%>
-                <%= collection_select(:intake_vet, :veterinarian_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian"}) %>
+                <!-- Selecting Prev Location-->
+                <%= f.label :intake_loc, "Previous Location"%>
+                <%= collection_select(:intake_loc, :intake_reason_id, IntakeReason.all, :id, :name, {:prompt => "Select Previous Location"}) %>
 
                 <!-- Selecting Previous Location-->
-                <%= f.label :intake_prev, "Previous Location"%>
-                <%= collection_select(:intake_prev, :animal_facility_id, AnimalFacility.all, :id, :name, {:prompt => "Select Previous Location"}) %>
+                <%= f.label :intake_prev, "Animal Facility"%>
+                <%= collection_select(:intake_prev, :animal_facility_id, AnimalFacility.all, :id, :name, {:prompt => "Select Animal Facility"}) %>
 
                 <!-- Inputing Details-->
                 <%= f.label :intake_comm, "Details" %>
                 <%= text_field_tag 'intake_cm', "", class: 'form-control' %>
               
               </div> 
-
 
               <!-- VETTING -->
               <div id="vetting" role="tabpanel" class="tab-pane">
@@ -317,9 +316,8 @@
                   <%= f.label :vet_vet, "Veterinarian"%>
                   <%= collection_select(:vet_vet, :veterinarian_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian"}) %>
                   
-                  
                   <!-- Inputing Details-->
-                  <%= f.label :vet_comm, "Details" %>
+                  <%= f.label :vet_comm, "Comments" %>
                   <%= text_field_tag 'vet_cm', "", class: 'form-control' %>
 
               </div>
@@ -334,15 +332,8 @@
 
                 <%= f.label :fost_fost, "Foster"%>
                 <%= collection_select(:fost_fost, :foster_id, @fosters, :email, :name, {:prompt => "Select foster"}) %>
-                
-                <%= f.label :homecheck, "Home Check Completed"%>
-                <%= check_box_tag 'foster_check', value = "1"%>
 
-                <!-- Selecting Vet-->
-                <%= f.label :fost_vet, "Veterinarian"%>
-                <%= collection_select(:fost_vet, :veterinarian_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian"}) %>
-
-                <%= f.label :fost_comm, "Details" %>
+                <%= f.label :fost_comm, "Comments" %>
                 <%= text_field_tag 'fost_cm', "", class: 'form-control' %>
               </div>
               
@@ -379,22 +370,6 @@
 
                 <%= f.label :adopt_comm, "Comments" %>
                 <%= text_field_tag 'adopt_cm', "", class: 'form-control' %>
-              
-              </div>
-
-              <!-- OTHER -->
-              <div id="other" role="tabpanel" class="tab-pane">
-                <%= f.label :other_date%>
-                <%= text_field_tag 'other_dt', "", class: 'datepicker' %>
-
-                <%= f.label :other_name, "Other Status Name" %>
-                <%= text_field_tag 'other_nm', "", class: 'form-control' %>
-
-                <%= f.label :other_sub, "Sub Status"%>
-                <%= collection_select(:other_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
-                
-                <%= f.label :other_comm, "Comments" %>
-                <%= text_field_tag 'other_cm', "", class: 'form-control' %>
               
               </div>
 

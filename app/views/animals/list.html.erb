@@ -14,13 +14,13 @@
     <br><br>
 
     <div id='filterDiv' class = "filters col-md-3" style = "border-radius:1px; margin:5px; border:solid;";> 
-    <p> Name:  </p> <input type = "text" id = "filter-name"/>
+    <p> Name:  </p> <input type = "text" id = "filter-name" value = "<%= @name %> "/>
     <p> Breed:  </p> 
     <select id = "filter-breed">
       <option value = "">Select Breed</option>
 
       <% @breeds.each do |b|%>
-        <option value = "<%=  b.id %>"> <%= b.name %> </option>
+        <option value = "<%=  b.id %>"  <% if( b.id.to_s == @breed) %>selected <% end %> > <%= b.name %> </option>
       <% end %>
 
     </select>
@@ -28,15 +28,15 @@
     <p> Gender:  </p> 
     <select id = "filter-gender">
       <option value = "">Select Gender</option>
-      <option value = "Male">Male</option>
-      <option value = "Female">Female</option>
+      <option value = "Male" <% if(@gender == "Male") %> selected <% end %>>Male</option>
+      <option value = "Female"<% if(@gender == "Female") %> selected <% end %>>Female</option>
     </select>
 
     <p> Status:  </p> 
     <select id = "filter-status">
       <option value = "">Select Status</option>
-      <% @status.each do |b|%>
-        <option value = "<%=  b.id %>"> <%= b.name %> </option>
+      <% @statuses.each do |b|%>
+        <option value = "<%=  b.id %>" <% if( b.id.to_s == @status) %>selected <% end %> > <%= b.name %> </option>
       <% end %>
     </select>
 
@@ -61,17 +61,14 @@
 
     </div>
 
-  
-     
-
 </div>
 
 <script>
 var slider = $("#age_slider").slider({
         range: true,
         min: 0,
-        max: 25,
-        values: [0, 25],
+        max: 15,
+        values: [<%= @ageMin %>, <%= @ageMax %>],
         slide: function(event, ui) {
             $("#age-min").text(ui.values[0]);
             $("#age-max").text(ui.values[1]);
@@ -154,17 +151,26 @@ function generateAnimalsList(){
       })
 
       animalData = result
-      var str = "<table class='table table-bordered table-hover table-striped'> <thead> <tr> <th>Name</th> <th>Primary Breed</th> <th>Status</th> <th>Gender</th> </tr> </thead>" 
+      var str = "<table class='table table-bordered table-hover table-striped'> <thead> <tr> <th>Name</th> <th>Status</th> <th>Sub-Status</th> <th>Location</th> <th>Marketing</th> </tr> </thead>" 
         for (x in result){
-          str += "<tr> \
-          <td> <a href='/animals/profile?method=get&param=" + result[x].id + " '  >" + result[x].name + "</a></td>\
-           <td>" + result[x].primary + "</td>\
-          <td>" + result[x].status + "</td>\
-          <td>" + result[x].gender + "</td>\
-          </tr>"
+          str += "<tr>"
+
+          str += "<td> <div class=\"tooltip2\"><a href='/animals/profile?method=get&param=" + result[x].id + " '  >" + result[x].name + "</a><span class=\"tooltiptext2\"><div class= \"tooltiptext3\"><p class=\"two\">" 
+
+          str += "<div class=\"header\">" + result[x].name + "</div><b>Breed: </b>"+ result[x].primary
+          str += "<br><b>Birthday: </b>" + result[x].birthday.slice(0,result[x].birthday.length-6)  + "<br><b>Age: </b>" + result[x].age +"<br><b>Gender: </b>" + result[x].gender 
+          str += "<br><b>Spayed/Neutered: </b>" + result[x].neutered + "<br><b>Adoption Fee: </b>" + result[x].adoption_free 
+          str += "<br><b> Coordinator: </b>" + result[x].coordinator.name + "<br><b> Notes: </b>" + result[x].notes 
+          str += "</div><div class = \"tooltiptext4\"><img src=" +  result[x].picture.picture.url +" "+ "height=\"150px\" width=\"150px\" align=\"right\"></p></div></span></div></td>"
+
+          str += "<td>" + result[x].status + "</td>"
+          str += "<td>" + result[x].sub_status + "</td>"
+          str += "<td>" + result[x].location + "</td>"
+          str += "<td>" + result[x].marketing + "</td>"
+          str += "</tr>"
+
         }
         str +=  " </table>"
-
         $("#animals-list").html(str);
     },
   });
@@ -189,15 +195,15 @@ function resetFilters(){
   params.gender = "";
   params.status = "";
   params.age_min = 0;
-  params.age_max = 25;
+  params.age_max = 15;
   $("#filter-name").val('')
   $("#filter-breed").prop('selectedIndex',0)
   $("#filter-gender").prop('selectedIndex',0)
   $("#filter-status").prop('selectedIndex',0)
   $("#age-min").text(0);
-  $("#age-max").text(25);
+  $("#age-max").text(15);
   $("#age_slider").slider("values", 0, 0);
-  $("#age_slider").slider("values", 1, 25);
+  $("#age_slider").slider("values", 1, 15);
   str = ""
   str += document.location
   str = str.substring(0,str.indexOf("?n="))
@@ -239,9 +245,10 @@ function convertArrayOfObjectsToCSV(args) {
 }
 
 function downloadCSV(args) {
+    animalData2 = formatData(animalData)
     var data, filename, link;
     var csv = convertArrayOfObjectsToCSV({
-        data: animalData
+        data: animalData2
     });
 
     if (csv == null) return;
@@ -265,5 +272,118 @@ $("#generate-button").on("click", function(){
 })
 generateAnimalsList();
 
+var tipwidth='50%' //default tooltip width
+var tipbgcolor='lightyellow'  //tooltip bgcolor
+var disappeardelay=250  //tooltip disappear speed onMouseout (in miliseconds)
+var vertical_offset="0px" //horizontal offset of tooltip from anchor link
+var horizontal_offset="-3px" //horizontal offset of tooltip from anchor link
+
+/////No further editting needed
+
+var ie4=document.all
+var ns6=document.getElementById&&!document.all
+
+if (ie4||ns6)
+  document.write('<div id="fixedtipdiv" style="visibility:hidden;width:'+tipwidth+';background-color:'+tipbgcolor+'" ></div>')
+
+  function getposOffset(what, offsettype){
+  var totaloffset=(offsettype=="left")? what.offsetLeft : what.offsetTop;
+  var parentEl=what.offsetParent;
+  while (parentEl!=null){
+    totaloffset=(offsettype=="left")? totaloffset+parentEl.offsetLeft : totaloffset+parentEl.offsetTop;
+    parentEl=parentEl.offsetParent;
+  }
+  return totaloffset;
+}
+
+
+function showhide(obj, e, visible, hidden, tipwidth){
+  if (ie4||ns6)
+    dropmenuobj.style.left=dropmenuobj.style.top=-500
+  if (tipwidth!=""){
+    dropmenuobj.widthobj=dropmenuobj.style
+    dropmenuobj.widthobj.width=tipwidth
+  }
+  if (e.type=="click" && obj.visibility==hidden || e.type=="mouseover")
+    obj.visibility=visible
+  else if (e.type=="click")
+    obj.visibility=hidden
+}
+
+function iecompattest(){
+  return (document.compatMode && document.compatMode!="BackCompat")? document.documentElement : document.body
+}
+
+function clearbrowseredge(obj, whichedge){
+  var edgeoffset=(whichedge=="rightedge")? parseInt(horizontal_offset)*-1 : parseInt(vertical_offset)*-1
+  if (whichedge=="rightedge"){
+    var windowedge=ie4 && !window.opera? iecompattest().scrollLeft+iecompattest().clientWidth-15 : window.pageXOffset+window.innerWidth-15
+    dropmenuobj.contentmeasure=dropmenuobj.offsetWidth
+    if (windowedge-dropmenuobj.x < dropmenuobj.contentmeasure)
+      edgeoffset=dropmenuobj.contentmeasure-obj.offsetWidth
+  }
+  else{
+  var windowedge=ie4 && !window.opera? iecompattest().scrollTop+iecompattest().clientHeight-15 : window.pageYOffset+window.innerHeight-18
+  dropmenuobj.contentmeasure=dropmenuobj.offsetHeight
+  if (windowedge-dropmenuobj.y < dropmenuobj.contentmeasure)
+    edgeoffset=dropmenuobj.contentmeasure+obj.offsetHeight
+  }
+  return edgeoffset
+}
+
+function fixedtooltip(menucontents, obj, e, tipwidth){
+  if (window.event) event.cancelBubble=true
+  else if (e.stopPropagation) e.stopPropagation()
+  clearhidetip()
+  dropmenuobj=document.getElementById? document.getElementById("fixedtipdiv") : fixedtipdiv
+  dropmenuobj.innerHTML=menucontents
+  if (!dropmenuobj.repositioned){
+    document.body.appendChild(dropmenuobj)
+    dropmenuobj.repositioned = true
+  }
+
+  if (ie4||ns6){
+    showhide(dropmenuobj.style, e, "visible", "hidden", tipwidth)
+    dropmenuobj.x=getposOffset(obj, "left")
+    dropmenuobj.y=getposOffset(obj, "top")
+    dropmenuobj.style.left=dropmenuobj.x-clearbrowseredge(obj, "rightedge")+"px"
+    dropmenuobj.style.top=dropmenuobj.y-clearbrowseredge(obj, "bottomedge")+obj.offsetHeight+"px"
+  }
+}
+
+function hidetip(e){
+  if (typeof dropmenuobj!="undefined"){
+    if (ie4||ns6)
+      dropmenuobj.style.visibility="hidden"
+  }
+}
+
+function delayhidetip(){
+  if (ie4||ns6)
+    delayhide=setTimeout("hidetip()",disappeardelay)
+}
+
+function clearhidetip(){
+  if (typeof delayhide!="undefined")
+    clearTimeout(delayhide)
+}
+
+function formatData(data){
+
+  arr =  []
+
+  for(i = 0; i < data.length; i++){
+    json = {}
+    json.ID = i
+    json.Name = data[i]["name"]
+    json.Age = data[i]["age"]
+ //   json.Birthday = data[i]["birthday"]
+    json.Gender = data[i]["gender"]
+    json["Primary Breed"] = data[i]["primary"]
+    json.Status = data[i]["status"]
+    arr.push(json)
+  }
+  return arr
+}
 </script>
 

@@ -1,13 +1,11 @@
 <% modal ||= false %>
 <% remote = modal ? true : false %>
 
-<!-- Intake fill in information -->
-<!-- Is this going to throw an error because all the other stuff aren't in here = Check validations? --> 
 <%= form_for(new_adopt, remote: remote, url: url_for(action: 'new', controller: 'adopted', method: 'get'))      do |f| %>
 
     <%= f.hidden_field :animal_id, value: animal_id%>
     
-    <%= f.label :current_entry, "Current Entry" %>
+    <%= f.label :current_entry, "Make it Current Entry" %>
     <%= f.check_box :current_entry, class: 'form-control' %>
  
     <%= f.label :adopt_date, "Adopt Date" %>
@@ -17,7 +15,7 @@
     <%= f.collection_select :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select SubStatus"}, class: 'form-control' %> 
 
     <%= f.label :adopt_adopter, "Adopter"%>
-    <%=collection_select(:adopt_adopter, :adopter_id, adopters, :email, :name, {:prompt => "Select Adopter"}) %>
+    <%=collection_select(:adopt_adopter, :adopt_id, adopters, :email, :name, {:prompt => "Select Adopter"}) %>
 
     <!-- Inputing Details-->
     <%= f.label :comments, "Comments" %>

@@ -5,11 +5,12 @@ class PeopleController < ApplicationController
   #for the main people that displays all of them
   def list
    
-      @allPeople = User.all
-      @allNonUser = NonUser.all
-      @allVets = Veterinarian.all
-      @allTrainer = Trainer.all
-      user = User.all
+    @allPeople = User.all
+    @allNonUser = NonUser.all
+    @allVets = Veterinarian.all
+    @allTrainer = Trainer.all
+    @allAniFaci = AnimalFacility.all
+    user = User.all
   end
 
   #page for adding new people to the organization 
@@ -26,24 +27,35 @@ class PeopleController < ApplicationController
   
    def profile
     @employee = User.find(params["param"])
-    
-    if @employee.address != nil and @employee.state != nil and @employee.zip_code != nil
-      @full_address = @employee.address.to_s + " " + @employee.state.to_s + " " + @employee.zip_code.to_s
+
+    if @employee.address != nil and @employee.city != nil and @employee.state != nil and @employee.zip_code != nil
+      @full_address = @employee.address + " " + @employee.city + " " + @employee.state + " " + @employee.zip_code
+
     else
       @full_address = nil
     end
     @foster_ok = @employee.foster_check
-    
-    #Rails.logger.debug("My object: #{@foster_ok.inspect}")
-    
     @adopt_ok = @employee.adopt_check
+
+    @foster = Foster.find_by user_id: @employee.id
+    if @foster != nil
+      @allFosters = FosterStatus.where(foster_id: @foster.id)
+    end
+
+    @adoptions = Adopter.find_by user_id: @employee.id
+    #Rails.logger.debug("My adopter--------------: #{@adoptions.inspect}")
+    if @adoptions != nil
+      @allAdoptions = Adopted.where(adopter_id: @adoptions.id)
+      @allApps = AnimalApplication.where(adopter_id: @adoptions.id)
+      #Rails.logger.debug("My adopter--------------: #{@allAdoptions.inspect}")
+    end
   end
   #require says the type it has to be, for this one it has to have a user parameter
   #says the fields that are allowed. have to match up with column names
   def people_params
       params.require(:user).permit(:name, :email, :password,
                                    :password_confirmation, :role_id, :picture, :disabled, :address,
-                                   :state, :zip_code, :foster_check, :adopt_check)
+                                   :state, :zip_code, :foster_check, :adopt_check, :comments, :home_comm, :homecheck, :phone_number, :user_document)
   end
   # the code that actually adds an employee. 
   def addEmployee

@@ -1,4 +1,14 @@
 class TrainerController < ApplicationController
+  def profile
+    @trainer = Trainer.find(params["param"])
+    
+    if @trainer.address != nil and @trainer.state != nil and @trainer.zip_code != nil
+      @full_address = @trainer.address + " " + @trainer.state + " " + @trainer.zip_code.to_s
+    else
+      @full_address = nil
+    end
+  end
+  
   def new
   	@trainer = Trainer.new()
   end
@@ -35,6 +45,6 @@ class TrainerController < ApplicationController
   end
 
   def trainer_params
-  	params.require(:trainer).permit(:name, :address , :city , :state, :zip_code, :email)
+  	params.require(:trainer).permit(:name, :address , :city , :state, :zip_code, :email, :phone_number, :person_contact, :comments)
   end
 end

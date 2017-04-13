@@ -7,6 +7,7 @@
   <%= link_to "<button>Add Non User</button>".html_safe,  :controller => "non_user", :action => "new", :method => "get" %>
   <%= link_to "<button>Add Trainer</button>".html_safe,  :controller => "trainer", :action => "new", :method => "get" %>
   <%= link_to "<button>Add Veterinarian</button>".html_safe,  :controller => "veterinarian", :action => "new", :method => "get" %>  
+  <%= link_to "<button>Add Animal Facility</button>".html_safe,  :controller => "animal_facility", :action => "new", :method => "get" %>  
 <% end %>
 
 <!-- TAB NAV LINKS-->
@@ -14,7 +15,8 @@
     <li class="active"><a href="#user" data-toggle="tab">Users</a></li>
     <li><a href="#non_user" data-toggle="tab">Non Users</a></li>
     <li><a href="#trainer" data-toggle="tab">Trainers</a></li>
-    <li><a href="#vet" data-toggle="tab">Veterinarians</a></li>
+    <li><a href="#vet" data-toggle="tab">Veterinarian</a></li>
+    <li><a href="#animal_fac" data-toggle="tab">Animal Facilities</a></li>
 </ul>
 
 
@@ -92,22 +94,29 @@
     <table id = "user-table" class="table table-bordered table-inverse table-hover user-table">
       <thead>
         <tr>
-          <th class= "col-md-1">#</th>
-          <th class= "col-md-3">Name</th>
+          <th class= "col-md-1">Name</th>
+          <th class= "col-md-2">Person of Contact</th>
+          <th class= "col-md-3">Address</th>
+          <th class= "col-md-1">Phone Number</th>
         </tr>
       </thead>
       <tbody>
         <% @allTrainer.each_with_index do |a, index| %>
            <tr style = "height: 70px;" >
-              <th scope="row"><%= index %></th>
-
               <td> 
-                  <%= link_to a.name,  :controller => "trainer", :action => "edit", :param => a, :method => "get" %>
+                  <%= link_to a.name,  :controller => "trainer", :action => "profile", :param => a, :method => "get" %>
 
                 <% if admin?(current_user) %>
                  <%= link_to ' <span class ="glyphicon glyphicon-pencil" style = "display:none; cursor: pointer;"></span>'.html_safe,  :controller => "trainer", :action => "edit", :param => a, :method => "get" %>
                  <% end %>
               </td>
+              <td><%= a.person_contact%></td>
+              <td>
+                <% if a.address != nil and a.city != nil and a.state != nil and a.zip_code !=nil%>
+                  <%= a.address.to_s + " " + a.city.to_s + " " + a.state.to_s + " " + a.zip_code.to_s%>
+                <% end %>
+              </td>
+              <td><%= a.phone_number%></td>
             </tr>
         <% end %>
       </tbody>
@@ -119,29 +128,77 @@
     <table id = "user-table" class="table table-bordered table-inverse table-hover user-table">
       <thead>
         <tr>
-          <th class= "col-md-1">#</th>
-          <th class= "col-md-1">Name</th>
+          <th class= "col-md-3">Name</th>
+          <th class= "col-md-2">Person of Contact</th>
+          <th class= "col-md-3">Address</th>
+          <th class= "col-md-1">Phone Number</th>
         </tr>
       </thead>
       <tbody>
-        <% @allVets.each_with_index do |a, index| %>
+        <% @allVets.each do |a| %>
            <tr style = "height: 70px;" >
-              <th scope="row"><%= index %></th>
-
               <td> 
-                  <%= link_to a.name,  :controller => "veterinarian", :action => "edit", :param => a, :method => "get" %>
+                  <%= link_to a.name,  :controller => "veterinarian", :action => "profile", :param => a, :method => "get" %>
 
                 <% if admin?(current_user) %>
                  <%= link_to ' <span class ="glyphicon glyphicon-pencil" style = "display:none; cursor: pointer;"></span>'.html_safe,  :controller => "veterinarian", :action => "edit", :param => a, :method => "get" %>
                  <% end %>
               </td>
+              <td><%= a.person_contact%></td>
+              <td>
+                <% if a.address != nil and a.city != nil and a.state != nil and a.zip_code !=nil%>
+                  <%= a.address.to_s + " " + a.city.to_s + " " + a.state.to_s + " " + a.zip_code.to_s%>
+                <% end %>
+              </td>
+              <td><%= a.phone_number%></td>
+            </tr>
+
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <!--- ANIMAL FACILITY-->
+  <div class="tab-pane" id="animal_fac">
+    <table id = "user-table" class="table table-bordered table-inverse table-hover user-table">
+      <thead>
+        <tr>
+          <th class= "col-md-1">Name</th>
+          <th class= "col-md-2">Address</th>
+          <th class= "col-md-1">Phone Number</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @allAniFaci.each_with_index do |a, index| %>
+           <tr style = "height: 70px;">
+              <td> 
+                  <%= link_to a.name,  :controller => "trainer", :action => "profile", :param => a, :method => "get" %>
+
+                <% if admin?(current_user) %>
+                 <%= link_to ' <span class ="glyphicon glyphicon-pencil" style = "display:none; cursor: pointer;"></span>'.html_safe,  :controller => "trainer", :action => "edit", :param => a, :method => "get" %>
+                 <% end %>
+              </td>
+              <td>
+                <% if a.address != nil and a.city != nil and a.state != nil and a.zip_code !=nil%>
+                  <%= a.address.to_s + " " + a.city.to_s + " " + a.state.to_s + " " + a.zip_code.to_s%>
+                <% end %>
+              </td>
+              <td><%= a.phone_number%></td>
             </tr>
         <% end %>
       </tbody>
     </table>
   </div>
-</div>
 
+
+
+
+
+
+
+
+
+
+</div>
 <script>
 
 $("#people-table tr").hover(

@@ -6,6 +6,8 @@ class FosterController < ApplicationController
     
     if @new_foster.current_entry?
       FosterStatus.update_all "current_entry = 'false'"
+      @new_foster.current_entry = true
+      
       @new_status = StatusType.find_by(name: "Foster").id
       @foster_animal = Animal.find_by(id: @new_foster.animal_id)
       
@@ -41,18 +43,19 @@ class FosterController < ApplicationController
   end
 
   def foster_params
-  	params.require(:foster_status).permit(:foster_date, :foster_id, :vet_id, :comments, :animal_id, :sub_status_id, :homecheck)
+  	params.require(:foster_status).permit(:foster_date, :foster_id, :comments, :animal_id, :sub_status_id, :current_entry)
   end
 
   skip_before_filter :verify_authenticity_token, :only => :editFoster
   
   def editFoster
-    #Rails.logger.debug("Params -----------------------------------: #{params.inspect}")
     @edit_foster = FosterStatus.find(params[:fost_id])
     
     if @edit_foster.current_entry?
       FosterStatus.update_all "current_entry = 'false'"
+      @edit_foster.current_entry = true
       @new_status = StatusType.find_by(name: "Foster").id
+      
       @foster_animal = Animal.find_by(id: @edit_foster.animal_id)
       
       if @edit_foster.sub_status_id != nil
