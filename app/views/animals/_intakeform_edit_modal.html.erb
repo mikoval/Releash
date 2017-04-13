@@ -1,0 +1,38 @@
+<% modal ||= false %>
+<% remote = modal ? true : false %>
+
+<!-- Intake fill in information -->
+<!-- Is this going to throw an error because all the other stuff aren't in here = Check validations? --> 
+<%= form_for(edit_intake, remote: remote, url: url_for(action: 'editIntake', intake_id: intake_id, controller: 'intake', method: 'patch')) do |f| %>
+
+    <%= f.hidden_field :animal_id, value: animal_id%>
+    <%= hidden_field_tag "intake_id", intake_id%>
+    
+    <%= f.label :current_entry, "Make it Current Entry" %>
+    <%= f.check_box :current_entry, class: 'form-control' %>
+    
+    <%= f.label :intake_date, "Intake Date" %>
+    <%= f.text_field :intake_date, class: 'datepicker' %>
+
+    <%= f.label :sub_status, class: 'control-label' %><br>
+    <%= f.collection_select :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select SubStatus"}, class: 'form-control' %> 
+
+    <%= f.label :intake_reason_id, "Previous Location"%>
+    <%= f.collection_select(:intake_reason_id, IntakeReason.all, :id, :name, {:prompt => "Select Previous Location"}) %>
+
+    <!-- Selecting Previous Location-->
+    <%= f.label :animal_facility_id, "Animal Facility"%>
+    <%= f.collection_select(:animal_facility_id, AnimalFacility.all, :id, :name, {:prompt => "Select Animal Facility"}) %>
+
+    <!-- Inputing Details-->
+    <%= f.label :comments, "Comments" %>
+    <%= f.text_field :comments, class: 'form-control' %>
+
+    <%= f.submit 'Submit', class: 'btn btn-primary' %>
+<% end %>
+
+<script>
+  $('.datepicker').datepicker({
+    endDate: '-0d'
+  });
+</script>

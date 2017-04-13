@@ -1,6 +1,11 @@
 class AlertsController < ApplicationController
+  skip_before_filter :verify_authenticity_token, :only => [:deleteAlert, :unsubscribeAlert, :completed]
+  layout "login", :only => :completed
   def date_format(date)
     return date.to_formatted_s(:long_ordinal)
+  end
+  def completed
+
   end
   #listing all the alerts
   def list
@@ -26,7 +31,11 @@ class AlertsController < ApplicationController
   #for the new alerts
   def new
     update_referer(request.referer, request.original_url)
-    @animal = Animal.where(id=params["param"])
+    if(params["param"] != nil) 
+      @animal = Animal.where('id = ' + params["param"])
+    else
+      @animal = []
+    end
     @alert = Alert.new
     @types = AlertType.all
     @users = User.where(disabled: false)
@@ -52,23 +61,26 @@ class AlertsController < ApplicationController
 
   end
   def unsubscribeAlert
-    session[:prev_url] = request.referer
+
 
      id = request["param"]
      UserAlert.where("alert_id =" + id.to_s + " and user_id = " + current_user.id.to_s).delete_all
-
-    redirect_to session[:prev_url]
+     render json: {"status" => "success"}
+    
 
   end 
   def deleteAlert
-
+    
 
     id = request["param"]
     AnimalAlert.where("alert_id =" + id.to_s).delete_all
     UserAlert.where("alert_id =" + id.to_s).delete_all
+  
     Alert.where("id =" + id.to_s).delete_all
 
-    redirect_to session[:prev_url]
+    render json: {"status" => "success"}
+  
+    
   end
   #for displaying alerts
   def display
@@ -93,6 +105,9 @@ class AlertsController < ApplicationController
           
         @userAlert = UserAlert.new({alert_id: @alert.id, user_id: d})
         @userAlert.save
+        user = User.find(d)
+        UserMailer.alert_email_assigned(user, @alert).deliver_now
+        @userAlert.update_attributes(email_date: Time.now)
         end
       end
       if params["animals"]
@@ -124,6 +139,9 @@ class AlertsController < ApplicationController
           
         @userAlert = UserAlert.new({alert_id: @alert.id, user_id: d})
         @userAlert.save
+        user = User.find(d)
+        UserMailer.alert_email_edited(user, @alert).deliver_now
+        @userAlert.update_attributes(email_date: Time.now)
         end
       end
       if params["animals"]
@@ -146,10 +164,10 @@ class AlertsController < ApplicationController
     end
 
   end
-
+ 
   def alert_params
     params.require(:alert).permit(:title, :description, :date, :alert_type_id, :assignee_id,
-                  :created_by_id, :animal_id, :location, :created_at)
+                  :created_by_id, :animal_id, :location, :created_at, :required)
   end
   def query
     @id = params["id"]
@@ -206,7 +224,7 @@ class AlertsController < ApplicationController
           "id" =>  a.id, 
           "title" => a.title,
           "description" => a.description,
-          "date" => a.date,
+          "date" => date_format(a.date),
 
         })
       end

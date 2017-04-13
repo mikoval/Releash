@@ -30,9 +30,9 @@
 
   <!-- Nav Bar Content -->
   
-  <div class="form-nav col-md-2">
+  <div class="form-nav col-md-10">
     <!-- Personal info tab -->
-    <div class="card form-div personal col-md-12">
+    <div class="card form-div personal col-md-3">
       <a class="card-header personal-header" data-toggle="collapse" href="#personal-body">
         <div style="background: white;">
           <h4>Characteristics</h4>
@@ -40,7 +40,7 @@
       </a>
     </div>
 
-    <div class= "card form-div personal col-md-12">
+    <div class= "card form-div personal col-md-3">
       <a class= "card-header paper-header" data-toggle="collapse" href="#paper-body">
         <div>
           <h4>Paperwork</h4>
@@ -48,10 +48,18 @@
       </a>
     </div>
 
-    <div class="form-div tracking col-md-12">
+    <div class="form-div tracking col-md-3">
       <a class= "card-header tracking-header" data-toggle="collapse" href="#tracking-body">
         <div>
           <h4>Tracking</h4>
+        </div>
+      </a>
+    </div>
+
+    <div class="form-div alerts col-md-3">
+      <a class= "card-header alert-header" data-toggle="collapse" href="#alerts-body">
+        <div>
+         <h4>Notes</h4>
         </div>
       </a>
     </div>
@@ -94,20 +102,35 @@
               <%= f.text_field :name, class: 'form-control required' %>
 
               <%= f.label :primary_breed_id, "Primary Breed" %>
-              <%= f.collection_select :primary_breed_id, @breed, :id, :name, {:prompt => "Select Breed"}, class:'required' %>
+              <%= f.collection_select :primary_breed_id, @primary, :id, :name, {:prompt => "Select Breed"}, class:'required' %>
 
                <%= label :post, "Additional Breeds" %>
-              <%= collection_select(:breed_id, 0, @breed, :id, :name, {:prompt => "Select Breed"}, {class: "breed-selecter"}) %>              
+              <%= collection_select(:breed_id, 0, @secondary, :id, :name, {:prompt => "Select Breed"}, {class: "breed-selecter"}) %>              
               <div id = "breeds-list"></div>
 
               <%= text_field_tag 'breeds', "", class: "hidden-breeds", style: "display:none;"  %>
              
-
               <%= f.label :date_of_birth %>
               <%= f.text_field :birthday, class: 'datepicker required' %>
 
+              <%= f.label :input_date %>
+              <%= f.text_field :input_date, class: 'datepicker' %>
+
+              <%= f.label :microchip_number , "Microchip #"%>
+              <%= f.text_field :microchip_number, class: 'form-control' %>
+
+              <%= f.label :coordinator, "Assigned Coordinator"%>
+              <%= f.collection_select :coordinator_id, @coordinators, :id, :name, {:prompt => "Select Coordinator"}, class: 'required' %>
+
               <%= f.label :status %>
-              <%= f.collection_select :status_id, @status, :id, :name, {:prompt => "Select Status"}, class: 'required' %>
+              <%= f.collection_select :status_id, @status, :id, :name, {:prompt => "Select Status"}, class: 'required' %> 
+              
+              <%= f.label :sub_status %>
+              <%= f.collection_select :sub_status_id, @sub_status, :id, :name, {:prompt => "Select SubStatus"}%> 
+
+              <%= f.label :marketing %>
+              <%= f.collection_select :marketing_id, @marketing, :id, :name, {:prompt => "Select Marketing Status"}, class: 'required' %>
+
             </div>
           </div>
         </div>
@@ -123,37 +146,17 @@
 
             <div id="phys-feat" class="collapse col-md-12">
               <%= f.label :gender %>
-              <%= f.select :gender, [ 'Male','Female', 'Unknown'], :prompt => 'Select Gender' %>    
+              <%= f.select :gender, [ 'Male','Female'], :prompt => 'Select Gender' %>    
 
               <%= f.label :color_primary %>
               <%= f.text_field :color_primary, class: 'form-control' %>
 
               <%= f.label :color_secondary %>
-              <%= f.text_field :color_secondary, class: 'form-control' %>
-
-              <%= f.label :eye_color %>
-              <%= f.text_field :eye_color, class: 'form-control' %>
-
-             
+              <%= f.text_field :color_secondary, class: 'form-control' %>             
             </div>
           </div>
 
-          <div class = "med col-md-12">
-            <!-- Medical -->
-            <a class= "card-header doc-header" data-toggle="collapse" href="#doc-body">
-              <div>
-                <h4>Vetting</h4>
-              </div>
-            </a>
 
-            <div id="doc-body" class="collapse col-md-12">
-              <%= f.label :microchip_number , "Microchip #"%>
-              <%= f.text_field :microchip_number, class: 'form-control' %>
-
-              <%= f.label :neutered , "Spayed/Neutered" %>
-              <%= f.check_box :neutered, class: 'form-control' %>
-            </div>
-          </div>
 
           <div class = "med col-md-12">
             <!-- Personality -->
@@ -165,17 +168,27 @@
 
             <div id="pers-body" class="collapse col-md-12">
               <%= label :post, "behavior" %>
-              <%= collection_select(:behavior_id, 0, @behavior, :id, :name, {:prompt => "Select behavior"}, {class: "behavior-selecter"}) %>              
+              <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Select Behavior
+                <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <% @behavior.each do |b| %>
+                  <li  class = "behavior-dd-item" id = "behavior-dd-<%= b.id %>"><a href="#" class= "behavior-dd-item" value = '<%= b.id %>'> <%= b.name %></a>  </li> 
+                  <% end %>
+                </ul>
+              </div>
+
+                
+
               <div id = "behavior-list"></div>
 
               <%= text_field_tag 'behavior', "", class: "hidden-behavior", style: "display:none;"  %>
+              <br>
 
-              <%= label :post, "attribute" %>
-              <%= collection_select(:attribute_id, 0, @attribute, :id, :name, {:prompt => "Select attribute"}, {class: "attribute-selecter"}) %>              
-              <div id = "attribute-list"></div>
 
-              <%= text_field_tag 'attribute', "", class: "hidden-attribute", style: "display:none;"  %>
             </div>
+
+
           </div>
         </div>
       </div>
@@ -252,61 +265,7 @@
 
       <!--========================== TRACKING =============================-->
       <div id="tracking-body" class="collapse inner-formdiv">
-        <!--========== BEGIN DROPDOWN OPTIONS =========-->
 
-
-        <!--========== END DROPDOWN OPTIONS =========-->
-
-        <!--=========== ADD HOLD ==========-->
-        <!--<div id="hold-sel" class="peopleFostDiv col-md-4">
-          <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#holdModal">
-            Add Hold
-          </button>-->
-
-          <!-- Modal -->
-          <!--<div class="modal fade" id="holdModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title" id="myModalLabel">Add Hold</h4>
-                </div>
-                
-                <div class="modal-body">-->
-                  
-                  <!-- Hold option selections -->
-                  <!--<h3>Select Hold Type</h3>
-                  <div class="hold=options">
-                    <button id="illness_btn" type="button" class="btn btn-primary btn-md col-md-3">Illness</button>
-                    <button id="training-btn" type="button" class="btn btn-primary btn-md col-md-3">Training</button>
-                    <button type="button" class="btn btn-primary btn-md col-md-3">Other</button>
-                  </div>-->
-
-                  <!-- Hold option selected info -->
-                  <!--<div id="illness-info" class="col-md-12">
-                    <p> Show if ilness button clicked </p>
-                  </div>
-                  <div id="training-info" class="col-md-12">
-                    <p> Show if training button clicked </p>
-                  </div>
-                  <div id="other-info" class="col-md-12">
-                    <p> Show if other button clicked </p>
-                  </div>
-                </div>
-
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                  <button type="button" class="btn btn-primary">Add Hold</button>
-                </div>
-                
-              </div>
-            </div>
-          </div>            
-        </div>-->
-        <!--=========== END ADD HOLD ==========-->       
-
-
-    
         <!--========== BEGIN TRACKING TABS =========-->
         <div id= "trackingInner-div" class="col-md-12">
           
@@ -316,9 +275,8 @@
               <li role="presentation"><a href="#intake" data-toggle="tab">Intake</a></li>
               <li role="presentation"><a href="#vetting" data-toggle="tab">Vetting</a></li>
               <li role="presentation"><a href="#foster" data-toggle="tab">Foster</a></li>
-              <li role="presentation"><a href="#adopted" data-toggle="tab">Adopted</a></li>
-              <li role="presentation"><a href="#sleep" data-toggle="tab">Sleep</a></li>
-              <li role="presentation"><a href="#transfer" data-toggle="tab">Transfer</a></li>
+              <li role="presentation"><a href="#training" data-toggle="tab">Training</a></li>
+              <li role="presentation"><a href="#adopted" data-toggle="tab">With Adopter</a></li>
             </ul>
 
             <!-- Information for Statuses in Tabs-->
@@ -329,41 +287,37 @@
                 <%= f.label :intake_date, "Intake Date" %>
                 <%= text_field_tag 'intake_dt', "" ,class: 'datepicker' %>
                 
-                <!-- Selecting Foster-->
-                <%= f.label :intake_fost, "Foster"%>
-                <%= collection_select(:intake_fost, :user_id, User.all, :id, :name, {:prompt => "Select foster"}) %>
+                <%= f.label :intake_sub, "Sub Status"%>
+                <%= collection_select(:intake_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
                 
-                <!-- Selecting Vets-->
-                <%= f.label :intake_vet, "Veterinarian"%>
-                <%= collection_select(:intake_vet, :veterinarian_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian"}) %>
+                <!-- Selecting Prev Location-->
+                <%= f.label :intake_loc, "Previous Location"%>
+                <%= collection_select(:intake_loc, :intake_reason_id, IntakeReason.all, :id, :name, {:prompt => "Select Previous Location"}) %>
+
+                <!-- Selecting Previous Location-->
+                <%= f.label :intake_prev, "Animal Facility"%>
+                <%= collection_select(:intake_prev, :animal_facility_id, AnimalFacility.all, :id, :name, {:prompt => "Select Animal Facility"}) %>
 
                 <!-- Inputing Details-->
                 <%= f.label :intake_comm, "Details" %>
                 <%= text_field_tag 'intake_cm', "", class: 'form-control' %>
-
-                <%= f.label :intake_hold, "Hold"%>
-                <%= collection_select(:intake_hold, :hold_type_id, HoldType.all, :id, :name, {:prompt => "Select a Hold"}) %>
               
               </div> 
-
 
               <!-- VETTING -->
               <div id="vetting" role="tabpanel" class="tab-pane">
                   <%= f.label :vetting_date %>
                   <%= text_field_tag 'vet_dt', "" ,class: 'datepicker' %>
-                  <!-- Selecting Foster-->
-                  <%= f.label :vet_fost, "Foster"%>
-                  <%= collection_select(:vet_fost, :user_id, User.all, :id, :name, {:prompt => "Select foster"}) %>
                   
+                  <%= f.label :vet_sub, "Sub Status"%>
+                  <%= collection_select(:vet_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
+
                   <!-- Selecting Vets-->
                   <%= f.label :vet_vet, "Veterinarian"%>
                   <%= collection_select(:vet_vet, :veterinarian_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian"}) %>
                   
-                  <!-- Selecting Holds-->
-                  <%= f.label :vet_hold, "Hold"%>
-                  <%= collection_select(:vet_hold, :hold_type_id, HoldType.all, :id, :name, {:prompt => "Select a Hold"}) %>
                   <!-- Inputing Details-->
-                  <%= f.label :vet_comm, "Details" %>
+                  <%= f.label :vet_comm, "Comments" %>
                   <%= text_field_tag 'vet_cm', "", class: 'form-control' %>
 
               </div>
@@ -372,111 +326,62 @@
               <div id="foster" role="tabpanel" class="tab-pane">
                 <%= f.label :foster_date %>
                 <%= text_field_tag 'foster_dt', "" ,class: 'datepicker' %>
-                
+
+                <%= f.label :fost_sub, "Sub Status"%>
+                <%= collection_select(:fost_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
+
                 <%= f.label :fost_fost, "Foster"%>
-                <%= collection_select(:fost_fost, :user_id, User.all, :id, :name, {:prompt => "Select foster"}) %>
+                <%= collection_select(:fost_fost, :foster_id, @fosters, :email, :name, {:prompt => "Select foster"}) %>
 
-                <!-- Selecting Holds-->
-                <%= f.label :fost_hold, "Hold"%>
-                <%= collection_select(:fost_hold, :hold_type_id, HoldType.all, :id, :name, {:prompt => "Select a Hold"}) %>
-
-                <%= f.label :fost_comm, "Details" %>
+                <%= f.label :fost_comm, "Comments" %>
                 <%= text_field_tag 'fost_cm', "", class: 'form-control' %>
               </div>
               
+              <!-- TRAINING -->
+              <div id="training" role="tabpanel" class="tab-pane">
+                <%= f.label :training_date %>
+                <%= text_field_tag 'training_dt', "" ,class: 'datepicker' %>
+
+                <%= f.label :training_sub, "Sub Status"%>
+                <%= collection_select(:training_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
+
+                <%= f.label :train_comm, "Problem Information" %>
+                <%= text_field_tag 'training_cm', "", class: 'form-control' %> 
+
+                 <!-- Selecting Training-->
+                <%= f.label :trainer_train, "Trainer Location"%>
+                <%= collection_select(:trainer_train, :trainer_id, Trainer.all, :id, :name, {:prompt => "Select Trainer"}) %>
+
+                      
+              </div>
+              
+
               <!-- ADOPTED -->
               <div id="adopted" role="tabpanel" class="tab-pane">
-                <%= f.label :adopt_date %>
-                <%= text_field_tag 'adopted_dt', "", class: 'form-control' %>
+                <%= f.label :adopted_date %>
+                <%= text_field_tag 'adopted_dt', "" ,class: 'datepicker' %>
                 
-                <%= f.label :adopt_comm, "Details" %>
-                <%= text_field_tag 'adopted_cm', "", class: 'form-control' %>              
-              </div>
+                <%= f.label :adopt_sub, "Sub Status"%>
+                <%= collection_select(:adopt_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
+
+                <!-- Selecting Adopter-->
+                <%= f.label :adopt_adopter, "Adopter"%>
+                <%= collection_select(:adopt_adopter, :adopter_id, @adopters, :email, :name, {:prompt => "Select Adopter"}) %>
+
+                <%= f.label :adopt_comm, "Comments" %>
+                <%= text_field_tag 'adopt_cm', "", class: 'form-control' %>
               
-              <!-- SLEEP -->
-              <div id="sleep" role="tabpanel" class="tab-pane">
-                <%= f.label :sleep_date %>
-                <%= text_field_tag 'sleep_dt', "", class: 'form-control' %>
-                
-                <%= f.label :sleep_comm, "Details" %>
-                <%= text_field_tag 'sleep_cm', "", class: 'form-control' %>
               </div>
-              
-              <!-- TRANSFER -->
-              <div id="transfer" role="tabpanel" class="tab-pane">
-                <%= f.label :transfer_date %>
-                <%= text_field_tag 'transfer_dt', "", class: 'form-control' %>
-                
-                <%= f.label :transfer_comm, "Details" %>
-                <%= text_field_tag 'transfer_cm', "", class: 'form-control' %> 
-              </div>
+
             </div>
           </div>
           <!--========== END TRACKING TABS =========-->
-
-
-          <!--===================== BEGIN ADD PEOPLE ========================-->
-          <!-- <div id="foster sel" class="trackingInner-div2 col-md-4"> -->
-            
-
-            <!-- BEGIN ADD FOSTER -->
-            <!--<div id="foster sel" class="peopleFostDiv col-md-12">
-              <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#fostModal">
-                Add Foster
-              </button> -->
-
-              <!-- Modal -->
-              <!--<div class="modal fade" id="fostModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title" id="myModalLabel">Add Foster</h4>
-                    </div>
-                    <div class="modal-body">
-                      ...
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                      <button type="button" class="btn btn-primary">Add Foster</button>
-                    </div>
-                  </div>
-                </div>
-              </div>            
-            </div> -->
-            <!-- END ADD FOSTER -->
-
-            <!-- BEGIN ADD VET -->
-            <!-- <div id="vet sel" class="peopleVetDiv col-md-12"> -->
-              <!-- Button trigger modal -->
-              <!--<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#vetModal">
-                Add Veterenarian
-              </button> -->
-
-              <!-- Modal -->
-              <!--<div class="modal fade" id="vetModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title" id="myModalLabel">Add Vet</h4>
-                    </div>
-                    <div class="modal-body">
-                      ...
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                      <button type="button" class="btn btn-primary">Add Vet</button>
-                    </div>
-                  </div>
-                </div>
-              </div>            
-            </div> -->
-            <!-- END ADD VET -->
-          <!--</div> -->
-          <!--===================== END ADD PEOPLE ========================-->
-
         </div>  
+      </div>
+
+      <!-- Notes -->
+      <div id="notes-body" class="collapse inner-formdiv">
+          <p> General notes</p>
       </div>
     
       <!-- Can i move this? -->
@@ -497,11 +402,6 @@
   // $("")
 
 
-
-
-
-
-
   $("#animal_species_id").change(function(){
     console.log($("#animal_breed_id"))
     if ($("#animal_species_id").val() == 1) {
@@ -516,8 +416,10 @@
   });
 
 
-  $('.datepicker').datepicker({
-    endDate: '-0d'
+  $('.datepicker').datetimepicker({
+    //endDate: '+5y',
+    format:'YYYY/MM/DD',
+    
   });
 
   $(".profile-file").change(function(input) { 
@@ -564,7 +466,8 @@
         inputfield[0].value = "";
 
   });
-  $(".breed-selecter").on("change", function(){
+  $(".breed-selecter").on("change", function(e){
+
     var text = $(".breed-selecter option:selected").text();
     var val = $(".breed-selecter option:selected").val();
     if(text == "Select Breed"){
@@ -593,39 +496,15 @@
     $(".hidden-breeds").val(str)
   }
 
-  $(".attribute-selecter").on("change", function(){
-    var text = $(".attribute-selecter option:selected").text();
-    var val = $(".attribute-selecter option:selected").val();
-    if(text == "Select Attribute"){
-      return
-    }
-    html = $("#attribute-list").html();
-    html += "<div id = 'attribute-" + val + "'' class = 'attribute-item select-item' style = 'position: relative; display: inline-block;'>" 
-        + "<p style = 'margin:0px; padding-right:15px'>" + text + "</p>" + 
-       "<span class = 'glyphicon glyphicon-remove remove-attribute remove-item' style='margin:2px; float:right;'>" +"</span>" + 
-       " </div>"
-    $("#attribute-list").html(html);
-    $(".remove-attribute").on("click", function(){
-      $(this).closest(".attribute-item").detach()
-      setHiddenAttribute();
-    })
-    //just for now while im setting up the new breeds
-    $(this).get(0).selectedIndex = 0;
-    setHiddenAttribute();
-  })
-  function setHiddenAttribute(){
-    str = ""
-    $(".attribute-item").each(function(){
-      var id = this.id.split("-")[1]
-      str += id + "|"
-    })
-    $(".hidden-attribute").val(str)
-  }
 
 
-  $(".behavior-selecter").on("change", function(){
-    var text = $(".behavior-selecter option:selected").text();
-    var val = $(".behavior-selecter option:selected").val();
+
+  $(".behavior-dd-item").on("click", function(e){
+
+    e.stopPropagation();
+    e.preventDefault();
+    var text = $(this).text();
+    var val = $(this).attr("value");
     if(text == "Select Behavior"){
       return
     }
@@ -644,9 +523,13 @@
     setHiddenBehavior();
   })
   function setHiddenBehavior(){
+
     str = ""
+    $(".behavior-dd-item").show();
+
     $(".behavior-item").each(function(){
       var id = this.id.split("-")[1]
+      $("#behavior-dd-" +id).hide();
       str += id + "|"
     })
     $(".hidden-behavior").val(str)
@@ -654,5 +537,4 @@
 
 
 </script>
-
 

@@ -11,20 +11,25 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery_ujs
-//= require turbolinks
-//= require_tree .
+//= require jquery-ui
 //= require bootstrap
-//= require bootstrap-datepicker
 //= require moment
 //= require bootstrap-datetimepicker
+//= require bootstrap-slider
+//= require gridstack-js-rails
+//= require_tree .
+
+//= require moment 
+
+$('#calendar').fullCalendar({});
+
 
 function generateAnimals(arr){
   str = ""
   for (i in arr){
     var id = arr[i].id;
     var name = arr[i].name;
-    str = str + "<span><a href='/animals/profile?method=get&param=" + id + "'>" + name + "</a></span>";
+    str = str + "<span><a target='_blank' href='/animals/profile?method=get&param=" + id + "'>" + name + "</a></span>";
     if(i != arr.length -1){
       str = str + ", ";
     }
@@ -39,7 +44,7 @@ function generateUsers(arr){
   for (i in arr){
     var id = arr[i].id;
     var name = arr[i].name;
-    str = str + "<span><a href='/people/profile?method=get&param=" + id + "'>" + name + "</a></span>";
+    str = str + "<span><a target='_blank' href='/people/profile?method=get&param=" + id + "'>" + name + "</a></span>";
     if(i != arr.length -1){
       str = str + ", ";
     }

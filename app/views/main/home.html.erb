@@ -1,87 +1,89 @@
 <% provide(:title, "Home") %>
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<%= content_for(:body_attributes, 'data-no-turbolink = "true"') %>
+      
+      <h1>Dashboard</h1>
+      <hr>
 
-<div id="page-wrapper">
-    <div class = "container-fluid" style="display:flex; flex-flow: row wrap;  justify-content: space-around;">
-        <div class= "col-lg-12 col-md-12 col-sm-12 col-xs-12 "><h1>Dashboard</h1></div>
-            <div id="sortable" class="row" style = "width:100%">
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div class= "panel panel-default animal-list" widget-type="animal-list" ondrop="drop(event)"></div>
-                </div>
+      <div id = "grid" class="grid-stack">
+      </div>
 
-                <div class = "col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div class= "panel panel-default user-list" widget-type="user-list"  ondrop="drop(event)"></div>
-                </div>
+        <div id="widgetsList" class="modal fade" role="dialog">
+          <div class="modal-dialog">
 
-                <div class = "col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div class= "panel panel-default alert-list" widget-type="alert-list"  ondrop="drop(event)"></div>
-                </div>
-
-                <div class = "col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div class= "panel panel-default animal-list" widget-type="animal-list"  ondrop="drop(event)"></div>
-                </div>
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add widget</h4>
               </div>
+              <div class="modal-body">
+                <button onClick="addAnimalWidget()" type="button" class="btn btn-info btn-lg">Animals Widget</button>
+                <button onClick="addAlertsWidget()" type="button" class="btn btn-primary btn-lg">Alerts Widget</button>
+                <button onClick="addUserWidget()" type="button" class="btn btn-warning btn-lg">User Widget</button>
 
-              <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="justify-content: center">
-                <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#widgetsList">Add Widget</button>
-                </div> 
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            </div>
+          </div>
 
-                <div id="widgetsList" class="modal fade" role="dialog">
-                  <div class="modal-dialog">
-
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Add widget</h4>
-                      </div>
-                      <div class="modal-body">
-                        <button onClick="addAnimalWidget()" type="button" class="btn btn-info btn-lg">Animals Widget</button>
-                        <button onClick="addAlertsWidget()" type="button" class="btn btn-primary btn-lg">Alerts Widget</button>
-                        <button onClick="addUserWidget()" type="button" class="btn btn-warning btn-lg">User Widget</button>
-
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                      </div>
-                    </div>
-                    </div>
-                  </div>
-
-
-        <div style = "visibile:false; width: 45% "> </div>
-    </div>
-
-</div>
 
 <script>
+var grid;
+
+
+
 
 function saveLayout() {
     var arr = []
-    $(".panel").each(function() {
-        var type = $(this).attr("widget-type")
-        arr.push(type)
+    $(".grid-stack-item").each(function() {
+        var type = $(this).attr("widget-type");
+        var x = $(this).attr("data-gs-x");
+        var y = $(this).attr("data-gs-y");
+        var width = $(this).attr("data-gs-width");
+        var height = $(this).attr("data-gs-height");
+        arr.push({"type": type, "x": x, "y": y, "width": width, "height": height});
 
     })
-    console.log(arr)
+    var str = JSON.stringify(arr);
+    $.ajax({
+
+        url: "dashboard",
+        type: "PATCH",
+        data: {"str": str},
+       success: function(result){
+       },
+       error: function(){
+        console.log("failed")
+       }
+     })
+
+
 }
 
-saveLayout()
 
 
 function addAnimalWidget() {
-    document.getElementById('sortable').innerHTML += "<div class = 'col-lg-6 col-md-6 col-sm-12 col-xs-12'> <div class= 'panel panel-default animal-list' widget-type='animal-list'  ondrop='drop(event)'></div> </div>"
+    var el = $.parseHTML('<div class="grid-stack-item" widget-type = "animal-list" data-gs-x="0" data-gs-y="0" data-gs-width="5" data-gs-height="4"><div class="grid-stack-item-content animal-list panel"></div></div>');
+    grid.addWidget(el, 0, 0, 5, 4, true);
     widgetAnimalList()
 }
 
 function addAlertsWidget() {
-    document.getElementById('sortable').innerHTML += "<div class = 'col-lg-6 col-md-6 col-sm-12 col-xs-12'> <div class= 'panel panel-default alert-list' widget-type='alert-list'  ondrop='drop(event)'></div> </div>"
+    
+
+     var el = $.parseHTML('<div class="grid-stack-item" widget-type = "alert-list" data-gs-x="0" data-gs-y="0" data-gs-width="5" data-gs-height="4"><div class="grid-stack-item-content alert-list panel panel-default"></div></div>');
+    grid.addWidget(el, 0, 0, 5, 4, true);
     widgetAlertList()
+
+
 }
 
 function addUserWidget() {
-    document.getElementById('sortable').innerHTML += "<div class = 'col-lg-6 col-md-6 col-sm-12 col-xs-12'> <div class= 'panel panel-default user-list' widget-type='user-list'  ondrop='drop(event)'></div> </div>"
+    var el = $.parseHTML('<div class="grid-stack-item" widget-type = "user-list" data-gs-x="0" data-gs-y="0" data-gs-width="5" data-gs-height="4"><div class="grid-stack-item-content user-list panel panel-default"></div></div>');
+    grid.addWidget(el, 0, 0, 5, 4, true);
     widgetUserList()
 }
 
@@ -90,10 +92,7 @@ function drop(event) {
 }
 
 
-$(function () {
-    $("#sortable").sortable();
-    $("#sortable").disableSelection();
-});
+
 
 if($(".animal-list").length > 0) {
     widgetAnimalList();
@@ -104,21 +103,31 @@ if($(".user-list").length > 0){
 if($(".alert-list").length > 0){
     widgetAlertList();
 }
+function widgetNewWidgets(){
+  var str = '<div class=\'panel-heading clearfix\'> <h3 class= \'panel-title pull-left\' style=\'padding-top: 8.5px;\'> New Widgets</h3></div><input type="image" class = "new-widget-img" href = "#widgetsList" style = "max-width: 100%; max-height:100%" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Plus_font_awesome.svg/2000px-Plus_font_awesome.svg.png" />'
+   $(".new-widget").each(function(){
 
+        $(this).html( str)
+     })
+
+   $(".new-widget-img").on("click", function(){
+      $('#widgetsList').modal('show')    
+    })
+}
 function widgetAnimalList(){
-    $.ajax({url: "animals/query", success: function(result){
-        var str = "<div class='panel-heading clearfix'> <div class='btn-group pull-right'> <button class= 'btn toggle-dropdown' data-toggle='dropdown' aria-expanded='false' aria-haspopup='true'> <span class='glyphicon glyphicon-cog'></span> </button> <ul class='dropdown-menu dropdown-menu-right'> <li> <a href='#' class='remove-item-btn' onclick='return false;'>Remove</a> </li> </ul> </div> <h3 class= 'panel-title pull-left' style='padding-top: 8.5px;'> Animals</h3> </div>"
+    $.ajax({url: "animals/querySimple", success: function(result){
+        var str = "<div class='panel-heading'> <h3 class= 'panel-title pull-left'> Animals</h3><div class='right'><button type='button' class='btn-toggle-collapse'><i class='lnr lnr-chevron-up'></i></button><button type='button' class='remove-item-btn' onclick='return false;'><i class='lnr lnr-cross'></i></button></div></div>"
 
-        str += "<div class='panel-body'> <div class='table-responsive'> <table class='table table-bordered table-hover table-striped'> <thead> <tr> <th>Name</th> <th>Primary Breed</th> <th>Secondary Breed</th> </tr> </thead>" 
+        str += "<div class='panel-body no-padding'> <div class='table-responsive'> <table class='table table-hover table-striped'> <thead> <tr> <th>Name</th> <th>Primary Breed</th> <th>Age</th> </tr> </thead>" 
         for (x in result){
     
                 str += "<tr> \
-                <td> <a href='/animals/profile?method=get&param=" + result[x].id + "class= 'list-group-item' >" + result[x].name + "</a></td>\
+                <td> <a href='/animals/profile?method=get&param=" + result[x].id + " '  >" + result[x].name + "</a></td>\
                  <td>" + result[x].primary + "</td>\
-                <td>" + result[x].secondary + "</td>\
+                <td>" + result[x].age + "</td>\
                 </tr>"
         }
-        str +=  " </table> </div> <div class='text-right'> <a href= animals>View all Animals</a> </div> </div>"
+        str +=  " </table> </div> <div class='text-right panel-footer'> <div class='row text-right'><a href= animals class='btn btn-primary'>View all Animals</a> </div></div>"
 
          $(".animal-list").each(function(){
             $(this).html( str)
@@ -129,9 +138,9 @@ function widgetAnimalList(){
 
 function widgetUserList(){
     $.ajax({url: "people/query", success: function(result){
-        var str = "<div class='panel-heading clearfix'> <div class='btn-group pull-right'> <button class= 'btn toggle-dropdown' data-toggle='dropdown' aria-expanded='false' aria-haspopup='true'> <span class='glyphicon glyphicon-cog'></span> </button> <ul class='dropdown-menu dropdown-menu-right'> <li> <a href='#' class='remove-item-btn' onclick='return false;'>Remove</a> </li> </ul> </div> <h3 class= 'panel-title pull-left' style='padding-top: 8.5px;'> Users</h3> </div>"
+        var str = "<div class='panel-heading'> <h3 class= 'panel-title pull-left'> Users</h3><div class='right'><button type='button' class='btn-toggle-collapse'><i class='lnr lnr-chevron-up'></i></button><button type='button' class='remove-item-btn' onclick='return false;'><i class='lnr lnr-cross'></i></button></div></div>"
 
-        str += "<div class='panel-body'> <div class='table-responsive'> <table class='table table-bordered table-hover table-striped'> <thead> <tr> <th>Name</th> <th>Email</th> </tr> </thead>" 
+        str += "<div class='panel-body no-padding'> <div class='table-responsive'> <table class='table table-hover table-striped'> <thead> <tr> <th>Name</th> <th>Email</th> </tr> </thead>" 
 
         for (x in result){
     
@@ -140,7 +149,7 @@ function widgetUserList(){
                  <td>" + result[x].email + "</td>\
                 </tr>"
         }
-        str +=  " </table> </div> <div class='text-right'> <a href= people>View all Users</a> </div> </div>"
+        str +=  " </table> </div> <div class='text-right panel-footer'> <div class='row text-right'><a href= people class='btn btn-primary'>View all Users</a> </div></div>"
 
          $(".user-list").each(function(){
             $(this).html( str)
@@ -151,32 +160,86 @@ function widgetUserList(){
 
 function widgetAlertList(){
     $.ajax({url: "/alerts/query", success: function(result){
-        var str = "<div class='panel-heading clearfix'> <div class='btn-group pull-right'> <button class= 'btn toggle-dropdown' data-toggle='dropdown' aria-expanded='false' aria-haspopup='true'> <span class='glyphicon glyphicon-cog'></span> </button> <ul class='dropdown-menu dropdown-menu-right'> <li> <a href='#' class='remove-item-btn' onclick='return false;'>Remove</a> </li> </ul> </div> <h3 class= 'panel-title pull-left' style='padding-top: 8.5px;' <h3 class= 'panel-title'> Alerts</h3> </div>"
+        var str = "<div class='panel-heading'> <h3 class= 'panel-title pull-left'> Alerts</h3><div class='right'><button type='button' class='btn-toggle-collapse'><i class='lnr lnr-chevron-up'></i></button><button type='button' class='remove-item-btn' onclick='return false;'><i class='lnr lnr-cross'></i></button></div></div>"
 
-        str += "<div class='panel-body'> <div class='table-responsive'> <table class='table table-bordered table-hover table-striped'> <thead> <tr> <th>Title</th> <th>Date</th> </tr> </thead>" 
+        str += "<div class='panel-body no-padding'> <div class='table-responsive'> <table class='table table-hover table-striped'> <thead> <tr> <th>Title</th> <th>Date</th> </tr> </thead>" 
 
         for (x in result){
     
                 str += "<tr> \
-                <td> <a> " + result[x].title + "</a></td>\
+                <td> <a href = '#' class = 'alert-event' id = 'alert-" + result[x].id + "'> " + result[x].title + "</a></td>\
                  <td>" + result[x].date + "</td>\
                 </tr>"
         }
-        str +=  " </table> </div> <div class='text-right'> <a href= alerts>View all Alerts</a> </div> </div>"
+        str +=  " </table> </div> <div class='text-right panel-footer'> <div class='row text-right'><a href= alerts class='btn btn-warning'>View all Alerts</a> </div></div>"
 
          $(".alert-list").each(function(){
             $(this).html( str)
          })
          bindRemove();
+         bindAlertsModal();
     }});
 }
+
 function bindRemove(){
   $('.remove-item-btn').on('click', function(event) {
     console.log("removing")
-    $(this).closest('.ui-sortable-handle').remove()
+    $(this).closest('.grid-stack-item').remove()
   })
 
 }
 
+$('.grid-stack').on('change', function(event, items) {
+  saveLayout();
+});
 
+function activateWidgets(){
+  widgetAlertList();
+  widgetUserList();
+  widgetAnimalList();
+  widgetNewWidgets();
+}
+function loadWidgets(){
+  console.log("loading widgets")
+  $.ajax({
+
+        url: "dashboard",
+        type: "GET",
+       success: function(result){
+
+        str = result.str;
+        obj = JSON.parse(str);
+        console.log(obj)
+        for (i = 0; i < obj.length; i++){
+          
+
+
+          var el = $.parseHTML('<div class="grid-stack-item" widget-type = "' + obj[i].type + '" data-gs-x="'+ obj[i].x+'" data-gs-y="'+ obj[i].y +'" data-gs-width="' + obj[i].width + '" data-gs-height="' +obj[i].height+'"><div class="grid-stack-item-content '+obj[i].type+' panel panel-default"></div></div>');
+          $("#grid").append(el);
+
+
+        }
+
+        $(function () {
+            var options = {
+                cell_height: 80,
+                vertical_margin: 10
+            };
+            grid = $('.grid-stack').gridstack(options);
+            grid = grid.data("gridstack");
+
+          
+        });
+
+
+
+        activateWidgets();
+       },
+       error: function(){
+        console.log("failed")
+       }
+     })
+
+}
+loadWidgets();
 </script>

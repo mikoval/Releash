@@ -12,12 +12,16 @@
  * files in this directory. It is generally better to create a new file per
  * style scope.
  *
- *= require_tree .
+
  *= require_self
-*= require bootstrap-datetimepicker
- *= require bootstrap-datepicker
- # Or if using bootstrap v3:
- *= require bootstrap-datepicker3
+ *= require bootstrap-datetimepicker
+ *= require bootstrap-slider
+ *= require jquery-ui
+ *= require gridstack-js-rails
+
+ *= require_tree .
+
+
  */
 
 /*Change font everywhere */
@@ -31,3 +35,17 @@
     border-color:red;
     border-size:2px;
 }
+
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+
+@import "css/animate.min";
+@import "css/custom";
+@import "css/icheck/flat/green";
+@import "css/floatexamples";
+@import "css/normalize";
+@import "css/ion.rangeSlider";
+@import "css/ion.rangeSlider.skinFlat";
+@import "pace";

@@ -4,11 +4,12 @@
     <title><%= full_title(yield(:title)) %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= csrf_meta_tags %>
-    <%= stylesheet_link_tag    'application',  media: 'all', 'data-turbolinks-track'=> 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track' => 'reload' %>
-    <%= render 'layouts/shim' %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
   </head>
-  <body>
+
+  <body <%= yield(:body_attributes) %>>
 
     <div id="wrapper">
       <%= render 'layouts/header' %>
@@ -27,7 +28,8 @@
       </div>
     </div>
 
-<%= render 'layouts/alerts' %>
+    <%= render 'layouts/alerts' %>
+    <%= javascript_include_tag 'footermanifest', 'data-turbolinks-track' => true %>
 
 
   </body>

@@ -1,4 +1,4 @@
- <% provide(:title, 'New Employee') %>
+ <% provide(:title, 'New User') %>
 <h1>Add new employee</h1>
 
 <div class="row">
@@ -15,19 +15,53 @@
       <%= f.label :name %>
       <%= f.text_field :name, class: 'form-control' %>
 
+      <%= f.label :address %>
+      <%= f.text_field :address, class: 'form-control' %>
+
+      <%= f.label :city %>
+      <%= f.text_field :city, class: 'form-control' %>
+
+      <%= f.label :state %>
+      <%= f.text_field :state, class: 'form-control' %>
+
+      <%= f.label :zip_code %>
+      <%= f.text_field :zip_code, class: 'form-control' %>
+
+      <%= f.label :phone_number %>
+      <%= f.text_field :phone_number, class: 'form-control' %>
+
       <%= f.label :email %>
       <%= f.email_field :email, class: 'form-control' %>
 
+      <%= f.label :comments %>
+      <%= f.text_field :comments, class: 'form-control' %>
+
+      <%= f.label :home_comm %>
+      <%= f.text_field :home_comm, class: 'form-control' %>
+
+      <%= f.label :homecheck %>
+      <%= f.check_box :homecheck, class: 'form-control' %>
+      
       <%= f.label :password %>
       <%= f.password_field :password, class: 'form-control' %>
 
-      <%= f.label :password_confirmation, "Confirmation" %>
+      <%= f.label :password_confirmation, "Password Confirmation" %>
       <%= f.password_field :password_confirmation, class: 'form-control' %>
 
       <%= f.label :role_id %>
       <%= f.collection_select :role_id, @roles, :id, :title, :prompt => "Select Role" %>
 
+      <div class = "upload-wrapper" style= "padding-bottom: 15px">
+            <span class="btn btn-large btn-warning btn-file">
+                <%= label_tag "Homecheck Document" %>
+                <%= f.file_field :user_document, class: 'file-upload' %>
+            </span>
+            <span class = "file-name"></span>
+            <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+        </div>
+
       <span class="picture">
+        <%= f.label :Picture, "Profile Picture" %>
         <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
       </span>
       <%= f.submit "Create my account", class: "btn btn-primary" %>
@@ -41,5 +75,31 @@
     if (size_in_megabytes > 5) {
       alert('Maximum file size is 5MB. Please choose a smaller file.');
     }
+  });
+
+  $(".file-upload").change(function(input) { 
+    var input = input.target;
+    if (input.files && input.files[0]) {
+        var fileName = input.files[0].name;
+        var container =  $(this).closest(".upload-wrapper");
+        var nameSpan = container.find(".file-name");
+        nameSpan.text(fileName);
+        var removeSpan = container.find(".remove-file");
+        removeSpan.show();
+        }
+  }); 
+
+  $(".remove-file").on('click', function(){
+        var container =  $(this).closest(".upload-wrapper");
+
+        nameSpan = container.find(".file-name");
+        nameSpan.text("");
+
+        var removeSpan = container.find(".remove-file");
+        removeSpan.hide();
+
+        var inputfield  = container.find(".file-upload");
+        inputfield[0].value = "";
+
   });
 </script>

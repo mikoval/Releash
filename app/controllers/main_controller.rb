@@ -22,6 +22,7 @@ class MainController < ApplicationController
   def people
   end
 
+
   private
 
     def animal_params

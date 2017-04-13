@@ -60,7 +60,7 @@
               </td>
 
             <td> 
-                <%= date_format(a.date) %> 
+                <%= a.date.to_formatted_s(:long_ordinal) %> 
            </td> 
             <td> <%= a.created_by.name%> </td> 
           </tr> 
@@ -91,7 +91,7 @@
               </td>
 
             <td> 
-                <%= date_format(a.date) %> 
+                <%= a.date.to_formatted_s(:long_ordinal) %> 
            </td>
             <td> <%= a.created_by.name%> </td>
           </tr>

@@ -2,6 +2,11 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+//Style for tracking in profile
+$neutral: #e1e1e1;
+$blue : #2980b9;
+
+
 
 //Style for new & edit pages & profile
 .pg-title {
@@ -90,4 +95,154 @@
 
 .list-info {
 
+}
+
+
+body {
+  font-family: arial, sans-serif;
+}
+
+//timeline inner
+div#timeline {
+  background-color: lighten($blue,20%);
+  margin-top: 10%;
+  height: 2px;
+  width: 100%;
+  position: relative;
+  //box-shadow: 0 0 5px rgba(0,0,0,0.2) inset;
+  .circle {
+    box-shadow: 0 0 5px rgba(0,0,0,0.2) inset;
+    z-index: 1; //Place dots infront on timeline line
+    //transition : 0.3s ease-in-out; //idk
+    width: 36px;
+    height: 36px;
+    border-radius: 100%; //Dot
+    position: absolute;
+    top: -18px;
+    //text-align: center;
+    //cursor: pointer;
+    &:nth-child(1){
+      left: 5%;
+      background-color: $neutral;
+    }
+    &:nth-child(2){
+      left: 18%;
+      background-color: $neutral;
+    }
+    &:nth-child(3){
+      left: 33%;
+      background-color: $neutral;
+    }
+    &:nth-child(4){
+      left: 48%;
+      background-color: $neutral;
+    }
+    &:nth-child(5){
+      left: 63%;
+      background-color: $neutral;
+    }
+    &:nth-child(6){
+      left: 78%;
+      background-color: $neutral;
+    }
+    &:nth-child(7){
+      left: 91%;
+      background-color: $neutral;
+    }
+    &:hover {
+      transform: scale(1.2);
+    }
+    status {
+      font-size: 1.2rem;
+      //display: block;
+      position: relative;
+      top: -30px;
+      text-align: center;
+    }
+  }
+}
+
+
+article {
+  //display: none;
+  //position: relative;
+  //top: 30px;
+  max-width : 90%;
+  padding: 60px;
+  margin: auto;
+  // h2 {
+  //   font-family: merriweather, sans-serif;
+  //   font-size: 5rem;
+  //   padding: 10px 0;
+  //   border-bottom: solid #111 2px;
+  //   margin-bottom: 20px;
+  // }
+  p {
+    line-height: 130%;
+    text-align: left;
+    margin-left: 20%;
+    margin-right: 20%;
+  }
+}
+
+.status-buffer {
+    height: 20px;
+}
+
+.tooltip2 {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip2 .tooltiptext2 {
+    visibility: hidden;
+    width: 370px;
+    background-color: #505050;
+    color: #fff;
+    text-align: center;
+    border-radius: 10px;
+    padding: 5px 0;
+    text-align: left;
+    padding-left: 5px;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: -10px;
+    left: 55px;
+    font-family: "Times New Roman", Times, serif;
+}
+
+.tooltip2 .header {
+  height: 40px;
+  background-color: #F16D6D;
+  font-size: 200%;
+  font-family: Arial, Helvetica, serif;
+}
+
+.tooltip2 .tooltiptext3 {
+  float: left;
+  width: 60%;
+  font-size: 110%;
+}
+
+.tooltip2 .tooltiptext4 {
+  float: left;
+  width: 40%;
+  padding-top: 28px;
+  padding-right: 5px;
+}
+
+.tooltip2 .tooltiptext2::after {
+    content: " ";
+    position: absolute;
+    top: 10px;
+    right: 370px; /* To the left of the tooltip */
+    margin-top: 5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #505050 transparent transparent;
+}
+
+.tooltip2:hover .tooltiptext2 {
+    visibility: visible;
 }

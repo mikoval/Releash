@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -17,8 +17,10 @@ gem 'rails_12factor'
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
 
-gem 'bootstrap-datepicker-rails'
 gem "simple_calendar", "~> 2.0"
+
+gem 'whenever', :require => false
+gem 'bootstrap-slider-rails'
 
 group :development, :test do
   gem 'sqlite3', '1.3.12'
@@ -43,6 +45,9 @@ gem 'coffee-rails', '~> 4.1.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'jquery-ui-rails', '~> 5.0.0'
+
+gem 'gridstack-js-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder

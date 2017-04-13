@@ -1,0 +1,25 @@
+<h1>iShelter</h1>
+
+<bold><italic> Dear <%= @user.name %> </italic> </bold> 
+
+<p>You have been assigned a new alert. </p>
+
+<%= @alert.title %>
+<br>
+<% if (@alert.location != nil) %>
+<p>Location:  <%= @alert.location %>
+<% end %> 
+
+<p>This alert is scheduled for <%= @alert.date %></p>
+
+<% if(@alert.required == "1" || @alert.required == "true" || @alert.required == true) %>
+<p> Once the alert has been completed, click on the button below</p>
+
+<a  href = '<%= edit_alert_completion_url(id: @alert.id)%>'><img src="https://s3.amazonaws.com/releashatlanta/uploads/non_user/picture/1/SubmitComplete.png" alt="Activate" ></a>
+
+<% end %> 
+
+<p>Description: </p>
+<p>
+<%= @alert.description %>
+</p>

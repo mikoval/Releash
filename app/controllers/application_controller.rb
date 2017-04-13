@@ -7,11 +7,17 @@ class ApplicationController < ActionController::Base
   
     before_filter :require_login
 
+  def getAge(date)
+    return ((Time.now.to_i  - date.to_datetime.to_i )  / 1.year).to_i
+  end
 private
 
   def require_login
     unless current_user
       redirect_to login_url
     end
+  end
+  def date_format(date)
+    return date.to_formatted_s(:long_ordinal)
   end
 end

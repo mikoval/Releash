@@ -14,8 +14,32 @@
       <%= f.label :name %>
       <%= f.text_field :name, class: 'form-control' %>
 
+      <%= f.label :address %>
+      <%= f.text_field :address, class: 'form-control' %>
+
+      <%= f.label :city %>
+      <%= f.text_field :city, class: 'form-control' %>
+
+      <%= f.label :state %>
+      <%= f.text_field :state, class: 'form-control' %>
+
+      <%= f.label :zip_code %>
+      <%= f.text_field :zip_code, class: 'form-control' %>
+
+      <%= f.label :phone_number %>
+      <%= f.text_field :phone_number, class: 'form-control' %>
+
       <%= f.label :email %>
       <%= f.email_field :email, class: 'form-control' %>
+
+      <%= f.label :comments %>
+      <%= f.text_field :comments, class: 'form-control' %>
+
+      <%= f.label :home_comm %>
+      <%= f.text_field :home_comm, class: 'form-control' %>
+
+      <%= f.label :homecheck %>
+      <%= f.check_box :homecheck, class: 'form-control' %>
 
       <%= f.label :password %>
       <%= f.password_field :password, class: 'form-control' %>
@@ -28,15 +52,40 @@
 
       
       <% if admin?(current_user) %>
+
+        <%= f.label :foster %>
+        <%= f.check_box :foster_check, class: 'form-control' %>
+
+        <%= f.label :adopt %>
+        <%= f.check_box :adopt_check, class: 'form-control' %>
+        
         <%= f.label :disabled %>
         <%= f.check_box :disabled, class: 'form-control' %>
+
         <br>
       <% end %>
 
 
+        <div id="upload-buttons" style="padding-top: 15px">
+
+        <div class = "upload-wrapper">
+            <span class="btn btn-large btn-warning btn-file">
+                <%= label_tag "Homecheck Document" %>
+                <%= f.file_field :user_document, class: 'file-upload' %>
+            </span>
+            <span class = "file-name">
+              <% if @employee.user_document.length > 0 %>
+                <%= @employee.user_document.file.filename %> 
+              <% end %>
+              <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"> </span>
+            </span>
+            
+        </div>
+        </div>
       
 
       <span class="picture">
+        <%= f.label :Picture, "Profile Picture" %>
         <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
       </span>
       <%= f.submit "Submit changes", class: "btn btn-primary" %>
@@ -51,4 +100,17 @@
       alert('Maximum file size is 5MB. Please choose a smaller file.');
     }
   });
+
+    $(".file-upload").change(function(input) { 
+    var input = input.target;
+    if (input.files && input.files[0]) {
+        var fileName = input.files[0].name;
+        var container =  $(this).closest(".upload-wrapper");
+        var nameSpan = container.find(".file-name");
+        nameSpan.text(fileName);
+        var removeSpan = container.find(".remove-file");
+        removeSpan.show();
+        }
+  }); 
+
 </script>
