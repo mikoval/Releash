@@ -603,7 +603,7 @@ class AnimalsController < ApplicationController
         length = length -1 
         if(params["name"].length > d.name.length)
           add = false
-        elsif(params["name"] != d.name[0..length])
+        elsif(params["name"].downcase != d.name[0..length].downcase)
           add = false
         end
       end 
@@ -650,7 +650,7 @@ class AnimalsController < ApplicationController
         arr.push({
           "id" => d.id,
           "#" =>  index, 
-          "name" => d.name.downcase,
+          "name" => d.name,
           "primary" => d.primary_breed.name,
           "gender" => d.gender,
           "status" => d.status.name,
