@@ -662,7 +662,8 @@ class AnimalsController < ApplicationController
           "marketing" => d.marketing.name,
           "neutered" => d.neutered,
           "adoption_fee" => d.adoption_fee,
-          "notes" => d.notes
+          "notes" => d.notes,
+          "coordinator" => d.coordinator
         })
       end
     end
