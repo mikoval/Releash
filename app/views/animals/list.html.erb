@@ -404,7 +404,8 @@ function formatData(data){
     json.ID = i
     json.Name = data[i]["name"]
     json.Age = data[i]["age"]
- //   json.Birthday = data[i]["birthday"]
+    data[i]["birthday"] = data[i]["birthday"].replace(",", "");
+    json.Birthday = data[i]["birthday"].slice(0,data[i]["birthday"].length-6)
     json.Gender = data[i]["gender"]
     json["Primary Breed"] = data[i]["primary"]
     json.Status = data[i]["status"]
