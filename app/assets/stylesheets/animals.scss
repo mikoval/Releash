@@ -8,7 +8,16 @@ $blue : #2980b9;
 
 
 
+
 //Style for new & edit pages & profile
+
+.pg-container {
+  background-color: white;
+  margin-top: 5%;
+  padding: 2%;
+  border-radius: 0.2%;
+}
+
 .pg-title {
     text-align: right;
     font-size: 24px;
@@ -79,7 +88,7 @@ $blue : #2980b9;
 
 
 
-//Style for list page
+//List page
 .list-card {
     border-radius: 10px;
     border:solid #e8e8e8;
@@ -93,8 +102,31 @@ $blue : #2980b9;
     padding: 5px;
 }
 
-.list-info {
 
+//New Page
+.select-item{
+  border:solid;
+  border-width: 1px;
+  padding:3px;
+  border-radius:5px;
+
+  margin:4px;
+
+}
+.breed-item{
+  border:solid;
+  border-width: 1px;
+  padding:3px;
+  border-radius:5px;
+
+  margin:4px;
+  width: 100%;
+}
+.remove-item{
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
 }
 
 
@@ -105,6 +137,8 @@ $blue : #2980b9;
   padding: 2%;
   border-radius: 0.5%;
 }
+
+
 #animal-name {
   text-align: center;
 }

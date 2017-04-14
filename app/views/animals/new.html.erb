@@ -1,407 +1,351 @@
-<!-- This is the page to add a new animal -->
-<h2 class= "pg-title">Add a new Animal</h2>
-<style>
-.select-item{
-  border:solid;
-  border-width: 1px;
-  padding:3px;
-  border-radius:5px;
 
-  margin:4px;
+<!-- Inner form Content  Profile page-->
+<div class="form col-md-12 pg-container" id="new-container">
+  <h2 class= "pg-title">Add a new Animal</h2>
 
-}
-.breed-item{
-  border:solid;
-  border-width: 1px;
-  padding:3px;
-  border-radius:5px;
+  <!-- Begin animal form -->
+  <%= form_for(@animal, url: animals_path(@animal))  do |f| %>
 
-  margin:4px;
-  width: 100%;
-}
-.remove-item{
-  position: absolute;
-  top: 0;
-  right: 0;
-  cursor: pointer;
-}
-</style>
-<div class= "nav-form-container col-md-12">
 
-  <!-- Nav Bar Content -->
-  
-  <div class="form-nav col-md-10">
-    <!-- Personal info tab -->
-    <div class="card form-div personal col-md-3">
-      <a class="card-header personal-header" data-toggle="collapse" href="#personal-body">
-        <div style="background: white;">
-          <h4>Characteristics</h4>
-        </div>
-      </a>
-    </div>
-
-    <div class= "card form-div personal col-md-3">
-      <a class= "card-header paper-header" data-toggle="collapse" href="#paper-body">
-        <div>
-          <h4>Paperwork</h4>
-        </div>
-      </a>
-    </div>
-
-    <div class="form-div tracking col-md-3">
-      <a class= "card-header tracking-header" data-toggle="collapse" href="#tracking-body">
-        <div>
-          <h4>Tracking</h4>
-        </div>
-      </a>
-    </div>
-
-    <div class="form-div alerts col-md-3">
-      <a class= "card-header alert-header" data-toggle="collapse" href="#alerts-body">
-        <div>
-         <h4>Notes</h4>
-        </div>
-      </a>
-    </div>
-
-  </div>
-
-  <!-- Inner form Content -->
-
-  <div class="form col-md-10">
-    <%= form_for(@animal, url: animals_path(@animal))  do |f| %>
-      
-      <!-- Personal Inner Div -->
-      <div id ="personal-body" class="collapse show inner-formdiv">
-        
-        <div class="bsc-chracteristics col-md-6">
-          <!--Basic Characteristics Header -->
-          <a class= "card-header pers-header" data-toggle="collapse show" href="#characteristics-body">
-            <div>
-              <h4> Basic Characteristics</h4>
-            </div>
-          </a>
-
-          <!--Basic Characteristics Body -->
-          <div id = "characteristics-body" class="collapse show col-md-12">
-            <!-- Profile Picture -->
-            <div class="picture col-md-6">
-              <%= f.label :picture %>
-              <div id="pic-preview" style="padding: 5px">
-                <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
-                <!-- alt="Dog Image"-->
-              </div>
-
-              <img id="profilepic" src="#" alt="Dog Image" style="display: none"/>
-              <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'file-upload profile-file' %>
-            </div>
-
-            <!-- Basic Characteristics -->
-            <div class="characteristics-info col-md-6">
-              <%= f.label :name %>
-              <%= f.text_field :name, class: 'form-control required' %>
-
-              <%= f.label :primary_breed_id, "Primary Breed" %>
-              <%= f.collection_select :primary_breed_id, @primary, :id, :name, {:prompt => "Select Breed"}, class:'required' %>
-
-               <%= label :post, "Additional Breeds" %>
-              <%= collection_select(:breed_id, 0, @secondary, :id, :name, {:prompt => "Select Breed"}, {class: "breed-selecter"}) %>              
-              <div id = "breeds-list"></div>
-
-              <%= text_field_tag 'breeds', "", class: "hidden-breeds", style: "display:none;"  %>
-             
-              <%= f.label :date_of_birth %>
-              <%= f.text_field :birthday, class: 'datepicker required' %>
-
-              <%= f.label :input_date %>
-              <%= f.text_field :input_date, class: 'datepicker' %>
-
-              <%= f.label :microchip_number , "Microchip #"%>
-              <%= f.text_field :microchip_number, class: 'form-control' %>
-
-              <%= f.label :coordinator, "Assigned Coordinator"%>
-              <%= f.collection_select :coordinator_id, @coordinators, :id, :name, {:prompt => "Select Coordinator"}, class: 'required' %>
-
-              <%= f.label :status %>
-              <%= f.collection_select :status_id, @status, :id, :name, {:prompt => "Select Status"}, class: 'required' %> 
-              
-              <%= f.label :sub_status %>
-              <%= f.collection_select :sub_status_id, @sub_status, :id, :name, {:prompt => "Select SubStatus"}%> 
-
-              <%= f.label :marketing %>
-              <%= f.collection_select :marketing_id, @marketing, :id, :name, {:prompt => "Select Marketing Status"}, class: 'required' %>
-
-            </div>
-          </div>
-        </div>
-
-        <div class = "phy-med-frame col-md-6">
-          <div class = "phys-features col-md-12">
-            <!-- Physical Features -->
-            <a class= "card-header doc-header" data-toggle="collapse" href="#phys-feat">
-              <div>
-                <h4>Physical Features</h4>
-              </div>
-            </a>
-
-            <div id="phys-feat" class="collapse col-md-12">
-              <%= f.label :gender %>
-              <%= f.select :gender, [ 'Male','Female'], :prompt => 'Select Gender' %>    
-
-              <%= f.label :color_primary %>
-              <%= f.text_field :color_primary, class: 'form-control' %>
-
-              <%= f.label :color_secondary %>
-              <%= f.text_field :color_secondary, class: 'form-control' %>             
-            </div>
-          </div>
-
-
-
-          <div class = "med col-md-12">
-            <!-- Personality -->
-            <a class= "card-header doc-header" data-toggle="collapse" href="#pers-body">
-              <div>
-                <h4>Personality</h4>
-              </div>
-            </a>
-
-            <div id="pers-body" class="collapse col-md-12">
-              <%= label :post, "behavior" %>
-              <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Select Behavior
-                <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                  <% @behavior.each do |b| %>
-                  <li  class = "behavior-dd-item" id = "behavior-dd-<%= b.id %>"><a href="#" class= "behavior-dd-item" value = '<%= b.id %>'> <%= b.name %></a>  </li> 
-                  <% end %>
-                </ul>
-              </div>
-
-                
-
-              <div id = "behavior-list"></div>
-
-              <%= text_field_tag 'behavior', "", class: "hidden-behavior", style: "display:none;"  %>
-              <br>
-
-
-            </div>
-
-
-          </div>
-        </div>
-      </div>
-
-
-      <!-- Paperwork -->
-      <div id="paper-body" class="collapse inner-formdiv">
-        <div id="upload-buttons" style="padding-top: 15px">
-
-        <div class = "upload-wrapper" style= "padding-bottom: 15px">
-            <span class="btn btn-large btn-warning btn-file">
-                <%= label_tag "Vetting Document" %>
-                <%= f.file_field :vetting_document, class: 'file-upload' %>
-            </span>
-            <span class = "file-name"></span>
-            <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
-        </div>
-
-        <div class = "upload-wrapper" style= "padding-bottom: 15px">
-            <span class="btn btn-large btn-primary btn-file">
-                <%= label_tag "Intake Document" %>
-                <%= f.file_field :intake_document, class: 'file-upload' %>
-            </span>
-            <span class = "file-name"></span>
-            <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
-         </div>
-
-         <div class = "upload-wrapper" style= "padding-bottom: 15px">
-            <span class="btn btn-large btn-info btn-file">
-                <%= label_tag "Owner Surrender" %>
-                <%= f.file_field  :owner_surrender_document, class: 'file-upload' %>
-            </span>
-            <span class = "file-name"></span>
-            <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
-        </div>
-
-        <div class = "upload-wrapper" style= "padding-bottom: 15px">
-          <span class="btn btn-large btn-info btn-file">
-              <%= label_tag "Home Check" %>
-              <%= f.file_field  :home_check_document, class: 'file-upload' %>
-          </span>
-          <span class = "file-name"></span>
-          <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
-        </div>
-
-        <div class = "upload-wrapper" style= "padding-bottom: 15px">
-          <span class="btn btn-large btn-info btn-file">
-              <%= label_tag "Match Application" %>
-              <%= f.file_field  :match_application_document, class: 'file-upload' %>
-          </span>
-          <span class = "file-name"></span>
-          <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
-        </div>
-
-        <div class = "upload-wrapper" style= "padding-bottom: 15px">
-          <span class="btn btn-large btn-info btn-file">
-              <%= label_tag "Adoption Application" %>
-              <%= f.file_field  :adoption_application_document, class: 'file-upload' %>
-          </span>
-          <span class = "file-name"></span>
-          <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
-        </div>
-
-        <div class = "upload-wrapper">
-          <span class="btn btn-large btn-info btn-file">
-              <%= label_tag "Adoption Contract" %>
-              <%= f.file_field  :adoption_contract_document, class: 'file-upload' %>
-          </span>
-          <span class = "file-name"></span>
-          <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
-        </div>
-        </div>
-      </div>
-
-      <!--========================== TRACKING =============================-->
-      <div id="tracking-body" class="collapse inner-formdiv">
-
-        <!--========== BEGIN TRACKING TABS =========-->
-        <div id= "trackingInner-div" class="col-md-12">
-          
-          <div id="status-tabs" class="trackingInner-div1 col-md-8">
-            <!-- Tab headers for each status -->
-            <ul class="nav nav-tabs" role="tablist">
-              <li role="presentation"><a href="#intake" data-toggle="tab">Intake</a></li>
-              <li role="presentation"><a href="#vetting" data-toggle="tab">Vetting</a></li>
-              <li role="presentation"><a href="#foster" data-toggle="tab">Foster</a></li>
-              <li role="presentation"><a href="#training" data-toggle="tab">Training</a></li>
-              <li role="presentation"><a href="#adopted" data-toggle="tab">With Adopter</a></li>
-            </ul>
-
-            <!-- Information for Statuses in Tabs-->
-            <div class="status-tabsInner tab-content">
-              <!-- INTAKE -->
-              <div id = "intake" role="tabpanel" class="tab-pane fade in">
-                <!-- Selecting Date-->
-                <%= f.label :intake_date, "Intake Date" %>
-                <%= text_field_tag 'intake_dt', "" ,class: 'datepicker' %>
-                
-                <%= f.label :intake_sub, "Sub Status"%>
-                <%= collection_select(:intake_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
-                
-                <!-- Selecting Prev Location-->
-                <%= f.label :intake_loc, "Previous Location"%>
-                <%= collection_select(:intake_loc, :intake_reason_id, IntakeReason.all, :id, :name, {:prompt => "Select Previous Location"}) %>
-
-                <!-- Selecting Previous Location-->
-                <%= f.label :intake_prev, "Animal Facility"%>
-                <%= collection_select(:intake_prev, :animal_facility_id, AnimalFacility.all, :id, :name, {:prompt => "Select Animal Facility"}) %>
-
-                <!-- Inputing Details-->
-                <%= f.label :intake_comm, "Details" %>
-                <%= text_field_tag 'intake_cm', "", class: 'form-control' %>
-              
-              </div> 
-
-              <!-- VETTING -->
-              <div id="vetting" role="tabpanel" class="tab-pane">
-                  <%= f.label :vetting_date %>
-                  <%= text_field_tag 'vet_dt', "" ,class: 'datepicker' %>
-                  
-                  <%= f.label :vet_sub, "Sub Status"%>
-                  <%= collection_select(:vet_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
-
-                  <!-- Selecting Vets-->
-                  <%= f.label :vet_vet, "Veterinarian"%>
-                  <%= collection_select(:vet_vet, :veterinarian_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian"}) %>
-                  
-                  <!-- Inputing Details-->
-                  <%= f.label :vet_comm, "Comments" %>
-                  <%= text_field_tag 'vet_cm', "", class: 'form-control' %>
-
-              </div>
-              
-              <!-- FOSTER -->
-              <div id="foster" role="tabpanel" class="tab-pane">
-                <%= f.label :foster_date %>
-                <%= text_field_tag 'foster_dt', "" ,class: 'datepicker' %>
-
-                <%= f.label :fost_sub, "Sub Status"%>
-                <%= collection_select(:fost_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
-
-                <%= f.label :fost_fost, "Foster"%>
-                <%= collection_select(:fost_fost, :foster_id, @fosters, :email, :name, {:prompt => "Select foster"}) %>
-
-                <%= f.label :fost_comm, "Comments" %>
-                <%= text_field_tag 'fost_cm', "", class: 'form-control' %>
-              </div>
-              
-              <!-- TRAINING -->
-              <div id="training" role="tabpanel" class="tab-pane">
-                <%= f.label :training_date %>
-                <%= text_field_tag 'training_dt', "" ,class: 'datepicker' %>
-
-                <%= f.label :training_sub, "Sub Status"%>
-                <%= collection_select(:training_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
-
-                <%= f.label :train_comm, "Problem Information" %>
-                <%= text_field_tag 'training_cm', "", class: 'form-control' %> 
-
-                 <!-- Selecting Training-->
-                <%= f.label :trainer_train, "Trainer Location"%>
-                <%= collection_select(:trainer_train, :trainer_id, Trainer.all, :id, :name, {:prompt => "Select Trainer"}) %>
-
-                      
-              </div>
-              
-
-              <!-- ADOPTED -->
-              <div id="adopted" role="tabpanel" class="tab-pane">
-                <%= f.label :adopted_date %>
-                <%= text_field_tag 'adopted_dt', "" ,class: 'datepicker' %>
-                
-                <%= f.label :adopt_sub, "Sub Status"%>
-                <%= collection_select(:adopt_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
-
-                <!-- Selecting Adopter-->
-                <%= f.label :adopt_adopter, "Adopter"%>
-                <%= collection_select(:adopt_adopter, :adopter_id, @adopters, :email, :name, {:prompt => "Select Adopter"}) %>
-
-                <%= f.label :adopt_comm, "Comments" %>
-                <%= text_field_tag 'adopt_cm', "", class: 'form-control' %>
-              
-              </div>
-
-            </div>
-          </div>
-          <!--========== END TRACKING TABS =========-->
-        </div>  
-      </div>
-
-      <!-- Notes -->
-      <div id="notes-body" class="collapse inner-formdiv">
-          <p> General notes</p>
-      </div>
+  <!--===================== BASIC CHARACTERISTICS =======================-->
     
-      <!-- Can i move this? -->
-      <%= f.submit "Add animal", :onclick => "return validateform();", class: "add-btn btn-primary" %>
-    <% end %>
+  <!-- Basic Header -->
+  <div class= "card form-div personal col-md-12">
+    <a class= "card-header paper-header" data-toggle="collapse" href="#characteristics-body">
+      <div>
+        <h3 class="tab-title">Basics</h3>
+      </div>
+    </a>
   </div>
+
+   <!--Basic Characteristics Body -->
+  <div id = "characteristics-body" class="collapse in col-md-12 inner-formdiv">
+    
+    <!-- Profile Picture -->
+    <div class="picture col-md-3">
+      <%= f.label :picture %>
+      <div id="pic-preview" style="padding: 5px">
+        <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
+        <!-- alt="Dog Image"-->
+      </div>
+
+      <img id="profilepic" src="#" alt="Dog Image" style="display: none"/>
+      <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'file-upload profile-file' %>
+    </div>
+
+    <!-- Characteristics Info -->
+    <div class="characteristics-info col-md-9">
+
+
+      <div class= "basics-inner col-md-5">
+        <!-- Physical Features -->
+        <a class= "card-header basics-header" data-toggle="collapse" href="#basics-body">
+          <div>
+            <h4 class="tab-inner-title">Characteristics</h4>
+          </div>
+        </a>
+
+        <div id="basics-body" class="collapse in">
+          <!-- Basics -->
+          
+          <%= f.label :name %>
+          <%= f.text_field :name, class: 'form-control required' %>
+
+          <%= f.label :date_of_birth %>
+          <%= f.text_field :birthday, class: 'form-control datepicker required' %>
+
+          <%= f.label :gender %>
+          <%= f.select :gender, [ 'Male','Female'], {:prompt => 'Select Gender'}, class: "form-control" %>   
+
+          <%= f.label :primary_breed_id, "Primary Breed" %>
+          <%= f.collection_select(:primary_breed_id, @primary, :id, :name, {:prompt => "Select Breed"}, {class:"form-control required"} ) %>
+
+           <%= label :post, "Additional Breeds" %>
+          <%= collection_select(:breed_id, 0, @secondary, :id, :name, {:prompt => "Select Breed"}, {class: "form-control breed-selecter"}) %>              
+          <div id = "breeds-list"></div>
+          <%= text_field_tag 'breeds', "", class: "hidden-breeds", style: "display:none;"  %>
+
+          <%= f.label :color_primary %>
+          <%= f.text_field :color_primary, class: 'form-control' %>
+
+          <%= f.label :color_secondary %>
+          <%= f.text_field :color_secondary, class: 'form-control' %> 
+
+          <%= label :post, "behavior" %>
+          <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Select Behavior
+            <span class="caret"></span></button>
+            
+            <ul class="dropdown-menu">
+              <% @behavior.each do |b| %>
+              <li  class = "behavior-dd-item" id = "behavior-dd-<%= b.id %>"><a href="#" class= "behavior-dd-item" value = '<%= b.id %>'> <%= b.name %></a>  </li> 
+              <% end %>
+            </ul>
+          </div>
+          <div id = "behavior-list"></div>
+          <%= text_field_tag 'behavior', "", class: "hidden-behavior", style: "display:none;"  %>
+          <br>
+        </div>
+      </div>
+      
+
+      <div class= "basics-inner col-md-5">
+        <!-- Physical Features -->
+        <a class= "card-header basics-header" data-toggle="collapse" href="#basics-track-body">
+          <div>
+            <h4 class="tab-inner-title">Tracking</h4>
+          </div>
+        </a>
+
+        <div id="basics-track-body" class="collapse in">
+          <!-- Tracking -->
+          <%= f.label :input_date %>
+          <%= f.text_field :input_date, class: 'form-control datepicker' %>
+
+          <%= f.label :microchip_number , "Microchip #"%>
+          <%= f.text_field :microchip_number, class: 'form-control' %>
+
+          <%= f.label :coordinator, "Assigned Coordinator"%>
+          <%= f.collection_select :coordinator_id, @coordinators, :id, :name, {:prompt => "Select Coordinator"}, class: 'form-control required' %>
+
+          <%= f.label :status %>
+          <%= f.collection_select :status_id, @status, :id, :name, {:prompt => "Select Status"}, class: 'form-control required' %> 
+          
+          <%= f.label :sub_status %>
+          <%= f.collection_select :sub_status_id, @sub_status, :id, :name, {:prompt => "Select SubStatus"}, class: "form-control"%> 
+
+          <%= f.label :marketing %>
+          <%= f.collection_select :marketing_id, @marketing, :id, :name, {:prompt => "Select Marketing Status"}, class: 'form-control required' %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  
+  <!--===================== PAPERWORK =======================-->
+
+  <!-- Paperwork Header -->
+  <div class= "card form-div personal col-md-12">
+    <a class= "card-header paper-header" data-toggle="collapse" href="#paper-body">
+      <div>
+        <h3 class="tab-title">Paperwork</h3>
+      </div>
+    </a>
+  </div>
+
+  <!-- Paperwork Body -->
+  <div id="paper-body" class="collapse in inner-formdiv">
+    <div id="upload-buttons" style="padding-top: 15px">
+      <div class = "upload-wrapper" style= "padding-bottom: 15px">
+          <span class="btn btn-large btn-warning btn-file">
+              <%= label_tag "Vetting Document" %>
+              <%= f.file_field :vetting_document, class: 'file-upload' %>
+          </span>
+          <span class = "file-name"></span>
+          <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+      </div>
+
+      <div class = "upload-wrapper" style= "padding-bottom: 15px">
+          <span class="btn btn-large btn-primary btn-file">
+              <%= label_tag "Intake Document" %>
+              <%= f.file_field :intake_document, class: 'file-upload' %>
+          </span>
+          <span class = "file-name"></span>
+          <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+       </div>
+
+       <div class = "upload-wrapper" style= "padding-bottom: 15px">
+          <span class="btn btn-large btn-info btn-file">
+              <%= label_tag "Owner Surrender" %>
+              <%= f.file_field  :owner_surrender_document, class: 'file-upload' %>
+          </span>
+          <span class = "file-name"></span>
+          <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+      </div>
+
+      <div class = "upload-wrapper" style= "padding-bottom: 15px">
+        <span class="btn btn-large btn-info btn-file">
+            <%= label_tag "Home Check" %>
+            <%= f.file_field  :home_check_document, class: 'file-upload' %>
+        </span>
+        <span class = "file-name"></span>
+        <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+      </div>
+
+      <div class = "upload-wrapper" style= "padding-bottom: 15px">
+        <span class="btn btn-large btn-info btn-file">
+            <%= label_tag "Match Application" %>
+            <%= f.file_field  :match_application_document, class: 'file-upload' %>
+        </span>
+        <span class = "file-name"></span>
+        <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+      </div>
+
+      <div class = "upload-wrapper" style= "padding-bottom: 15px">
+        <span class="btn btn-large btn-info btn-file">
+            <%= label_tag "Adoption Application" %>
+            <%= f.file_field  :adoption_application_document, class: 'file-upload' %>
+        </span>
+        <span class = "file-name"></span>
+        <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+      </div>
+
+      <div class = "upload-wrapper">
+        <span class="btn btn-large btn-info btn-file">
+            <%= label_tag "Adoption Contract" %>
+            <%= f.file_field  :adoption_contract_document, class: 'file-upload' %>
+        </span>
+        <span class = "file-name"></span>
+        <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+      </div>
+    </div>
+  </div>
+
+
+<!--===================== TRACKING =======================-->
+  
+  <!-- Tracking Header -->
+  <div class= "card form-div personal col-md-12">
+  <a class= "card-header tracking-header" data-toggle="collapse" href="#tracking-body">
+    <div>
+      <h3 class="tab-title">Tracking</h3>
+    </div>
+  </a>
+  </div>
+
+  <!-- Tracking Body -->
+  <div id="tracking-body" class="collapse inner-formdiv">
+
+    <!-- BEGIN TRACKING TAB DIV -->
+    <div id="status-div" class="tracking-innerDiv col-md-8">
+      
+      <!-- Tab headers for each status -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation"><a href="#intake" data-toggle="tab">Intake</a></li>
+        <li role="presentation"><a href="#vetting" data-toggle="tab">Vetting</a></li>
+        <li role="presentation"><a href="#foster" data-toggle="tab">Foster</a></li>
+        <li role="presentation"><a href="#training" data-toggle="tab">Training</a></li>
+        <li role="presentation"><a href="#adopted" data-toggle="tab">With Adopter</a></li>
+      </ul>
+
+      <!-- Information for Statuses in Tabs-->
+      <div class="status-tabsInner tab-content">
+        <!-- INTAKE -->
+        <div id = "intake" role="tabpanel" class="tab-pane fade in">
+          <!-- Selecting Date-->
+          <%= f.label :intake_date, "Intake Date" %>
+          <%= text_field_tag 'intake_dt', "" ,class: 'datepicker' %>
+          
+          <%= f.label :intake_sub, "Sub Status"%>
+          <%= collection_select(:intake_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
+          
+          <!-- Selecting Prev Location-->
+          <%= f.label :intake_loc, "Previous Location"%>
+          <%= collection_select(:intake_loc, :intake_reason_id, IntakeReason.all, :id, :name, {:prompt => "Select Previous Location"}) %>
+
+          <!-- Selecting Previous Location-->
+          <%= f.label :intake_prev, "Animal Facility"%>
+          <%= collection_select(:intake_prev, :animal_facility_id, AnimalFacility.all, :id, :name, {:prompt => "Select Animal Facility"}) %>
+
+          <!-- Inputing Details-->
+          <%= f.label :intake_comm, "Details" %>
+          <%= text_field_tag 'intake_cm', "", class: 'form-control' %>
+        
+        </div> 
+
+        <!-- VETTING -->
+        <div id="vetting" role="tabpanel" class="tab-pane">
+            <%= f.label :vetting_date %>
+            <%= text_field_tag 'vet_dt', "" ,class: 'datepicker' %>
+            
+            <%= f.label :vet_sub, "Sub Status"%>
+            <%= collection_select(:vet_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
+
+            <!-- Selecting Vets-->
+            <%= f.label :vet_vet, "Veterinarian"%>
+            <%= collection_select(:vet_vet, :veterinarian_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian"}) %>
+            
+            <!-- Inputing Details-->
+            <%= f.label :vet_comm, "Comments" %>
+            <%= text_field_tag 'vet_cm', "", class: 'form-control' %>
+
+        </div>
+        
+        <!-- FOSTER -->
+        <div id="foster" role="tabpanel" class="tab-pane">
+          <%= f.label :foster_date %>
+          <%= text_field_tag 'foster_dt', "" ,class: 'datepicker' %>
+
+          <%= f.label :fost_sub, "Sub Status"%>
+          <%= collection_select(:fost_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
+
+          <%= f.label :fost_fost, "Foster"%>
+          <%= collection_select(:fost_fost, :foster_id, @fosters, :email, :name, {:prompt => "Select foster"}) %>
+
+          <%= f.label :fost_comm, "Comments" %>
+          <%= text_field_tag 'fost_cm', "", class: 'form-control' %>
+        </div>
+        
+        <!-- TRAINING -->
+        <div id="training" role="tabpanel" class="tab-pane">
+          <%= f.label :training_date %>
+          <%= text_field_tag 'training_dt', "" ,class: 'datepicker' %>
+
+          <%= f.label :training_sub, "Sub Status"%>
+          <%= collection_select(:training_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
+
+          <%= f.label :train_comm, "Problem Information" %>
+          <%= text_field_tag 'training_cm', "", class: 'form-control' %> 
+
+           <!-- Selecting Training-->
+          <%= f.label :trainer_train, "Trainer Location"%>
+          <%= collection_select(:trainer_train, :trainer_id, Trainer.all, :id, :name, {:prompt => "Select Trainer"}) %>       
+        </div>
+        
+
+        <!-- ADOPTED -->
+        <div id="adopted" role="tabpanel" class="tab-pane">
+          <%= f.label :adopted_date %>
+          <%= text_field_tag 'adopted_dt', "" ,class: 'datepicker' %>
+          
+          <%= f.label :adopt_sub, "Sub Status"%>
+          <%= collection_select(:adopt_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
+
+          <!-- Selecting Adopter-->
+          <%= f.label :adopt_adopter, "Adopter"%>
+          <%= collection_select(:adopt_adopter, :adopter_id, @adopters, :email, :name, {:prompt => "Select Adopter"}) %>
+
+          <%= f.label :adopt_comm, "Comments" %>
+          <%= text_field_tag 'adopt_cm', "", class: 'form-control' %>
+        </div>
+      </div>
+    </div> 
+    <!-- END TRACKING TAB DIV -->
+  </div>
+
+  <!-- Notes Header -->
+  <div class= "card form-div personal col-md-12">
+  <a class= "card-header notes-header" data-toggle="collapse" href="#notes-body">
+    <div>
+      <h3 class="tab-title">Notes</h3>
+    </div>
+  </a>
+  </div>
+
+  <!-- Notes Body -->
+  <div id="notes-body" class="collapse inner-formdiv">
+  </div>
+
+
+  <%= f.submit "Add animal", :onclick => "return validateform();", class: "add-btn btn-primary" %>
+  <% end %>
 </div>
 
 
-
-
-</div>
+<!-- End Html -->
+    
 <script>
-  // //Tracking show modals
-  // function showDiv() {
-  //  document.getElementById('welcomeDiv').style.display = "block";
-  // }
-  // $("")
-
-
   $("#animal_species_id").change(function(){
     console.log($("#animal_breed_id"))
     if ($("#animal_species_id").val() == 1) {
@@ -534,7 +478,5 @@
     })
     $(".hidden-behavior").val(str)
   }
-
-
 </script>
 
