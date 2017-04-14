@@ -10,7 +10,6 @@ $blue : #2980b9;
 
 
 //Style for new & edit pages & profile
-
 .pg-container {
   background-color: white;
   margin-top: 5%;
@@ -131,11 +130,33 @@ $blue : #2980b9;
 
 
 //Profile Page
+.circle-img {
+  border-radius: 50%;
+}
+
+
 #profile-container {
   background-color: white;
   margin-top: 5%;
   padding: 2%;
   border-radius: 0.5%;
+}
+
+#profile-snippet {
+  background-color: #f1f1f1;
+  border-radius: 0.7%;
+  border-color: blue;
+  border-width: 15px;
+}
+
+#profile-box {
+  margin-left: 25%;
+  border-radius: 50%;
+  border-color: black;
+}
+
+#snippet-info {
+  margin-left: 25%;
 }
 
 
