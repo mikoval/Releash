@@ -141,7 +141,12 @@ function generateAnimalsList(){
     data: params,
     success: function(result){
 
-      // sort animals by status
+      // sort animals by sub-status then status
+      result.sort(function(a, b){
+      if(a.sub_status < b.sub_status) return -1;
+      if(a.sub_status > b.sub_status) return 1;
+      return 0;
+      })
       result.sort(function(a, b){
       if(a.status < b.status) return -1;
       if(a.status > b.status) return 1;
