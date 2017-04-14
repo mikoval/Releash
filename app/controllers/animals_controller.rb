@@ -104,8 +104,8 @@ class AnimalsController < ApplicationController
 
     @characteristics = AnimalCharacteristic.where("animal_id = " + params["param"])
 
-    @sub_status = SubStatusType.all
-    @marketing = MarketingType.all
+    @sub_status = SubStatusType.all.order('name ASC')
+    @marketing = MarketingType.all.order('name ASC')
     
     @breed = Breed.order('name ASC')
     @breeds = AnimalBreed.where("animal_id = " + params["param"])
@@ -699,9 +699,7 @@ class AnimalsController < ApplicationController
       end 
 
       if(add)
-        if d.sub_status != nil
-          @sub = d.sub_status.name
-        end
+        
         arr.push({
           "id" => d.id,
           "#" =>  index, 
@@ -713,12 +711,12 @@ class AnimalsController < ApplicationController
           "age" => d.age(),
           "birthday" => d.birthday.to_formatted_s(:long_ordinal),
           "location" =>d.location(),
-          "sub_status" =>@sub,
+          "sub_status" =>d.substatus(),
           "marketing" => d.marketing.name,
           "neutered" => d.neutered,
           "adoption_fee" => d.adoption_fee,
           "notes" => d.notes,
-          "coordinator" => d.coordinator
+          "coordinator" => d.coordinator.name
         })
       end
     end

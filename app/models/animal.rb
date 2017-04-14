@@ -27,6 +27,14 @@ class Animal < ActiveRecord::Base
         return ((Time.now.to_i  - birthday.to_datetime.to_i )  / 1.year).to_i
 
     end
+    def substatus()
+        if sub_status == nil
+            return ""
+        else 
+            return sub_status.name
+        end
+
+    end
     def location()
 
 
