@@ -699,9 +699,7 @@ class AnimalsController < ApplicationController
       end 
 
       if(add)
-        if d.sub_status != nil
-          @sub = d.sub_status.name
-        end
+        
         arr.push({
           "id" => d.id,
           "#" =>  index, 
@@ -713,7 +711,7 @@ class AnimalsController < ApplicationController
           "age" => d.age(),
           "birthday" => d.birthday.to_formatted_s(:long_ordinal),
           "location" =>d.location(),
-          "sub_status" =>@sub,
+          "sub_status" =>d.substatus(),
           "marketing" => d.marketing.name,
           "neutered" => d.neutered,
           "adoption_fee" => d.adoption_fee,
