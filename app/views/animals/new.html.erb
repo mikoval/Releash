@@ -55,13 +55,13 @@
           <%= f.text_field :birthday, class: 'form-control datepicker required' %>
 
           <%= f.label :gender %>
-          <%= f.select :gender, [ 'Male','Female'], :prompt => 'Select Gender' %>   
+          <%= f.select :gender, [ 'Male','Female'], {:prompt => 'Select Gender'}, class: "form-control" %>   
 
           <%= f.label :primary_breed_id, "Primary Breed" %>
-          <%= f.collection_select :primary_breed_id, @primary, :id, :name, {:prompt => "Select Breed"}, class:'required' %>
+          <%= f.collection_select(:primary_breed_id, @primary, :id, :name, {:prompt => "Select Breed"}, {class:"form-control required"} ) %>
 
            <%= label :post, "Additional Breeds" %>
-          <%= collection_select(:breed_id, 0, @secondary, :id, :name, {:prompt => "Select Breed"}, {class: "breed-selecter"}) %>              
+          <%= collection_select(:breed_id, 0, @secondary, :id, :name, {:prompt => "Select Breed"}, {class: "form-control breed-selecter"}) %>              
           <div id = "breeds-list"></div>
           <%= text_field_tag 'breeds', "", class: "hidden-breeds", style: "display:none;"  %>
 
@@ -100,22 +100,22 @@
         <div id="basics-track-body" class="collapse in">
           <!-- Tracking -->
           <%= f.label :input_date %>
-          <%= f.text_field :input_date, class: 'datepicker' %>
+          <%= f.text_field :input_date, class: 'form-control datepicker' %>
 
           <%= f.label :microchip_number , "Microchip #"%>
           <%= f.text_field :microchip_number, class: 'form-control' %>
 
           <%= f.label :coordinator, "Assigned Coordinator"%>
-          <%= f.collection_select :coordinator_id, @coordinators, :id, :name, {:prompt => "Select Coordinator"}, class: 'required' %>
+          <%= f.collection_select :coordinator_id, @coordinators, :id, :name, {:prompt => "Select Coordinator"}, class: 'form-control required' %>
 
           <%= f.label :status %>
-          <%= f.collection_select :status_id, @status, :id, :name, {:prompt => "Select Status"}, class: 'required' %> 
+          <%= f.collection_select :status_id, @status, :id, :name, {:prompt => "Select Status"}, class: 'form-control required' %> 
           
           <%= f.label :sub_status %>
-          <%= f.collection_select :sub_status_id, @sub_status, :id, :name, {:prompt => "Select SubStatus"}%> 
+          <%= f.collection_select :sub_status_id, @sub_status, :id, :name, {:prompt => "Select SubStatus"}, class: "form-control"%> 
 
           <%= f.label :marketing %>
-          <%= f.collection_select :marketing_id, @marketing, :id, :name, {:prompt => "Select Marketing Status"}, class: 'required' %>
+          <%= f.collection_select :marketing_id, @marketing, :id, :name, {:prompt => "Select Marketing Status"}, class: 'form-control required' %>
         </div>
       </div>
     </div>
