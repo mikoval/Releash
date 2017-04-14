@@ -324,7 +324,7 @@
       <!-- Can i move this? -->
       <%= f.submit "Submit Edit", class: "add-btn btn-primary" %>
 
-      <button  class= "btn btn-danger animal-delete" id= "delete-<%= @animal.id.to_s %> " > Delete Animal</button>
+       <%= link_to "<button class= 'btn btn-danger'> Delete Animal</button>".html_safe ,animals_path(@animal), method: :delete, data: {confirm: "Are you sure? This will delete animal and all associated records. This is NOT reversible. Delete at your own risk"}%>
 
     <% end %>
     
@@ -335,21 +335,6 @@
 
 <script>
   
-  $(".animal-delete").on("click", function(event){
-  event.preventDefault()
-  $.ajax({
-    type: "DELETE",
-    url: "/animals",
-    data: "param=" + $(this).attr("id").split("-")[1],
-    success: function(msg){
-        window.location = "<%= session[:prev_url] %>"
-    },
-    error: function(e){
-      alert("unable to delete animal")
-
-    }
-  });
-});
 
   $("#animal_species_id").change(function(){
     console.log($("#animal_breed_id"))

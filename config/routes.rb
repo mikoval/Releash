@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   get '/animals', to: 'animals#list'
   post  '/animals',   to: 'animals#newAnimal'
   patch  '/animals',   to: 'animals#editAnimal'
-  delete  '/animals',   to: 'animals#destroyAnimal'
+  delete  '/animals',   to: 'animals#destroy'
 
   get 'intake/new'   
   get 'intake/edit'

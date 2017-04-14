@@ -20,18 +20,19 @@ class AnimalsController < ApplicationController
     
   end
 
-  def destroyAnimal
-    id = request["param"]
-    puts "Here"
-    @animals = Animals.destroy(id)
-    @ani_alerts = AnimalAlerts.where(animal_id: id).destroy_all
-    @intake = Intake.where(animal_id: id).destroy_all
-    @vetting = Vetting.where(animal_id: id).destroy_all
-    @foster = FosterStatus.where(animal_id: id).destroy_all
-    @train = Training.where(animal_id: id).destroy_all
-    @adopt = Adopted.where(animal_id: id).destroy_all
+  def destroy
+    id = params["format"]
+    #Rails.logger.debug("My admin--------------: #{params.inspect}")
+    @animals = Animal.destroy(id)
+    @ani_alerts = AnimalAlert.where(animal_id: id).delete_all
+    @intake = Intake.where(animal_id: id).delete_all
+    @vetting = Vetting.where(animal_id: id).delete_all
+    @foster = FosterStatus.where(animal_id: id).delete_all
+    @train = Training.where(animal_id: id).delete_all
+    @adopt = Adopted.where(animal_id: id).delete_all
 
-    render json: {"status" => "success"}
+    flash.now[:success] = "New Animal!"
+    redirect_to :controller => "animals", :action => "list", :param => @animals
   end
   
   def new
