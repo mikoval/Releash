@@ -44,6 +44,8 @@
           <% if b != @breeds.last %>
             <%= b.breed.name + "," %> 
           <% else %>
+            <%= b.breed.name  %> 
+          <% end %>
         <% end %> 
        </p> 
 
@@ -103,7 +105,6 @@
         </div>
       </div>
   <!-- </div> Personal div--> 
->>>>>>> master
 
       <!-- Status Info -->
       <p> Current Status: <%= @animal.status.name%> </p>
