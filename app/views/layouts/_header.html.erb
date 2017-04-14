@@ -11,15 +11,23 @@
         <div class="brand">
         <%= link_to image_tag("https://s3.amazonaws.com/releashatlanta/uploads/ReleashImages/images/17690116_10213324689658581_1634804572_n.png"), root_path %></div>
         </div>
-        
+        <div class = "search col-md-4">
+
         <ul class="nav navbar-nav navbar-left">
           <li style = "display: inline-block; width: 200px; white-space: nowrap;">
-            <span class = 'glyphicon glyphicon-search navbar-text' style = "display: inline-block; font-size: 24px; margin-right:5px" ></span> 
-            <input style = " width: 100%; vertical-align: middle; margin-top:15px" placeholder="Search" class ="search" /> 
+            
+
+              <span class = 'glyphicon glyphicon-search search-child' style = "display: inline-block; font-size: 24px; margin-right:5px" ></span> 
+
+              <input style = " width: 100%; vertical-align: middle; margin-top:15px" placeholder="Search" class ="search" /> 
+            </div>            
+            <div class = "search-result col-md-4 col-md-offset-4">
+            </div>
           </li>
           <li></li>
         </ul>
-          
+
+        </div>
           <ul class="nav navbar-nav navbar-right" style="padding-right: 20px">
             <% if logged_in? %>
 
@@ -40,6 +48,7 @@
                 <% end %>
               </ul>
           </nav>
+
     <!-- END NAVBAR -->
 
     <!-- LEFT SIDEBAR -->
@@ -63,7 +72,7 @@
         </nav>
         </div>
       </div>
-      <div style = "position:fixed" class = "search-result col-md-4 col-md-offset-4">
+      
     <!-- END LEFT SIDEBAR -->
   </div>
 

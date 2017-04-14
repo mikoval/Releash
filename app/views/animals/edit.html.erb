@@ -323,27 +323,33 @@
     
       <!-- Can i move this? -->
       <%= f.submit "Submit Edit", class: "add-btn btn-primary" %>
+
+      <button  class= "btn btn-danger animal-delete" id= "delete-<%= @animal.id.to_s %> " > Delete Animal</button>
+
     <% end %>
+    
   </div>
 </div>  
 </div> <!-- If this is not there there is a line across the screen. Not sure why - J -->
 
 
 <script>
-  //Tracking modal save
-  $('#intake-entry-savebtn').click(function() {
-    $('.modal').modal('hide');
-    //Take information stored in modal and save
-    //$('intake_cm').html();
-    var value = $('.animal.name').val();
-    var show = $('h1').html(value);
+  
+  $(".animal-delete").on("click", function(event){
+  event.preventDefault()
+  $.ajax({
+    type: "DELETE",
+    url: "/animals",
+    data: "param=" + $(this).attr("id").split("-")[1],
+    success: function(msg){
+        window.location = "<%= session[:prev_url] %>"
+    },
+    error: function(e){
+      alert("unable to delete animal")
 
-    //insert information into newly created div & display div in edit
-    $("#intake-content").append('<div>' + show + '</div>');
-    
+    }
   });
-
-
+});
 
   $("#animal_species_id").change(function(){
     console.log($("#animal_breed_id"))
