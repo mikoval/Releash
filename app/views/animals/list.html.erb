@@ -251,22 +251,33 @@ function downloadCSV(args) {
 
     if (csv == null) return;
 
+    // date
     var today = new Date();
     var month = today.getMonth()+1;
+    var day = today.getDate();
     if(month < 10){
       month = "0" + month;
     }
-    var day = today.getDate();
     if(day < 10){
       day = "0" + day;
     }
-
     var date = today.getFullYear()+ "" + month + "" + day;
+
+    // time
+    var hour = today.getHours();
+    var minute = today.getMinutes();
     var second = today.getSeconds();
+    if(hour < 10){
+      hour = "0" + hour;
+    }
+    if(minute < 10){
+      minute = "0" + minute;
+    }
     if(second < 10){
       second = "0" + second;
     }
-    var time = today.getHours() + today.getMinutes() + second;
+
+    var time = hour + "" + minute + "" + second;
 
     filename = args.filename || 'export.csv';
     filename += " v." + date + time + ".csv";
