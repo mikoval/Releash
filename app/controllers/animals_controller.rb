@@ -20,6 +20,21 @@ class AnimalsController < ApplicationController
     
   end
 
+  def destroy
+    id = params["format"]
+    #Rails.logger.debug("My admin--------------: #{params.inspect}")
+    @animals = Animal.destroy(id)
+    @ani_alerts = AnimalAlert.where(animal_id: id).delete_all
+    @intake = Intake.where(animal_id: id).delete_all
+    @vetting = Vetting.where(animal_id: id).delete_all
+    @foster = FosterStatus.where(animal_id: id).delete_all
+    @train = Training.where(animal_id: id).delete_all
+    @adopt = Adopted.where(animal_id: id).delete_all
+
+    flash.now[:success] = "New Animal!"
+    redirect_to :controller => "animals", :action => "list", :param => @animals
+  end
+  
   def new
     @animal = Animal.new
     @new_intake = Intake.new
@@ -131,6 +146,12 @@ class AnimalsController < ApplicationController
       @hidden = "Hidden"
     else
       @hidden = "Visible"
+    end
+
+    if @animal.vetting_completed?
+      @vet_done = "Complete"
+    else
+      @vet_done = "Incomplete"
     end
 
     if @animal.sub_status_id != nil
@@ -589,6 +610,39 @@ class AnimalsController < ApplicationController
     render json: arr
   end
 
+  def querySimpleStatus
+    @animals = Animal.all
+    @status = StatusType.all
+    
+    arr = []
+
+    @status.each do |d|
+      @count = @animals.select {|a| a.status_id == d.id}.count
+      arr.push({
+          "id" =>  d.id, 
+          "name" => d.name,
+          "count" => @count,
+        })
+    end
+    render json: arr
+  end
+
+  def querySimpleCoor
+    @animals = Animal.where(coordinator_id: current_user.id)
+    
+    arr = []
+
+    @animals.each do |d|
+      arr.push({
+          "id" =>  d.id, 
+          "name" => d.name,
+          "primary" => d.primary_breed.name,
+          "gender" => d.gender,
+          "status" => d.status.name,
+        })
+    end
+    render json: arr
+  end
 
   def query
     
@@ -644,9 +698,10 @@ class AnimalsController < ApplicationController
         end
       end 
 
-
-
       if(add)
+        if d.sub_status != nil
+          @sub = d.sub_status.name
+        end
         arr.push({
           "id" => d.id,
           "#" =>  index, 
@@ -658,7 +713,7 @@ class AnimalsController < ApplicationController
           "age" => d.age(),
           "birthday" => d.birthday.to_formatted_s(:long_ordinal),
           "location" =>d.location(),
-          "sub_status" =>d.sub_status.name,
+          "sub_status" =>@sub,
           "marketing" => d.marketing.name,
           "neutered" => d.neutered,
           "adoption_fee" => d.adoption_fee,

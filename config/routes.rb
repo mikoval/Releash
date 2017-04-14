@@ -19,6 +19,8 @@ Rails.application.routes.draw do
 
   get 'animals/query'
   get 'animals/querySimple'
+  get 'animals/querySimpleStatus'
+  get 'animals/querySimpleCoor'
   get 'animals/search'
   get '/animals/new'
   get '/animals/profile'
@@ -27,6 +29,7 @@ Rails.application.routes.draw do
   get '/animals', to: 'animals#list'
   post  '/animals',   to: 'animals#newAnimal'
   patch  '/animals',   to: 'animals#editAnimal'
+  delete  '/animals',   to: 'animals#destroy'
 
   get 'intake/new'   
   get 'intake/edit'

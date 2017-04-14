@@ -323,27 +323,18 @@
     
       <!-- Can i move this? -->
       <%= f.submit "Submit Edit", class: "add-btn btn-primary" %>
+
+       <%= link_to "<button class= 'btn btn-danger'> Delete Animal</button>".html_safe ,animals_path(@animal), method: :delete, data: {confirm: "Are you sure? This will delete animal and all associated records. This is NOT reversible. Delete at your own risk"}%>
+
     <% end %>
+    
   </div>
 </div>  
 </div> <!-- If this is not there there is a line across the screen. Not sure why - J -->
 
 
 <script>
-  //Tracking modal save
-  $('#intake-entry-savebtn').click(function() {
-    $('.modal').modal('hide');
-    //Take information stored in modal and save
-    //$('intake_cm').html();
-    var value = $('.animal.name').val();
-    var show = $('h1').html(value);
-
-    //insert information into newly created div & display div in edit
-    $("#intake-content").append('<div>' + show + '</div>');
-    
-  });
-
-
+  
 
   $("#animal_species_id").change(function(){
     console.log($("#animal_breed_id"))

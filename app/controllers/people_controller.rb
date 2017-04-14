@@ -40,6 +40,7 @@ class PeopleController < ApplicationController
     @foster = Foster.find_by user_id: @employee.id
     if @foster != nil
       @allFosters = FosterStatus.where(foster_id: @foster.id)
+      Rails.logger.debug("My adopter--------------: #{@allFosters.inspect}")
     end
 
     @adoptions = Adopter.find_by user_id: @employee.id

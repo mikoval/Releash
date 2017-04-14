@@ -44,10 +44,66 @@
           <% if b != @breeds.last %>
             <%= b.breed.name + "," %> 
           <% else %>
-            <%= b.breed.name  %> 
-          <% end %>
         <% end %> 
        </p> 
+
+        <!-- Basic Characteristics -->
+        <div class="characteristics-info col-md-9">
+          <h4>Name</h4>
+          <%= @animal.name %>
+          <h4>Animal ID</h4>
+          <%= @animal.id %>
+          <p> Microchip Number: <%= @animal.microchip_number %> </p> 
+          <h4>Primary Breed</h4>
+          <%= @animal.primary_breed.name %>
+          <h4>Primary Breed</h4>
+          <%= @animal.primary_breed.name %>
+          <h4>Date of Birth</h4>
+          <%= @animal.birthday%>
+          <h4>Input Date</h4>
+          <%= @animal.input_date%>
+          <h4>Date of Death</h4>
+          <%= @animal.date_death%>
+          <h4>Date of Adoption</h4>
+          <%= @animal.date_adopted%>
+          <h4>Vetting Status</h4>
+          <%= @vet_done%>
+
+          <!-- Breeds -->
+          <h4>Additional Breeds</h4> 
+          <p> 
+            <% @breeds.each do |b| %>
+              <% if b != @breeds.last %>
+                <%= b.breed.name + "," %> 
+              <% else %>
+                <%= b.breed.name  %> 
+              <% end %>
+            <% end %> 
+           </p> 
+
+          <!-- Status Info -->
+          <p> Current Status: <%= @animal.status.name%> </p>
+          <p> Current Substatus: <%= @sub_status_name%> </p>
+          <p> Marketing: <%= @animal.marketing.name%> </p>
+          <p> Visibility: <%= @hidden%> </p>
+
+          <!-- Physical Features & Behavior -->
+          <p> Primary Color: <%= @animal.color_primary %> </p>
+          <p> Secondary Color: <%= @animal.color_secondary %> </p>
+
+          <p>
+          <% @behaviors.each do |b| %>
+           <% if b != @behaviors.last %>
+              <%= b.characteristic.name + "," %> 
+            <% else %>
+              <%= b.characteristic.name  %> 
+            <% end %>
+            <% end %> 
+         </p>  
+        </div>
+      </div>
+  <!-- </div> Personal div--> 
+>>>>>>> master
 
       <!-- Status Info -->
       <p> Current Status: <%= @animal.status.name%> </p>
