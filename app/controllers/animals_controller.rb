@@ -104,8 +104,8 @@ class AnimalsController < ApplicationController
 
     @characteristics = AnimalCharacteristic.where("animal_id = " + params["param"])
 
-    @sub_status = SubStatusType.all
-    @marketing = MarketingType.all
+    @sub_status = SubStatusType.all.order('name ASC')
+    @marketing = MarketingType.all.order('name ASC')
     
     @breed = Breed.order('name ASC')
     @breeds = AnimalBreed.where("animal_id = " + params["param"])
