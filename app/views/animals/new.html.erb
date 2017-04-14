@@ -49,7 +49,7 @@
           <!-- Basics -->
           
           <%= f.label :name %>
-          <%= f.text_field :name, class: 'form-control required' %>
+          <%= f.text_field :name, class: 'required form-control' %>
 
           <%= f.label :date_of_birth %>
           <%= f.text_field :birthday, class: 'form-control datepicker required' %>
@@ -72,6 +72,7 @@
           <%= f.text_field :color_secondary, class: 'form-control' %> 
 
           <%= label :post, "behavior" %>
+          
           <div class="dropdown">
             <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Select Behavior
             <span class="caret"></span></button>
@@ -86,6 +87,7 @@
           <%= text_field_tag 'behavior', "", class: "hidden-behavior", style: "display:none;"  %>
           <br>
         </div>
+
       </div>
       
 
@@ -136,6 +138,7 @@
 
   <!-- Paperwork Body -->
   <div id="paper-body" class="collapse in inner-formdiv">
+    
     <div id="upload-buttons" style="padding-top: 15px">
       <div class = "upload-wrapper" style= "padding-bottom: 15px">
           <span class="btn btn-large btn-warning btn-file">
@@ -235,7 +238,7 @@
         <div id = "intake" role="tabpanel" class="tab-pane fade in">
           <!-- Selecting Date-->
           <%= f.label :intake_date, "Intake Date" %>
-          <%= text_field_tag 'intake_dt', "" ,class: 'datepicker' %>
+          <%= text_field_tag 'intake_dt', "" ,class: 'form-control datepicker' %>
           
           <%= f.label :intake_sub, "Sub Status"%>
           <%= collection_select(:intake_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
@@ -257,7 +260,7 @@
         <!-- VETTING -->
         <div id="vetting" role="tabpanel" class="tab-pane">
             <%= f.label :vetting_date %>
-            <%= text_field_tag 'vet_dt', "" ,class: 'datepicker' %>
+            <%= text_field_tag 'vet_dt', "" ,class: 'form-control datepicker' %>
             
             <%= f.label :vet_sub, "Sub Status"%>
             <%= collection_select(:vet_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
@@ -275,7 +278,7 @@
         <!-- FOSTER -->
         <div id="foster" role="tabpanel" class="tab-pane">
           <%= f.label :foster_date %>
-          <%= text_field_tag 'foster_dt', "" ,class: 'datepicker' %>
+          <%= text_field_tag 'foster_dt', "" ,class: 'form-control datepicker' %>
 
           <%= f.label :fost_sub, "Sub Status"%>
           <%= collection_select(:fost_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
@@ -290,7 +293,7 @@
         <!-- TRAINING -->
         <div id="training" role="tabpanel" class="tab-pane">
           <%= f.label :training_date %>
-          <%= text_field_tag 'training_dt', "" ,class: 'datepicker' %>
+          <%= text_field_tag 'training_dt', "" ,class: 'form-control datepicker' %>
 
           <%= f.label :training_sub, "Sub Status"%>
           <%= collection_select(:training_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
@@ -307,7 +310,7 @@
         <!-- ADOPTED -->
         <div id="adopted" role="tabpanel" class="tab-pane">
           <%= f.label :adopted_date %>
-          <%= text_field_tag 'adopted_dt', "" ,class: 'datepicker' %>
+          <%= text_field_tag 'adopted_dt', "" ,class: 'form-control datepicker' %>
           
           <%= f.label :adopt_sub, "Sub Status"%>
           <%= collection_select(:adopt_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>

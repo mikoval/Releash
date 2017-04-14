@@ -10,11 +10,11 @@ module ApplicationHelper
     end
   end
 
-  def display_avatar(user, size)  
+  def display_avatar(user, size, classes = "")  
     unless user.picture.nil? 
-      image_tag( user.picture.url,  :size => size, :class => "small_img")
+      image_tag( user.picture.url,  :size => size, :class => classes)
     else
-      image_tag("/images/default.png",  :size => size, :class => "small_img")
+      image_tag("/images/default.png",  :size => size, :class => classes)
      end    
   end
 

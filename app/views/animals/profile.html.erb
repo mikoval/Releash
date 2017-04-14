@@ -17,22 +17,42 @@
   <div class= "card form-div personal col-md-12">
     <a class= "card-header paper-header" data-toggle="collapse" href="#characteristics-body">
       <div>
-        <h4>Basics</h4>
+        <h3 class="tab-title">Basics</h3>
       </div>
     </a>
   </div>
 
    <!--Basic Characteristics Body -->
   <div id = "characteristics-body" class="collapse in col-md-12 inner-formdiv">
-    <!-- Profile Picture -->
-    <div class="picture col-md-3">
-      <%= display_avatar(@animal, "150x200") %>
+
+    <div id= "profile-snippet" class="col-md-5">
+      <div class = "row">
+          <!-- Profile Picture -->
+        <div id="profile-box"class="picture col-md-4 img-circle">
+          <%= display_avatar(@animal, "130x130", "circle-img") %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div id="snippet-info">
+          <h4><%= @animal.name %></h4>
+            <!-- Status Info -->
+            <p> Current Status: <%= @animal.status.name%> </p>
+            <p> Current Substatus: <%= @sub_status_name%> </p>
+            <p> Marketing: <%= @animal.marketing.name%> </p>
+            <p> Visibility: <%= @hidden%> </p>
+        </div>
+      </div>
     </div>
+
+    <!-- Profile Picture -->
+<!--     <div class="picture col-md-3">
+      <%#= display_avatar(@animal, "150x200") %>
+    </div> -->
 
     <!-- Characteristics Info -->
     <div class="characteristics-info col-md-9">
-      <h4>Name</h4>
-      <%= @animal.name %>
+
       <p> Microchip Number: <%= @animal.microchip_number %> </p> 
       <h4>Primary Breed</h4>
       <%= @animal.primary_breed.name %>
@@ -49,11 +69,6 @@
         <% end %> 
        </p> 
 
-      <!-- Status Info -->
-      <p> Current Status: <%= @animal.status.name%> </p>
-      <p> Current Substatus: <%= @sub_status_name%> </p>
-      <p> Marketing: <%= @animal.marketing.name%> </p>
-      <p> Visibility: <%= @hidden%> </p>
 
       <!-- Physical Features & Behavior -->
       <p> Primary Color: <%= @animal.color_primary %> </p>
@@ -79,7 +94,7 @@
   <div class= "card form-div personal col-md-12">
     <a class= "card-header paper-header" data-toggle="collapse" href="#paper-body">
       <div>
-        <h4>Paperwork</h4>
+         <h3 class="tab-title">Paperwork</h3>
       </div>
     </a>
   </div>
@@ -115,13 +130,13 @@
   <div class= "card form-div personal col-md-12">
   <a class= "card-header application-header" data-toggle="collapse" href="#application-body">
     <div>
-      <h4>Adoption Applications</h4>
+       <h3 class="tab-title">Adoption Application</h3>
     </div>
   </a>
   </div>
 
   <!-- Adoption Applications -->
-  <div id="application-body" class="collapse inner-formdiv">
+  <div id="application-body" class="collapse in inner-formdiv">
     <%= link_to 'Add Adoption Application', '#adopterAppFormEntryModal', class: 'btn btn-default', 'data-toggle' => 'modal' %>
 
     <!-- Begin New Modal -->
@@ -237,13 +252,13 @@
   <div class= "card form-div personal col-md-12">
   <a class= "card-header tracking-header" data-toggle="collapse" href="#tracking-body">
     <div>
-      <h4>Tracking</h4>
+       <h3 class="tab-title">Tracking</h3>
     </div>
   </a>
   </div>
 
   <!-- Tracking -->
-  <div id="tracking-body" class="collapse inner-formdiv">
+  <div id="tracking-body" class="collapse in inner-formdiv">
     <p> Current Status: <%=@status_name%> </p>
 
     <div id="timeline">
@@ -641,7 +656,6 @@
               </div>
             <!-- End Modal -->
             <% end %>
-
           <% end %>
         <% end %>  
     </article>
@@ -657,13 +671,13 @@
   <div class= "card form-div alerts col-md-12">
     <a class= "card-header alert-header" data-toggle="collapse" href="#alerts-body">
       <div>
-        <h4>Alerts</h4>
+         <h3 class="tab-title">Alerts</h3>
       </div>
     </a>
   </div>
 
   <!-- Alerts -->
-  <div id="alerts-body" class="collapse inner-formdiv">
+  <div id="alerts-body" class="collapse in inner-formdiv">
       <table>
         <thead>
           <tr>
