@@ -157,8 +157,8 @@ function generateAnimalsList(){
 
           str += "<div class=\"header\">" + result[x].name + "</div><b>Breed: </b>"+ result[x].primary
           str += "<br><b>Birthday: </b>" + result[x].birthday.slice(0,result[x].birthday.length-6)  + "<br><b>Age: </b>" + result[x].age +"<br><b>Gender: </b>" + result[x].gender 
-          str += "<br><b>Spayed/Neutered: </b>" + result[x].neutered + "<br><b>Adoption Fee: </b>" + result[x].adoption_free 
-          str += "<br><b> Coordinator: </b>" + result[x].coordinator.name + "<br><b> Notes: </b>" + result[x].notes 
+          str += "<br><b>Spayed/Neutered: </b>" + result[x].neutered + "<br><b>Adoption Fee: </b>" + result[x].adoption_fee 
+          str += "<br><b> Coordinator: </b>" + result[x].coordinator + "<br><b> Notes: </b>" + result[x].notes 
           str += "</div><div class = \"tooltiptext4\"><img src=" +  result[x].picture.picture.url +" "+ "height=\"150px\" width=\"150px\" align=\"right\"></p></div></span></div></td>"
 
           str += "<td>" + result[x].status + "</td>"
@@ -408,6 +408,12 @@ function formatData(data){
     json.Gender = data[i]["gender"]
     json["Primary Breed"] = data[i]["primary"]
     json.Status = data[i]["status"]
+    json.Substatus = data[i]["sub-status"]
+    json.Location = data[i]["location"]
+    json.Marketing = data[i]["marketing"]
+    json.Neutered = data[i]["neutered"]
+    json.Adoptionfee = data[i]["adoption_fee"]
+    json.Coordinator = data[i]["coordinator"]
     arr.push(json)
   }
   return arr

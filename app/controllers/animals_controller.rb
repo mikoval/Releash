@@ -716,7 +716,7 @@ class AnimalsController < ApplicationController
           "neutered" => d.neutered,
           "adoption_fee" => d.adoption_fee,
           "notes" => d.notes,
-          "coordinator" => d.coordinator
+          "coordinator" => d.coordinator.name
         })
       end
     end
