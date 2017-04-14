@@ -98,8 +98,35 @@ $blue : #2980b9;
 }
 
 
-body {
-  font-family: arial, sans-serif;
+//Profile Page
+#profile-container {
+  background-color: white;
+  margin-top: 5%;
+  padding: 2%;
+  border-radius: 0.5%;
+}
+#animal-name {
+  text-align: center;
+}
+
+#personal-body {
+  border-color: red;
+}
+
+.card {
+  border-left: none;
+  border-top: none;
+  border-right: none;
+  border-bottom-color: $neutral;
+}
+
+.card-header {
+  text-transform: 1.2em;
+}
+
+.inner-formdiv {
+  //background-color: black;
+  border: none;
 }
 
 //timeline inner
@@ -164,19 +191,9 @@ div#timeline {
 
 
 article {
-  //display: none;
-  //position: relative;
-  //top: 30px;
   max-width : 90%;
   padding: 60px;
   margin: auto;
-  // h2 {
-  //   font-family: merriweather, sans-serif;
-  //   font-size: 5rem;
-  //   padding: 10px 0;
-  //   border-bottom: solid #111 2px;
-  //   margin-bottom: 20px;
-  // }
   p {
     line-height: 130%;
     text-align: left;

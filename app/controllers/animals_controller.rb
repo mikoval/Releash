@@ -656,7 +656,7 @@ class AnimalsController < ApplicationController
         length = length -1 
         if(params["name"].length > d.name.length)
           add = false
-        elsif(params["name"] != d.name[0..length])
+        elsif(params["name"].downcase != d.name[0..length].downcase)
           add = false
         end
       end 
@@ -716,7 +716,8 @@ class AnimalsController < ApplicationController
           "marketing" => d.marketing.name,
           "neutered" => d.neutered,
           "adoption_fee" => d.adoption_fee,
-          "notes" => d.notes
+          "notes" => d.notes,
+          "coordinator" => d.coordinator
         })
       end
     end

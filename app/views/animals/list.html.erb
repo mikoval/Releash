@@ -32,7 +32,7 @@
       <option value = "Female"<% if(@gender == "Female") %> selected <% end %>>Female</option>
     </select>
 
-    <p> Status:  </p> 
+    <p> Status:  </p>
     <select id = "filter-status">
       <option value = "">Select Status</option>
       <% @statuses.each do |b|%>
@@ -76,8 +76,6 @@ var slider = $("#age_slider").slider({
     });
 $("#age-min").text(slider.slider("values")[0]);
 $("#age-max").text(slider.slider("values")[1]);
-    
-
 
 
 $(".list-card").hover(
@@ -160,7 +158,7 @@ function generateAnimalsList(){
           str += "<div class=\"header\">" + result[x].name + "</div><b>Breed: </b>"+ result[x].primary
           str += "<br><b>Birthday: </b>" + result[x].birthday.slice(0,result[x].birthday.length-6)  + "<br><b>Age: </b>" + result[x].age +"<br><b>Gender: </b>" + result[x].gender 
           str += "<br><b>Spayed/Neutered: </b>" + result[x].neutered + "<br><b>Adoption Fee: </b>" + result[x].adoption_free 
-          str += "<br><b> Notes: </b>" + result[x].notes 
+          str += "<br><b> Coordinator: </b>" + result[x].coordinator.name + "<br><b> Notes: </b>" + result[x].notes 
           str += "</div><div class = \"tooltiptext4\"><img src=" +  result[x].picture.picture.url +" "+ "height=\"150px\" width=\"150px\" align=\"right\"></p></div></span></div></td>"
 
           str += "<td>" + result[x].status + "</td>"
@@ -169,7 +167,6 @@ function generateAnimalsList(){
           str += "<td>" + result[x].marketing + "</td>"
           str += "</tr>"
 
-        console.log(result[x].picture.picture.url);
         }
         str +=  " </table>"
         $("#animals-list").html(str);
