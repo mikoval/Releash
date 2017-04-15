@@ -3,7 +3,7 @@
 
 <!-- BUTTONS TO ADD USERS -->
 <% if admin?(current_user) %>
-  <%= link_to "<button>Add Employee</button>".html_safe,  :controller => "people", :action => "new", :method => "get" %>
+  <%= link_to "<button>Add User</button>".html_safe,  :controller => "people", :action => "new", :method => "get" %>
   <%= link_to "<button>Add Non User</button>".html_safe,  :controller => "non_user", :action => "new", :method => "get" %>
   <%= link_to "<button>Add Trainer</button>".html_safe,  :controller => "trainer", :action => "new", :method => "get" %>
   <%= link_to "<button>Add Veterinarian</button>".html_safe,  :controller => "veterinarian", :action => "new", :method => "get" %>  
