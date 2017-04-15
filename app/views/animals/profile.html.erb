@@ -10,86 +10,165 @@
 
   <!--===================== BASIC INFO =======================-->
   
-  <!-- Basic Header -->
-  <div class= "card form-div personal col-md-12">
-    <a class= "card-header paper-header" data-toggle="collapse" href="#characteristics-body">
-      <div>
-        <h3 class="tab-title">Basics</h3>
-      </div>
-    </a>
-  </div>
-
-   <!--Basic Characteristics Body -->
-  <div id = "characteristics-body" class="collapse in col-md-12 inner-formdiv">
-
-    <div id= "profile-snippet" class="col-md-5">
-      <div class = "row">
-          <!-- Profile Picture -->
-        <div id="profile-box"class="picture col-md-4 img-circle">
-          <%= display_avatar(@animal, "130x130", "circle-img") %>
+  <div class = "profile-section col-md-6">
+    <!-- Basic Header -->
+    <div class= "card form-div personal col-md-12">
+      <a class= "card-header paper-header" data-toggle="collapse" href="#characteristics-body">
+        <div>
+          <h3 class="tab-title">Basics</h3>
         </div>
-      </div>
+      </a>
+    </div>
 
-      <div class="row">
-        <div id="snippet-info">
-          <!-- Identification -->
-          <h4><%= @animal.name %></h4>
-          <p>Age: <%= @animal.age%></p>
-          <p>ID: <%= @animal.id %></p>
-          <p> Microchip Number: <%= @animal.microchip_number %> </p> 
-      
-            
-          <!-- Status Info -->
-          <p> Status: <%= @animal.status.name%> </p>
-          <p> Substatus: <%= @sub_status_name%> </p>
-          <p> Marketing: <%= @animal.marketing.name%> </p>
-          <p> Visibility: <%= @hidden%> </p>
-          <p>Vetting Status: <%= @vet_done%> </p>
+     <!--Basic Characteristics Body -->
+    <div id = "characteristics-body" class="collapse in col-md-12 inner-formdiv">
+
+      <div id= "profile-snippet" class="col-md-12">
+        
+        <!-- Row 1 -->
+        <div class = "row">
+            <!-- Profile Picture -->
+          <div id="profile-box" class="picture col-md-4 img-circle">
+              <%= display_avatar(@animal, "130x130", "circle-img") %> 
+           </div>
+
+          <div id="snippet-info" class="col-md-6">
+            <!-- Identification -->
+            <h4 class="profile-name"><%= @animal.name %></h4>
+            <p>Age: <%= @animal.age%></p>
+            <p>ID: <%= @animal.id %></p>
+            <p> Microchip Number: <%= @animal.microchip_number %> </p> 
+            <p>Input Date: <%= @animal.input_date%> <p>
+
+            <!-- Features & Breed stuff -->  
+            <% if @animal.date_death != nil %>
+              <p> <%= @animal.date_death%></p>
+            <% end %>
+
+            <% if @animal.date_adopted != nil %>
+              <p> <%= @animal.date_adopted%></p>
+            <% end %>
+          </div> <!-- end of snippet -->
+        </div> <!-- end of row -->
+
+
+        <!-- Row 2 -->
+        <div class="row">
+
+          <div class="basics-inner inner-div">
+            <div class= "card form-div personal col-md-12">
+              <a class= "card-header paper-header" data-toggle="collapse" href="#status-snippet">
+                <div>
+                  <h3 class="tab-title">Status</h3>
+                </div>
+              </a>
+            </div>
+            <!-- Status Info -->
+            <div id = "status-snippet" class="collapse in col-md-12">
+              <p> Status: <%= @animal.status.name%> </p>
+              <p> Substatus: <%= @sub_status_name%> </p>
+              <p> Marketing: <%= @animal.marketing.name%> </p>
+              <p> Visibility: <%= @hidden%> </p>
+              <p>Vetting Status: <%= @vet_done%> </p>
+            </div>
+          </div>
+
+
+          <div class="basics-inner inner-div">
+            <div class= "card form-div personal col-md-12">
+              <a class= "card-header paper-header" data-toggle="collapse" href="#traits-behavior">
+                <div>
+                  <h3 class="tab-title">Physical Features and Behavior</h3>
+                </div>
+              </a>
+            </div>
+
+            <div id = "traits-behavior" class="collapse col-md-12">
+              <!-- Breeds -->
+              <p>Primary Breed: <%= @animal.primary_breed.name %> </p>
+              <p>Additional Breeds</p> 
+              <p> 
+                <% @breeds.each do |b| %>
+                  <% if b != @breeds.last %>
+                    <%= b.breed.name + "," %> 
+                  <% else %>
+                    <%= b.breed.name  %> 
+                  <% end %>
+                <% end %> 
+               </p> 
+
+              <!-- Physical Features & Behavior -->
+              <p> Primary Color: <%= @animal.color_primary %> </p>
+              <p> Secondary Color: <%= @animal.color_secondary %> </p>
+
+              <p>
+              <% @behaviors.each do |b| %>
+               <% if b != @behaviors.last %>
+                  <%= b.characteristic.name + "," %> 
+                <% else %>
+                  <%= b.characteristic.name  %> 
+                <% end %>
+                <% end %> 
+             </p>  
+            </div> 
+          </div>
+
+
         </div>
       </div>
     </div>
+  </div>
 
 
-    <!-- Basic Characteristics -->
-    <div class="characteristics-info col-md-9">
-      <!-- Important Dates & Checks -->
-      <h4>Input Date</h4>
-      <%= @animal.input_date%>
-      <h4>Date of Death</h4>
-      <%= @animal.date_death%>
-      <h4>Date of Adoption</h4>
-      <%= @animal.date_adopted%>
+   <!--==================== NOTES =================-->
+  <div class = "profile-section col-md-6">
 
+    <div class= "card form-div alerts col-md-12">
+      <a class= "card-header paper-header" data-toggle="collapse" href="#notes-body">
+        <div>
+           <h3 class="tab-title">Notes</h3>
+        </div>
+      </a>
+    </div>
 
+    <!-- Alerts -->
+    <div id="notes-body" class="collapse in inner-formdiv">
+        <p> Put some notes here and such </p>
+    </div>
+  </div>
 
-      <!-- Breeds -->
-      <h4>Primary Breed</h4>
-      <%= @animal.primary_breed.name %>
-      
-      <h4>Additional Breeds</h4> 
-      <p> 
-        <% @breeds.each do |b| %>
-          <% if b != @breeds.last %>
-            <%= b.breed.name + "," %> 
-          <% else %>
-            <%= b.breed.name  %> 
-          <% end %>
-        <% end %> 
-       </p> 
+  <!--==================== ALERTS =================-->
+  <div class = "profile-section col-md-6">
 
-      <!-- Physical Features & Behavior -->
-      <p> Primary Color: <%= @animal.color_primary %> </p>
-      <p> Secondary Color: <%= @animal.color_secondary %> </p>
+    <div class= "card form-div alerts col-md-12">
+      <a class= "card-header alert-header" data-toggle="collapse" href="#alerts-body">
+        <div>
+           <h3 class="tab-title">Alerts</h3>
+        </div>
+      </a>
+    </div>
 
-      <p>
-      <% @behaviors.each do |b| %>
-       <% if b != @behaviors.last %>
-          <%= b.characteristic.name + "," %> 
-        <% else %>
-          <%= b.characteristic.name  %> 
-        <% end %>
-        <% end %> 
-     </p>  
+    <!-- Alerts -->
+    <div id="alerts-body" class="collapse in inner-formdiv">
+        <table>
+          <thead>
+            <tr>
+              <th class= "col-md-3">Title</th>
+              <th class= "col-md-3">Date</th>
+              <th class= "col-md-3">Created By</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @alerts.each do |a| %>
+              <tr>
+              <td><a href = "#" class = "alert-event" id = "alert-<%= a['id'] %> "><%= a["title"] %> </a></td>
+              <td><%= a["date"] %></td>
+              <td><%= a["created_by"] %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <a href='/alerts/new?method=get&param= <%= @animal.id %> '><button class = "button" >Add New Alert</button></a>
     </div>
   </div>
 
@@ -98,162 +177,44 @@
   <!--===================== PAPERWORK =======================-->
 
   <!-- Paperwork Header -->
-  <div class= "card form-div personal col-md-12">
-    <a class= "card-header paper-header" data-toggle="collapse" href="#paper-body">
-      <div>
-         <h3 class="tab-title">Paperwork</h3>
-      </div>
-    </a>
-  </div>
 
-  <!-- Paperwork Body -->
-  <div id="paper-body" class="collapse in inner-formdiv">
-    <% if @animal.vetting_document.length > 0 %>
-      <p style = "text-align: center">Vetting Document: <%= link_to @animal.vetting_document.file.filename, @animal.vetting_document.url %> </p>
-      <% end %>
-      <% if @animal.owner_surrender_document.length > 0 %>
-      <p style = "text-align: center">Owner Surrender: <%= link_to @animal.owner_surrender_document.file.filename, @animal.owner_surrender_document.url %> </p>
-      <% end %>
-      <% if @animal.intake_document.length > 0 %>
-      <p style = "text-align: center">Intake: <%= link_to @animal.intake_document.file.filename, @animal.intake_document.url %> </p>
-      <% end %>
-      <% if @animal.home_check_document.length > 0 %>
-      <p style = "text-align: center">Home Check: <%= link_to @animal.home_check_document.file.filename, @animal.home_check_document.url %> </p>
-      <% end %>
-      <% if @animal.match_application_document.length > 0 %>
-      <p style = "text-align: center">Match Application: <%= link_to @animal.match_application_document.file.filename, @animal.match_application_document.url %> </p>
-      <% end %>
-      <% if @animal.adoption_application_document.length > 0 %>
-      <p style = "text-align: center">Adoption Application: <%= link_to @animal.adoption_application_document.file.filename, @animal.adoption_application_document.url %> </p>
-      <% end %>
-      <% if @animal.adoption_contract_document.length > 0 %>
-      <p style = "text-align: center">Adoption Contract: <%= link_to @animal.adoption_contract_document.file.filename, @animal.adoption_contract_document.url %> </p>
-      <% end %>
-  </div>
-
-  <!--===================== ADOPTION APPLICATIONS =======================-->
-
-  <!-- Applications Header -->
-  <div class= "card form-div personal col-md-12">
-  <a class= "card-header application-header" data-toggle="collapse" href="#application-body">
-    <div>
-       <h3 class="tab-title">Adoption Application</h3>
-    </div>
-  </a>
-  </div>
-
-  <!-- Adoption Applications -->
-  <div id="application-body" class="collapse in inner-formdiv">
-    <%= link_to 'Add Adoption Application', '#adopterAppFormEntryModal', class: 'btn btn-default', 'data-toggle' => 'modal' %>
-
-    <!-- Begin New Modal -->
-    <div class="modal entry-modal fade" id="adopterAppFormEntryModal" tabindex="-1" role="dialog" aria-labelledby="adopterAppFormEntryLabel">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Add New Adoption Application</h4>
-          </div>
-          <div class="modal-body">
-              <%= render 'adopterappform_modal', modal: true, new_app: @new_app,animal_id: @animal.id, adopters: @adopters%>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
-          </div>
+  <div class = "profile-section col-md-6">
+    <div class= "card form-div personal col-md-12">
+      <a class= "card-header paper-header" data-toggle="collapse" href="#paper-body">
+        <div>
+           <h3 class="tab-title">Paperwork</h3>
         </div>
-      </div>
+      </a>
     </div>
-    <!-- End New Modal -->
 
-    <!-- User table -->
-    <table id = "user-table" class="table table-bordered table-inverse table-hover user-table">
-
-      <!-- Table Head -->
-      <thead>
-        <tr>
-          <th class= "col-md-1">Application Number</th>
-          <th class= "col-md-1">Date</th>
-          <th class= "col-md-1">Applicant Name</th>
-          <th class= "col-md-3">Application File</th>
-          <th class= "col-md-3">Comments</th>
-          <th class= "col-md-3">Text Application</th>
-        </tr>
-      </thead>
-
-      <!-- Table Body -->
-      <tbody>
-        <%if @allApps != []%>
-        <% @app_stats.each_with_index do |a, index| %>
-          <tr style = "height: 70px;" >
-            <th scope="row"><%= index %></th>
-            <td><%= a["date"]%></td>
-            <td><%= a["adopt"]%></td>
-            <td> 
-              <% if AnimalApplication.find_by(id: a["id"]).adoption_document.length > 0 %>
-                <p style = "text-align: center">Adoption Application: <%= link_to AnimalApplication.find_by(id: a["id"]).adoption_document.file.filename, AnimalApplication.find_by(id: a["id"]).adoption_document.url %> </p>
-              <% end %>
-
-              <% if employee?(current_user) %>
-                <%= link_to 'Edit Entry', '#', class: 'btn btn-default', 'data-toggle' => 'modal', 'data-target' => "#adoptedapp_#{a["id"]}"  %>
-
-                <!-- Edit Modal -->
-                <div class="modal entry-modal fade" id = <%= "adoptedapp_#{a["id"]}" %> tabindex="-1" role="dialog" aria-labelledby="adopterappModalLabel">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Edit Application</h4>
-                      </div>
-                      <div class="modal-body">
-                          <%= render 'adopterappform_edit_modal', modal: true, edit_app: AnimalApplication.find_by(id: a["id"]), animal_id: @animal.id, adopters: @adopters, curr_adopter: a["email"], app_id: a["id"]%>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- End Modal -->
-              <% end %>
-            </td>
-
-            <td><%= simple_format(a["comm"])%></td>
-              
-            <td>
-              <%= link_to 'View', '#', class: 'btn btn-default', 'data-toggle' => 'modal', 'data-target' => "#adoptedtextapp_#{a["id"]}"  %>
-
-              <!-- Edit Modal -->
-              <div class="modal entry-modal fade" id = <%= "adoptedtextapp_#{a["id"]}" %> tabindex="-1" role="dialog" aria-labelledby="adoptedtextappModalLabel">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title" id="myModalLabel">Application</h4>
-                    </div>
-                    <div class="modal-body">
-                        <%= render 'adoptertextform_modal', modal: true,text_app: a["text_app"]%>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- End Modal -->
-            </td>
-          </tr>
+    <!-- Paperwork Body -->
+    <div id="paper-body" class="collapse in inner-formdiv col-md-12">
+      <% if @animal.vetting_document.length > 0 %>
+        <p style = "text-align: center">Vetting Document: <%= link_to @animal.vetting_document.file.filename, @animal.vetting_document.url %> </p>
         <% end %>
+        <% if @animal.owner_surrender_document.length > 0 %>
+        <p style = "text-align: center">Owner Surrender: <%= link_to @animal.owner_surrender_document.file.filename, @animal.owner_surrender_document.url %> </p>
         <% end %>
-      </tbody>
-    </table>
-    <!-- End User table -->
+        <% if @animal.intake_document.length > 0 %>
+        <p style = "text-align: center">Intake: <%= link_to @animal.intake_document.file.filename, @animal.intake_document.url %> </p>
+        <% end %>
+        <% if @animal.home_check_document.length > 0 %>
+        <p style = "text-align: center">Home Check: <%= link_to @animal.home_check_document.file.filename, @animal.home_check_document.url %> </p>
+        <% end %>
+        <% if @animal.match_application_document.length > 0 %>
+        <p style = "text-align: center">Match Application: <%= link_to @animal.match_application_document.file.filename, @animal.match_application_document.url %> </p>
+        <% end %>
+        <% if @animal.adoption_application_document.length > 0 %>
+        <p style = "text-align: center">Adoption Application: <%= link_to @animal.adoption_application_document.file.filename, @animal.adoption_application_document.url %> </p>
+        <% end %>
+        <% if @animal.adoption_contract_document.length > 0 %>
+        <p style = "text-align: center">Adoption Contract: <%= link_to @animal.adoption_contract_document.file.filename, @animal.adoption_contract_document.url %> </p>
+        <% end %>
+    </div>
   </div>
-
-
 
 
 <!--===================== TRACKING =======================-->
-
 
   <!-- Tracking Header -->
   <div class= "card form-div personal col-md-12">
@@ -666,45 +627,131 @@
           <% end %>
         <% end %>  
     </article>
-
-
     <div class= "status-buffer col-md-12" ></div>
-  </div>
+  </div> <!-- End of tracking -->
 
 
+  <!--===================== ADOPTION APPLICATIONS =======================-->
 
-  <!--==================== ALERTS =================-->
+  <div class="profile-section col-md-12">
 
-  <div class= "card form-div alerts col-md-12">
-    <a class= "card-header alert-header" data-toggle="collapse" href="#alerts-body">
+    <!-- Applications Header -->
+    <div class= "card form-div personal col-md-12">
+    <a class= "card-header application-header" data-toggle="collapse" href="#application-body">
       <div>
-         <h3 class="tab-title">Alerts</h3>
+         <h3 class="tab-title">Adoption Application</h3>
       </div>
     </a>
-  </div>
+    </div>
 
-  <!-- Alerts -->
-  <div id="alerts-body" class="collapse in inner-formdiv">
-      <table>
+    <!-- Adoption Applications -->
+    <div id="application-body" class="collapse in inner-formdiv">
+      <%= link_to 'Add Adoption Application', '#adopterAppFormEntryModal', class: 'btn btn-default', 'data-toggle' => 'modal' %>
+
+      <!-- Begin New Modal -->
+      <div class="modal entry-modal fade" id="adopterAppFormEntryModal" tabindex="-1" role="dialog" aria-labelledby="adopterAppFormEntryLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Add New Adoption Application</h4>
+            </div>
+            <div class="modal-body">
+                <%= render 'adopterappform_modal', modal: true, new_app: @new_app,animal_id: @animal.id, adopters: @adopters%>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End New Modal -->
+
+      <!-- User table -->
+      <table id = "user-table" class="table table-bordered table-inverse table-hover user-table">
+
+        <!-- Table Head -->
         <thead>
           <tr>
-            <th class= "col-md-3">Title</th>
-            <th class= "col-md-3">Date</th>
-            <th class= "col-md-3">Created By</th>
+            <th class= "col-md-1">Application Number</th>
+            <th class= "col-md-1">Date</th>
+            <th class= "col-md-1">Applicant Name</th>
+            <th class= "col-md-3">Application File</th>
+            <th class= "col-md-3">Comments</th>
+            <th class= "col-md-3">Text Application</th>
           </tr>
         </thead>
+
+        <!-- Table Body -->
         <tbody>
-          <% @alerts.each do |a| %>
-            <tr>
-            <td><a href = "#" class = "alert-event" id = "alert-<%= a['id'] %> "><%= a["title"] %> </a></td>
-            <td><%= a["date"] %></td>
-            <td><%= a["created_by"] %></td>
+          <%if @allApps != []%>
+          <% @app_stats.each_with_index do |a, index| %>
+            <tr style = "height: 70px;" >
+              <th scope="row"><%= index %></th>
+              <td><%= a["date"]%></td>
+              <td><%= a["adopt"]%></td>
+              <td> 
+                <% if AnimalApplication.find_by(id: a["id"]).adoption_document.length > 0 %>
+                  <p style = "text-align: center">Adoption Application: <%= link_to AnimalApplication.find_by(id: a["id"]).adoption_document.file.filename, AnimalApplication.find_by(id: a["id"]).adoption_document.url %> </p>
+                <% end %>
+
+                <% if employee?(current_user) %>
+                  <%= link_to 'Edit Entry', '#', class: 'btn btn-default', 'data-toggle' => 'modal', 'data-target' => "#adoptedapp_#{a["id"]}"  %>
+
+                  <!-- Edit Modal -->
+                  <div class="modal entry-modal fade" id = <%= "adoptedapp_#{a["id"]}" %> tabindex="-1" role="dialog" aria-labelledby="adopterappModalLabel">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title" id="myModalLabel">Edit Application</h4>
+                        </div>
+                        <div class="modal-body">
+                            <%= render 'adopterappform_edit_modal', modal: true, edit_app: AnimalApplication.find_by(id: a["id"]), animal_id: @animal.id, adopters: @adopters, curr_adopter: a["email"], app_id: a["id"]%>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Modal -->
+                <% end %>
+              </td>
+
+              <td><%= simple_format(a["comm"])%></td>
+                
+              <td>
+                <%= link_to 'View', '#', class: 'btn btn-default', 'data-toggle' => 'modal', 'data-target' => "#adoptedtextapp_#{a["id"]}"  %>
+
+                <!-- Edit Modal -->
+                <div class="modal entry-modal fade" id = <%= "adoptedtextapp_#{a["id"]}" %> tabindex="-1" role="dialog" aria-labelledby="adoptedtextappModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Application</h4>
+                      </div>
+                      <div class="modal-body">
+                          <%= render 'adoptertextform_modal', modal: true,text_app: a["text_app"]%>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Modal -->
+              </td>
             </tr>
+          <% end %>
           <% end %>
         </tbody>
       </table>
-      <a href='/alerts/new?method=get&param= <%= @animal.id %> '><button class = "button" >Add New Alert</button></a>
-  </div>
+      <!-- End User table -->
+    </div>
+  </div> <!-- end of application profile section -->
+
 </div>
 
 
