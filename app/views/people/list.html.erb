@@ -171,10 +171,10 @@
         <% @allAniFaci.each_with_index do |a, index| %>
            <tr style = "height: 70px;">
               <td> 
-                  <%= link_to a.name,  :controller => "trainer", :action => "profile", :param => a, :method => "get" %>
+                  <%= link_to a.name,  :controller => "animal_facility", :action => "profile", :param => a, :method => "get" %>
 
                 <% if admin?(current_user) %>
-                 <%= link_to ' <span class ="glyphicon glyphicon-pencil" style = "display:none; cursor: pointer;"></span>'.html_safe,  :controller => "trainer", :action => "edit", :param => a, :method => "get" %>
+                 <%= link_to ' <span class ="glyphicon glyphicon-pencil" style = "display:none; cursor: pointer;"></span>'.html_safe,  :controller => "animal_facility", :action => "edit", :param => a, :method => "get" %>
                  <% end %>
               </td>
               <td>

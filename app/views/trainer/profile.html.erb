@@ -1,29 +1,17 @@
+<% provide(:title, 'Trainer') %>
+<h1><%= @trainer.name%>
+    <% if admin?(current_user)%>
+ <%= link_to ' <span class ="glyphicon glyphicon-pencil" style = "cursor: pointer; font-size:25px;"></span>'.html_safe,  :controller => "trainer", :action => "edit", :param => @trainer, :method => "get" %>
+ <%end %>
+ </h1>
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <!-- form for submitting employees. 
-    submits to /people path. that can be found in routes. 
-    passes in @employee that is defined by the form
-    thats what :name, :email,  etc is for 
-
-  --> 
-          <%= display_avatar(@non_user, "150x150") %>
-        	<p> Name: <%= @non_user.name%> </p>
-        	<p> Email: <%=@non_user.email%> </p>
-        	<p> Address: <%=@full_address%> </p>
-
-        	<%if @foster_ok == false %>
-                  <p> Approved Foster:  No </p> 
-                <% else %>
-                  <p> Approved Foster:  Yes </p> 
-            <% end %> 
-            <%if @adopt_ok == false %>
-                  <p> Approved Adoption:  No </p> 
-                <% else %>
-                  <p> Approved Adoption:  Yes </p> 
-            <% end %> 
+    <p> Name: <%= @trainer.name%> </p>
+    <p> Person of Contact: <%= @trainer.person_contact%> </p>
+    <p> Email: <%=@trainer.email%> </p>
+    <p> Address: <%=@full_address%> </p>
+    <p> Phone Number: <%= @trainer.phone_number%> </p>
+    <p> Comments: <%= @trainer.comments%> </p>
 
     </div>
 </div>
-
-
-</script>

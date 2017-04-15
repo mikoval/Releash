@@ -21,7 +21,7 @@ class AnimalFacilityController < ApplicationController
   end
 
   def newAnifaci
-  	@ani_faci = AnimalFacility.new(ani_faci_params)
+  	@ani_faci = AnimalFacility.new(anifaci_params)
 
     if @ani_faci.save
       flash[:success] = "Added Animal Facility"

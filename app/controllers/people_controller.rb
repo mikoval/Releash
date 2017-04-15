@@ -5,12 +5,12 @@ class PeopleController < ApplicationController
   #for the main people that displays all of them
   def list
    
-    @allPeople = User.all
-    @allNonUser = NonUser.all
-    @allVets = Veterinarian.all
-    @allTrainer = Trainer.all
-    @allAniFaci = AnimalFacility.all
-    user = User.all
+    @allPeople = User.all.order('name ASC')
+    @allNonUser = NonUser.all.order('name ASC')
+    @allVets = Veterinarian.all.order('name ASC')
+    @allTrainer = Trainer.all.order('name ASC')
+    @allAniFaci = AnimalFacility.all.order('name ASC')
+    user = User.all.order('name ASC')
   end
 
   #page for adding new people to the organization 
