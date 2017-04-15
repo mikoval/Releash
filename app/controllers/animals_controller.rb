@@ -739,6 +739,8 @@ class AnimalsController < ApplicationController
       
       @animals = @animal | @breeds
       @user = User.where('LOWER(name) LIKE LOWER(:search)' , search: "%#{@search}%")
+      @nonuser = NonUser.where('LOWER(name) LIKE LOWER(:search)' , search: "%#{@search}%")
+
     end
 
 
@@ -770,10 +772,24 @@ class AnimalsController < ApplicationController
           "picture" => d.picture,
         })
       end
+
+    end
+
+    if (!@nonuser.nil?) 
+      @nonuser.each do |d|
+        arr.push({
+          "check" => "nonuser",
+          "id" =>  d.id, 
+          "name" => d.name,
+          "attribute" => d.email,
+          "picture" => d.picture,
+        })
+      end
     end
     render json: arr
 
   end
+
   private
 
   def animal_params

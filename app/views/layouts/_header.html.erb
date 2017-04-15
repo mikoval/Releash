@@ -90,6 +90,13 @@ $(".search").on( "keyup",function(input){
                      <td>" + result[x].attribute + "</td>\
                     </tr>"
                 }
+                if (result[x].check == "nonuser") {
+                  str += "<tr> \
+                    <td>  <img src='"+ result[x].picture.picture.url+ "' alt='missing picture' style='width:50px;height:50px;'></td>\
+                    <td> <a href='/non_user/profile?method=get&param=" + result[x].id + "' onmousedown='link(event)'> " + result[x].name + " </a></td>\
+                     <td>" + result[x].attribute + "</td>\
+                    </tr>"
+                }
         }
         str +=  " </table>"
          $(".search-result").each(function(){
