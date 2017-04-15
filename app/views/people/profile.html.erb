@@ -94,7 +94,30 @@
                   </div>
 
                   <div class="tab-pane fade" id="adopt">
-                      <table id = "adopt-table" class="table table-bordered table-inverse table-hover adopt-table">
+                    <table id = "adopt-table" class="table table-bordered table-inverse table-hover adopt-table">
+                      <thead>
+                        <tr>
+                          <th class= "col-md-1">Date</th>
+                          <th class= "col-md-2">Animal Name</th>
+                        </tr>
+                      </thead>
+                      <% if @allAdoptions != nil%>
+                        <tbody>
+                          <% @allAdoptions.each do |a| %>
+                             <tr style = "height: 70px;" >
+                                <td><%= a.adopt_date%></td>
+                                <td> 
+                                  <%= Animal.find_by(id: a.animal_id).name%>
+                                </td>
+                              </tr>
+                          <% end %>
+                        </tbody>
+                      <% end %>
+                    </table>
+                  </div>
+
+                  <div class="tab-pane fade" id="applied">
+                      <table id = "app-table" class="table table-bordered table-inverse table-hover adopt-table">
                         <thead>
                           <tr>
                             <th class= "col-md-1">Date</th>
@@ -102,11 +125,11 @@
                           </tr>
                         </thead>
                         
-                        <% if @allAdoptions != nil%>
+                        <% if @allApps != nil%>
                           <tbody>
-                            <% @allAdoptions.each do |a| %>
+                            <% @allApps.each do |a| %>
                                <tr style = "height: 70px;" >
-                                  <td><%= a.adopt_date%></td>
+                                  <td><%= a.app_date%></td>
                                   <td> 
                                     <%= Animal.find_by(id: a.animal_id).name%>
                                   </td>
