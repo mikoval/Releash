@@ -17,8 +17,8 @@
     <%=collection_select(:fost_fost, :foster_id, fosters, :email, :name, {:prompt => "Select foster" ,:selected => curr_foster}) %>
     
 
-    <%= f.label :sub_status, class: 'control-label' %><br>
-    <%= f.collection_select :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select SubStatus"}, class: 'form-control' %> 
+    <%= f.label :sub_status %>
+    <%= f.collection_select :sub_status_id, sub_status, :id, :name, :include_blank => true %>
 
     <!-- Inputing Details-->
     <%= f.label :comments, "Comments" %>

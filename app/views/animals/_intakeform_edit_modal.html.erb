@@ -14,8 +14,8 @@
     <%= f.label :intake_date, "Intake Date" %>
     <%= f.text_field :intake_date, class: 'datepicker' %>
 
-    <%= f.label :sub_status, class: 'control-label' %><br>
-    <%= f.collection_select :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select SubStatus"}, class: 'form-control' %> 
+    <%= f.label :sub_status %>
+    <%= f.collection_select :sub_status_id, sub_status, :id, :name, :include_blank => true %>
 
     <%= f.label :intake_reason_id, "Previous Location"%>
     <%= f.collection_select(:intake_reason_id, IntakeReason.all, :id, :name, {:prompt => "Select Previous Location"}) %>

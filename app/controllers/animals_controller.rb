@@ -21,17 +21,21 @@ class AnimalsController < ApplicationController
   end
 
   def destroy
-    id = params["format"]
-    #Rails.logger.debug("My admin--------------: #{params.inspect}")
+    id = params["id"]
+    Rails.logger.debug("My id!!--------------: #{params.inspect}")
     @animals = Animal.destroy(id)
     @ani_alerts = AnimalAlert.where(animal_id: id).delete_all
+    @alerts = Alert.where(animal_id: id).delete_all
     @intake = Intake.where(animal_id: id).delete_all
     @vetting = Vetting.where(animal_id: id).delete_all
     @foster = FosterStatus.where(animal_id: id).delete_all
     @train = Training.where(animal_id: id).delete_all
     @adopt = Adopted.where(animal_id: id).delete_all
+    @apps = AnimalApplication.where(animal_id: id).delete_all
+    @breeds = AnimalBreed.where(animal_id: id).delete_all
+    @ani_charac = AnimalCharacteristic.where(animal_id: id).delete_all
 
-    flash.now[:success] = "New Animal!"
+    flash.now[:success] = "Deleted Animal!"
     redirect_to :controller => "animals", :action => "list", :param => @animals
   end
   
@@ -118,6 +122,7 @@ class AnimalsController < ApplicationController
   def profile
     id = params["param"]
     @animal = Animal.find(id) 
+    @sub_status = SubStatusType.all.order('name ASC')
 
     @breeds = AnimalBreed.where("animal_id = " + id)
     @characteristics = AnimalCharacteristic.where("animal_id = " + id)

@@ -323,9 +323,7 @@
     
       <!-- Can i move this? -->
       <%= f.submit "Submit Edit", class: "add-btn btn-primary" %>
-      <% if admin?(current_user) %>
-       <%= link_to "<button class= 'btn btn-danger'> Delete Animal</button>".html_safe ,animals_path(@animal), method: :delete, data: {confirm: "Are you sure? This will delete animal and all associated records. This is NOT reversible. Delete at your own risk"}%>
-       <% end %>
+      
     <% end %>
     
   </div>
@@ -334,7 +332,6 @@
 
 
 <script>
-  
 
   $("#animal_species_id").change(function(){
     console.log($("#animal_breed_id"))

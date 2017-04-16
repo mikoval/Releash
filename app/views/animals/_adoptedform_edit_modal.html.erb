@@ -12,8 +12,8 @@
     <%= f.label :adopt_date, "Date" %>
     <%= f.text_field :adopt_date, class: 'datepicker' %>
 
-    <%= f.label :sub_status, class: 'control-label' %><br>
-    <%= f.collection_select :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select SubStatus"}, class: 'form-control' %> 
+    <%= f.label :sub_status %>
+    <%= f.collection_select :sub_status_id, sub_status, :id, :name, :include_blank => true %>
     
     <%= f.label :adopt_adopter, "Select Adopter"%>
     <%= collection_select(:adopt_adopter, :adopt_id, adopters, :email, :name, {:prompt => "Select Adopter" ,:selected => curr_adopter}) %>

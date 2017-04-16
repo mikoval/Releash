@@ -6,8 +6,7 @@
   <% if employee?(current_user) %>
   <%= link_to "<div class = 'col-md-2 col-md-offset-10 col-sm-4 col-sm-offset-8 col-xs-4 col-xs-offset-8'> <button>Edit profile</button></div>".html_safe,  :controller => "animals", :action => "edit", :param => @animal, :method => "get" %>
   <% end %>
-
-
+ 
   <!--===================== BASIC INFO =======================-->
   
   <!-- Basic Header -->
@@ -414,10 +413,10 @@
                   <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title" id="myModalLabel">Add New Intake Entry</h4>
+                      <h4 class="modal-title" id="myModalLabel">Edit Entry</h4>
                     </div>
                     <div class="modal-body">
-                        <%= render 'intakeform_edit_modal', modal: true, edit_intake: Intake.find_by(id: a["id"]), animal_id: @animal.id, intake_id: a["id"]%>
+                        <%= render 'intakeform_edit_modal', modal: true, edit_intake: Intake.find_by(id: a["id"]), animal_id: @animal.id, sub_status: @sub_status, intake_id: a["id"]%>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
@@ -473,10 +472,10 @@
                   <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title" id="myModalLabel">Add New Vetting Entry</h4>
+                      <h4 class="modal-title" id="myModalLabel">Edit Vetting Entry</h4>
                     </div>
                     <div class="modal-body">
-                        <%= render 'vettingform_edit_modal', modal: true, edit_vet: Vetting.find_by(id: a["id"]), animal_id: @animal.id, vet_id: a["id"]%>
+                        <%= render 'vettingform_edit_modal', modal: true, edit_vet: Vetting.find_by(id: a["id"]), sub_status: @sub_status,animal_id: @animal.id, vet_id: a["id"]%>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
@@ -531,10 +530,10 @@
                   <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title" id="myModalLabel">Add New Foster Entry</h4>
+                      <h4 class="modal-title" id="myModalLabel">Edit Foster Entry</h4>
                     </div>
                     <div class="modal-body">
-                        <%= render 'fosterform_edit_modal', modal: true, edit_fost: FosterStatus.find_by(id: a["id"]), animal_id: @animal.id, fosters: @fosters, curr_foster: a["email"], fost_id: a["id"]%>
+                        <%= render 'fosterform_edit_modal', modal: true, edit_fost: FosterStatus.find_by(id: a["id"]), animal_id: @animal.id, fosters: @fosters, curr_foster: a["email"], sub_status: @sub_status, fost_id: a["id"]%>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
@@ -590,10 +589,10 @@
                   <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title" id="myModalLabel">Add New In Training Entry</h4>
+                      <h4 class="modal-title" id="myModalLabel">Edit In Training Entry</h4>
                     </div>
                     <div class="modal-body">
-                        <%= render 'trainform_edit_modal', modal: true, edit_train: Training.find_by(id: a["id"]), animal_id: @animal.id, train_id: a["id"]%>
+                        <%= render 'trainform_edit_modal', modal: true, edit_train: Training.find_by(id: a["id"]), animal_id: @animal.id, sub_status: @sub_status, train_id: a["id"]%>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
@@ -650,10 +649,10 @@
                   <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title" id="myModalLabel">Add New Intake Entry</h4>
+                      <h4 class="modal-title" id="myModalLabel">Edit Adopted Entry</h4>
                     </div>
                     <div class="modal-body">
-                        <%= render 'adoptedform_edit_modal', modal: true, edit_adopt: Adopted.find_by(id: a["id"]), animal_id: @animal.id, adopters: @adopters, curr_adopter: a["email"], adopt_id: a["id"]%>
+                        <%= render 'adoptedform_edit_modal', modal: true, edit_adopt: Adopted.find_by(id: a["id"]), animal_id: @animal.id, adopters: @adopters, sub_status: @sub_status, curr_adopter: a["email"], adopt_id: a["id"]%>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
@@ -704,6 +703,11 @@
         </tbody>
       </table>
       <a href='/alerts/new?method=get&param= <%= @animal.id %> '><button class = "button" >Add New Alert</button></a>
+  </div>
+    <div class="col-md-2 col-md-offset-10 col-sm-4 col-sm-offset-8 col-xs-4 col-xs-offset-8" > 
+   <% if admin?(current_user) %>
+      <%= button_to("Delete Animal", {id: @animal.id }, {:onclick => "return confirm('Are you sure? This action is not reversiable!')", :method => :delete}) %>
+  <% end %>
   </div>
 </div>
 
