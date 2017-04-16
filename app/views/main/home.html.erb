@@ -248,6 +248,7 @@ function bindRemove(){
   $('.remove-item-btn').on('click', function(event) {
     console.log("removing")
     $(this).closest('.grid-stack-item').remove()
+    saveLayout();
   })
 }
 
