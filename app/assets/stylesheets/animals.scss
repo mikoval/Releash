@@ -253,10 +253,6 @@ div#timeline {
       left: 78%;
       background-color: $neutral;
     }
-    &:nth-child(7){
-      left: 91%;
-      background-color: $neutral;
-    }
     &:hover {
       transform: scale(1.2);
     }
@@ -281,6 +277,22 @@ article {
     margin-left: 20%;
     margin-right: 20%;
   }
+}
+
+.entry-item {
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 0.2%;
+  border-color: $neutral;
+  margin-bottom: 5%;
+
+}
+
+.entry-text {
+  margin-top: 5%;
+}
+.edit-entry {
+  margin-top: 5%;
 }
 
 .status-buffer {

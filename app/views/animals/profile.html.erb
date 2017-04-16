@@ -245,7 +245,7 @@
         <status>Training</status>
       </div>
       <div class="circle" id="adopted">
-        <status>With Adopter</status>
+        <status>Adopter</status>
       </div>
     </div>
 
@@ -358,15 +358,19 @@
       
       <p>
         <%if @allIntakes != []%>
-          <p>Intake Status </p>
           <% @intake_stats.each  do |a| %>
-            <p> Date: <%= a["date"]%> </p>
-            <p> Previous Location: <%=a["prev_location"]%> </p>
-            <p> SubStatus: <%=a["sub_status"]%> </p>
-            <p> Comments: <%= a["comm"]%> </p>
-
-            <% if employee?(current_user) %>
-            <%= link_to 'Edit Entry', '#', class: 'btn btn-default', 'data-toggle' => 'modal', 'data-target' => "#intake_#{a["id"]}"  %>
+            <div class = "entry-item col-md-7">
+              <div class = "entry-text col-md-8">
+                <p> Date: <%= a["date"]%> </p>
+                <p> Previous Location: <%=a["prev_location"]%> </p>
+                <p> SubStatus: <%=a["sub_status"]%> </p>
+                <p> Comments: <%= a["comm"]%> </p>
+              </div>
+              <div class = "edit-entry col-md-3">
+                <% if employee?(current_user) %>
+                <%= link_to 'Edit Entry', '#', class: 'btn btn-default', 'data-toggle' => 'modal', 'data-target' => "#intake_#{a["id"]}"  %>
+              </div>
+            </div>
 
             <!-- Edit Modal -->
               <div class="modal entry-modal fade" id = <%= "intake_#{a["id"]}" %> tabindex="-1" role="dialog" aria-labelledby="intakeEditEntryModalLabel">
@@ -417,15 +421,19 @@
       <!-- End Modal -->
       <p>
         <%if @allVetting != []%>
-          <p>Vetting Status </p>
           <% @vet_stats.each do |a| %>
-            <p> Date: <%= a["date"]%> </p>
-            <p> Vet: <%=a["vet"]%> </p>
-            <p> Sub Status: <%=a["sub_status"]%> </p>
-            <p> Comments: <%= a["comm"]%> </p>
-
-            <% if employee?(current_user) %>
-            <%= link_to 'Edit Entry', '#', class: 'btn btn-default', 'data-toggle' => 'modal', 'data-target' => "#vetting_#{a["id"]}"  %>
+            <div class = "entry-item col-md-7">
+              <div class = "entry-text col-md-8">
+                <p> Date: <%= a["date"]%> </p>
+                <p> Vet: <%=a["vet"]%> </p>
+                <p> Sub Status: <%=a["sub_status"]%> </p>
+                <p> Comments: <%= a["comm"]%> </p>
+              </div>
+              <div class = "edit-entry col-md-3">
+                <% if employee?(current_user) %>
+                <%= link_to 'Edit Entry', '#', class: 'btn btn-default', 'data-toggle' => 'modal', 'data-target' => "#vetting_#{a["id"]}"  %>
+              </div>
+            </div>
 
             <!-- Edit Modal -->
               <div class="modal entry-modal fade" id = <%= "vetting_#{a["id"]}" %> tabindex="-1" role="dialog" aria-labelledby="vettingEntryModalLabel">
@@ -475,15 +483,19 @@
       <!-- End Modal -->
       <p>
         <%if @allFoster != []%>
-          <p>Foster Status </p>
           <% @foster_stats.each do |a| %>
-            <p> Date: <%= a["date"]%> </p>
-            <p> Foster: <%= a["foster"]%> </p>
-            <p> Sub Status: <%=a["sub_status"]%> </p>
-            <p> Comments: <%= a["comm"]%> </p>
-
-            <% if employee?(current_user) %>
-            <%= link_to 'Edit Entry', '#', class: 'btn btn-default', 'data-toggle' => 'modal', 'data-target' => "#foster_#{a["id"]}"  %>
+            <div class = "entry-item col-md-7">
+              <div class = "entry-text col-md-8">
+                <p> Date: <%= a["date"]%> </p>
+                <p> Foster: <%= a["foster"]%> </p>
+                <p> Sub Status: <%=a["sub_status"]%> </p>
+                <p> Comments: <%= a["comm"]%> </p>
+              </div>
+              <div class = "edit-entry col-md-3">
+                <% if employee?(current_user) %>
+                <%= link_to 'Edit Entry', '#', class: 'btn btn-default', 'data-toggle' => 'modal', 'data-target' => "#foster_#{a["id"]}"  %>
+              </div>
+            </div>            
 
             <!-- Edit Modal -->
               <div class="modal entry-modal fade" id = <%= "foster_#{a["id"]}" %> tabindex="-1" role="dialog" aria-labelledby="fosterEntryModalLabel">
