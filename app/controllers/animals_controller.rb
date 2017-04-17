@@ -165,12 +165,12 @@ class AnimalsController < ApplicationController
     
     @behaviors =  AnimalCharacteristic.where("animal_id = " + params["param"])
 
-    @allIntakes = Intake.where(animal_id: @animal.id)
-    @allVetting = Vetting.where(animal_id: @animal.id)
-    @allTraining = Training.where(animal_id: @animal.id)
-    @allAdopt = Adopted.where(animal_id: @animal.id)
-    @allFoster = FosterStatus.where(animal_id: @animal.id)
-    @allApps = AnimalApplication.where(animal_id: @animal.id)
+    @allIntakes = Intake.where(animal_id: @animal.id).order('intake_date DESC')
+    @allVetting = Vetting.where(animal_id: @animal.id).order('vet_date DESC')
+    @allTraining = Training.where(animal_id: @animal.id).order('train_date DESC')
+    @allAdopt = Adopted.where(animal_id: @animal.id).order('adopt_date DESC')
+    @allFoster = FosterStatus.where(animal_id: @animal.id).order('foster_date DESC')
+    @allApps = AnimalApplication.where(animal_id: @animal.id).order('app_date DESC')
 
     #so we need this value to pass to intake modal so it knows we are creating a new Intake or whatever status
     @new_intake = Intake.new
