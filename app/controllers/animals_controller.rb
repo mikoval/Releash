@@ -643,6 +643,7 @@ class AnimalsController < ApplicationController
           "name" => d.name,
           "primary" => d.primary_breed.name,
           "gender" => d.gender,
+          "age" => d.age(),
           "status" => d.status.name,
         })
     end
