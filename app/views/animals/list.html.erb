@@ -266,7 +266,7 @@ function downloadCSV(args) {
     if(day < 10){
       day = "0" + day;
     }
-    var date = today.getFullYear()+ "" + month + "" + day;
+    var date = today.getFullYear()+ "-" + month + "-" + day;
 
     // time
     var hour = today.getHours();
@@ -285,7 +285,7 @@ function downloadCSV(args) {
     var time = hour + "" + minute + "" + second;
 
     filename = args.filename || 'export.csv';
-    filename += " v." + date + time + ".csv";
+    filename += " v." + date + " " + time + ".csv";
 
     if (!csv.match(/^data:text\/csv/i)) {
         csv = 'data:text/csv;charset=utf-8,' + csv;
