@@ -188,18 +188,22 @@
                 <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Select Behavior
                 <span class="caret"></span></button>
                 <ul class="dropdown-menu">
+                  <%if @behavior != [] %>
                   <% @behavior.each do |b| %>
                   <li  class = "behavior-dd-item" id = "behavior-dd-<%= b.id %>"><a href="#" class= "behavior-dd-item" value = '<%= b.id %>'> <%= b.name %></a>  </li> 
+                  <% end %>
                   <% end %>
                 </ul>
               </div>           
               <div id = "behavior-list">
+                <%if @behavior != [] %>
                 <% @behaviors.each do |b| %>
                 <div id = 'behavior-<%= b.id %>'   class = 'select-item behavior-item' style = 'position: relative; display: inline-block;'>
                   <p style = 'margin:0px; padding-right:15px'> <%= b.name %> </p> 
                   <span class = 'glyphicon glyphicon-remove remove-item remove-behavior' style='margin:2px; float:right;'></span>
                 </div>
 
+                <% end %>
                 <% end %>
               </div>
 
