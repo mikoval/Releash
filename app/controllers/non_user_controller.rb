@@ -2,13 +2,12 @@ class NonUserController < ApplicationController
   def profile
     @non_user = NonUser.find(params["param"])
     
-    if @non_user.address != nil and @non_user.state != nil and @non_user.zip_code != nil
-      @full_address = @non_user.address + " " + @non_user.state + " " + @non_user.zip_code.to_s
+    if @non_user.address != nil and @non_user.state != nil and @non_user.zip_code != nil and @non_user.city != nil
+      @full_address = @non_user.address.to_s + " " + " "  + @non_user.city.to_s + " " + @non_user.state.to_s + " " + @non_user.zip_code.to_s
     else
       @full_address = nil
     end
     @foster_ok = @non_user.foster_check
-    Rails.logger.debug("Foster Check--------------: #{@foster_ok.inspect}")
     @adopt_ok = @non_user.adopt_check
 
     @foster = Foster.find_by non_user_id: @non_user.id
@@ -19,6 +18,7 @@ class NonUserController < ApplicationController
     @adoptions = Adopter.find_by non_user_id: @non_user.id
     if @adoptions != nil
       @allAdoptions = Adopted.where(adopter_id: @adoptions.id)
+      @allApps = AnimalApplication.where(adopter_id: @adoptions.id)
     end
   end
 
@@ -88,7 +88,7 @@ class NonUserController < ApplicationController
   end
   
   def user_params
-  	params.require(:non_user).permit(:name,:address,:state, :zip_code, :email, :picture, 
+  	params.require(:non_user).permit(:name,:address,:state, :city, :zip_code, :email, :picture, 
                                     :foster_check, :adopt_check, :nonuser_document, :comments, :home_comm, :homecheck, :disable, :phone_number)
   end
 

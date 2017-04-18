@@ -29,7 +29,7 @@ class PeopleController < ApplicationController
     @employee = User.find(params["param"])
 
     if @employee.address != nil and @employee.city != nil and @employee.state != nil and @employee.zip_code != nil
-      @full_address = @employee.address + " " + @employee.city + " " + @employee.state + " " + @employee.zip_code
+      @full_address = @employee.address.to_s + " " + @employee.city.to_s + " " + @employee.state.to_s + " " + @employee.zip_code.to_s
 
     else
       @full_address = nil
@@ -39,23 +39,22 @@ class PeopleController < ApplicationController
 
     @foster = Foster.find_by user_id: @employee.id
     if @foster != nil
-      @allFosters = FosterStatus.where(foster_id: @foster.id)
-      Rails.logger.debug("My adopter--------------: #{@allFosters.inspect}")
+      @allFosters = FosterStatus.where(foster_id: @foster.id).order('foster_date DESC')
+
     end
 
     @adoptions = Adopter.find_by user_id: @employee.id
-    #Rails.logger.debug("My adopter--------------: #{@adoptions.inspect}")
+
     if @adoptions != nil
-      @allAdoptions = Adopted.where(adopter_id: @adoptions.id)
-      @allApps = AnimalApplication.where(adopter_id: @adoptions.id)
-      #Rails.logger.debug("My adopter--------------: #{@allAdoptions.inspect}")
+      @allAdoptions = Adopted.where(adopter_id: @adoptions.id).order('adopt_date DESC')
+      @allApps = AnimalApplication.where(adopter_id: @adoptions.id).order('app_date DESC')
+ 
     end
   end
-  #require says the type it has to be, for this one it has to have a user parameter
-  #says the fields that are allowed. have to match up with column names
+
   def people_params
       params.require(:user).permit(:name, :email, :password,
-                                   :password_confirmation, :role_id, :picture, :disabled, :address,
+                                   :password_confirmation, :role_id, :picture, :disabled, :address, :city,
                                    :state, :zip_code, :foster_check, :adopt_check, :comments, :home_comm, :homecheck, :phone_number, :user_document)
   end
   # the code that actually adds an employee. 

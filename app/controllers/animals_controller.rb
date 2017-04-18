@@ -65,8 +65,8 @@ class AnimalsController < ApplicationController
     @coord_id = Role.find_by title: "Coordinator"
     @admin_id = Role.find_by title: "Administrator"
 
-    @coordinators = User.where(role_id: @coord_id.id, role_id: @admin_id.id)
-    
+    @coordinators = User.where("role_id = ? OR role_id = ?", @coord_id.id, @admin_id.id )
+
     #having fosters and adopter display
     @fosters_user = User.where(foster_check: true)
     @foster_non_user = NonUser.where(foster_check: true)

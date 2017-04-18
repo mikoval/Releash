@@ -26,12 +26,12 @@
 
                   <div class="profile-info">
                     <h4 class="heading">Comments</h4>
-                    <p><%=@employee.comments%></p>
+                    <p><%=simple_format(@employee.comments)%></p>
                   </div>
 
                   <div class="profile-info">
                     <h4 class="heading">Homecheck Comments</h4>
-                    <p><%=@employee.home_comm%>
+                    <p><%=simple_format(@employee.home_comm)%>
                         <%if @employee.homecheck == false %>
                               <p> Homecheck Completed:  No </p> 
                             <% else %>

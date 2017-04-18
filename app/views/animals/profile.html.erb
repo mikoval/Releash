@@ -766,7 +766,7 @@
 
 <div class="col-md-2 col-md-offset-10 col-sm-4 col-sm-offset-8 col-xs-4 col-xs-offset-8" > 
    <% if admin?(current_user) %>
-      <%= button_to("Delete Animal", {id: @animal.id }, {:onclick => "return confirm('Are you sure? This action is not reversiable!')", :method => :delete}) %>
+      <%= button_to("Delete Animal", {id: @animal.id }, {:onclick => "return confirm('Are you sure? This action is not reversable!')", :method => :delete}) %>
   <% end %>
   </div>
 </div>
