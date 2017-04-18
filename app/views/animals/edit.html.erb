@@ -199,7 +199,7 @@
                 <%if @behavior != [] %>
                 <% @behaviors.each do |b| %>
                 <div id = 'behavior-<%= b.id %>'   class = 'select-item behavior-item' style = 'position: relative; display: inline-block;'>
-                  <p style = 'margin:0px; padding-right:15px'> <%= b.name %> </p> 
+                  <p style = 'margin:0px; padding-right:15px'> <%= b.characteristic.name %> </p> 
                   <span class = 'glyphicon glyphicon-remove remove-item remove-behavior' style='margin:2px; float:right;'></span>
                 </div>
 
