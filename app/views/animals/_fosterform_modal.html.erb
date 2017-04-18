@@ -11,7 +11,7 @@
     <%= f.check_box :current_entry, class: 'form-control' %>
     
     <%= f.label :foster_date, "Date" %>
-    <%= f.text_field :foster_date, class: 'datepicker' %>
+    <%= f.text_field :foster_date, class: 'foster_date' %>
     
      <%= f.label :fost_fost, "Foster"%>
     <%= collection_select(:fost_fost, :foster_id, fosters, :email, :name, {:prompt => "Select foster"}) %>
@@ -27,7 +27,9 @@
 <% end %>
 
 <script>
-  $('.datepicker').datepicker({
-    endDate: '-0d'
+   $('.foster_date').datetimepicker({
+    //endDate: '+5y',
+    format:'MM/DD/YYYY',
+    
   });
 </script>

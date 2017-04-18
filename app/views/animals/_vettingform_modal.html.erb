@@ -9,7 +9,7 @@
     <%= f.check_box :current_entry, class: 'form-control' %>
     
     <%= f.label :vet_date, "Date" %>
-    <%= f.text_field :vet_date, class: 'datepicker' %>
+    <%= f.text_field :vet_date, class: 'vet_date' %>
 
     <%= f.label :sub_status, class: 'control-label' %><br>
     <%= f.collection_select :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select SubStatus"}, class: 'form-control' %> 
@@ -26,7 +26,9 @@
 <% end %>
 
 <script>
-  $('.datepicker').datepicker({
-    endDate: '-0d'
+  $('.vet_date').datetimepicker({
+    //endDate: '+5y',
+    format:'MM/DD/YYYY',
+    
   });
 </script>

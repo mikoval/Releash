@@ -118,16 +118,16 @@
 
            
               <%= f.label :date_of_birth %>
-              <%= f.text_field :birthday, class: 'datepicker' %>
+              <%= f.text_field :birthday, class: 'form-control datepicker required' %>
 
               <%= f.label :input_date %>
-              <%= f.text_field :input_date, class: 'datepicker' %>
+              <%= f.text_field :input_date, class: 'form-control datepicker' %>
 
               <%= f.label :adoption_date %>
-              <%= f.text_field :date_adopted, class: 'datepicker' %>
+              <%= f.text_field :date_adopted, class: 'form-control datepicker' %>
 
               <%= f.label :date_of_death %>
-              <%= f.text_field :date_death, class: 'datepicker' %>
+              <%= f.text_field :date_death, class: 'form-control datepicker' %>
 
               <%= f.label :microchip_number , "Microchip #"%>
               <%= f.text_field :microchip_number, class: 'form-control' %>
@@ -431,7 +431,7 @@
   
       $(this).closest(".behavior-item").detach()
       setHiddenBehavior();
-  })
+
   
   function setHiddenBehavior(){
 

@@ -10,7 +10,7 @@
     <%= f.check_box :current_entry, class: 'form-control' %>
  
     <%= f.label :foster_date, "Date" %>
-    <%= f.text_field :foster_date, class: 'datepicker' %>
+    <%= f.text_field :foster_date, class: 'foster_date' %>
     
     <!-- Selecting Foster-->
     <%= f.label :fost_fost, "Foster"%>
@@ -28,7 +28,10 @@
 <% end %>
 
 <script>
-  $('.datepicker').datepicker({
-    endDate: '-0d'
+   $('.foster_date').datetimepicker({
+    //endDate: '+5y',
+    format:'MM/DD/YYYY',
+    
   });
+    
 </script>

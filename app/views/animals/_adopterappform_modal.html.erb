@@ -6,7 +6,7 @@
     <%= f.hidden_field :animal_id, value: animal_id%>
  
     <%= f.label :app_date, "Application Date" %>
-    <%= f.text_field :app_date, class: 'datepicker' %>
+    <%= f.text_field :app_date, class: 'app_date' %>
 
     <%= f.label :app_adopter, "Select Applicant"%>
     <%=collection_select(:app_adopter, :adopt_id, adopters, :email, :name, {:prompt => "Select Adopter"}) %>
@@ -30,8 +30,10 @@
 <% end %>
 
 <script>
-  $('.datepicker').datepicker({
-    endDate: '-0d'
+  $('.app_date').datetimepicker({
+    //endDate: '+5y',
+    format:'MM/DD/YYYY',
+    
   });
 
   $(".file-upload").change(function(input) { 

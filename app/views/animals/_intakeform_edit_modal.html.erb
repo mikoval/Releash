@@ -12,7 +12,7 @@
     <%= f.check_box :current_entry, class: 'form-control' %>
     
     <%= f.label :intake_date, "Intake Date" %>
-    <%= f.text_field :intake_date, class: 'datepicker' %>
+    <%= f.text_field :intake_date, class: 'input_date' %>
 
     <%= f.label :sub_status %>
     <%= f.collection_select :sub_status_id, sub_status, :id, :name, :include_blank => true %>
@@ -32,7 +32,9 @@
 <% end %>
 
 <script>
-  $('.datepicker').datepicker({
-    endDate: '-0d'
+ $('.input_date').datetimepicker({
+    //endDate: '+5y',
+    format:'MM/DD/YYYY',
+    
   });
 </script>
