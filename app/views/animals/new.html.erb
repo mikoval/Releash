@@ -238,7 +238,7 @@
         <div id = "intake" role="tabpanel" class="tab-pane fade in">
           <!-- Selecting Date-->
           <%= f.label :intake_date, "Intake Date" %>
-          <%= text_field_tag 'intake_dt', "" ,class: 'form-control datepicker' %>
+          <%= text_field_tag 'intake_dt', "" ,class: 'form-control datepicker required' %>
           
           <%= f.label :intake_sub, "Sub Status"%>
           <%= collection_select(:intake_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>

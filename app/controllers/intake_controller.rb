@@ -23,7 +23,7 @@ class IntakeController < ApplicationController
       flash[:success] = "Saved Intake Entry"
       redirect_to :controller => "animals", :action => "profile", :param => @intake.animal_id
     else
-      redirect_to :controller => "animals", :action => "profile", :param => @intake.animal_id
+      #redirect_to :controller => "intake", :action => "new", :param => @intake.animal_id
     end
 
   end

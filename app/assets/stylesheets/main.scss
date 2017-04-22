@@ -264,6 +264,12 @@ ul.list-justify > li {
     border-color: #d6d6d6;
     background-color: #fff; }
 
+.required-error{
+    background-color:#FAABAB;
+    border-color:red;
+    border-size:15px;
+}
+
 .input-group {
   -moz-box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.1);

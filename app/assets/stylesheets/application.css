@@ -33,7 +33,7 @@
 .required-error{
     background-color:#FAABAB;
     border-color:red;
-    border-size:2px;
+    border-size:15px;
 }
 
 .form-control-error {
