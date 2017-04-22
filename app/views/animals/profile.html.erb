@@ -41,11 +41,11 @@
 
             <!-- Features & Breed stuff -->  
             <% if @animal.date_death != nil %>
-              <p> <%= @animal.date_death%></p>
+              <p>Death: <%= @animal.date_death%></p>
             <% end %>
 
             <% if @animal.date_adopted != nil %>
-              <p> <%= @animal.date_adopted%></p>
+              <p>Adopted: <%= @animal.date_adopted%></p>
             <% end %>
           </div> <!-- end of snippet -->
         </div> <!-- end of row -->
@@ -103,9 +103,9 @@
               <p>
               <% @behaviors.each do |b| %>
                <% if b != @behaviors.last %>
-                  <%= b.characteristic.name + "," %> 
+                  <%#= b.characteristic.name + "," %> 
                 <% else %>
-                  <%= b.characteristic.name  %> 
+                  <%#= b.characteristic.name  %> 
                 <% end %>
                 <% end %> 
              </p>  
