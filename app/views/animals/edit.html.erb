@@ -83,7 +83,7 @@
           <div id = "behavior-list">
             <% @behaviors.each do |b| %>
             <div id = 'behavior-<%= b.id %>'   class = 'select-item behavior-item' style = 'position: relative; display: inline-block;'>
-              <p style = 'margin:0px; padding-right:15px'> <%#= b.characteristic.name %> </p> 
+              <p style = 'margin:0px; padding-right:15px'> <%= b.characteristic.name %> </p> 
               <span class = 'glyphicon glyphicon-remove remove-item remove-behavior' style='margin:2px; float:right;'></span>
             </div>
 
@@ -370,11 +370,31 @@
       setHiddenBreeds();
   })
 
-  
+   
+
+  $(".behavior-dd-item").on("click", function(e){
+
+    e.stopPropagation();
+    e.preventDefault();
+    var text = $(this).text();
+    var val = $(this).attr("value");
+    if(text == "Select Behavior"){
+      return
+    }
+    html = $("#behavior-list").html();
+    html += "<div id = 'behavior-" + val + "'' class = 'behavior-item select-item' style = 'position: relative; display: inline-block;'>" 
+        + "<p style = 'margin:0px; padding-right:15px'>" + text + "</p>" + 
+       "<span class = 'glyphicon glyphicon-remove remove-behavior remove-item' style='margin:2px; float:right;'>" +"</span>" + 
+       " </div>"
+    $("#behavior-list").html(html);
+    $(".remove-behavior").on("click", function(){
       $(this).closest(".behavior-item").detach()
       setHiddenBehavior();
-
-  
+    })
+    //just for now while im setting up the new breeds
+    $(this).get(0).selectedIndex = 0;
+    setHiddenBehavior();
+  })
   function setHiddenBehavior(){
 
     str = ""
@@ -387,7 +407,10 @@
     })
     $(".hidden-behavior").val(str)
   }
-
+  $(".remove-behavior").on("click", function(){
+      $(this).closest(".behavior-item").detach()
+      setHiddenBehavior();
+    })
   setHiddenBehavior();
 </script>
     

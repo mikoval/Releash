@@ -101,11 +101,12 @@
               <p> Secondary Color: <%= @animal.color_secondary %> </p>
 
               <p>
+
               <% @behaviors.each do |b| %>
                <% if b != @behaviors.last %>
-                  <%#= b.characteristic.name + "," %> 
+                  <%= b.characteristic.name + "," %> 
                 <% else %>
-                  <%#= b.characteristic.name  %> 
+                  <%= b.characteristic.name  %> 
                 <% end %>
                 <% end %> 
              </p>  
