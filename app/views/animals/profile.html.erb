@@ -526,7 +526,6 @@
 
     <!--=================== TRAINING =======================-->  
     <article class='status-info training'>
-      <p>
         <!-- Add New Training Modal -->
        <%= link_to 'Add New Training', '#trainingEntryModal', class: 'btn btn-default', 'data-toggle' => 'modal' %>
       <div class="modal entry-modal fade" id="trainingEntryModal" tabindex="-1" role="dialog" aria-labelledby="trainingEntryModalLabel">
@@ -546,16 +545,22 @@
         </div>
       </div>
       <!-- End Modal -->
-        <p>In Training Status </p>
+      <p>
+
         <%if @allTraining != []%>
           <% @train_stats.each do |a| %>
-            <p> Date: <%= a["date"]%> </p>
-            <p> Trainer: <%=a["train"]%> </p>
-            <p> Sub Status: <%=a["sub_status"]%> </p>
-            <p> Problem Information: <%=a["comm"]%> </p>
-            
-            <% if employee?(current_user) %>
-            <%= link_to 'Edit Entry', '#', class: 'btn btn-default', 'data-toggle' => 'modal', 'data-target' => "#train_#{a["id"]}"  %>
+            <div class = "entry-item col-md-7">
+              <div class = "entry-text col-md-8">
+                <p> Date: <%= a["date"]%> </p>
+                <p> Trainer: <%=a["train"]%> </p>
+                <p> Sub Status: <%=a["sub_status"]%> </p>
+                <p> Problem Information: <%=a["comm"]%> </p>
+              </div>
+              <div class = "edit-entry col-md-3">
+                <% if employee?(current_user) %>
+                <%= link_to 'Edit Entry', '#', class: 'btn btn-default', 'data-toggle' => 'modal', 'data-target' => "#train_#{a["id"]}"  %>
+              </div>
+            </div>
 
             <!-- Edit Modal -->
               <div class="modal entry-modal fade" id = <%= "train_#{a["id"]}" %> tabindex="-1" role="dialog" aria-labelledby="trainingEntryModalLabel">
@@ -607,15 +612,19 @@
       <!-- End New Modal -->
       <p>            
         <%if @allAdopt != []%>
-          <p>Adopted Status </p>
           <% @adopt_stats.each do |a| %>
-            <p> Date: <%= a["date"]%> </p>
-            <p> Sub Status: <%= a["sub_status"]%> </p>
-            <p> Adopted By: <%= a["adopt"]%> </p>
-            <p> Comments: <%= a["comm"]%> </p>
-            
-            <% if employee?(current_user) %>
-            <%= link_to 'Edit Entry', '#', class: 'btn btn-default', 'data-toggle' => 'modal', 'data-target' => "#adopted_#{a["id"]}"  %>
+            <div class = "entry-item col-md-7">
+              <div class = "entry-text col-md-8">
+                <p> Date: <%= a["date"]%> </p>
+                <p> Sub Status: <%= a["sub_status"]%> </p>
+                <p> Adopted By: <%= a["adopt"]%> </p>
+                <p> Comments: <%= a["comm"]%> </p>
+              </div>
+              <div class = "edit-entry col-md-3">
+                <% if employee?(current_user) %>
+                <%= link_to 'Edit Entry', '#', class: 'btn btn-default', 'data-toggle' => 'modal', 'data-target' => "#adopted_#{a["id"]}"  %>
+              </div>
+            </div>
 
             <!-- Edit Modal -->
               <div class="modal entry-modal fade" id = <%= "adopted_#{a["id"]}" %> tabindex="-1" role="dialog" aria-labelledby="adoptEntryModalLabel">
