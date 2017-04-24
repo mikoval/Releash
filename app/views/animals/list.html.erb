@@ -40,6 +40,12 @@
       <% end %>
     </select>
 
+    <p style = "display:inline-block;  white-space: nowrap;"> 
+      Active: <input style = "display:inline-block; width:auto" type = "checkbox" id = "active-chk" 
+      <% if(@active.to_s == "true") %>checked <% end %> > 
+      Inactive: <input style = "display:inline-block; width:auto" type = "checkbox" id = "inactive-chk" 
+      <% if(@inactive.to_s == "true") %> checked <% end %>  ></p>
+
 
     <!-- <p> Spayed/Neutered:  </p> 
     <select id = "filter-neutered">
@@ -119,23 +125,32 @@ function generateAnimalsList(){
 
     if(myURL.charAt(myURL.indexOf("?a=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.age_min = parseInt(myURL.substring(myURL.indexOf("?a=")+3, myURL.indexOf("&?A=")))}
     else{params.age_min = $("#age-min").text();}
-    if(myURL.charAt(myURL.indexOf("?A=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.age_max = parseInt(myURL.substring(myURL.indexOf("?A=")+3, myURL.length))}
+    if(myURL.charAt(myURL.indexOf("?A=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.age_max = parseInt(myURL.substring(myURL.indexOf("?A=")+3, myURL.indexOf("&?Act=")))}
     else{params.age_max = $("#age-max").text();}
+
+    if(myURL.charAt(myURL.indexOf("?Act=")+5)!="&" && myURL.indexOf("?n=")!=-1){params.active = myURL.substring(myURL.indexOf("?Act=")+5, myURL.indexOf("&?Inact="))}
+    else{params.active = $("#active-chk")[0].checked};
+    if(myURL.charAt(myURL.indexOf("?Inact=")+7)!="&" && myURL.indexOf("?n=")!=-1){params.inactive = myURL.substring(myURL.indexOf("?Inact=") + 7, myURL.length)}
+    else{params.inactive = $("#inactive-chk")[0].checked};
   }
   else{
-    params.name = $("#filter-name").val();
+      params.name = $("#filter-name").val();
     params.breed = $("#filter-breed").val();
     params.gender = $("#filter-gender").val();
     params.status = $("#filter-status").val();
     params.age_min = $("#age-min").text();
     params.age_max = $("#age-max").text();
+    params.active = $("#active-chk")[0].checked;
+    params.inactive = $("#inactive-chk")[0].checked;
+
+
   }
 
   $("#age-min").text(params.age_min);
   $("#age-max").text(params.age_max);
   $("#age_slider").slider("values", 0, params.age_min);
   $("#age_slider").slider("values", 1, params.age_max);
-
+  console.log(params)
   $.ajax({
     url: "animals/query",
     data: params,
@@ -186,7 +201,9 @@ function generateAnimalsList(){
     name = name.replace(" ", "+")
   }
   queryNumber +=1
-  myURL = str + "?n=" + name + "&?b=" + params.breed + "&?g=" + params.gender + "&?s=" + params.status + "&?a=" + params.age_min + "&?A=" + params.age_max + "&?qn=" + queryNumber;
+  console.log(params)
+  myURL = str + "?n=" + name + "&?b=" + params.breed + "&?g=" + params.gender + "&?s=" + params.status + "&?a=" + params.age_min + "&?A=" + params.age_max + "&?qn=" + queryNumber +  "&?Act=" + params.active + "&?Inact=" + params.inactive;
+  console.log(myURL)
 
   window.history.pushState('obj', 'newtitle', myURL)
 

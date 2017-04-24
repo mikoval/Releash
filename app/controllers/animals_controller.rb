@@ -6,6 +6,9 @@ class AnimalsController < ApplicationController
     @statuses = StatusType.all
     @ageMin = params["?a"]
     @ageMax = params["?A"]
+    @active = params["?Act"]
+    @inactive = params["?Inact"]
+    
     if(@ageMin == nil ) 
       @ageMin = 0
     end
@@ -704,6 +707,24 @@ class AnimalsController < ApplicationController
         end
       end 
 
+      if(params["active"] != ""  && params["inactive"] != "")
+
+        tmp1 = false
+        tmp2 = false
+        
+        if(d.inactive_animal.to_s == "false" && params["active"] == true.to_s)
+          tmp1 = true
+        end
+        if(d.inactive_animal.to_s == "true" && params["inactive"] == true.to_s)
+          tmp2 = true
+        end
+        if(!tmp1 && !tmp2)
+         add = false
+        end
+
+
+      end 
+
       if(add)
         
         arr.push({
@@ -722,7 +743,8 @@ class AnimalsController < ApplicationController
           "neutered" => d.neutered,
           "adoption_fee" => d.adoption_fee,
           "notes" => d.notes,
-          "coordinator" => d.coordinator.name
+          "coordinator" => d.coordinator.name,
+          "active" => !d.inactive_animal
         })
       end
     end
