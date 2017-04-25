@@ -100,3 +100,8 @@ At the time of creation of these accounts, they have the same attributes as a re
 If you want to make them available as a Foster and/or Adopters, Navigate to People → Click Edit on the desired Non-User → Once on the edit page click on the check boxes for Foster and/Adopter
 
 Upcoming Events
+
+In the Upcoming Events page you can create new events.
+Emails will sent to the users who are assigned when the alert is created, as well as before the alert, and after if it passes and requires completion. 
+Emails will contain the information for the alerts.
+Two different views for viewing the alerts, a calendar view and a list view
