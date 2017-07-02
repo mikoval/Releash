@@ -16,8 +16,8 @@
  *= require_self
  *= require bootstrap-datetimepicker
  *= require bootstrap-slider
- *= require jquery-ui
- *= require gridstack-js-rails
+
+
 
  *= require_tree .
 
@@ -25,7 +25,7 @@
  */
 
 /*Change font everywhere */
-@import url('https://fonts.googleapis.com/css?family=Nunito+Sans');
+/*@import url('https://fonts.googleapis.com/css?family=Nunito+Sans');
 .container {
     font-family: 'Nunito Sans', sans-serif;
 
@@ -43,16 +43,3 @@
 
 }
 
-
-@import "bootstrap-sprockets";
-@import "bootstrap";
-
-
-@import "css/animate.min";
-@import "css/custom";
-@import "css/icheck/flat/green";
-@import "css/floatexamples";
-@import "css/normalize";
-@import "css/ion.rangeSlider";
-@import "css/ion.rangeSlider.skinFlat";
-@import "pace";

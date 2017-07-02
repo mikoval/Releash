@@ -11,25 +11,21 @@
 
   <body <%= yield(:body_attributes) %>>
 
-    <div id="wrapper">
+      <div class = "container">
       <%= render 'layouts/header' %>
-
-      <div id="page-content-wrapper">
-        <div class="container-fluid">
-          <div class="container" style = "width:100%">
-            <% flash.each do |message_type, message| %>
-              <div class="alert alert-<%= message_type %>"><%= message %></div>
-            <% end %>
-            <%= yield %>
-            <%= render 'layouts/footer' %>
-            <%= debug(params) if Rails.env.development? %>
-          </div>
-        </div>
-      </div>
     </div>
+     
+      <div class="container" style = "width:100%">
+        <% flash.each do |message_type, message| %>
+          <div class="alert alert-<%= message_type %>"><%= message %></div>
+        <% end %>
+        <%= yield %>
+        <%= render 'layouts/footer' %>
+        <%= debug(params) if Rails.env.development? %>
+      </div>
+    </div> 
 
     <%= render 'layouts/alerts' %>
-    <%= javascript_include_tag 'footermanifest', 'data-turbolinks-track' => true %>
 
 
   </body>
