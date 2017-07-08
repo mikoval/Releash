@@ -16,6 +16,7 @@
 //= require moment
 //= require bootstrap-datetimepicker
 //= require bootstrap-slider
+//= require gridly
 
 //= require_tree .
 

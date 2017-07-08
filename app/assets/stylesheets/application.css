@@ -16,7 +16,7 @@
  *= require_self
  *= require bootstrap-datetimepicker
  *= require bootstrap-slider
-
+ *= require gridly
 
 
  *= require_tree .
