@@ -1,4 +1,4 @@
-Rails.application.routes.draw do
+ Rails.application.routes.draw do
 
 # the first part is what they are going to 
 # for example localhost:3000/home, localhost:3000/people/new, localhost:3000/animal

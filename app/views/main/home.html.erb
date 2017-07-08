@@ -2,23 +2,139 @@
 
       
       <div class="row" style="padding-top:20px;">
-        <div class="col-md-3"> <h1 id="dashboard-head">Dashboard</h1> </div>
+        <div style="margin:20px"> 
+        <h1 style="display:inline-block" id="dashboard-head">Dashboard</h1>         
+        <button style="display:inline-block" type="button" class="new-widget  btn btn-primary" href ="#widgetsList"> Add New Widgets </button>
+      </div>
+
       </div>
    
 
       <div class="gridly">
-        <div class="brick small">Widget 1</div>
-        <div class="brick small">Widget 2</div>
-        <div class="brick large">Widget 3</div>
-        <div class="brick small">Widget 4</div>
-        <div class="brick small">Widget 5</div>
-        <div class="brick large">Widget 6</div>
+        
       </div>
 
+      <div id="widgetsList" class="modal fade" role="dialog">
+          <div class="modal-dialog">
 
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add widget</h4>
+              </div>
+              <div class="modal-body">
+                <button onClick="addAnimalWidget()" type="button" class="btn btn-info btn-lg">Animals Widget</button>
+                <button onClick="addAlertsWidget()" type="button" class="btn btn-primary btn-lg">Alerts Widget</button>
+                <button onClick="addUserWidget()" type="button" class="btn btn-warning btn-lg">User Widget</button>
+                <button onClick="addStatusWidget()" type="button" class="btn btn-warning btn-lg">Status Count Widget</button>
+                 <button onClick="addCoorWidget()" type="button" class="btn btn-warning btn-lg">My Assigned Animals</button>
+
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
     
            
 
 <script>
-  $('.gridly').gridly();
+ $(".new-widget").on("click", function(){
+  $('#widgetsList').modal('show')    
+})
+
+function addAnimalWidget() {
+  $('#widgetsList').modal('hide')   
+    var el = $.parseHTML('<div class = "brick large animal-list" ></div>');
+
+    $(".gridly").append(el);
+    widgetAnimalList()
+    $('.gridly').gridly(
+         {base: 400, // px 
+          gutter: 20, // px
+          columns: (parseInt($(window).width()/400))}
+        );
+}
+function addCoorWidget() {
+  $('#widgetsList').modal('hide')   
+    var el = $.parseHTML('<div class = "brick large coor-list " ></div>');
+
+    $(".gridly").append(el);
+    widgetCoorList()
+    $('.gridly').gridly(
+         {base: 400, // px 
+          gutter: 20, // px
+          columns: (parseInt($(window).width()/400))}
+        );
+}
+function addStatusWidget() {
+  $('#widgetsList').modal('hide')   
+    var el = $.parseHTML('<div class = "brick large status-list " ></div>');
+    $(".gridly").append(el);
+    widgetStatusList()
+    $('.gridly').gridly(
+         {base: 400, // px 
+          gutter: 20, // px
+          columns: (parseInt($(window).width()/400))}
+        );
+}
+function addAlertsWidget() {
+  $('#widgetsList').modal('hide')   
+    
+    var el = $.parseHTML('<div class = "brick large alert-list " ></div>');
+    $(".gridly").append(el);
+
+    widgetAlertList()
+    $('.gridly').gridly(
+         {base: 400, // px 
+          gutter: 20, // px
+          columns: (parseInt($(window).width()/400))}
+        );
+}
+function addUserWidget() {
+  $('#widgetsList').modal('hide')   
+    var el = $.parseHTML('<div class = "brick large user-list" ></div>');
+
+    $(".gridly").append(el);
+
+    widgetUserList()
+    $('.gridly').gridly(
+         {base: 400, // px 
+          gutter: 20, // px
+          columns: (parseInt($(window).width()/400))}
+        );
+}
+
+function loadWidgets(){
+
+  console.log("loading widgets")
+  $.ajax({
+        url: "dashboard",
+        type: "GET",
+       success: function(result){
+        str = result.str;
+        obj = JSON.parse(str);
+        
+        for (i = 0; i < obj.length; i++){
+          console.log(obj[i])
+          var el = $.parseHTML('<div class = "brick large ' + obj[i].type+' " >' + obj[i].type + '</div>');
+          $(".gridly").append(el);
+        }
+         $('.gridly').gridly(
+           {base: 400, // px 
+            gutter: 20, // px
+            columns: (parseInt($(window).width()/400))}
+          );
+         activateWidgets();
+       },
+       error: function(){
+        console.log("failed")
+       }
+     })
+}
+loadWidgets();
 </script>

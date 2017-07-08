@@ -5,12 +5,28 @@
   
 }
 .brick.large {
-    width: 300px;
-    height: 300px;
+    width: 400px;
+    height: 400px;
 }
 .brick{
     border: solid;
+    background-color:white;
 }
 .gridly{
+    position:relative;
+    width: 100%;
+
+}
+.panel-heading{
+   background-color:lightgray ;
+   position:relative;
+
+}
+.remove-item-btn{
+    position:absolute;
+    right:0px;
+    top:0px;
+}
+.panel-title{
     position:relative
 }
