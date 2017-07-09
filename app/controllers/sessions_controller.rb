@@ -1,5 +1,7 @@
 class SessionsController < ApplicationController
   skip_before_filter :require_login
+  before_filter :check_for_mobile
+
   layout "login"
   def new
    
