@@ -1,9 +1,12 @@
 <% provide(:title, "Log in") %>
-<%= image_tag("https://s3.amazonaws.com/releashatlanta/uploads/ReleashImages/images/17690116_10213324689658581_1634804572_n.png") %>
-<p>Log into your account</p>
+
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
+    <%= image_tag("https://s3.amazonaws.com/releashatlanta/uploads/ReleashImages/images/17690116_10213324689658581_1634804572_n.png") %>
+
+    <p class = "title">Log into your account</p>
+
     <%= form_for(:session, url: login_path) do |f| %>
 
       <%= f.label :email %>
@@ -14,13 +17,33 @@
       <%= f.password_field :password, class: 'form-control' %>
 
 
-       <%= f.label :remember_me, class: "checkbox inline" do %>
-        <%= f.check_box :remember_me %>
-        Remember me on this computer 
-      <% end %>
+      <%= f.check_box :remember_me, {class: ""} %>
+      <%= f.label :remember_me, "Remember Me", {class: "checkbox inline-block"} %>
 
 
       <%= f.submit "Log in", class: "btn btn-primary" %>
     <% end %>
   </div>
 </div>
+
+<style>
+body{
+  font-size: 20px;
+}
+.title{
+  font-size: 30px;
+}
+
+.inline-block{
+
+  display:inline-block;
+}
+.row{
+  margin:20px;
+}
+input[type=checkbox] {
+  width:20px;
+  transform: scale(1.5);
+}
+
+</style>

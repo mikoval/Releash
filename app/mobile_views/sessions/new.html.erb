@@ -1,0 +1,70 @@
+<% provide(:title, "Log in") %>
+
+
+</style>
+
+
+<%= image_tag("https://s3.amazonaws.com/releashatlanta/uploads/ReleashImages/images/17690116_10213324689658581_1634804572_n.png") %>
+<h3 class = "title"> Log into your account</h3>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(:session, url: login_path) do |f| %>
+
+      <%= f.label :email %>
+      <%= f.email_field :email, class: 'form-control mobile' %>
+
+      <%= f.label :password %>
+      <%= link_to "(forgot password)", new_password_reset_path %>
+      <%= f.password_field :password, class: 'form-control mobile' %>
+
+
+
+        
+        <%= f.check_box :remember_me, {class: "inline-block small"} %>
+<%= f.label :remember_me, "I agree to the #{link_to 'Terms of Service'}.".html_safe, {class: "checkbox inline-block"} %>
+        
+   
+
+
+      <%= f.submit "Log in", class: "btn btn-primary mobile" %>
+    <% end %>
+  </div>
+</div>
+
+<style>
+.title{
+  text-align: center
+}
+img{
+  width:100%;
+}
+body{
+  font-size: 50px;
+
+}
+.title{
+  font-size: 70px;
+}
+label{
+  margin-bottom: 20px;
+}
+.mobile{
+  height:70px;
+  font-size: 50px;
+}
+.small{
+  width:10px;
+}
+.inline-block{
+  margin-left: 20px;
+  display:inline-block;
+}
+.row{
+  margin:20px;
+}
+input[type=checkbox] {
+  margin-left:10px;
+  transform: scale(5);
+}
+</style>
