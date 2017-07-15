@@ -1,28 +1,30 @@
 <% provide(:title, "Log in") %>
 
-
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= image_tag("https://s3.amazonaws.com/releashatlanta/uploads/ReleashImages/images/17690116_10213324689658581_1634804572_n.png") %>
-
-    <p class = "title">Log into your account</p>
-
-    <%= form_for(:session, url: login_path) do |f| %>
-
-      <%= f.label :email %>
-      <%= f.email_field :email, class: 'form-control' %>
-
-      <%= f.label :password %>
-      <%= link_to "(forgot password)", new_password_reset_path %>
-      <%= f.password_field :password, class: 'form-control' %>
+<div class = "col-md-12" id="login-pg">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3" id="login-container">
+      <div class = "col-md-8 col-md-offset-2">
+        <%= image_tag("https://s3.amazonaws.com/releashatlanta/uploads/ReleashImages/images/17690116_10213324689658581_1634804572_n.png") %>
+        <p class = "title">Shelterbook</p>
 
 
-      <%= f.check_box :remember_me, {class: ""} %>
-      <%= f.label :remember_me, "Remember Me", {class: "checkbox inline-block"} %>
-
-
-      <%= f.submit "Log in", class: "btn btn-primary" %>
-    <% end %>
+        <p>Log into your account</p>
+        <%= form_for(:session, url: login_path) do |f| %>
+          
+          <%= f.email_field :email, placeholder: 'Email', class: 'line-form' %>
+          <%= f.password_field :password, placeholder: 'Password', class: 'line-form' %>
+          <%= link_to "(forgot password)", new_password_reset_path %>
+          
+          <div>
+            <%= f.check_box :remember_me, {class: ""} %>
+            <%= f.label :remember_me, "Remember Me", {class: "checkbox inline-block"} %>
+          
+          </div>
+          <%= f.submit "Log in", class: "btn btn-primary" %>
+        <% end %>
+        
+      </div>
+    </div>
   </div>
 </div>
 
