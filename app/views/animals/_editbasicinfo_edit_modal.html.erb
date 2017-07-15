@@ -1,0 +1,64 @@
+<% modal ||= false %>
+<% remote = modal ? true : false %>
+
+<%= form_for(basic_animal, remote: remote, url: url_for(action: 'editAnimal', animal_id: animal_id, controller: 'animals', method: 'patch'))      do |f| %>
+
+    <%= f.hidden_field :animal_id, value: animal_id%>
+
+    <%= f.label :picture %>
+    <div id="pic-preview">
+    <img id="profilepic" src=<%= basic_animal.picture %> alt="Dog Image"  width = "150px" height = "200px" style = "display:block" />  
+    <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'file-upload profile-file' %>
+    </div>
+ 
+    <%= f.label :name %>
+    <%= f.text_field :name, class: 'form-control required' %>
+    
+    <%= f.label :date_of_birth %>
+    <%= f.text_field :birthday, class: 'form-control datepicker required' %>     
+    <%= f.label :gender %>
+    <%= f.select :gender, [ 'Male','Female'], :prompt => 'Select Gender' %>
+
+    <%= f.label :input_date %>
+    <%= f.text_field :input_date, class: 'form-control datepicker' %>
+
+    <%= f.label :adoption_date %>
+    <%= f.text_field :date_adopted, class: 'form-control datepicker' %>
+
+    <%= f.label :date_of_death %>
+    <%= f.text_field :date_death, class: 'form-control datepicker' %>
+
+    <%= f.label :microchip_number , "Microchip #"%>
+    <%= f.text_field :microchip_number, class: 'form-control' %>   
+
+      
+
+    <%= f.submit 'Submit', class: 'btn btn-primary submit-btn1' %>
+<% end %>
+
+<script>
+  
+  $('.datepicker').datetimepicker({
+    //endDate: '+5y',
+    format:'YYYY/MM/DD',
+    
+  });
+
+  $(".profile-file").change(function(input) { 
+    input = input.target
+    if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#profilepic')
+                    .attr('src', e.target.result)
+                    .width(150)
+                    .height(200);
+                $('#profilepic').show()
+            };
+
+            reader.readAsDataURL(input.files[0]);
+
+        }
+  }); 
+</script>

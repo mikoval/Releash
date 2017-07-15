@@ -47,6 +47,10 @@
             <% if @animal.date_adopted != nil %>
               <p>Adopted: <%= @animal.date_adopted%></p>
             <% end %>
+
+            <% if employee?(current_user) %>
+                <%= link_to 'Edit', '#', class: 'btn btn-default', 'data-toggle' => 'modal', 'data-target' => "#basic_#{@animal.id}"  %>
+              <% end %>
           </div> <!-- end of snippet -->
         </div> <!-- end of row -->
 
@@ -69,6 +73,9 @@
               <p> Marketing: <%= @animal.marketing.name%> </p>
               <p> Visibility: <%= @hidden%> </p>
               <p>Vetting Status: <%= @vet_done%> </p>
+              <% if employee?(current_user) %>
+                <%= link_to 'Edit', '#', class: 'btn btn-default', 'data-toggle' => 'modal', 'data-target' => "#status_#{@animal.id}"  %>
+              <% end %>
             </div>
           </div>
 
@@ -84,6 +91,10 @@
 
             <div id = "traits-behavior" class="collapse col-md-12">
               <!-- Breeds -->
+               
+             <% if employee?(current_user) %>
+                <%= link_to 'Edit', '#', class: 'btn btn-default', 'data-toggle' => 'modal', 'data-target' => "#charac_#{@animal.id}"  %>
+              <% end %>
               <p>Primary Breed: <%= @animal.primary_breed.name %> </p>
               <p>Additional Breeds</p> 
               <p> 
@@ -213,6 +224,56 @@
     </div>
   </div>
 
+  <div class="modal entry-modal fade" id = <%= "charac_#{@animal.id}" %> tabindex="-1" role="dialog" aria-labelledby="CharacEditEntryModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Edit</h4>
+        </div>
+        <div class="modal-body">
+            <%= render 'editcharc_edit_modal', modal: true, charc_animal: Animal.find_by(id: @animal.id), animal_id: @animal.id, behavior: @behavior, behaviors: @behaviors, primary: @primary, secondary: @secondary, breed: @breed, breeds: @breeds %>
+            <div class="modal-footer">
+          <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal entry-modal fade" id = <%= "basic_#{@animal.id}" %> tabindex="-1" role="dialog" aria-labelledby="BasicEditEntryModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Edit</h4>
+        </div>
+        <div class="modal-body">
+            <%= render 'editbasicinfo_edit_modal', modal: true, basic_animal: @animal, animal_id: @animal.id, behavior: @behavior, behaviors: @behaviors, primary: @primary, secondary: @secondary, breed: @breed, breeds: @breeds %>
+            <div class="modal-footer">
+          <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal entry-modal fade" id = <%= "status_#{@animal.id}" %> tabindex="-1" role="dialog" aria-labelledby="StatusEditEntryModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Edit</h4>
+        </div>
+        <div class="modal-body">
+            <%= render 'editstatus_edit_modal', modal: true, status_animal: @animal, animal_id: @animal.id, coordinator: @coordinators, status: @status_type, sub_status: @sub_status, marketing: @marketing%>
+            <div class="modal-footer">
+          <button type="button" class="btn btn-default entry-cancelbtn" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <!--===================== TRACKING =======================-->
 

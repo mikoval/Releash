@@ -25,7 +25,7 @@ class AnimalsController < ApplicationController
 
   def destroy
     id = params["id"]
-    Rails.logger.debug("My id!!--------------: #{params.inspect}")
+    
     @animals = Animal.destroy(id)
     @ani_alerts = AnimalAlert.where(animal_id: id).delete_all
     @alerts = Alert.where(animal_id: id).delete_all
@@ -125,7 +125,27 @@ class AnimalsController < ApplicationController
   def profile
     id = params["param"]
     @animal = Animal.find(id) 
+    @behaviors =  AnimalCharacteristic.where("animal_id = " + params["param"])
+    @status_type = StatusType.all
     @sub_status = SubStatusType.all.order('name ASC')
+    @behavior = Characteristic.where("category = 'Behavior'")
+    @marketing = MarketingType.all.order('name ASC')
+    @breed = Breed.where("name != 'Mixed'").order('name ASC')
+    @mixed = Breed.where("name = 'Mixed'")
+
+    @primary = []
+    @secondary = []
+    @secondary.push(@mixed[0])
+    @breed.each do |b|
+      @primary.push(b)
+      @secondary.push(b)
+    end
+
+    @coord_id = Role.find_by title: "Coordinator"
+    @admin_id = Role.find_by title: "Administrator"
+    #Rails.logger.debug("My admin--------------: #{@admin_id.inspect}")
+
+    @coordinators = User.where(role_id: @coord_id.id, role_id: @admin_id.id)
 
     @breeds = AnimalBreed.where("animal_id = " + id)
     @characteristics = AnimalCharacteristic.where("animal_id = " + id)
@@ -166,6 +186,7 @@ class AnimalsController < ApplicationController
       @sub_status_name = SubStatusType.find(@animal.sub_status_id).name
     end
     
+    @behavior = Characteristic.all.order('name ASC')
     @behaviors =  AnimalCharacteristic.where("animal_id = " + params["param"])
 
     @allIntakes = Intake.where(animal_id: @animal.id).order('intake_date DESC')
@@ -558,10 +579,94 @@ class AnimalsController < ApplicationController
       render 'new'
     end
   end
+  skip_before_filter :verify_authenticity_token, :only => :editAnimal
+  
+  def editAnimal2
+    @animal = Animal.find(params[:animal_id])
+    Rails.logger.debug("EDIT ANIMAL!!--------------: #{params.inspect}")
+    #checks if there were any updates to the animal object
+    if @animal.update_attributes(animal_params)
+       AnimalBreed.where("animal_id = " + @animal.id.to_s).delete_all
+       AnimalCharacteristic.where("animal_id = " + @animal.id.to_s).delete_all
+       
+      if params["breeds"]
+        arr = params["breeds"].split("|")
+        arr.each do |d|
+        
+        @breed = AnimalBreed.new({animal_id: @animal.id, breed_id: d})
+        @breed.save
+        end
+      end
+      if params["behavior"]
+        arr = params["behavior"].split("|")
+        arr.each do |d|
+          
+        @Characteristic = AnimalCharacteristic.new({animal_id: @animal.id, characteristic_id: d})
+        @Characteristic.save
+        end
+      end
+      if params["attribute"]
+        arr = params["attribute"].split("|")
+        arr.each do |d|
+          
+        @Characteristic = AnimalCharacteristic.new({animal_id: @animal.id, characteristic_id: d})
+        @Characteristic.save
+        end
+      end
 
+      flash[:success] = "Saved animal"
+      redirect_to :controller => "animals", :action => "profile", :param => @animal
+    else
+      flash.now[:danger] = "Error editing animal!"
+      @breed = Breed.all
+      render 'edit'
+    end
+  end
+
+  def editAnimal1
+    @animal = Animal.find(params[:animal_id])
+    Rails.logger.debug("EDIT ANIMAL!!--------------: #{params.inspect}")
+    #checks if there were any updates to the animal object
+    if @animal.update_attributes(animal_params)
+       AnimalBreed.where("animal_id = " + @animal.id.to_s).delete_all
+       AnimalCharacteristic.where("animal_id = " + @animal.id.to_s).delete_all
+       
+      if params["breeds"]
+        arr = params["breeds"].split("|")
+        arr.each do |d|
+        
+        @breed = AnimalBreed.new({animal_id: @animal.id, breed_id: d})
+        @breed.save
+        end
+      end
+      if params["behavior"]
+        arr = params["behavior"].split("|")
+        arr.each do |d|
+          
+        @Characteristic = AnimalCharacteristic.new({animal_id: @animal.id, characteristic_id: d})
+        @Characteristic.save
+        end
+      end
+      if params["attribute"]
+        arr = params["attribute"].split("|")
+        arr.each do |d|
+          
+        @Characteristic = AnimalCharacteristic.new({animal_id: @animal.id, characteristic_id: d})
+        @Characteristic.save
+        end
+      end
+
+      flash[:success] = "Saved animal"
+      redirect_to :controller => "animals", :action => "profile", :param => @animal
+    else
+      flash.now[:danger] = "Error editing animal!"
+      @breed = Breed.all
+      render 'edit'
+    end
+  end
   def editAnimal
-    @animal = Animal.find(params["format"])
-    
+    @animal = Animal.find(params[:animal_id])
+    Rails.logger.debug("EDIT ANIMAL!!--------------: #{params.inspect}")
     #checks if there were any updates to the animal object
     if @animal.update_attributes(animal_params)
        AnimalBreed.where("animal_id = " + @animal.id.to_s).delete_all
