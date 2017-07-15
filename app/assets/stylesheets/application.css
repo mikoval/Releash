@@ -25,11 +25,13 @@
  */
 
 /*Change font everywhere */
-/*@import url('https://fonts.googleapis.com/css?family=Nunito+Sans');
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans');
 .container {
     font-family: 'Nunito Sans', sans-serif;
 
 }
+
+/*
 .required-error{
     background-color:#FAABAB;
     border-color:red;

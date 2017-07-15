@@ -30,3 +30,31 @@
 .panel-title{
     position:relative
 }
+
+
+/* Navs*/
+
+#side-nav {
+    background-color: white;
+    position: fixed;
+    height: 100vh;
+    text-align: left;
+}
+
+#top-nav {
+    position:fixed;
+    background-color: white;
+    margin-bottom: 5%;
+    z-index: 2;
+
+}
+
+.content-body {
+    background-color: #f3f3f3;
+    margin-left: 200px;
+    min-height: 100vh;
+}
+
+#page-render {
+    margin-top: 50px;
+}
