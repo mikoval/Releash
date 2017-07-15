@@ -11,19 +11,45 @@
 
   <body <%= yield(:body_attributes) %>>
 
-      <div class = "container">
-      <%= render 'layouts/header' %>
-    </div>
-     
-      <div class="container" style = "width:100%; padding-top:60px">
-        <% flash.each do |message_type, message| %>
-          <div class="alert alert-<%= message_type %>"><%= message %></div>
-        <% end %>
-        <%= yield %>
-        <%= render 'layouts/footer' %>
-        <%= debug(params) if Rails.env.development? %>
+      <div class="container col-md-12">
+        
+        <div class="row">
+          <div class="container col-md-2" id="side-nav">
+              <h1> ShelterBook </h1>
+              <ul class="sidebar-nav">
+                <li><a href="/home">Dashboard</a></li>
+                <li><a href="/animals">Animals</a></li>
+                <li><a href="/people">People</a></li>
+                <li><a href="/alerts">Upcoming Events</a></li>
+                <li><a href="/logout">Logout</a></li>
+              </ul>
+          </div>
+         
+          <div class="container col-md-10 content-body">
+            <div class="row">
+              <div class="col-md-12" id="top-nav">
+                <%#= render 'layouts/header' %>
+                <p> Top Nav </p>
+              </div>
+            </div>
+
+            <!-- body page render -->
+            <div id="page-render">
+              <% flash.each do |message_type, message| %>
+                <div class="alert alert-<%= message_type %>"><%= message %></div>
+              <% end %>
+              <%= yield %>
+            <div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div id="footer">
+            <%= render 'layouts/footer' %>
+            <%= debug(params) if Rails.env.development? %>
+          </div>
+        </div>
       </div>
-    </div> 
 
     <%= render 'layouts/alerts' %>
 

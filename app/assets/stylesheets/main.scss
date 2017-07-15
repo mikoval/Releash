@@ -10,7 +10,9 @@
 }
 .brick{
     border: solid;
-    background-color:white;
+    border-color: #fff;
+    background-color: #fff;
+    box-shadow: 0px 2px 1px #9B9B9B;
 }
 .gridly{
     position:relative;
@@ -18,15 +20,66 @@
 
 }
 .panel-heading{
-   background-color:lightgray ;
-   position:relative;
+   background-color: #fff;
+   border-bottom: 1px solid #f3f3f3;
+   position: relative;
 
 }
 .remove-item-btn{
-    position:absolute;
+    position: absolute;
     right:0px;
     top:0px;
 }
 .panel-title{
     position:relative
+}
+
+
+/* Navs*/
+
+#side-nav {
+    background-color: #4A494B;
+    box-shadow: 0px 2px 1px #4A494B;
+    position: fixed;
+    height: 100vh;
+    text-align: left;
+    z-index: 1;
+    font-family: 'NunitoSans-Bold';
+    color: #fff;
+}
+
+
+
+.sidebar-nav li {
+    list-style: none;
+    text-decoration: none;
+    display: block;
+    color: #fff;
+    padding: 5%;
+    margin-left: 0;
+}
+
+.sidebar-nav li a {
+    color: #fff;
+    font-family: 'NunitoSans-ExtraLight';
+    font-size: 1.1em;
+}
+
+#top-nav {
+    box-shadow: 0px 1px 1px #4A494B;
+    background-color: white;
+    position:fixed;
+    z-index: 2;
+
+}
+
+.content-body {
+    background-color: #f3f3f3;
+    margin-left: 210px;
+    min-height: 100vh;
+    z-index: 0;
+}
+
+#page-render {
+    margin-top: 50px;
 }
