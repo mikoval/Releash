@@ -1,3 +1,89 @@
 // Place all the styles related to the Sessions controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+/* Login */
+
+body {
+    font-family: 'NunitoSans-Light';
+    color: #4A4A4A;
+    font-size: 1.4em;
+}
+
+.row {
+    margin-bottom: 20px;
+}
+
+.check.checkbox {
+    padding: 0px;
+    display: inline-block;
+    margin-bottom: 0px;
+}
+
+#lg-row {
+    margin: 20px;
+}
+
+.line-form {
+    border: none;
+    border-bottom: 1px solid #979797;
+    font-family: 'NunitoSans-Light';
+    font-size: 1.0em;
+}
+
+.line-form.pass {
+    margin-bottom: 0px;
+}
+
+.line-form.link {
+    font-size: 0.7em;
+    color: #9b9b9b;
+    border: none;
+}
+
+#login-pg {
+    background-color: #f3f3f3;
+    height: 100vH;
+}
+
+#login-container {
+    background-color: #fff;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    box-shadow: 0px 1px 1px #979797;
+}
+
+.logo-textdiv {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#login-content img {
+    width: 100px;
+    margin: 0 auto;
+}
+
+
+#login-content p {
+    font-family: 'NunitoSans-ExtraBold';
+    font-size: 1.2em;
+
+}
+
+
+#login-title {
+    font-family: 'NunitoSans-ExtraBold';
+    font-size: 2.0em;
+    margin: 0 auto;
+}
+
+#login-btn {
+    background-color: #f9f9f9;
+    font-family: 'NunitoSans-Black';
+    font-size: 1.2em;
+    border-radius: 0;
+    border-color: #E7E7E7;
+    box-shadow: 0px 1px 1px #979797;
+    margin-bottom: 30px;
+}
