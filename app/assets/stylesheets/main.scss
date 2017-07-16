@@ -9,8 +9,8 @@
     height: 40px;
 }
 .brick.large {
-    width: 400px;
-    height: 400px;
+    width: 350px;
+    height: 350px;
 }
 .brick.large.collapsed{
 
@@ -54,6 +54,9 @@
     z-index: 1;
     font-family: 'NunitoSans-Bold';
     color: #fff;
+    width:210px;
+    margin:0px;
+    padding:0px;
 }
 
 
@@ -86,6 +89,7 @@
     margin-left: 210px;
     min-height: 100vh;
     z-index: 0;
+    width:auto;
 }
 
 
