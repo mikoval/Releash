@@ -8,7 +8,7 @@
 
  
     <%= f.label :app_date, "Date" %>
-    <%= f.text_field :app_date, class: 'app_date' %>
+    <%= f.text_field :app_date, class: 'app_date required' %>
     
     <%= f.label :app_adopter, "Select Applicant"%>
     <%= collection_select(:app_adopter, :adopter_id, adopters, :email, :name, {:prompt => "Select Adopter" ,:selected => curr_adopter}) %>
@@ -31,7 +31,7 @@
               <% end %>
             </span>
     </div>
-    <%= f.submit 'Submit', class: 'btn btn-primary' %>
+    <%= f.submit 'Submit', class: 'btn btn-primary submit-btn' %>
 <% end %>
 
 <script>

@@ -222,23 +222,13 @@
 
     <!-- BEGIN TRACKING TAB DIV -->
     <div id="status-div" class="tracking-innerDiv col-md-8">
-      
-      <!-- Tab headers for each status -->
-      <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation"><a href="#intake" data-toggle="tab">Intake</a></li>
-        <li role="presentation"><a href="#vetting" data-toggle="tab">Vetting</a></li>
-        <li role="presentation"><a href="#foster" data-toggle="tab">Foster</a></li>
-        <li role="presentation"><a href="#training" data-toggle="tab">Training</a></li>
-        <li role="presentation"><a href="#adopted" data-toggle="tab">With Adopter</a></li>
-      </ul>
 
       <!-- Information for Statuses in Tabs-->
       <div class="status-tabsInner tab-content">
         <!-- INTAKE -->
-        <div id = "intake" role="tabpanel" class="tab-pane fade in">
           <!-- Selecting Date-->
           <%= f.label :intake_date, "Intake Date" %>
-          <%= text_field_tag 'intake_dt', "" ,class: 'form-control datepicker required' %>
+          <%= text_field_tag 'intake_dt', "" ,class: 'form-control datepicker' %>
           
           <%= f.label :intake_sub, "Sub Status"%>
           <%= collection_select(:intake_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
@@ -254,74 +244,7 @@
           <!-- Inputing Details-->
           <%= f.label :intake_comm, "Details" %>
           <%= text_field_tag 'intake_cm', "", class: 'form-control' %>
-        
-        </div> 
 
-        <!-- VETTING -->
-        <div id="vetting" role="tabpanel" class="tab-pane">
-            <%= f.label :vetting_date %>
-            <%= text_field_tag 'vet_dt', "" ,class: 'form-control datepicker' %>
-            
-            <%= f.label :vet_sub, "Sub Status"%>
-            <%= collection_select(:vet_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
-
-            <!-- Selecting Vets-->
-            <%= f.label :vet_vet, "Veterinarian"%>
-            <%= collection_select(:vet_vet, :veterinarian_id, Veterinarian.all, :id, :name, {:prompt => "Select Current Veterinarian"}) %>
-            
-            <!-- Inputing Details-->
-            <%= f.label :vet_comm, "Comments" %>
-            <%= text_field_tag 'vet_cm', "", class: 'form-control' %>
-
-        </div>
-        
-        <!-- FOSTER -->
-        <div id="foster" role="tabpanel" class="tab-pane">
-          <%= f.label :foster_date %>
-          <%= text_field_tag 'foster_dt', "" ,class: 'form-control datepicker' %>
-
-          <%= f.label :fost_sub, "Sub Status"%>
-          <%= collection_select(:fost_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
-
-          <%= f.label :fost_fost, "Foster"%>
-          <%= collection_select(:fost_fost, :foster_id, @fosters, :email, :name, {:prompt => "Select foster"}) %>
-
-          <%= f.label :fost_comm, "Comments" %>
-          <%= text_field_tag 'fost_cm', "", class: 'form-control' %>
-        </div>
-        
-        <!-- TRAINING -->
-        <div id="training" role="tabpanel" class="tab-pane">
-          <%= f.label :training_date %>
-          <%= text_field_tag 'training_dt', "" ,class: 'form-control datepicker' %>
-
-          <%= f.label :training_sub, "Sub Status"%>
-          <%= collection_select(:training_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
-
-          <%= f.label :train_comm, "Problem Information" %>
-          <%= text_field_tag 'training_cm', "", class: 'form-control' %> 
-
-           <!-- Selecting Training-->
-          <%= f.label :trainer_train, "Trainer Location"%>
-          <%= collection_select(:trainer_train, :trainer_id, Trainer.all, :id, :name, {:prompt => "Select Trainer"}) %>       
-        </div>
-        
-
-        <!-- ADOPTED -->
-        <div id="adopted" role="tabpanel" class="tab-pane">
-          <%= f.label :adopted_date %>
-          <%= text_field_tag 'adopted_dt', "" ,class: 'form-control datepicker' %>
-          
-          <%= f.label :adopt_sub, "Sub Status"%>
-          <%= collection_select(:adopt_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
-
-          <!-- Selecting Adopter-->
-          <%= f.label :adopt_adopter, "Adopter"%>
-          <%= collection_select(:adopt_adopter, :adopter_id, @adopters, :email, :name, {:prompt => "Select Adopter"}) %>
-
-          <%= f.label :adopt_comm, "Comments" %>
-          <%= text_field_tag 'adopt_cm', "", class: 'form-control' %>
-        </div>
       </div>
     </div> 
     <!-- END TRACKING TAB DIV -->
@@ -344,7 +267,7 @@
   </div>
 
 
-  <%= f.submit "Add animal", :onclick => "return validateform();", class: "add-btn btn-primary" %>
+  <%= f.submit "Add animal", class: "add-btn btn-primary submit-btn" %>
   <% end %>
 </div>
 
@@ -365,6 +288,12 @@
     console.log("Hey I changed :)")
   });
 
+  $('.submit-btn').on('click', function(e){
+        e.preventDefault()
+        if (!validateForm($(this).closest(".new_animal")[0]))
+            e.preventDefault()
+        
+   })
 
   $('.datepicker').datetimepicker({
     //endDate: '+5y',

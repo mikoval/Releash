@@ -28,7 +28,7 @@
 
   get '/animals', to: 'animals#list'
   post  '/animals',   to: 'animals#newAnimal'
-  patch  '/animals',   to: 'animals#editAnimal'
+  patch  '/animals/edit',   to: 'animals#editAnimal'
   delete  '/animals/profile',   to: 'animals#destroy'
 
   get 'intake/new'   

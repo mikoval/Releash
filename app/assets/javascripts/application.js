@@ -31,21 +31,25 @@ function checkEditable(userID, createdID, alertID){
     $(".modal-edit").html("")
   }
 }
- function validateform(){
+ function validateForm(param){
     ret = true
-    $(".required").each(function(){
-        console.log($(this).val())
-        if($(this).val()==""){
+    console.log("HEYYYYYY");
+    console.log($(param).find(".required"))
+    
+    $(param).find(".required").each(function(){
+      if($(this).val()==""){
+          
+          console.log(this);
+
           $(this).addClass("required-error")
           ret = false;
         }
         else{
             $(this).removeClass("required-error")
         }
-    
-
     })
+    console.log(ret);
     return ret;
-  }
 
+  }
 

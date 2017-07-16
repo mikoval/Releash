@@ -1,0 +1,168 @@
+<% modal ||= false %>
+<% remote = modal ? true : false %>
+
+<%= form_for(charc_animal, remote: remote, url: url_for(action: 'editAnimal', animal_id: animal_id, controller: 'animals', method: 'patch'))      do |f| %>
+
+    <%= f.hidden_field :animal_id, value: animal_id%> 
+
+    <%= f.label :primary_breed_id %>
+
+    <%= f.collection_select :primary_breed_id, primary, :id, :name, :prompt => "Select Breed" %>
+
+    <%= label :post, "Additional Breeds" %>
+    <%= collection_select(:breed_id, 0, secondary, :id, :name, {:prompt => "Select Breed"}, {class: "breed-selecter"}) %>              
+    <div id = "breeds-list">
+      <% breeds.each do |b| %>
+      <div id = 'breed-<%= b.breed.id %>'   class = 'breed-item' style = 'position: relative; display: inline-block;'>
+        <p style = 'margin:0px; padding-right:15px'> <%= b.breed.name %> </p> 
+        <span class = 'glyphicon glyphicon-remove remove-breed' style='margin:2px; float:right;'></span>
+      </div>
+
+      <% end %>
+    </div>
+   <%= text_field_tag 'breeds', "", class: "hidden-breeds", style: "display:none;"  %>
+
+    <%= f.label :color_primary %>
+    <%= f.text_field :color_primary, class: 'form-control' %>
+
+    <%= f.label :color_secondary %>
+    <%= f.text_field :color_secondary, class: 'form-control' %> 
+    <%= label :post, "behavior" %>
+    <div class="dropdown">
+      <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Select Behavior
+      <span class="caret"></span></button>
+      <ul class="dropdown-menu">
+        <% behavior.each do |b| %>
+        <li  class = "behavior-dd-item" id = "behavior-dd-<%= b.id %>"><a href="#" class= "behavior-dd-item" value = '<%= b.id %>'> <%= b.name %></a>  </li> 
+        <% end %>
+      </ul>
+    </div>           
+    <div id = "behavior-list">
+      <% behaviors.each do |b| %>
+      <div id = 'behavior-<%= b.id %>'   class = 'select-item behavior-item' style = 'position: relative; display: inline-block;'>
+        <p style = 'margin:0px; padding-right:15px'> <%= b.characteristic.name %> </p> 
+        <span class = 'glyphicon glyphicon-remove remove-item remove-behavior' style='margin:2px; float:right;'></span>
+      </div>
+
+      <% end %>
+    </div>
+    <%= text_field_tag 'behavior', "", class: "hidden-behavior", style: "display:none;"  %> 
+
+
+    <%= f.submit 'Submit', class: 'btn btn-primary submit-btn' %>
+<% end %>
+
+<script>
+   $("#animal_species_id").change(function(){
+    console.log($("#animal_breed_id"))
+    if ($("#animal_species_id").val() == 1) {
+      $("#animal_breed_id option:eq(1)").hide();
+      $("#animal_breed_id option:eq(0)").show();
+    } else {
+      $("#animal_breed_id option:eq(0)").hide();
+      $("#animal_breed_id option:eq(1)").show();
+
+    }
+  });
+ 
+  $('.datepicker').datetimepicker({
+    //endDate: '+5y',
+    format:'YYYY/MM/DD',
+    
+  });
+
+  $(".profile-file").change(function(input) { 
+    input = input.target
+    if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#profilepic')
+                    .attr('src', e.target.result)
+                    .width(150)
+                    .height(200);
+                $('#profilepic').show()
+            };
+
+            reader.readAsDataURL(input.files[0]);
+
+        }
+  }); 
+   $(".breed-selecter").on("change", function(){
+    var text = $(".breed-selecter option:selected").text();
+    var val = $(".breed-selecter option:selected").val();
+    if(text == "Select Breed"){
+      return
+    }
+    html = $("#breeds-list").html();
+    html += "<div id = 'breed-" + val + "'' class = 'breed-item select-item' style = 'position: relative; display: inline-block;'>" 
+        + "<p style = 'margin:0px; padding-right:15px'>" + text + "</p>" + 
+       "<span class = 'glyphicon glyphicon-remove remove-breed remove-item' style='margin:2px; float:right;'>" +"</span>" + 
+       " </div>"
+    $("#breeds-list").html(html);
+    $(".remove-breed").on("click", function(){
+      $(this).closest(".breed-item").detach()
+      setHiddenBreeds();
+    })
+    //just for now while im setting up the new breeds
+    $(this).get(0).selectedIndex = 0;
+    setHiddenBreeds();
+  })
+  function setHiddenBreeds(){
+    str = ""
+    $(".breed-item").each(function(){
+      var id = this.id.split("-")[1]
+      str += id + "|"
+    })
+    $(".hidden-breeds").val(str)
+  }
+  //do on start for existing ones
+  setHiddenBreeds();
+  $(".remove-breed").on("click", function(){
+      $(this).closest(".breed-item").detach()
+      setHiddenBreeds();
+  })
+
+   
+
+  $(".behavior-dd-item").on("click", function(e){
+
+    e.stopPropagation();
+    e.preventDefault();
+    var text = $(this).text();
+    var val = $(this).attr("value");
+    if(text == "Select Behavior"){
+      return
+    }
+    html = $("#behavior-list").html();
+    html += "<div id = 'behavior-" + val + "'' class = 'behavior-item select-item' style = 'position: relative; display: inline-block;'>" 
+        + "<p style = 'margin:0px; padding-right:15px'>" + text + "</p>" + 
+       "<span class = 'glyphicon glyphicon-remove remove-behavior remove-item' style='margin:2px; float:right;'>" +"</span>" + 
+       " </div>"
+    $("#behavior-list").html(html);
+    $(".remove-behavior").on("click", function(){
+      $(this).closest(".behavior-item").detach()
+      setHiddenBehavior();
+    })
+    //just for now while im setting up the new breeds
+    $(this).get(0).selectedIndex = 0;
+    setHiddenBehavior();
+  })
+  function setHiddenBehavior(){
+
+    str = ""
+    $(".behavior-dd-item").show();
+
+    $(".behavior-item").each(function(){
+      var id = this.id.split("-")[1]
+      $("#behavior-dd-" +id).hide();
+      str += id + "|"
+    })
+    $(".hidden-behavior").val(str)
+  }
+  $(".remove-behavior").on("click", function(){
+      $(this).closest(".behavior-item").detach()
+      setHiddenBehavior();
+    })
+  setHiddenBehavior();
+</script>

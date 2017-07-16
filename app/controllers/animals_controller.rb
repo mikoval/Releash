@@ -25,7 +25,7 @@ class AnimalsController < ApplicationController
 
   def destroy
     id = params["id"]
-    Rails.logger.debug("My id!!--------------: #{params.inspect}")
+    
     @animals = Animal.destroy(id)
     @ani_alerts = AnimalAlert.where(animal_id: id).delete_all
     @alerts = Alert.where(animal_id: id).delete_all
@@ -81,19 +81,15 @@ class AnimalsController < ApplicationController
 
 
   end
-
-  def edit
-    @animal = Animal.find(params["param"])
-    @status = StatusType.all
-
-    #We need to get a list of all the users who are coordinators or administrators
-    @coord_id = Role.find_by title: "Coordinator"
-    @admin_id = Role.find_by title: "Administrator"
-    #Rails.logger.debug("My admin--------------: #{@admin_id.inspect}")
-
-    @coordinators = User.where(role_id: @coord_id.id, role_id: @admin_id.id)
-    
-
+  
+  def profile
+    id = params["param"]
+    @animal = Animal.find(id) 
+    @behaviors =  AnimalCharacteristic.where("animal_id = " + params["param"])
+    @status_type = StatusType.all
+    @sub_status = SubStatusType.all.order('name ASC')
+    @behavior = Characteristic.where("category = 'Behavior'")
+    @marketing = MarketingType.all.order('name ASC')
     @breed = Breed.where("name != 'Mixed'").order('name ASC')
     @mixed = Breed.where("name = 'Mixed'")
 
@@ -105,27 +101,11 @@ class AnimalsController < ApplicationController
       @secondary.push(b)
     end
 
-    @breeds = AnimalBreed.where("animal_id = " + params["param"])
-    @behavior = Characteristic.where("category = 'Behavior'")
-    @attribute = Characteristic.where("category = 'Attribute'")
+    @coord_id = Role.find_by title: "Coordinator"
+    @admin_id = Role.find_by title: "Administrator"
+    #Rails.logger.debug("My admin--------------: #{@admin_id.inspect}")
 
-    @characteristics = AnimalCharacteristic.where("animal_id = " + params["param"])
-
-    @sub_status = SubStatusType.all.order('name ASC')
-    @marketing = MarketingType.all.order('name ASC')
-    
-    @breed = Breed.order('name ASC')
-    @breeds = AnimalBreed.where("animal_id = " + params["param"])
-    @behavior = Characteristic.all.order('name ASC')
-    @behaviors =  AnimalCharacteristic.where("animal_id = " + params["param"])
-    
-
-  end
-  
-  def profile
-    id = params["param"]
-    @animal = Animal.find(id) 
-    @sub_status = SubStatusType.all.order('name ASC')
+    @coordinators = User.where(role_id: @coord_id.id, role_id: @admin_id.id)
 
     @breeds = AnimalBreed.where("animal_id = " + id)
     @characteristics = AnimalCharacteristic.where("animal_id = " + id)
@@ -166,6 +146,7 @@ class AnimalsController < ApplicationController
       @sub_status_name = SubStatusType.find(@animal.sub_status_id).name
     end
     
+    @behavior = Characteristic.all.order('name ASC')
     @behaviors =  AnimalCharacteristic.where("animal_id = " + params["param"])
 
     @allIntakes = Intake.where(animal_id: @animal.id).order('intake_date DESC')
@@ -401,42 +382,6 @@ class AnimalsController < ApplicationController
         @new_intake.save
       end
       
-      if (params["vet_dt"] == "" or params["vet_dt"] == nil) and @status_name.to_s == "Vetting"
-
-        @new_vetting = Vetting.new({vet_date: @date_made, curr_vet_id: nil, comments: nil, animal_id: @animal.id, sub_status_id: @animal.sub_status_id, current_entry: true})
-        @new_vetting.save
-      end
-
-      if (params["foster_dt"] == "" or params["foster_dt"] == nil) and @status_name.to_s == "Foster"
-
-        @new_foster = FosterStatus.new({foster_date: @date_made, foster_id: nil, comments: nil, sub_status_id: @animal.sub_status_id, animal_id: @animal.id, current_entry: true})
-        @new_foster.save
-      end
-
-      if (params["training_dt"] == "" or params["training_dt"] == nil) and @status_name.to_s == "In Training"
-
-        @new_train = Training.new({train_date: @date_made, problem_info: nil, animal_id: @animal.id, trainer_id: nil, sub_status_id: @animal.sub_status_id, current_entry: true})
-
-        @new_train.save
-      end
-
-      if (params["adopted_dt"] == "" or params["adopted_dt"] == nil) and @status_name.to_s == "With Adopter"
-
-        @new_adopt = Adopted.new({adopt_date: @date_made, adopter_id: nil, comments: nil, animal_id: @animal.id, sub_status_id: @animal.sub_status_id, current_entry: true})
-
-        @new_adopt.save
-      end
-
-      if params["breeds"]
-        arr = params["breeds"].split("|")
-        arr.each do |d|
-          
-        @breed = AnimalBreed.new({animal_id: @animal.id, breed_id: d})
-        @breed.save
-        end
-      end
-
-
       #INTAKE -----------------------------
       if params["intake_dt"] != "" and params["intake_dt"] != nil
         @intake = params[:intake_dt]
@@ -450,87 +395,6 @@ class AnimalsController < ApplicationController
         @new_intake = Intake.new({intake_date: @intake, comments: @comm, animal_id: @animal.id, sub_status_id: @intake_sub, animal_facility_id: @ani_faci, intake_reason_id: @intake_loc, current_entry: true})
         @new_intake.save
 
-      end
-      #VETTING -----------------------------------
-      if params["vet_dt"] != "" and params["vet_dt"] != nil
-
-        @vetting = params[:vet_dt]
-
-        @vet = params[:vet_vet][:veterinarian_id]
-
-        @comm = params[:vet_cm]
-        @vet_sub = params[:vet_sub][:sub_status_id]
-
-        @new_vetting = Vetting.new({vet_date: @vetting, curr_vet_id: @vet, comments: @comm, animal_id: @animal.id, sub_status_id: @vet_sub, current_entry: true})
-        @new_vetting.save
-        
-      end
-
-      #FOSTER ---------------------------------
-      if params["foster_dt"] != "" and params["foster_dt"] != nil
-
-        @foster_date = params[:foster_dt]
-        
-        @foster = params[:fost_fost][:foster_id]
-
-        @fost_sub  = params[:fost_sub][:sub_status_id]
-
-        if User.where(email: @foster) != []
-          @temp = User.where(email: @foster)
-          @fost_foster = Foster.where(user_id: @temp.ids)
-          @foster_id = @fost_foster.ids[0]
-        end
-        if NonUser.where(email: @foster) != []
-          @temp = NonUser.where(email: @foster)
-          @fost_foster = Foster.where(non_user_id: @temp.ids)
-          @foster_id = @fost_foster.ids[0]
-        end
- 
-        @comm = params[:fost_cm]
-        
-        @new_foster = FosterStatus.new({foster_date: @foster_date,  foster_id: @foster_id, comments: @comm, sub_status_id: @fost_sub, animal_id: @animal.id,current_entry: true})
-        @new_foster.save
-      end
-
-      #TRAINING --------------------------------
-      if params["training_dt"] != "" and params["training_dt"] != nil
-
-        @train_date = params[:training_dt]
-        @trainer = params[:trainer_train][:trainer_id]
-
-        @problem_info = params[:training_cm]
-        
-        @train_sub  = params[:training_sub][:sub_status_id]
-
-        @new_train = Training.new({train_date: @train_date, problem_info: @problem_info, animal_id: @animal.id, trainer_id: @trainer, sub_status_id: @train_sub, current_entry: true})
-
-        @new_train.save
-
-      end
-
-      #ADOPTED --------------------------------
-      if params["adopted_dt"] != "" and params["adopted_dt"] != nil
-        @adopt_date = params[:adopted_dt]
-        @adopt_sub = params[:adopt_sub][:sub_status_id]
-        @adopter = params[:adopt_adopter][:adopter_id]
-
-        if User.where(email: @adopter) != []
-          @temp = User.where(email: @adopter)
-          @adopt_adopter = Adopter.where(user_id: @temp.ids)
-          @adopt_id = @adopt_adopter.ids[0]
-        end
-
-        if NonUser.where(email: @adopter) != []
-          @temp = NonUser.where(email: @adopter)
-          @adopt_adopter = Adopter.where(non_user_id: @temp.ids)
-          @adopt_id = @adopt_adopter.ids[0]
-        end
-
-        @comm = params[:adopted_cm]
-
-        @new_adopt = Adopted.new({adopt_date: @adopt_date, adopter_id: @adopt_id, comments: @comm, animal_id: @animal.id, sub_status_id: @adopt_sub, current_entry: true})
-
-        @new_adopt.save
       end
 
       if params["behavior"]
@@ -558,10 +422,11 @@ class AnimalsController < ApplicationController
       render 'new'
     end
   end
-
+  skip_before_filter :verify_authenticity_token, :only => :editAnimal
+  
+  
   def editAnimal
-    @animal = Animal.find(params["format"])
-    
+    @animal = Animal.find(params[:animal_id])
     #checks if there were any updates to the animal object
     if @animal.update_attributes(animal_params)
        AnimalBreed.where("animal_id = " + @animal.id.to_s).delete_all

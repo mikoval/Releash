@@ -2,13 +2,11 @@
 <h1>Add new trainer</h1>
 
 <div class="row">
-  <div class="col-md-6 col-md-offset-3">
+  <div class="col-md-6 col-md-offset-3 new_trainer">
 
     <%= form_for(@trainer, html: { multipart: true },  url: trainer_path(@trainer)) do |f| %>
 
-      <%= render 'trainer/error_messages' %>
-
-      <%= f.text_field :name, class: 'form-control' %>
+      <%= f.text_field :name, class: 'form-control required' %>
 
       <%= f.label :address %>
       <%= f.text_field :address, class: 'form-control' %>
@@ -34,8 +32,16 @@
       <%= f.label :comments %>
       <%= f.text_field :comments, class: 'form-control' %>
 
-      <%= f.submit "Create trainer account", class: "btn btn-primary" %>
+      <%= f.submit "Create new Trainer", class: "btn btn-primary submit-btn" %>
     <% end %>
     </div>
 </div>
+<script>
+
+$('.submit-btn').on('click', function(e){
+        if (!validateForm($(this).closest(".new_trainer")[0]))
+            e.preventDefault()
+        
+})
+</script>
 

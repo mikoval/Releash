@@ -2,7 +2,10 @@ class Animal < ActiveRecord::Base
 
     validates :name, presence: true
     validates :primary_breed, presence: true
+    validates :birthday, presence: true
     validates :status, presence: true
+    validates :coordinator_id, presence: true
+    validates :marketing_id, presence: true
     
     mount_uploader :picture, AnimalPictureUploader
 
