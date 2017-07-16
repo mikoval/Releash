@@ -1,0 +1,17 @@
+<% modal ||= false %>
+<% remote = modal ? true : false %>
+
+<%= form_for(notes_animal, remote: remote, url: url_for(action: 'editAnimal', animal_id: animal_id, controller: 'animals', method: 'patch'))      do |f| %>
+
+    <%= f.hidden_field :animal_id, value: animal_id%>
+
+    <%= label :notes, "Notes" %>
+    <%= f.text_area :notes, class: 'form-control' %>  
+
+
+    <%= f.submit 'Submit', class: 'btn btn-primary submit-btn' %>
+<% end %>
+
+<script>
+  
+</script>

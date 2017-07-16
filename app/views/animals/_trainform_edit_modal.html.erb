@@ -10,7 +10,7 @@
     <%= f.check_box :current_entry, class: 'form-control' %>
  
     <%= f.label :train_date, "Date" %>
-    <%= f.text_field :train_date, class: 'train_date' %>
+    <%= f.text_field :train_date, class: 'train_date required' %>
 
    <%= f.label :sub_status %>
     <%= f.collection_select :sub_status_id, sub_status, :id, :name, :include_blank => true %>
@@ -23,7 +23,7 @@
     <%= f.label :problem_info, "Problem Information" %>
     <%= f.text_field :problem_info, class: 'form-control' %>
 
-    <%= f.submit 'Submit', class: 'btn btn-primary' %>
+    <%= f.submit 'Submit', class: 'btn btn-primary submit-btn' %>
 <% end %>
 
 <script>

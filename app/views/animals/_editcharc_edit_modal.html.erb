@@ -1,7 +1,7 @@
 <% modal ||= false %>
 <% remote = modal ? true : false %>
 
-<%= form_for(charc_animal, remote: remote, url: url_for(action: 'editAnimal2', animal_id: animal_id, controller: 'animals', method: 'patch'))      do |f| %>
+<%= form_for(charc_animal, remote: remote, url: url_for(action: 'editAnimal', animal_id: animal_id, controller: 'animals', method: 'patch'))      do |f| %>
 
     <%= f.hidden_field :animal_id, value: animal_id%> 
 
@@ -23,7 +23,7 @@
    <%= text_field_tag 'breeds', "", class: "hidden-breeds", style: "display:none;"  %>
 
     <%= f.label :color_primary %>
-    <%= f.text_field :color_primary, class: 'form-control required' %>
+    <%= f.text_field :color_primary, class: 'form-control' %>
 
     <%= f.label :color_secondary %>
     <%= f.text_field :color_secondary, class: 'form-control' %> 
@@ -47,7 +47,7 @@
       <% end %>
     </div>
     <%= text_field_tag 'behavior', "", class: "hidden-behavior", style: "display:none;"  %> 
-  </div>
+
 
     <%= f.submit 'Submit', class: 'btn btn-primary submit-btn' %>
 <% end %>
@@ -64,15 +64,6 @@
 
     }
   });
-
-   $('.submit-btn').on('click', function(e){
-        //e.preventDefault()
-        var x = $(this).closest(".modal-body")
-        console.log(x)
-        validateForm($(this).closest(".modal-body")[0])
-        
-   })
-
  
   $('.datepicker').datetimepicker({
     //endDate: '+5y',
