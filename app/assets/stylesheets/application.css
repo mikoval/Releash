@@ -31,17 +31,6 @@
 
 }
 
-/*
-.required-error{
-    background-color:#FAABAB;
-    border-color:red;
-    border-size:15px;
+.modal-content{
+    z-index: 2000;
 }
-
-.form-control-error {
-    background-color:#FAABAB;
-    border-color:red;
-    border-size:2px;
-
-}
-

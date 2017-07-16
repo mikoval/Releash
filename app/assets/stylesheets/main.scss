@@ -4,9 +4,17 @@
     height: 140px;
   
 }
+.brick.small.collapsed{
+
+    height: 40px;
+}
 .brick.large {
     width: 400px;
     height: 400px;
+}
+.brick.large.collapsed{
+
+    height: 40px;
 }
 .brick{
     border: solid;
@@ -79,6 +87,7 @@
     min-height: 100vh;
     z-index: 0;
 }
+
 
 #page-render {
     margin-top: 50px;
