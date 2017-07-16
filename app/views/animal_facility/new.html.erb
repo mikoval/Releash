@@ -2,10 +2,10 @@
 <h1>Add new animal facility</h1>
 
 <div class="row">
-  <div class="col-md-6 col-md-offset-3">
+  <div class="col-md-6 col-md-offset-3 new_fac">
     <%= form_for(@ani_faci, html: { multipart: true },  url: animal_facility_path(@ani_faci)) do |f| %>
       <%= f.label :name %>
-      <%= f.text_field :name, class: 'form-control' %>
+      <%= f.text_field :name, class: 'form-control required' %>
 
       <%= f.label :address %>
       <%= f.text_field :address, class: 'form-control' %>
@@ -25,9 +25,16 @@
       <%= f.label :phone_number %>
       <%= f.text_field :phone_number, class: 'form-control' %>
 
-      <%= f.submit "Add Animal Facility", class: "btn btn-primary" %>
+      <%= f.submit "Add Animal Facility", class: "btn btn-primary submit-btn" %>
     <% end %>
     </div>
 </div>
+<script>
+$('.submit-btn').on('click', function(e){
+        if (!validateForm($(this).closest(".new_fac")[0]))
+            e.preventDefault()
+        
+  })
+</script>
 
 
