@@ -51,8 +51,8 @@
     position: fixed;
     height: 100vh;
     text-align: left;
-    z-index: 1;
-    font-family: 'NunitoSans-Bold';
+    z-index: 2;
+    font-family: 'NunitoSans-Bold', sans-serif;
     color: #fff;
     width:210px;
     margin:0px;
@@ -72,7 +72,7 @@
 
 .sidebar-nav li a {
     color: #fff;
-    font-family: 'NunitoSans-ExtraLight';
+    font-family: 'NunitoSans-ExtraLight', sans-serif;
     font-size: 1.1em;
 }
 
@@ -80,7 +80,7 @@
     box-shadow: 0px 1px 1px #4A494B;
     background-color: white;
     position:fixed;
-    z-index: 2;
+    z-index: 1;
 
 }
 
@@ -88,8 +88,9 @@
     background-color: #f3f3f3;
     margin-left: 210px;
     min-height: 100vh;
-    z-index: 0;
+
     width:auto;
+
 }
 
 
