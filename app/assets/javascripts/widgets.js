@@ -138,6 +138,99 @@ function bindRemove(){
   })
 }
 
+
+function addAnimalWidget() {
+  $('#widgetsList').modal('hide')   
+    var el = $.parseHTML('<div class = "brick large animal-list" ></div>');
+
+    $(".gridly").append(el);
+    widgetAnimalList()
+    $('.gridly').gridly(
+           {base: 350, // px 
+            gutter: 20, // px
+            columns: (parseInt( $(".content-body").width()/350))}
+          );
+}
+function addCoorWidget() {
+  $('#widgetsList').modal('hide')   
+    var el = $.parseHTML('<div class = "brick large coor-list " ></div>');
+
+    $(".gridly").append(el);
+    widgetCoorList()
+    $('.gridly').gridly(
+           {base: 350, // px 
+            gutter: 20, // px
+            columns: (parseInt( $(".content-body").width()/350))}
+          );
+}
+function addStatusWidget() {
+  $('#widgetsList').modal('hide')   
+    var el = $.parseHTML('<div class = "brick large status-list " ></div>');
+    $(".gridly").append(el);
+    widgetStatusList()
+    $('.gridly').gridly(
+           {base: 350, // px 
+            gutter: 20, // px
+            columns: (parseInt( $(".content-body").width()/350))}
+          );
+}
+function addAlertsWidget() {
+  $('#widgetsList').modal('hide')   
+    
+    var el = $.parseHTML('<div class = "brick large alert-list " ></div>');
+    $(".gridly").append(el);
+
+    widgetAlertList()
+    $('.gridly').gridly(
+           {base: 350, // px 
+            gutter: 20, // px
+            columns: (parseInt( $(".content-body").width()/350))}
+          );
+}
+function addUserWidget() {
+  $('#widgetsList').modal('hide')   
+    var el = $.parseHTML('<div class = "brick large user-list" ></div>');
+
+    $(".gridly").append(el);
+
+    widgetUserList()
+    $('.gridly').gridly(
+           {base: 350, // px 
+            gutter: 20, // px
+            columns: (parseInt( $(".content-body").width()/350))}
+          );
+}
+
+function loadWidgets(){
+
+  console.log("loading widgets")
+  $.ajax({
+        url: "dashboard",
+        type: "GET",
+       success: function(result){
+        str = result.str;
+        obj = JSON.parse(str);
+        
+        for (i = 0; i < obj.length; i++){
+          console.log(obj[i])
+          var el = $.parseHTML('<div class = "brick large ' + obj[i].type+' " >' + obj[i].type + '</div>');
+          $(".gridly").append(el);
+        }
+         $('.gridly').gridly(
+           {base: 350, // px 
+            gutter: 20, // px
+            columns: (parseInt( $(".content-body").width()/350))}
+          );
+         activateWidgets();
+       },
+       error: function(){
+        console.log("failed")
+       }
+     })
+}
+
+
+
 function saveLayout() {
   
 }
