@@ -290,7 +290,6 @@
 
   $('.submit-btn').on('click', function(e){
         e.preventDefault()
-        console.log("Hey I changed :)")
         if (!validateForm($(this).closest(".new_animal")[0]))
             e.preventDefault()
         
