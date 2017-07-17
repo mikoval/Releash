@@ -285,12 +285,9 @@ function saveLayout() {
      })
 }
 function refreshGridly() {
-    var lastGridly = $('.gridly').clone();
-    
-    lastGridly.removeAttr('style');
-    $('.gridly-container').empty().append(lastGridly);
 
-    gridlyInit();
+
+    setTimeout(gridlyInit, 5000);
     
 }
 function gridlyInit(){
