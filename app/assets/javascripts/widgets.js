@@ -127,10 +127,24 @@ function widgetUserList(){
     }});
 }
 function bindRemove(){
-  $(".panel-heading").on("click", function(){
-    $(this).closest(".brick").find(".panel-body").hide();
-    $(this).closest(".brick").addClass("collapsed");
-  })
+  $(".panel-heading").unbind('touchstart');
+  $(".panel-heading").bind("touchstart", function(e){
+    console.log("click");
+    if(!$(this).closest(".brick").hasClass("collapsed")){
+        $(this).closest(".brick").find(".panel-body").hide();
+        $(this).closest(".brick").addClass("collapsed");
+        setTimeout(function(){$('.gridly').gridly();}, 500);
+    }
+    else{
+        
+        $(this).closest(".brick").removeClass("collapsed");
+        setTimeout(function(param){
+          $('.gridly').gridly();
+          $(param).closest(".brick").find(".panel-body").show();
+        }, 500, this);
+    }
+   
+  });
   $('.remove-item-btn').on('click', function(event) {
     console.log("removing")
     $(this).closest('.brick').remove()
@@ -220,6 +234,35 @@ function loadWidgets(){
            {base: 350, // px 
             gutter: 20, // px
             columns: (parseInt( $(".content-body").width()/350))}
+          );
+         activateWidgets();
+       },
+       error: function(){
+        console.log("failed")
+       }
+     })
+}
+
+function loadWidgetsMobile(){
+
+  console.log("loading widgets")
+  $.ajax({
+        url: "dashboard",
+        type: "GET",
+       success: function(result){
+        str = result.str;
+        obj = JSON.parse(str);
+        
+        for (i = 0; i < obj.length; i++){
+          console.log(obj[i])
+          var el = $.parseHTML('<div class = "brick mobile ' + obj[i].type+' " >' + obj[i].type + '</div>');
+          $(".gridly").append(el);
+        }
+         $('.gridly').gridly(
+           {base: 350, // px 
+            gutter: 20, // px
+            columns:1,
+            draggable: false}
           );
          activateWidgets();
        },

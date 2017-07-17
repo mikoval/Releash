@@ -16,6 +16,14 @@
 
     height: 40px;
 }
+.brick.mobile {
+    width: 350px;
+    height: 350px;
+}
+.brick.mobile.collapsed{
+
+    height: 40px;
+}
 .brick{
     border: solid;
     border-color: #fff;
@@ -28,7 +36,7 @@
 
 }
 .panel-heading{
-   background-color: #fff;
+   background-color: #eee;
    border-bottom: 1px solid #f3f3f3;
    position: relative;
 
