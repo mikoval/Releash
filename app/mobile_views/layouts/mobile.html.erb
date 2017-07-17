@@ -12,7 +12,7 @@
   <body <%= yield(:body_attributes) %>>
 
    
-     <%= render 'layouts/header' %>
+     
       <div class="container" style = "width:100%">
         <% flash.each do |message_type, message| %>
           <div class="alert alert-<%= message_type %>"><%= message %></div>
