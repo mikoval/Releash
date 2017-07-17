@@ -287,7 +287,7 @@ function saveLayout() {
 function refreshGridly() {
 
 
-    setTimeout(gridlyInit, 5000);
+    gridlyInit();
     
 }
 function gridlyInit(){
@@ -306,6 +306,6 @@ function gridlyInit(){
 }
 $(window).resize(function(){
     clearTimeout(gridly_timeout);
-    gridly_timeout = setTimeout(refreshGridly, 50);
+    gridly_timeout = setTimeout(refreshGridly, 1000);
 });
 
