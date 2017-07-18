@@ -306,6 +306,6 @@ function gridlyInit(){
 }
 $(window).resize(function(){
     clearTimeout(gridly_timeout);
-    gridly_timeout = setTimeout(refreshGridly, 1000);
+    gridly_timeout = setTimeout(refreshGridly, 2000);
 });
 
