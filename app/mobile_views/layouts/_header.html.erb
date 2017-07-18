@@ -2,7 +2,41 @@
   <div id="top-nav" style="background-color:#aaa; height:30px; width:100%">
     <%#= render 'layouts/header' %>
 
-      <span class="glyphicon glyphicon-large glyphicon-menu-hamburger" aria-hidden="true" style = "font-size: 30px; position:absolute"></span>
+      <span class="glyphicon glyphicon-large glyphicon-menu-hamburger" id = "nav-dd"aria-hidden="true" style = "font-size: 30px; position:absolute"></span>
 
     <p style="font-size: 30px; position:absolute;width:100%; text-align:center; line-height:30px"> ShelterBooks </p>
   </div>
+<div id = "top-nav-dd" style="position:fixed; top:30px;z-index:1; background-color:#aaa; display:none">
+  
+        <div class = "nav-dd-item"><a href="/home">Dashboard</a></div>
+        <div class = "nav-dd-item"><a href="/animals">Animals</a></div>
+        <div class = "nav-dd-item"><a href="/people">People</a></div>
+        <div class = "nav-dd-item"><a href="/alerts">Upcoming Events</a></div>
+        <div class = "nav-dd-item"><a href="/logout">Logout</a></div>
+
+</div>
+<script>
+$("#top-nav").on("touchstart", function(e){
+    e.preventDefault();
+    $("#top-nav-dd").toggle();
+});
+
+$(document).on('click', function(e) {
+    if (e.target.id != 'top-nav-dd') {
+        $("#top-nav-dd").hide();
+        
+    } 
+
+})
+</script>
+<style>
+    .nav-dd-item{
+        padding:5px;
+        font-size: 14px;
+        font-weight: bold;
+
+    }
+    #top-nav-dd{
+        border-radius: 0px 0px 10px 10px;
+    }
+</style>
