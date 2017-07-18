@@ -1,4 +1,5 @@
 class AnimalsController < ApplicationController
+  before_filter :check_for_mobile
   def list
     @animal = Animal.new
     @allAnimals = Animal.all

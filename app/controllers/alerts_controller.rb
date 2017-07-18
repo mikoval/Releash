@@ -1,4 +1,5 @@
 class AlertsController < ApplicationController
+  before_filter :check_for_mobile
   skip_before_filter :verify_authenticity_token, :only => [:deleteAlert, :unsubscribeAlert, :completed]
   layout "login", :only => :completed
   def date_format(date)

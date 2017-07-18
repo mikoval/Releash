@@ -1,4 +1,5 @@
 class PeopleController < ApplicationController
+   before_filter :check_for_mobile
    skip_before_filter :verify_authenticity_token, :only => :dashboardSave
   # if you are wondering how these get called, look in routes. 
 
