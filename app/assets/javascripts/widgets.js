@@ -267,6 +267,7 @@ function loadWidgetsMobile(){
 function saveLayout() {
   console.log('saving');
   var arr = []
+    if($('.gridly').length == 0){return;}
     $(".brick").each(function() {
         var type = $(this).attr("widget-type");
         arr.push({"type": type});
