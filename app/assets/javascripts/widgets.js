@@ -303,6 +303,8 @@ function gridlyInit(){
           }
         }
   );
+  var w = (parseInt( $(".content-body").width()/320)) * (320 + 20)
+  $(".gridly").css("width", w);
 
 }
 $(window).resize(function(){
