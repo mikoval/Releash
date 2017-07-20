@@ -295,9 +295,9 @@ function gridlyInit(){
   console.log("here")
   setTimeout(saveLayout, 2000);
   $('.gridly').gridly(
-        {base: 350, // px 
+        {base: 320, // px 
           gutter: 20, // px
-          columns: (parseInt( $(".content-body").width()/350)), 
+          columns: (parseInt( $(".content-body").width()/320)), 
           callbacks: {
               reordered: function(){saveLayout()}
           }
