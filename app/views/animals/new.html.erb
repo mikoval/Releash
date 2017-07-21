@@ -289,8 +289,7 @@
   });
 
   $('.submit-btn').on('click', function(e){
-        e.preventDefault()
-        if (!validateForm($(this).closest(".new_animal")[0]))
+        if (!validateForm($(this).closest("form")[0]))
             e.preventDefault()
         
    })
