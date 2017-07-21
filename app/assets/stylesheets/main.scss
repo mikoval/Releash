@@ -48,8 +48,7 @@
    background-color: #eee;
    border-bottom: 1px solid #f3f3f3;
    position: relative;
-   height:60%;
-   padding:5px;
+   height:77%;
 
 }
 .remove-item-btn{
@@ -60,15 +59,9 @@
 .panel-title{
     position:relative
 }
-thead, tbody { display: block; }
-
-tbody {
-    height: 80%;       /* Just for the demo          */
-    overflow-y: auto;    /* Trigger vertical scroll    */
-    overflow-x: hidden;  /* Hide the horizontal scroll */
-}
-.table{
-    margin-bottom:0px;
+.table-responsive{
+    overflow-y: scroll;
+    height:100%;
 }
 .panel-footer{
     padding:0px;
