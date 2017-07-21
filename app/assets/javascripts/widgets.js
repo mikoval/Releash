@@ -59,7 +59,7 @@ function widgetAlertList(){
           <td>" + result[x].date + "</td>\
           </tr>"
         }
-        str +=  " </table> </div> <div class='text-right panel-footer'> <div class='row text-right'><a href= alerts class='btn btn-warning'>View all Alerts</a> </div></div>"
+        str +=  " </table> </div> <div class='Float panel-footer'> <div class='row '><a href= alerts class='btn btn-warning'>View all Alerts</a> </div></div>"
          $(".alert-list").each(function(){
             $(this).html( str)
          })
@@ -78,7 +78,7 @@ function widgetAnimalList(){
                 <td>" + result[x].age + "</td>\
                 </tr>"
         }
-        str +=  " </table> </div> <div class='text-right panel-footer'> <div class='row text-right'><a href= animals class='btn btn-primary'>View all Animals</a> </div></div>"
+        str +=  " </table> </div> <div class='Float panel-footer'> <div class='row Float'><a href= animals class='btn btn-primary'>View all Animals</a> </div></div>"
          $(".animal-list").each(function(){
             $(this).html( str)
          })
@@ -97,7 +97,7 @@ function widgetCoorList(){
                 <td>" + result[x].age + "</td>\
                 </tr>"
         }
-        str +=  " </table> </div> <div class='text-right panel-footer'> <div class='row text-right'><a href= animals class='btn btn-primary'>View all Animals</a> </div></div>"
+        str +=  " </table> </div> <div class='Float panel-footer'> <div class='row Float'><a href= animals class='btn btn-primary'>View all Animals</a> </div></div>"
          $(".coor-list").each(function(){
             $(this).html( str)
          })
@@ -113,7 +113,7 @@ function widgetStatusList(){
                 str += "<div class='col-md-4'><div class='metric'><span class='icon'><i class='glyphicon glyphicon-tasks'></i><a href='/animals?n=+&?b=&?g=&?s=" + result[x].id + "&?a=0&?A=15&?qn=1 '></span><p><span class='number'>" + result[x].count + "</span><span class='title'>" + result[x].name + "</p></div></div>"
     
         }
-        str +=  "</div></div><div class='text-right panel-footer'> <div class='row text-right'><a href= animals class='btn btn-primary'>View all Animals</a> </div></div>"
+        str +=  "</div></div><div class='Float panel-footer'> <div class='row '><a href= animals class='btn btn-primary'>View all Animals</a> </div></div>"
          $(".status-list").each(function(){
             $(this).html( str)
          })
@@ -131,7 +131,7 @@ function widgetUserList(){
                  <td>" + result[x].email + "</td>\
                 </tr>"
         }
-        str +=  " </table> </div> <div class='text-right panel-footer'> <div class='row text-right'><a href= people class='btn btn-primary'>View all Users</a> </div></div>"
+        str +=  " </table> </div> <div class='Float panel-footer'> <div class='row Float'><a href= people class='btn btn-primary'>View all Users</a> </div></div>"
          $(".user-list").each(function(){
             $(this).html( str)
          })
