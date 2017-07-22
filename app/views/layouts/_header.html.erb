@@ -1,4 +1,4 @@
-<div style="width:100%; background-color:#ddd; border-bottom:solid black 1px; margin:0px;" >
+<div style="width:100%; background-color:#ddd; border-bottom:solid black 1px; margin:0px; position:fixed; z-index:3000;" >
 
   
             
@@ -7,7 +7,7 @@
               <span class = 'glyphicon glyphicon-search search-child' style = "display: inline-block; font-size: 18px;padding-left:10px; padding-right:10px; margin-right:0px; margin-top:auto; margin-bottom:auto;" ></span> 
 
               <input style = " width: 450px; line-height:38px; border:none" placeholder="Search" class ="search" /> 
-            </div>            
+                    
             <div class = "search-result" style="position:absolute; width:500px; top:40px;">
             </div>
     </div>
@@ -48,6 +48,7 @@ $(".search").on( "keyup",function(input){
     }});
    $(".search").on( "blur", function(target){
        $(".search-result").html( '')
+       
 
    } )
 })

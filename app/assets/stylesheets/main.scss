@@ -129,10 +129,12 @@
 }
 .search-list {
     border:solid black 1px;
+    z-index:3000;
+    background-color:white;
 }
 
 #page-render {
-    margin-top: 30px;
+    margin-top: 40px;
 }
 
 #page-render-mobile {

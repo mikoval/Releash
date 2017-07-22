@@ -1,6 +1,6 @@
 
 <!-- Inner form Content  Profile page-->
-<div class="form col-md-12 pg-container" id="new-container">
+<div class="form col-md-12" id="new-container">
   <h2 class= "pg-title">Add a new Animal</h2>
 
   <!-- Begin animal form -->
@@ -8,16 +8,17 @@
 
 
   <!--===================== BASIC CHARACTERISTICS =======================-->
-    
+  
   <!-- Basic Header -->
-  <div class= "card form-div personal col-md-12">
-    <a class= "card-header paper-header" data-toggle="collapse" href="#characteristics-body">
-      <div>
-        <h3 class="tab-title">Basics</h3>
-      </div>
-    </a>
-  </div>
+  <ul class="nav nav-tabs">
+    <li class="active tab" target="characteristics-body"><a href="#">Basic</a></li>
+    <li class="tab"  target="paper-body"><a href="#" >Paperwork</a></li>
+    <li class="tab" target="tracking-body"><a href="#" >Tracking</a></li>
+    <li class="tab" target="notes-body"><a href="#" >Notes</a></li>
+  </ul>
 
+
+  
    <!--Basic Characteristics Body -->
   <div id = "characteristics-body" class="collapse in col-md-12 inner-formdiv">
     
@@ -127,17 +128,8 @@
   
   <!--===================== PAPERWORK =======================-->
 
-  <!-- Paperwork Header -->
-  <div class= "card form-div personal col-md-12">
-    <a class= "card-header paper-header" data-toggle="collapse" href="#paper-body">
-      <div>
-        <h3 class="tab-title">Paperwork</h3>
-      </div>
-    </a>
-  </div>
-
   <!-- Paperwork Body -->
-  <div id="paper-body" class="collapse in inner-formdiv">
+  <div id="paper-body" class="collapse in inner-formdiv" style="display:none">
     
     <div id="upload-buttons" style="padding-top: 15px">
       <div class = "upload-wrapper" style= "padding-bottom: 15px">
@@ -208,17 +200,9 @@
 
 <!--===================== TRACKING =======================-->
   
-  <!-- Tracking Header -->
-  <div class= "card form-div personal col-md-12">
-  <a class= "card-header tracking-header" data-toggle="collapse" href="#tracking-body">
-    <div>
-      <h3 class="tab-title">Tracking</h3>
-    </div>
-  </a>
-  </div>
 
   <!-- Tracking Body -->
-  <div id="tracking-body" class="collapse inner-formdiv">
+  <div id="tracking-body" class="collapse inner-formdiv" style="display:none">
 
     <!-- BEGIN TRACKING TAB DIV -->
     <div id="status-div" class="tracking-innerDiv col-md-8">
@@ -250,17 +234,9 @@
     <!-- END TRACKING TAB DIV -->
   </div>
 
-  <!-- Notes Header -->
-  <div class= "card form-div personal col-md-12">
-  <a class= "card-header notes-header" data-toggle="collapse" href="#notes-body">
-    <div>
-      <h3 class="tab-title">Notes</h3>
-    </div>
-  </a>
-  </div>
 
   <!-- Notes Body -->
-  <div id="notes-body" class="collapse inner-formdiv">
+  <div id="notes-body" class="collapse inner-formdiv" style="display:none">
         <!-- Inputing Details-->
     <%= f.label :notes, "Type any notes below" %>
     <%= f.text_area(:notes, cols: 40, rows: 15)%>
@@ -412,5 +388,13 @@
     })
     $(".hidden-behavior").val(str)
   }
+  $(".tab").on('click', function(e){
+    e.preventDefault();
+    $(".active").removeClass("active");
+    $(this).addClass("active");
+    $(".inner-formdiv").hide();
+    console.log("#" + $(this).attr("target"))
+    $("#" + $(this).attr("target")).show();
+  })
 </script>
 
