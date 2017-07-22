@@ -121,11 +121,15 @@
     background-color: #f3f3f3;
     margin-left: 210px;
     min-height: 100vh;
+    padding:0px;
+    margin-top:0px;
 
     width:auto;
 
 }
-
+.search-list {
+    border:solid black 1px;
+}
 
 #page-render {
     margin-top: 30px;
