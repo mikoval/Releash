@@ -10,6 +10,9 @@ body {
     color: #4A4A4A;
     font-size: 1.4em;
 }
+.line-form active {
+    color: blue;
+}
 
 .row {
     margin-bottom: 20px;
@@ -34,6 +37,7 @@ input[type=checkbox] {
     border-bottom: 1px solid #979797;
     font-family: 'NunitoSans-Light', sans-serif;
     font-size: 1.0em;
+    margin-top: 5px;
 }
 
 .line-form.pass {
@@ -41,7 +45,7 @@ input[type=checkbox] {
 }
 
 .line-form.link {
-    font-size: 0.7em;
+    font-size: 0.9em;
     color: #9b9b9b;
     border: none;
 }
@@ -69,9 +73,14 @@ input[type=checkbox] {
 }
 
 
-#login-content p {
+#login-content h5 {
     font-family: 'NunitoSans-ExtraBold', sans-serif;
     font-size: 1.2em;
+    margin-bottom: 0px;
+}
+
+#login-content p {
+    font-size: 1em;
 
 }
 

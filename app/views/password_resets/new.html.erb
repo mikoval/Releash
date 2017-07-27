@@ -1,7 +1,6 @@
 <% provide(:title, "Forgot password") %>
-<h1>Forgot password</h1>
 
-<div class="row">
+<!-- <div class="row">
   <div class="col-md-6 col-md-offset-3">
     <%= form_for(:password_reset, url: password_resets_path) do |f| %>
       <%= f.label :email %>
@@ -9,5 +8,37 @@
 
       <%= f.submit "Submit", class: "btn btn-primary" %>
     <% end %>
+  </div>
+</div> -->
+
+<div class = "col-md-12" id="login-pg">
+  <div class="row" id="lg-row">
+    <div class="col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4" id="login-container">
+      <div class = "col-md-8 col-md-offset-2" id="login-content">
+        <%#= image_tag("https://s3.amazonaws.com/releashatlanta/uploads/ReleashImages/images/17690116_10213324689658581_1634804572_n.png") %>
+        <%#= image_tab("https://s3.amazonaws.com/releashatlanta/uploads/ReleashImages/images/20136763_1645824548783400_2143594466_n.png")%>
+        <div class="row">
+          <div class="logo-textdiv col-md-4 col-md-offset-2">
+            <div class="col-md-2 col-md-offset-1">
+              <%=image_tag("https://s3.amazonaws.com/releashatlanta/uploads/ReleashImages/images/20117249_1645824472116741_1631439036_n.png")%>
+            </div>
+              <h3 id= "login-title">Shelterbook</h3>
+          </div>
+        </div>
+
+        <div class="row">
+          <h5>Account Recovery</h5>
+          <p>Enter your email to reset your password</p>
+            <%= form_for(:password_reset, url: password_resets_path) do |f| %>
+            <%= f.email_field :email, placeholder: 'Email', class: 'line-form' %>
+        </div>
+
+        <div class = "row">
+            <%= f.submit "Send recovery email", class: "btn", id:'login-btn' %>
+            <% end %>
+        </div>
+
+      </div>
+    </div>
   </div>
 </div>
