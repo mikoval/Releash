@@ -1,37 +1,5 @@
 <% provide(:title, "Log in") %>
 
-
-</style>
-
-
-<%= image_tag("https://s3.amazonaws.com/releashatlanta/uploads/ReleashImages/images/17690116_10213324689658581_1634804572_n.png") %>
-<h3 class = "title"> Log into your account</h3>
-
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= form_for(:session, url: login_path) do |f| %>
-
-      <%= f.label :email %>
-      <%= f.email_field :email, class: 'form-control mobile' %>
-
-      <%= f.label :password %>
-      <%= link_to "(forgot password)", new_password_reset_path %>
-      <%= f.password_field :password, class: 'form-control mobile' %>
-
-
-
-        
-        <%= f.check_box :remember_me, {class: "inline-block small"} %>
-<%= f.label :remember_me, "Remember Me".html_safe, {class: "checkbox inline-block"} %>
-        
-   
-
-
-      <%= f.submit "Log in", class: "btn btn-primary mobile" %>
-    <% end %>
-  </div>
-</div>
-
 <style>
 .title{
   text-align: center
@@ -41,8 +9,15 @@ img{
 }
 body{
   font-size: 50px;
-
+  color: #4a4a4a;
+  background-color: #f3f3f3;
+  margin: 30px;
 }
+
+#login-content h5 {
+  font-size: 1em;
+}
+
 .title{
   font-size: 70px;
 }
@@ -67,4 +42,52 @@ input[type=checkbox] {
   margin-left:10px;
   transform: scale(5);
 }
+
+#login-container {
+  margin: 30px;
+}
+
+@media screen and (min-width:770px) {
+  #login-content img {
+    width: 300px;
+    margin: 0 auto;
+  }
+}
 </style>
+
+<body>
+  <div id="login-container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3" id="login-content">
+        <div class="col-md-12">
+          <div class="col-md-6 col-md-offset-3">
+            <%= image_tag("https://s3.amazonaws.com/releashatlanta/uploads/ReleashImages/images/20117249_1645824472116741_1631439036_n.png") %>
+            <h3 id= "login-title">Shelterbook</h3>
+          </div>
+        </div>
+        <h5> Log into your account</h5>
+        <%= form_for(:session, url: login_path) do |f| %>
+
+        <%= f.email_field :email, placeholder: 'Email', class: 'line-form mobile' %>
+        <%= f.password_field :password, placeholder: 'Password', class: 'line-form mobile' %>
+        <div>
+          <%= link_to "Forgot password", new_password_reset_path %>
+        </div>
+
+
+
+            
+          <%= f.check_box :remember_me, {class: "inline-block small"} %>
+          <%= f.label :remember_me, "Remember Me".html_safe, {class: "checkbox inline-block"} %>
+            
+       
+
+
+          <%= f.submit "Login", class: "btn mobile", id:"login-btn" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</body>
+
+

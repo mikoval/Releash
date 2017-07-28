@@ -18,3 +18,40 @@
     <% end %>
   </div>
 </div>
+
+<div class = "col-md-12" id="login-pg">
+  <div class="row" id="lg-row">
+    <div class="col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4" id="login-container">
+      <div class = "col-md-8 col-md-offset-2" id="login-content">
+        <%#= image_tag("https://s3.amazonaws.com/releashatlanta/uploads/ReleashImages/images/17690116_10213324689658581_1634804572_n.png") %>
+        <%#= image_tab("https://s3.amazonaws.com/releashatlanta/uploads/ReleashImages/images/20136763_1645824548783400_2143594466_n.png")%>
+        <div class="row">
+          <div class="logo-textdiv col-md-4 col-md-offset-2">
+            <div class="col-md-2 col-md-offset-1">
+              <%=image_tag("https://s3.amazonaws.com/releashatlanta/uploads/ReleashImages/images/20117249_1645824472116741_1631439036_n.png")%>
+            </div>
+              <h3 id= "login-title">Shelterbook</h3>
+          </div>
+        </div>
+
+        <div class="row">
+          <h5>Account Recovery</h5>
+          <%= form_for(@user, url: password_reset_path(params[:id])) do |f| %>
+          <%= render 'shared/error_messages' %>
+
+          <%= hidden_field_tag :email, @user.email %>
+
+
+          <%= f.password_field :password, placeholder: 'Enter new password', class: 'line-form pass' %>
+          <%= f.password_field :password_confirmation, placeholder: 'Confirm password', class: 'line-form pass' %>
+        </div>
+
+        <div class = "row">
+          <%= f.submit "Update password", class: "btn login-btn" %>
+          <% end %>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
