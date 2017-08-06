@@ -39,7 +39,6 @@ function generateUsers(arr){
   return str;
 }
 function initWidget(str){
-  console.log(mobile);
   if(mobile){
     return "<div class='panel-heading'> <h3 class= 'panel-title -leftpull'> "+str + "</h3></div>"
   }
@@ -209,17 +208,17 @@ function addUserWidget() {
 
 function loadWidgets(){
 
-  console.log("loading widgets")
   $.ajax({
         url: "dashboard",
         type: "GET",
        success: function(result){
         str = result.str;
         obj = JSON.parse(str);
+        sortWidgets(obj)
         
         for (i = 0; i < obj.length; i++){
-          console.log(obj[i])
-          var el = $.parseHTML('<div class = "brick large ' + obj[i].type+' " widget-type="'+obj[i].type+'">' + obj[i].type + '</div>');
+          var el = $.parseHTML('<div class = "brick large ' + obj[i].type+' " widget-type="'+obj[i].type+'"style="left:'+obj[i].x+'; top:'+obj[i].y+'">' + obj[i].type + '</div>');
+          console.log('<div class = "brick large ' + obj[i].type+' " widget-type="'+obj[i].type+'" style="left:'+obj[i].x+'; top:'+obj[i].y+'">' + obj[i].type + '</div>')
           $(".gridly").append(el);
         }
         gridlyInit();
@@ -242,11 +241,11 @@ function loadWidgetsMobile(){
         obj = JSON.parse(str);
         
         for (i = 0; i < obj.length; i++){
-          console.log(obj[i])
+      
           var el = $.parseHTML('<div class = "brick mobile ' + obj[i].type+' " >' + obj[i].type + '</div>');
           $(".gridly").append(el);
         }
-        console.log($(window).width())
+       
          $('.gridly').gridly(
            {base: $(window).width(), // px 
             gutter: 0, // px
@@ -265,15 +264,18 @@ function loadWidgetsMobile(){
 
 
 function saveLayout() {
-  console.log('saving');
+
   var arr = []
     if($('.gridly').length == 0){return;}
     $(".brick").each(function() {
         var type = $(this).attr("widget-type");
-        arr.push({"type": type});
+        var x =  $(this).css("left");
+        var y =  $(this).css("top");
+    
+        arr.push({"type": type, x:x, y:y});
     })
-    console.log(arr);
     var str = JSON.stringify(arr);
+    console.log(str);
     $.ajax({
         url: "dashboard",
         type: "PATCH",
@@ -299,7 +301,7 @@ function gridlyInit(){
           gutter: 20, // px
           columns: (parseInt( $(".content-body").width()/320)), 
           callbacks: {
-              reordered: function(){saveLayout()}
+              reordered: function(){setTimeout(saveLayout, 1000)}
           }
         }
   );
@@ -311,4 +313,21 @@ $(window).resize(function(){
     clearTimeout(gridly_timeout);
     gridly_timeout = setTimeout(refreshGridly, 50);
 });
+function sortWidgets(arr){
+  var minIdx, temp, len = arr.length;
+
+  for(var i = 0; i < len; i++){
+    minIdx = i;
+    for(var  j = i+1; j<len; j++){
+       if(arr[j].y<arr[minIdx].y || (arr[j].y == arr[minIdx].y && arr[j].x < arr[minIdx].x ) ){
+          minIdx = j;
+       }
+    }
+    temp = arr[i];
+    arr[i] = arr[minIdx];
+    arr[minIdx] = temp;
+  }
+  return arr;
+
+}
 
