@@ -4,6 +4,7 @@
 /* mixins, variables, etc. */
 
 $gray-medium-light: #eaeaea;
+$bg-color: #fbfbfb;
 
 @mixin box_sizing {
   -moz-box-sizing:    border-box;
@@ -99,10 +100,10 @@ p {
 /* footer */
 
 footer {
-  margin-top: 45px;
-  padding-top: 5px;
-  border-top: 1px solid #eaeaea;
+  padding-top: 10px;
+  border-top: 1px solid #ebebeb;
   color: #777;
+  background-color: $bg-color;
 }
 
 footer a {
@@ -114,10 +115,14 @@ footer a:hover {
 }
 
 footer small {
-  float: left;
+  /*float: left;*/
+}
+footer #right {
+ /* float: right;
+  font-size: 1.0em;*/
 }
 
-footer ul {
+/*footer ul {
   float: right;
   list-style: none;
 }
@@ -125,7 +130,7 @@ footer ul {
 footer ul li {
   float: left;
   margin-left: 15px;
-}
+}*/
 
 
 /* miscellaneous */

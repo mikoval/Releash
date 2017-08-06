@@ -1,5 +1,22 @@
 
+
+$bg-color: #FBFBFB;
+
+
+
+/*Background for all pages */
+body {
+    background-color: $bg-color;
+}
+
+#page-render {
+    background-color: $bg-color;
+    min-height: 100vH;
+}
+
+/* Widgets */
 .content-body{margin:4px;}
+
 .brick.small {
     width: 140px;
     height: 140px;

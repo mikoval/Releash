@@ -5,6 +5,10 @@
 //Style for tracking in profile
 $neutral: #e1e1e1;
 $blue : #2980b9;
+$bg-color: #FBFBFB;
+$navcolor: #4A494B;
+$navhover: #6B6A6B;
+$divbody: #E0DDDD;
 
 p {
   margin: 0px;
@@ -15,104 +19,148 @@ p {
   position: fixed;
 }
 
-/*.inner-formdiv {
-  position: static;
-}*/
 
-//Style for new & edit pages & profile
-.pg-container {
-  background-color: white;
-  margin-top: 5%;
-  padding: 2%;
-  border-radius: 0.2%;
-}
+/*========= New, Edit & Profile Page ==========*/
 
 .pg-title {
-    text-align: right;
-    font-size: 24px;
+  text-align: left;
+  font-size: 24px;
+  font-family: 'NunitoSans-ExtraBold', sans-serif;
+  color: #4D4747;
 }
 
 #pic-preview {
-    width: 150px;
-    height: 200px;
-    border: dotted #bababa;
-    background: transparent;
-    border-radius: 3px;
+  width: 150px;
+  height: 200px;
+  border: 1px solid #bababa;
+  background: transparent;
+  border-radius: 5px;
 }
 
 
 .profile-file {
-    width: 150px;
-    height: 200px;
-    border: black;
+  width: 150px;
+  height: 200px;
+  border: black;
 
 }
 
 .inner-formdiv {
-    width: 100%;
-    padding: 20px;
-    border: solid #f0f0f0;
-    border-width: 1px;
-    overflow: auto;
+  width: 100%;
+  padding: 20px;
+  border: solid #f0f0f0;
+  border-width: 1px;
+  overflow: auto;
 }
 
 .form {
-    display: inline-block;
-    width:100%;
-    padding: 0px;
-    border-width: 5px;
+  margin-top: 15px;
+  display: inline-block;
+  width:100%;
+  padding: 0px;
+  border-width: 5px;
+  //border: 3px dotted blue;
+  background-color: white;
 }
 
+.form-head {
+  //border: 3px dotted red;
+}
+
+.form-body {
+  //border: 1px solid $divbody;
+  //border: 3px solid orange;
+}
+
+.nav > li > a {
+  background-color: $navcolor;
+  font-family: 'NunitoSans-ExtraBold', sans-serif;
+  color: white;
+}
+
+.nav > li > a:hover {
+  background-color: $navhover;
+}
+
+
+
 .form-div {
-    border: solid #f0f0f0; 
-    padding: 5px;
-    border-width: 1px;
+  border: solid #f0f0f0; 
+  padding: 5px;
+  border-width: 1px;
+}
+
+/* Submit */
+
+.submit-btn {
+  background-color: #f9f9f9;
+  font-family: 'NunitoSans-Black', sans-serif;
+  font-size: 1.2em;
+  border-radius: 0;
+  border-color: #E7E7E7;
+  box-shadow: 0px 1px 1px #979797;
+  margin-bottom: 30px;
 }
 
 .add-btn {
     width: 30%;
-
 }
 
 .btn-file {
-    position: relative;
-    overflow: hidden;
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-file input[type=file] {
-    position: absolute;
-    top: 0;
-    right: 0;
-    min-width: 100%;
-    min-height: 100%;
-    font-size: 100px;
-    text-align: right;
-    filter: alpha(opacity=0);
-    opacity: 0;
-    outline: none;
-    background: white;
-    cursor: inherit;
-    display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
 }
 
 
 
-//List page
+/*========= List Page ==========*/
 .list-card {
-    border-radius: 10px;
-    border:solid #e8e8e8;
-    display: inline-block;
-    margin-bottom: 10px;
-    padding: 5px;
-    margin-left: 5px;
+  border-radius: 10px;
+  border:solid #e8e8e8;
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 5px;
+  margin-left: 5px;
 }
 
 .list-pic {
-    padding: 5px;
+  padding: 5px;
 }
 
 
-//New Page
+/*========= New Page ==========*/
+/*#submit-div {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-bottom: 10px;
+  padding: 50px;
+}*/
+
+.inner-formdiv {
+  background-color: white;
+}
+
+.tab-inner-title {
+  font-family:"NunitoSans-SemiBold", sans-serif;
+}
+
 .select-item{
   border:solid;
   border-width: 1px;
@@ -139,7 +187,7 @@ p {
 }
 
 
-//Profile Page
+/*========= Profile Page ==========*/
 .circle-img {
   margin-top: 5px;
   border-radius: 50%;
@@ -299,60 +347,3 @@ article {
     height: 20px;
 }
 
-.tooltip2 {
-    position: relative;
-    display: inline-block;
-}
-
-.tooltip2 .tooltiptext2 {
-    visibility: hidden;
-    width: 370px;
-    background-color: #505050;
-    color: #fff;
-    text-align: center;
-    border-radius: 10px;
-    padding: 5px 0;
-    text-align: left;
-    padding-left: 5px;
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
-    top: -10px;
-    left: 55px;
-    font-family: "Times New Roman", Times, serif;
-}
-
-.tooltip2 .header {
-  height: 40px;
-  background-color: #F16D6D;
-  font-size: 200%;
-  font-family: Arial, Helvetica, serif;
-}
-
-.tooltip2 .tooltiptext3 {
-  float: left;
-  width: 60%;
-  font-size: 110%;
-}
-
-.tooltip2 .tooltiptext4 {
-  float: left;
-  width: 40%;
-  padding-top: 28px;
-  padding-right: 5px;
-}
-
-.tooltip2 .tooltiptext2::after {
-    content: " ";
-    position: absolute;
-    top: 10px;
-    right: 370px; /* To the left of the tooltip */
-    margin-top: 5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent #505050 transparent transparent;
-}
-
-.tooltip2:hover .tooltiptext2 {
-    visibility: visible;
-}

@@ -10,8 +10,18 @@ body {
     color: #4A4A4A;
     font-size: 1.4em;
 }
-.line-form active {
-    color: blue;
+
+
+#login-pg {
+    background-color: #fbfbfb;
+    height: 100vH;
+}
+
+#login-container {
+    background-color: #fff;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    box-shadow: 0px 1px 1px #979797;
 }
 
 .row {
@@ -50,17 +60,7 @@ input[type=checkbox] {
     border: none;
 }
 
-#login-pg {
-    background-color: #f3f3f3;
-    height: 100vH;
-}
 
-#login-container {
-    background-color: #fff;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    box-shadow: 0px 1px 1px #979797;
-}
 
 .logo-textdiv {
     margin-top: 20px;

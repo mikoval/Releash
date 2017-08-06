@@ -1,5 +1,5 @@
 <% provide(:title, "People") %>
-<h1>People</h1>
+<h1 class="pg-title">People</h1>
 
 <!-- BUTTONS TO ADD USERS -->
 <% if admin?(current_user) %>
@@ -11,7 +11,7 @@
 <% end %>
 
 <!-- TAB NAV LINKS-->
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs-unstyled nav-justified">
     <li class="active"><a href="#user" data-toggle="tab">Users</a></li>
     <li><a href="#non_user" data-toggle="tab">Non Users</a></li>
     <li><a href="#trainer" data-toggle="tab">Trainers</a></li>
