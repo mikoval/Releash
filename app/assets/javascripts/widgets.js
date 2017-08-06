@@ -67,7 +67,7 @@ function widgetAlertList(){
 }
 function widgetAnimalList(){
     $.ajax({url: "animals/querySimple", success: function(result){
-        var str = initWidget("Animals");
+        var str = initWidget("New Animals");
         str += "<div class='panel-body no-padding'> <div class='table-responsive'> <table class='table table-hover table-striped'> <thead> <tr> <th>Name</th> <th>Primary Breed</th> <th>Age</th> </tr> </thead>" 
         for (x in result){
     
@@ -105,7 +105,7 @@ function widgetCoorList(){
 }
 function widgetStatusList(){
     $.ajax({url: "animals/querySimpleStatus", success: function(result){
-        var str = initWidget("Status Count");
+        var str = initWidget("Tracking");
         str += "<div class='no-padding panel-body'><div class='table-responsive'>" 
         for (x in result){
     
@@ -121,7 +121,7 @@ function widgetStatusList(){
 }
 function widgetUserList(){
     $.ajax({url: "people/query", success: function(result){
-        var str = initWidget("User List");
+        var str = initWidget("People");
         str += "<div class='panel-body no-padding'> <div class='table-responsive'> <table class='table table-hover table-striped'> <thead> <tr> <th>Name</th> <th>Email</th> </tr> </thead>" 
         for (x in result){
     
