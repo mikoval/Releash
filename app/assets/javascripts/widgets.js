@@ -107,13 +107,13 @@ function widgetCoorList(){
 function widgetStatusList(){
     $.ajax({url: "animals/querySimpleStatus", success: function(result){
         var str = initWidget("Status Count");
-        str += "<div class='grid-stack-item-content panel-body'><div class='row'>" 
+        str += "<div class='no-padding panel-body'><div class='table-responsive'>" 
         for (x in result){
     
                 str += "<div class='col-md-4'><div class='metric'><span class='icon'><i class='glyphicon glyphicon-tasks'></i><a href='/animals?n=+&?b=&?g=&?s=" + result[x].id + "&?a=0&?A=15&?qn=1 '></span><p><span class='number'>" + result[x].count + "</span><span class='title'>" + result[x].name + "</p></div></div>"
     
         }
-        str +=  "</div></div><div class='Float panel-footer'> <div class='row '><a href= animals class='btn btn-primary'>View all Animals</a> </div></div>"
+        str +=  "</div><div class='Float panel-footer'> <div class='row '><a href= animals class='btn btn-primary'>View all Animals</a> </div></div>"
          $(".status-list").each(function(){
             $(this).html( str)
          })
