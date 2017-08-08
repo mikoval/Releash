@@ -1,0 +1,416 @@
+
+<!-- Inner form Content  Profile page-->
+<div class="form col-md-12 pg-container" id="profile-container">
+  <%= form_for(@animal, url: animals_path(@animal))  do |f| %>
+
+
+  <!--===================== BASIC CHARACTERISTICS =======================-->
+    
+  <!-- Basic Header -->
+  <div class= "card form-div personal col-md-12">
+    <a class= "card-header paper-header" data-toggle="collapse" href="#characteristics-body">
+      <div>
+        <h4>Basics</h4>
+      </div>
+    </a>
+  </div>
+
+   <!--Basic Characteristics Body -->
+  <div id = "characteristics-body" class="collapse in col-md-12 inner-formdiv">
+    
+    <!-- Profile Picture -->
+    <div class="picture col-md-3">
+      <%= f.label :picture %>
+      <div id="pic-preview">
+      <img id="profilepic" src=<%= @animal.picture %> alt="Dog Image"  width = "150px" height = "200px" style = "display:block" />  
+      <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'file-upload profile-file' %>
+      </div>
+    </div>
+
+    <!-- Characteristics Info -->
+    <div class="characteristics-info col-md-9">
+
+      <div class= "basics-inner col-md-5">
+        <!-- Characteristics -->
+        <a class= "card-header basics-header" data-toggle="collapse" href="#basics-body">
+          <div>
+            <h4 class="tab-inner-title">Characteristics</h4>
+          </div>
+        </a>
+
+        <div id="basics-body" class="collapse in">
+          <%= f.label :name %>
+          <%= f.text_field :name, class: 'form-control required' %>
+          
+          <%= f.label :date_of_birth %>
+          <%= f.text_field :birthday, class: 'form-control datepicker required' %>      
+
+          <%= f.label :gender %>
+          <%= f.select :gender, [ 'Male','Female'], :prompt => 'Select Gender' %>   
+
+          <%= f.label :primary_breed_id %>
+
+          <%= f.collection_select :primary_breed_id, @primary, :id, :name, :prompt => "Select Breed" %>
+
+          <%= label :post, "Additional Breeds" %>
+          <%= collection_select(:breed_id, 0, @secondary, :id, :name, {:prompt => "Select Breed"}, {class: "breed-selecter"}) %>              
+          <div id = "breeds-list">
+            <% @breeds.each do |b| %>
+            <div id = 'breed-<%= b.breed.id %>'   class = 'breed-item' style = 'position: relative; display: inline-block;'>
+              <p style = 'margin:0px; padding-right:15px'> <%= b.breed.name %> </p> 
+              <span class = 'glyphicon glyphicon-remove remove-breed' style='margin:2px; float:right;'></span>
+            </div>
+
+            <% end %>
+          </div>
+         <%= text_field_tag 'breeds', "", class: "hidden-breeds", style: "display:none;"  %>
+
+          <%= f.label :color_primary %>
+          <%= f.text_field :color_primary, class: 'form-control' %>
+
+          <%= f.label :color_secondary %>
+          <%= f.text_field :color_secondary, class: 'form-control' %> 
+          <%= label :post, "behavior" %>
+          <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Select Behavior
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <% @behavior.each do |b| %>
+              <li  class = "behavior-dd-item" id = "behavior-dd-<%= b.id %>"><a href="#" class= "behavior-dd-item" value = '<%= b.id %>'> <%= b.name %></a>  </li> 
+              <% end %>
+            </ul>
+          </div>           
+          <div id = "behavior-list">
+            <% @behaviors.each do |b| %>
+            <div id = 'behavior-<%= b.id %>'   class = 'select-item behavior-item' style = 'position: relative; display: inline-block;'>
+              <p style = 'margin:0px; padding-right:15px'> <%= b.characteristic.name %> </p> 
+              <span class = 'glyphicon glyphicon-remove remove-item remove-behavior' style='margin:2px; float:right;'></span>
+            </div>
+
+            <% end %>
+          </div>
+          <%= text_field_tag 'behavior', "", class: "hidden-behavior", style: "display:none;"  %> 
+        </div>
+      </div>
+
+   
+
+
+
+
+      <div class= "basics-inner col-md-5">
+        <!-- Physical Features -->
+        <a class= "card-header basics-header" data-toggle="collapse" href="#basics-track-body">
+          <div>
+            <h4 class="tab-inner-title">Tracking</h4>
+          </div>
+        </a>
+
+        <div id="basics-track-body" class="collapse in">
+          <%= f.label :input_date %>
+          <%= f.text_field :input_date, class: 'form-control datepicker' %>
+
+          <%= f.label :adoption_date %>
+          <%= f.text_field :date_adopted, class: 'form-control datepicker' %>
+
+          <%= f.label :date_of_death %>
+          <%= f.text_field :date_death, class: 'form-control datepicker' %>
+
+          <%= f.label :microchip_number , "Microchip #"%>
+          <%= f.text_field :microchip_number, class: 'form-control' %>
+
+          <%= f.label :vetting_completed%>
+          <%= f.check_box :vetting_completed, class: 'form-control' %>
+
+          <%= f.label :coordinator, "Assigned Coordinator"%>
+          <%= f.collection_select :coordinator_id, @coordinators, :id, :name, {:prompt => "Select Coordinator"}, class: 'required' %>
+          
+          <%= f.label :status %>
+          <%= f.collection_select :status_id, @status, :id, :name, {:prompt => "Select Status"} , class: 'form-control' %>
+          
+          <%= f.label :sub_status %>
+          <%= f.collection_select :sub_status_id, @sub_status, :id, :name, :include_blank => true %>
+          
+          <%= f.label :marketing %>
+          <%= f.collection_select :marketing_id, @marketing, :id, :name, {:prompt => "Select Current Marketing"}, class: 'required' %>
+          
+          <%= f.label :inactive_animal, "Deactivate Animal"%>
+          <%= f.check_box :inactive_animal, class: 'form-control' %> 
+        </div>
+      </div>     
+  </div>
+
+  <!--===================== PAPERWORK =======================-->
+
+  <!-- Paperwork Header -->
+  <div class= "card form-div personal col-md-12">
+    <a class= "card-header paper-header" data-toggle="collapse" href="#paper-body">
+      <div>
+        <h4>Paperwork</h4>
+      </div>
+    </a>
+  </div>
+
+  <!-- Paperwork Body -->
+  <div id="paper-body" class="collapse in inner-formdiv">
+    <div id="upload-buttons" style="padding-top: 15px">
+
+    <div class = "upload-wrapper">
+        <span class="btn btn-large btn-warning btn-file">
+            <%= label_tag "Vetting Document" %>
+            <%= f.file_field :vetting_document, class: 'file-upload' %>
+        </span>
+        <span class = "file-name">
+          <% if @animal.vetting_document.length > 0 %>
+            <%= @animal.vetting_document.file.filename %> 
+          <% end %>
+        </span>
+        <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"> </span>
+    </div>
+
+    <div class = "upload-wrapper">
+        <span class="btn btn-large btn-primary btn-file">
+            <%= label_tag "Intake Document" %>
+            <%= f.file_field :intake_document, class: 'file-upload' %>
+        </span>
+        <span class = "file-name"> 
+           <% if @animal.intake_document.length > 0 %>
+          <%= @animal.intake_document.file.filename %> 
+          <% end %>
+        </span>
+        <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+     </div>
+
+     <div class = "upload-wrapper">
+        <span class="btn btn-large btn-info btn-file">
+            <%= label_tag "Owner Surrender" %>
+            <%= f.file_field  :owner_surrender_document, class: 'file-upload' %>
+        </span>
+        <span class = "file-name">
+          <% if @animal.owner_surrender_document.length > 0 %>
+            <%= @animal.owner_surrender_document.file.filename %> 
+          <% end %>
+        </span>
+        <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+    </div>
+
+    <div class = "upload-wrapper">
+      <span class="btn btn-large btn-info btn-file">
+          <%= label_tag "Home Check" %>
+          <%= f.file_field  :home_check_document, class: 'file-upload' %>
+      </span>
+      <span class = "file-name">
+          <% if @animal.home_check_document.length > 0 %>
+            <%= @animal.home_check_document.file.filename %> 
+          <% end %>
+        </span>
+      <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+    </div>
+
+    <div class = "upload-wrapper">
+      <span class="btn btn-large btn-info btn-file">
+          <%= label_tag "Match Application" %>
+          <%= f.file_field  :match_application_document, class: 'file-upload' %>
+      </span>
+      <span class = "file-name">
+          <% if @animal.match_application_document.length > 0 %>
+            <%= @animal.match_application_document.file.filename %> 
+          <% end %>
+        </span>
+      <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+    </div>
+
+    <div class = "upload-wrapper">
+      <span class="btn btn-large btn-info btn-file">
+          <%= label_tag "Adoption Application" %>
+          <%= f.file_field  :adoption_application_document, class: 'file-upload' %>
+      </span>
+      <span class = "file-name">
+        <% if @animal.adoption_application_document.length > 0 %>
+          <%= @animal.adoption_application_document.file.filename %> 
+          <% end %></span>
+      <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+    </div>
+
+    <div class = "upload-wrapper">
+      <span class="btn btn-large btn-info btn-file">
+          <%= label_tag "Adoption Contract" %>
+          <%= f.file_field  :adoption_contract_document, class: 'file-upload' %>
+      </span>
+      <span class = "file-name">
+          <% if @animal.adoption_contract_document.length > 0 %>
+            <%= @animal.adoption_contract_document.file.filename %> 
+          <% end %>
+        </span>
+      <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+    </div>
+
+    </div>
+
+  </div>
+
+  <!--===================== NOTES =======================-->
+
+  <!-- Notes Header -->
+  <div class= "card form-div personal col-md-12">
+  <a class= "card-header notes-header" data-toggle="collapse" href="#notes-body">
+    <div>
+      <h3 class="tab-title">Notes</h3>
+    </div>
+  </a>
+  </div>
+
+  <!-- Notes Body -->
+  <div id="notes-body" class="collapse inner-formdiv">
+    <%= label :notes, "Notes" %>
+    <%= f.text_area :notes, class: 'form-control' %>
+  </div>
+
+  <%= f.submit "Submit Edit", class: "add-btn btn-primary" %>
+  <% end %>
+</div>
+
+<!-- End Html -->
+
+
+<script>
+
+  $("#animal_species_id").change(function(){
+    console.log($("#animal_breed_id"))
+    if ($("#animal_species_id").val() == 1) {
+      $("#animal_breed_id option:eq(1)").hide();
+      $("#animal_breed_id option:eq(0)").show();
+    } else {
+      $("#animal_breed_id option:eq(0)").hide();
+      $("#animal_breed_id option:eq(1)").show();
+
+    }
+  });
+
+
+  $('.datepicker').datetimepicker({
+    //endDate: '+5y',
+    format:'YYYY/MM/DD',
+    
+  });
+
+  $(".profile-file").change(function(input) { 
+    input = input.target
+    if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#profilepic')
+                    .attr('src', e.target.result)
+                    .width(150)
+                    .height(200);
+                $('#profilepic').show()
+            };
+
+            reader.readAsDataURL(input.files[0]);
+
+        }
+  }); 
+  $(".file-upload").change(function(input) { 
+    var input = input.target;
+    if (input.files && input.files[0]) {
+        var fileName = input.files[0].name;
+        var container =  $(this).closest(".upload-wrapper");
+        var nameSpan = container.find(".file-name");
+        nameSpan.text(fileName);
+        var removeSpan = container.find(".remove-file");
+        removeSpan.show();
+        }
+  }); 
+  $(".remove-file").on('click', function(){
+        var container =  $(this).closest(".upload-wrapper");
+
+        nameSpan = container.find(".file-name");
+        nameSpan.text("");
+
+        var removeSpan = container.find(".remove-file");
+        removeSpan.hide();
+
+        var inputfield  = container.find(".file-upload");
+        inputfield[0].value = "";
+
+  });
+  $(".breed-selecter").on("change", function(){
+    var text = $(".breed-selecter option:selected").text();
+    var val = $(".breed-selecter option:selected").val();
+    if(text == "Select Breed"){
+      return
+    }
+    html = $("#breeds-list").html();
+    html += "<div id = 'breed-" + val + "'' class = 'breed-item select-item' style = 'position: relative; display: inline-block;'>" 
+        + "<p style = 'margin:0px; padding-right:15px'>" + text + "</p>" + 
+       "<span class = 'glyphicon glyphicon-remove remove-breed remove-item' style='margin:2px; float:right;'>" +"</span>" + 
+       " </div>"
+    $("#breeds-list").html(html);
+    $(".remove-breed").on("click", function(){
+      $(this).closest(".breed-item").detach()
+      setHiddenBreeds();
+    })
+    //just for now while im setting up the new breeds
+    $(this).get(0).selectedIndex = 0;
+    setHiddenBreeds();
+  })
+  function setHiddenBreeds(){
+    str = ""
+    $(".breed-item").each(function(){
+      var id = this.id.split("-")[1]
+      str += id + "|"
+    })
+    $(".hidden-breeds").val(str)
+  }
+  //do on start for existing ones
+  setHiddenBreeds();
+  $(".remove-breed").on("click", function(){
+      $(this).closest(".breed-item").detach()
+      setHiddenBreeds();
+  })
+
+   
+
+  $(".behavior-dd-item").on("click", function(e){
+
+    e.stopPropagation();
+    e.preventDefault();
+    var text = $(this).text();
+    var val = $(this).attr("value");
+    if(text == "Select Behavior"){
+      return
+    }
+    html = $("#behavior-list").html();
+    html += "<div id = 'behavior-" + val + "'' class = 'behavior-item select-item' style = 'position: relative; display: inline-block;'>" 
+        + "<p style = 'margin:0px; padding-right:15px'>" + text + "</p>" + 
+       "<span class = 'glyphicon glyphicon-remove remove-behavior remove-item' style='margin:2px; float:right;'>" +"</span>" + 
+       " </div>"
+    $("#behavior-list").html(html);
+    $(".remove-behavior").on("click", function(){
+      $(this).closest(".behavior-item").detach()
+      setHiddenBehavior();
+    })
+    //just for now while im setting up the new breeds
+    $(this).get(0).selectedIndex = 0;
+    setHiddenBehavior();
+  })
+  function setHiddenBehavior(){
+
+    str = ""
+    $(".behavior-dd-item").show();
+
+    $(".behavior-item").each(function(){
+      var id = this.id.split("-")[1]
+      $("#behavior-dd-" +id).hide();
+      str += id + "|"
+    })
+    $(".hidden-behavior").val(str)
+  }
+  $(".remove-behavior").on("click", function(){
+      $(this).closest(".behavior-item").detach()
+      setHiddenBehavior();
+    })
+  setHiddenBehavior();
+</script>
+    

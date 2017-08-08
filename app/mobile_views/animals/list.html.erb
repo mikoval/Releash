@@ -1,0 +1,445 @@
+<!-- comment -->
+<% provide(:title, "Animals") %>
+<h1 class="pg-title">Animals</h1>
+
+
+<% if employee?(current_user) %>
+<%= link_to "<button>Add Animal</button>".html_safe,  :controller => "animals", :action => "new", :method => "get" %>
+<a href='#' style="float: right; padding-right: 10%"
+        onclick='downloadCSV({ filename: "animals-data" });'
+    >Download CSV</a>
+
+<% end %>
+
+    <br><br>
+
+    <div id='filterDiv' class = "filters col-md-3" style = "border-radius:1px; margin:5px; border:solid;";> 
+    <p> Name:  </p> <input type = "text" id = "filter-name" value = "<%= @name %> "/>
+    <p> Breed:  </p> 
+    <select id = "filter-breed">
+      <option value = "">Select Breed</option>
+
+      <% @breeds.each do |b|%>
+        <option value = "<%=  b.id %>"  <% if( b.id.to_s == @breed) %>selected <% end %> > <%= b.name %> </option>
+      <% end %>
+
+    </select>
+
+    <p> Gender:  </p> 
+    <select id = "filter-gender">
+      <option value = "">Select Gender</option>
+      <option value = "Male" <% if(@gender == "Male") %> selected <% end %>>Male</option>
+      <option value = "Female"<% if(@gender == "Female") %> selected <% end %>>Female</option>
+    </select>
+
+    <p> Status:  </p> 
+    <select id = "filter-status">
+      <option value = "">Select Status</option>
+      <% @statuses.each do |b|%>
+        <option value = "<%=  b.id %>" <% if( b.id.to_s == @status) %>selected <% end %> > <%= b.name %> </option>
+      <% end %>
+    </select>
+
+    <p style = "display:inline-block;  white-space: nowrap;"> 
+      Active: <input style = "display:inline-block; width:auto" type = "checkbox" id = "active-chk" 
+      <% if(@active.to_s == "true") %>checked <% end %> > 
+      Inactive: <input style = "display:inline-block; width:auto" type = "checkbox" id = "inactive-chk" 
+      <% if(@inactive.to_s == "true") %> checked <% end %>  ></p>
+
+
+    <!-- <p> Spayed/Neutered:  </p> 
+    <select id = "filter-neutered">
+      <option value = "">Select option</option>
+      <option value = "Yes">Yes</option>
+      <option value = "No">No</option>
+    </select> -->
+    
+
+    <p> Age: <span id = "age-min"></span>-<span id = "age-max"> </span> </p>
+     <div id="age_slider"></div>
+
+    <br>
+    <button id = "generate-button">Filter Animals</button>
+    <button id = "reset-button" onclick = "resetFilters(); generateAnimalsList()";>Reset Filters</button>
+
+    </div>
+    <div id = "animals-list" class = "col-md-8" > 
+
+    </div>
+
+</div>
+
+<script>
+var slider = $("#age_slider").slider({
+        range: true,
+        min: 0,
+        max: 15,
+        values: [<%= @ageMin %>, <%= @ageMax %>],
+        slide: function(event, ui) {
+            $("#age-min").text(ui.values[0]);
+            $("#age-max").text(ui.values[1]);
+        }
+    });
+$("#age-min").text(slider.slider("values")[0]);
+$("#age-max").text(slider.slider("values")[1]);
+
+
+$(".list-card").hover(
+  function(){
+    $(this).find(".glyphicon-pencil").show()
+  },
+  function(){
+    $(this).find(".glyphicon-pencil").hide()
+  }
+)
+
+var animalData
+var queryNumber = 0;
+function generateAnimalsList(){
+  var myURL = "";
+  myURL += document.location;
+  params = {};
+  if (queryNumber == 0){
+    if(myURL.charAt(myURL.indexOf("?n=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.name = myURL.substring(myURL.indexOf("?n=")+3, myURL.indexOf("&?b="))
+      while(params.name.indexOf("+")!=-1){
+        params.name = params.name.replace("+", " ");
+      }
+      document.getElementById("filter-name").value = params.name
+    }
+    else{params.name = $("#filter-name").val();}
+
+    if(myURL.charAt(myURL.indexOf("?b=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.breed = myURL.substring(myURL.indexOf("?b=")+3, myURL.indexOf("&?g="))
+      document.getElementById("filter-breed").value = params.breed
+    }
+    else{params.breed = $("#filter-breed").val();}
+
+    if(myURL.charAt(myURL.indexOf("?g=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.gender = myURL.substring(myURL.indexOf("?g=")+3, myURL.indexOf("&?s="))
+      document.getElementById("filter-gender").value = params.gender
+    }
+    else{params.gender = $("#filter-gender").val();}
+
+    if(myURL.charAt(myURL.indexOf("?s=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.status = myURL.substring(myURL.indexOf("?s=")+3, myURL.indexOf("&?a="))
+      document.getElementById("filter-status").value = params.status
+    }
+    else{params.status = $("#filter-status").val();}
+
+    if(myURL.charAt(myURL.indexOf("?a=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.age_min = parseInt(myURL.substring(myURL.indexOf("?a=")+3, myURL.indexOf("&?A=")))}
+    else{params.age_min = $("#age-min").text();}
+    if(myURL.charAt(myURL.indexOf("?A=")+3)!="&" && myURL.indexOf("?n=")!=-1){params.age_max = parseInt(myURL.substring(myURL.indexOf("?A=")+3, myURL.indexOf("&?Act=")))}
+    else{params.age_max = $("#age-max").text();}
+
+    if(myURL.charAt(myURL.indexOf("?Act=")+5)!="&" && myURL.indexOf("?n=")!=-1){params.active = myURL.substring(myURL.indexOf("?Act=")+5, myURL.indexOf("&?Inact="))}
+    else{params.active = $("#active-chk")[0].checked};
+    if(myURL.charAt(myURL.indexOf("?Inact=")+7)!="&" && myURL.indexOf("?n=")!=-1){params.inactive = myURL.substring(myURL.indexOf("?Inact=") + 7, myURL.length)}
+    else{params.inactive = $("#inactive-chk")[0].checked};
+  }
+  else{
+      params.name = $("#filter-name").val();
+    params.breed = $("#filter-breed").val();
+    params.gender = $("#filter-gender").val();
+    params.status = $("#filter-status").val();
+    params.age_min = $("#age-min").text();
+    params.age_max = $("#age-max").text();
+    params.active = $("#active-chk")[0].checked;
+    params.inactive = $("#inactive-chk")[0].checked;
+
+
+  }
+
+  $("#age-min").text(params.age_min);
+  $("#age-max").text(params.age_max);
+  $("#age_slider").slider("values", 0, params.age_min);
+  $("#age_slider").slider("values", 1, params.age_max);
+  console.log(params)
+  $.ajax({
+    url: "animals/query",
+    data: params,
+    success: function(result){
+
+      // sort animals by sub-status then status
+      result.sort(function(a, b){
+      if(a.sub_status < b.sub_status) return -1;
+      if(a.sub_status > b.sub_status) return 1;
+      return 0;
+      })
+      result.sort(function(a, b){
+      if(a.status < b.status) return -1;
+      if(a.status > b.status) return 1;
+      return 0;
+      })
+
+      animalData = result
+      var str = "<table class='table table-bordered table-hover table-striped'> <thead> <tr> <th>Name</th> <th>Status</th> <th>Sub-Status</th> <th>Location</th> <th>Marketing</th> </tr> </thead>" 
+        for (x in result){
+          str += "<tr>"
+
+          str += "<td> <div class=\"tooltip2\"><a href='/animals/profile?method=get&param=" + result[x].id + " '  >" + result[x].name + "</a><span class=\"tooltiptext2\"><div class= \"tooltiptext3\"><p class=\"two\">" 
+
+          str += "<div class=\"header\">" + result[x].name + "</div><b>Breed: </b>"+ result[x].primary
+          str += "<br><b>Birthday: </b>" + result[x].birthday.slice(0,result[x].birthday.length-6)  + "<br><b>Age: </b>" + result[x].age +"<br><b>Gender: </b>" + result[x].gender 
+          str += "<br><b>Spayed/Neutered: </b>" + result[x].neutered + "<br><b>Adoption Fee: </b>" + result[x].adoption_fee 
+          str += "<br><b> Coordinator: </b>" + result[x].coordinator + "<br><b> Notes: </b>" + result[x].notes 
+          str += "</div><div class = \"tooltiptext4\"><img src=" +  result[x].picture.picture.url +" "+ "height=\"150px\" width=\"150px\" align=\"right\"></p></div></span></div></td>"
+
+          str += "<td>" + result[x].status + "</td>"
+          str += "<td>" + result[x].sub_status + "</td>"
+          str += "<td>" + result[x].location + "</td>"
+          str += "<td>" + result[x].marketing + "</td>"
+          str += "</tr>"
+
+        }
+        str +=  " </table>"
+        $("#animals-list").html(str);
+    },
+  });
+  str = ""
+  str += document.location
+  str = str.substring(0,str.indexOf("?n="))
+  name = ""
+  name += params.name
+  while(name.indexOf(" ")!=-1){
+    name = name.replace(" ", "+")
+  }
+  queryNumber +=1
+  console.log(params)
+  myURL = str + "?n=" + name + "&?b=" + params.breed + "&?g=" + params.gender + "&?s=" + params.status + "&?a=" + params.age_min + "&?A=" + params.age_max + "&?qn=" + queryNumber +  "&?Act=" + params.active + "&?Inact=" + params.inactive;
+  console.log(myURL)
+
+  window.history.pushState('obj', 'newtitle', myURL)
+
+}
+
+function resetFilters(){
+  params.name = "";
+  params.breed = "";
+  params.gender = "";
+  params.status = "";
+  params.age_min = 0;
+  params.age_max = 15;
+  $("#filter-name").val('')
+  $("#filter-breed").prop('selectedIndex',0)
+  $("#filter-gender").prop('selectedIndex',0)
+  $("#filter-status").prop('selectedIndex',0)
+  $("#age-min").text(0);
+  $("#age-max").text(15);
+  $("#age_slider").slider("values", 0, 0);
+  $("#age_slider").slider("values", 1, 15);
+  str = ""
+  str += document.location
+  str = str.substring(0,str.indexOf("?n="))
+  console.log(str)
+  myURL = str + "?n=" + params.name + "&?b=" + params.breed + "&?g=" + params.gender + "&?s=" + params.status + "&?a=" + params.age_min + "&?A=" + params.age_max;
+  window.history.pushState('obj', 'newtitle', myURL)
+}
+
+
+function convertArrayOfObjectsToCSV(args) {  
+  var result, ctr, keys, columnDelimiter, lineDelimiter, data;
+
+  data = args.data || null;
+  if (data == null || !data.length) {
+      return null;
+  }
+
+  columnDelimiter = args.columnDelimiter || ',';
+  lineDelimiter = args.lineDelimiter || '\n';
+
+  keys = Object.keys(data[0]);
+
+  result = '';
+  result += keys.join(columnDelimiter);
+  result += lineDelimiter;
+
+  data.forEach(function(item) {
+      ctr = 0;
+      keys.forEach(function(key) {
+          if (ctr > 0) result += columnDelimiter;
+
+          result += item[key];
+          ctr++;
+      });
+      result += lineDelimiter;
+  });
+
+  return result;
+}
+
+function downloadCSV(args) {
+    animalData2 = formatData(animalData)
+    var data, filename, link;
+    var csv = convertArrayOfObjectsToCSV({
+        data: animalData2
+    });
+
+    if (csv == null) return;
+
+    // date
+    var today = new Date();
+    var month = today.getMonth()+1;
+    var day = today.getDate();
+    if(month < 10){
+      month = "0" + month;
+    }
+    if(day < 10){
+      day = "0" + day;
+    }
+    var date = today.getFullYear()+ "-" + month + "-" + day;
+
+    // time
+    var hour = today.getHours();
+    var minute = today.getMinutes();
+    var second = today.getSeconds();
+    if(hour < 10){
+      hour = "0" + hour;
+    }
+    if(minute < 10){
+      minute = "0" + minute;
+    }
+    if(second < 10){
+      second = "0" + second;
+    }
+
+    var time = hour + "" + minute + "" + second;
+
+    filename = args.filename || 'export.csv';
+    filename += " v." + date + " " + time + ".csv";
+
+    if (!csv.match(/^data:text\/csv/i)) {
+        csv = 'data:text/csv;charset=utf-8,' + csv;
+    }
+    data = encodeURI(csv);
+
+    link = document.createElement('a');
+    link.setAttribute('href', data);
+    link.setAttribute('download', filename);
+    link.click();
+}
+
+
+$("#generate-button").on("click", function(){
+  generateAnimalsList();
+})
+generateAnimalsList();
+
+var tipwidth='50%' //default tooltip width
+var tipbgcolor='lightyellow'  //tooltip bgcolor
+var disappeardelay=250  //tooltip disappear speed onMouseout (in miliseconds)
+var vertical_offset="0px" //horizontal offset of tooltip from anchor link
+var horizontal_offset="-3px" //horizontal offset of tooltip from anchor link
+
+/////No further editting needed
+
+var ie4=document.all
+var ns6=document.getElementById&&!document.all
+
+if (ie4||ns6)
+  document.write('<div id="fixedtipdiv" style="visibility:hidden;width:'+tipwidth+';background-color:'+tipbgcolor+'" ></div>')
+
+  function getposOffset(what, offsettype){
+  var totaloffset=(offsettype=="left")? what.offsetLeft : what.offsetTop;
+  var parentEl=what.offsetParent;
+  while (parentEl!=null){
+    totaloffset=(offsettype=="left")? totaloffset+parentEl.offsetLeft : totaloffset+parentEl.offsetTop;
+    parentEl=parentEl.offsetParent;
+  }
+  return totaloffset;
+}
+
+
+function showhide(obj, e, visible, hidden, tipwidth){
+  if (ie4||ns6)
+    dropmenuobj.style.left=dropmenuobj.style.top=-500
+  if (tipwidth!=""){
+    dropmenuobj.widthobj=dropmenuobj.style
+    dropmenuobj.widthobj.width=tipwidth
+  }
+  if (e.type=="click" && obj.visibility==hidden || e.type=="mouseover")
+    obj.visibility=visible
+  else if (e.type=="click")
+    obj.visibility=hidden
+}
+
+function iecompattest(){
+  return (document.compatMode && document.compatMode!="BackCompat")? document.documentElement : document.body
+}
+
+function clearbrowseredge(obj, whichedge){
+  var edgeoffset=(whichedge=="rightedge")? parseInt(horizontal_offset)*-1 : parseInt(vertical_offset)*-1
+  if (whichedge=="rightedge"){
+    var windowedge=ie4 && !window.opera? iecompattest().scrollLeft+iecompattest().clientWidth-15 : window.pageXOffset+window.innerWidth-15
+    dropmenuobj.contentmeasure=dropmenuobj.offsetWidth
+    if (windowedge-dropmenuobj.x < dropmenuobj.contentmeasure)
+      edgeoffset=dropmenuobj.contentmeasure-obj.offsetWidth
+  }
+  else{
+  var windowedge=ie4 && !window.opera? iecompattest().scrollTop+iecompattest().clientHeight-15 : window.pageYOffset+window.innerHeight-18
+  dropmenuobj.contentmeasure=dropmenuobj.offsetHeight
+  if (windowedge-dropmenuobj.y < dropmenuobj.contentmeasure)
+    edgeoffset=dropmenuobj.contentmeasure+obj.offsetHeight
+  }
+  return edgeoffset
+}
+
+function fixedtooltip(menucontents, obj, e, tipwidth){
+  if (window.event) event.cancelBubble=true
+  else if (e.stopPropagation) e.stopPropagation()
+  clearhidetip()
+  dropmenuobj=document.getElementById? document.getElementById("fixedtipdiv") : fixedtipdiv
+  dropmenuobj.innerHTML=menucontents
+  if (!dropmenuobj.repositioned){
+    document.body.appendChild(dropmenuobj)
+    dropmenuobj.repositioned = true
+  }
+
+  if (ie4||ns6){
+    showhide(dropmenuobj.style, e, "visible", "hidden", tipwidth)
+    dropmenuobj.x=getposOffset(obj, "left")
+    dropmenuobj.y=getposOffset(obj, "top")
+    dropmenuobj.style.left=dropmenuobj.x-clearbrowseredge(obj, "rightedge")+"px"
+    dropmenuobj.style.top=dropmenuobj.y-clearbrowseredge(obj, "bottomedge")+obj.offsetHeight+"px"
+  }
+}
+
+function hidetip(e){
+  if (typeof dropmenuobj!="undefined"){
+    if (ie4||ns6)
+      dropmenuobj.style.visibility="hidden"
+  }
+}
+
+function delayhidetip(){
+  if (ie4||ns6)
+    delayhide=setTimeout("hidetip()",disappeardelay)
+}
+
+function clearhidetip(){
+  if (typeof delayhide!="undefined")
+    clearTimeout(delayhide)
+}
+
+function formatData(data){
+
+  arr =  []
+
+  for(i = 0; i < data.length; i++){
+    json = {}
+    json.ID = i
+    json.Name = data[i]["name"]
+    json.Age = data[i]["age"]
+    data[i]["birthday"] = data[i]["birthday"].replace(",", "");
+    json.Birthday = data[i]["birthday"].slice(0,data[i]["birthday"].length-6)
+    json.Gender = data[i]["gender"]
+    json["Primary Breed"] = data[i]["primary"]
+    json.Status = data[i]["status"]
+    json.Substatus = data[i]["sub-status"]
+    json.Location = data[i]["location"]
+    json.Marketing = data[i]["marketing"]
+    json.Neutered = data[i]["neutered"]
+    json.Adoptionfee = data[i]["adoption_fee"]
+    json.Coordinator = data[i]["coordinator"]
+    arr.push(json)
+  }
+  return arr
+}
+</script>
+

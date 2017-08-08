@@ -1,0 +1,591 @@
+<style>
+.form{
+  padding:0px;
+  background-color: lightgray;
+}
+#characteristics-body{
+    overflow-y:auto;
+    
+}
+.mobile-tabs{
+  z-index: 10;
+  position: relative;
+  left:0px;
+
+  height:40px;
+  font-size: 30px;
+  background-color:lightgray;
+  text-align: center;
+  width:100%;
+}
+.mobile-tabs-wrapper{
+  position:relative;
+  width:100%;
+  height:100%;
+}
+#tab-left{
+   z-index: 11;
+   position: absolute;
+   top:0px;
+  left:0px;
+  border:solid black 1px;
+  width:40px;
+  padding:3px;
+  margin:auto;
+  background-color:gray;
+
+}
+#tab-right{
+  z-index: 11;
+  position: absolute;
+  top:0px;
+  right:0px;
+  border:solid black 1px;
+  width:40px;
+  padding:3px;
+  margin:auto;
+  background-color:gray;
+
+}
+.mobile-tab-title{
+  display:none;
+}
+
+.pg-title{
+  margin-bottom: 0px
+}
+#characteristics-body{
+  padding:0px;
+  background-color:#E0E0E0;
+}
+#paper-body{
+  padding:0px;
+  background-color:#E0E0E0;
+}
+#notes-body{
+  padding:0px;
+  background-color:#E0E0E0;
+}
+#tracking-body{
+  padding:0px;
+  background-color:#E0E0E0;
+}
+.submit{
+  width:100%;
+  height:40px;
+  margin-top:-5px;
+  margin-bottom:0px;
+  padding-top:9px;
+  padding-bottom:9px;
+}
+.select-item{
+  background-color:#F0F0F0;
+}
+.remove-item{
+  position: absolute;
+  top:5px;
+  right:0px;
+}
+.dropdown-toggle{
+  width:100%;
+}
+.file-upload{
+  width:100%;
+}
+.btn-file{
+  width:100%;
+}
+.picture{
+  text-align: center
+}
+#profilepic{
+  display: block;
+  margin:auto;
+}
+#pic-preview{
+  margin:auto;
+}
+.profile-file{
+  background-color:#FFF;
+  padding:5px;
+  border-radius: 10px;
+  margin:5px;
+}
+</style>
+<!-- Inner form Content  Profile page-->
+<div class= "col-xs-12 pg-outer">
+  <h2 class= "pg-title" style="text-align: center">Add New Animal</h2>
+  <div class="form col-md-12">
+    <!-- Begin animal form -->
+    <%= form_for(@animal, url: animals_path(@animal))  do |f| %>
+
+
+    <!--===================== BASIC CHARACTERISTICS =======================-->
+    
+    <div class="mobile-tabs">
+      <div class="mobile-tabs-wrapper">
+        <span id = "tab-left" class = "glyphicon glyphicon-chevron-left"> </span>
+        <div id = "mobile-tab-content" id = >
+          
+          <span id = "characteristics-title" class="mobile-tab-title">Characteristics</span>
+          <span id = "tracking-title" class="mobile-tab-title">Tracking</span>
+          <span id = "paperwork-title" class="mobile-tab-title">Paperwork</span>
+          <span id = "notes-title" class="mobile-tab-title">Notes</span>
+
+
+        </div>
+        
+        <span id = "tab-right" class = "glyphicon glyphicon-chevron-right"> </span>
+      </div>
+    </div>
+
+
+    <div class="form-body">
+      <!--Basic Characteristics Body -->
+      <div id = "characteristics-body" class="collapse in col-md-12 inner-formdiv">
+        
+        <!-- Profile Picture -->
+        <div class="picture col-md-3">
+          <%= f.label :picture %>
+          <div id="pic-preview" style="padding: 5px">
+            <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
+            <!-- alt="Dog Image"-->
+          </div>
+
+          <img id="profilepic" src="#" alt="Dog Image" style="display: none"/>
+          <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'file-upload profile-file' %>
+        </div>
+
+        <!-- Characteristics Info -->
+        <div class="characteristics-info col-md-9">
+
+
+          <div class= "basics-inner col-md-5">
+            <!-- Physical Features -->
+            <a class= "card-header basics-header" data-toggle="collapse" href="#basics-body">
+              <div>
+                <h4 class="tab-inner-title">Characteristics</h4>
+              </div>
+            </a>
+
+            <div id="basics-body" class="collapse in">
+              <!-- Basics -->
+              
+              <%= f.label :name %>
+              <%= f.text_field :name, class: 'required form-control' %>
+
+              <%= f.label :date_of_birth %>
+              <%= f.text_field :birthday, class: 'form-control datepicker required' %>
+
+              <%= f.label :gender %>
+              <%= f.select :gender, [ 'Male','Female'], {:prompt => 'Select Gender'}, class: "form-control" %>   
+
+              <%= f.label :primary_breed_id, "Primary Breed" %>
+              <%= f.collection_select(:primary_breed_id, @primary, :id, :name, {:prompt => "Select Breed"}, {class:"form-control required"} ) %>
+
+               <%= label :post, "Additional Breeds" %>
+              <%= collection_select(:breed_id, 0, @secondary, :id, :name, {:prompt => "Select Breed"}, {class: "form-control breed-selecter"}) %>              
+              <div id = "breeds-list"></div>
+              <%= text_field_tag 'breeds', "", class: "hidden-breeds", style: "display:none;"  %>
+
+              <%= f.label :color_primary %>
+              <%= f.text_field :color_primary, class: 'form-control' %>
+
+              <%= f.label :color_secondary %>
+              <%= f.text_field :color_secondary, class: 'form-control' %> 
+
+              <%= label :post, "behavior" %>
+              
+              <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Select Behavior
+                <span class="caret"></span></button>
+                
+                <ul class="dropdown-menu">
+                  <% @behavior.each do |b| %>
+                  <li  class = "behavior-dd-item" id = "behavior-dd-<%= b.id %>"><a href="#" class= "behavior-dd-item" value = '<%= b.id %>'> <%= b.name %></a>  </li> 
+                  <% end %>
+                </ul>
+              </div>
+              <div id = "behavior-list"></div>
+              <%= text_field_tag 'behavior', "", class: "hidden-behavior", style: "display:none;"  %>
+              <br>
+            </div>
+
+          </div>
+          
+
+          <div class= "basics-inner col-md-5">
+            <!-- Physical Features -->
+            <a class= "card-header basics-header" data-toggle="collapse" href="#basics-track-body">
+              <div>
+                <h4 class="tab-inner-title">Tracking</h4>
+              </div>
+            </a>
+
+            <div id="basics-track-body" class="collapse in">
+              <!-- Tracking -->
+              <%= f.label :input_date %>
+              <%= f.text_field :input_date, class: 'form-control datepicker' %>
+
+              <%= f.label :microchip_number , "Microchip #"%>
+              <%= f.text_field :microchip_number, class: 'form-control' %>
+
+              <%= f.label :coordinator, "Assigned Coordinator"%>
+              <%= f.collection_select :coordinator_id, @coordinators, :id, :name, {:prompt => "Select Coordinator"}, class: 'form-control required' %>
+
+              <%= f.label :status %>
+              <%= f.collection_select :status_id, @status, :id, :name, {:prompt => "Select Status"}, class: 'form-control required' %> 
+              
+              <%= f.label :sub_status %>
+              <%= f.collection_select :sub_status_id, @sub_status, :id, :name, {:prompt => "Select SubStatus"}, class: "form-control"%> 
+
+              <%= f.label :marketing %>
+              <%= f.collection_select :marketing_id, @marketing, :id, :name, {:prompt => "Select Marketing Status"}, class: 'form-control required' %>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      
+      <!--===================== PAPERWORK =======================-->
+
+      <!-- Paperwork Body -->
+      <div id="paper-body" class="collapse in inner-formdiv" style="display:none">
+        
+        <div id="upload-buttons" style="padding-top: 15px">
+          <div class = "upload-wrapper" style= "padding-bottom: 15px">
+              <span class="btn btn-large btn-info btn-file">
+                  <%= label_tag "Vetting Document" %>
+                  <%= f.file_field :vetting_document, class: 'file-upload' %>
+              </span>
+              <span class = "file-name"></span>
+              <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+          </div>
+
+          <div class = "upload-wrapper" style= "padding-bottom: 15px">
+              <span class="btn btn-large btn-info btn-file">
+                  <%= label_tag "Intake Document" %>
+                  <%= f.file_field :intake_document, class: 'file-upload' %>
+              </span>
+              <span class = "file-name"></span>
+              <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+           </div>
+
+           <div class = "upload-wrapper" style= "padding-bottom: 15px">
+              <span class="btn btn-large btn-info btn-file">
+                  <%= label_tag "Owner Surrender" %>
+                  <%= f.file_field  :owner_surrender_document, class: 'file-upload' %>
+              </span>
+              <span class = "file-name"></span>
+              <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+          </div>
+
+          <div class = "upload-wrapper" style= "padding-bottom: 15px">
+            <span class="btn btn-large btn-info btn-file">
+                <%= label_tag "Home Check" %>
+                <%= f.file_field  :home_check_document, class: 'file-upload' %>
+            </span>
+            <span class = "file-name"></span>
+            <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+          </div>
+
+          <div class = "upload-wrapper" style= "padding-bottom: 15px">
+            <span class="btn btn-large btn-info btn-file">
+                <%= label_tag "Match Application" %>
+                <%= f.file_field  :match_application_document, class: 'file-upload' %>
+            </span>
+            <span class = "file-name"></span>
+            <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+          </div>
+
+          <div class = "upload-wrapper" style= "padding-bottom: 15px">
+            <span class="btn btn-large btn-info btn-file">
+                <%= label_tag "Adoption Application" %>
+                <%= f.file_field  :adoption_application_document, class: 'file-upload' %>
+            </span>
+            <span class = "file-name"></span>
+            <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+          </div>
+
+          <div class = "upload-wrapper">
+            <span class="btn btn-large btn-info btn-file">
+                <%= label_tag "Adoption Contract" %>
+                <%= f.file_field  :adoption_contract_document, class: 'file-upload' %>
+            </span>
+            <span class = "file-name"></span>
+            <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+          </div>
+        </div>
+      </div>
+
+
+      <!--===================== TRACKING =======================-->
+      
+
+      <!-- Tracking Body -->
+      <div id="tracking-body" class="collapse inner-formdiv" style="display:none">
+
+        <!-- BEGIN TRACKING TAB DIV -->
+        <div id="status-div" class="tracking-innerDiv col-md-8">
+
+          <!-- Information for Statuses in Tabs-->
+          <div class="status-tabsInner tab-content">
+            <!-- INTAKE -->
+              <!-- Selecting Date-->
+              <%= f.label :intake_date, "Intake Date" %>
+              <%= text_field_tag 'intake_dt', "" ,class: 'form-control datepicker' %>
+              
+              <%= f.label :intake_sub, "Sub Status"%>
+              <%= collection_select(:intake_sub, :sub_status_id,  SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}, class:'form-control',) %>
+              
+              <!-- Selecting Prev Location-->
+              <%= f.label :intake_loc, "Previous Location"%>
+              <%= collection_select(:intake_loc, :intake_reason_id, IntakeReason.all, :id, :name, {:prompt => "Select Previous Location"}, class:'form-control',) %>
+
+              <!-- Selecting Previous Location-->
+              <%= f.label :intake_prev, "Animal Facility"%>
+              <%= collection_select(:intake_prev, :animal_facility_id, AnimalFacility.all, :id, :name, {:prompt => "Select Animal Facility"},class:'form-control',) %>
+
+              <!-- Inputing Details-->
+              <%= f.label :intake_comm, "Details" %>
+              <%= text_field_tag 'intake_cm', "", class: 'form-control' %>
+
+          </div>
+        </div> 
+        <!-- END TRACKING TAB DIV -->
+      </div>
+
+      <!--===================== NOTES =======================-->
+
+      <!-- Notes Body -->
+      <div id="notes-body" class="collapse inner-formdiv" style="display:none">
+            <!-- Inputing Details-->
+        <%= f.label :notes, "Type any notes below" %>
+        <%= f.text_area(:notes, cols: 40, rows: 15)%>
+      </div>
+    </div>
+  </div>
+
+   <%= f.submit "Add Animal", class: "add-btn btn-primary submit submit-btn" %>
+    <% end %>
+  </div>
+
+</div>
+
+
+<!-- End Html -->
+    
+<script>
+var tabs = [
+{title: "Characteristics", target: "characteristics-body", tab: "characteristics-title"},
+{title: "Paperwork", target: "paper-body" , tab: "paperwork-title"},
+{title: "Tracking", target: "tracking-body", tab: "tracking-title"},
+{title: "Notes", target: "notes-body", tab: "notes-title"}
+];
+var tabIndex = 0;
+$("#tab-left").on("click", function(){
+  tabLeft();
+
+})
+$("#tab-right").on("click", function(){
+  tabRight();
+
+})
+function getLeft(){
+  var tmp = tabIndex - 1;
+  if(tmp < 0){
+    tmp = tabs.length-1;
+  }
+  
+  return tmp;
+}
+function getRight(){
+  var tmp = tabIndex + 1;
+  if(tmp >= tabs.length){
+    tmp = 0;
+  }
+  
+  return tmp;
+}
+
+function showTab(i){
+  $(".mobile-tab-title").hide();
+   $("#"+tabs[tabIndex].tab).show();
+  $(".inner-formdiv").hide();
+  $("#"+tabs[i].target).show();
+
+}
+function tabRight(){
+  tabIndex = getRight();
+  showTab(tabIndex);
+} 
+function tabLeft(){
+  var next = getLeft();
+
+
+
+  tabIndex = next;
+  showTab(tabIndex);
+} 
+
+/*
+<span id = "characteristics-title" class="mobile-tab-title">Characteristics</span>
+          <span id = "tracking-title" class="mobile-tab-title">Tracking</span>
+          <span id = "paperwork-title" class="mobile-tab-title">Paperwork</span>
+          <span id = "notes-title" class="mobile-tab-title">Notes</span>
+
+*/
+
+showTab(tabIndex)
+
+  $("#animal_species_id").change(function(){
+    console.log($("#animal_breed_id"))
+    if ($("#animal_species_id").val() == 1) {
+      $("#animal_breed_id option:eq(1)").hide();
+      $("#animal_breed_id option:eq(0)").show();
+    } else {
+      $("#animal_breed_id option:eq(0)").hide();
+      $("#animal_breed_id option:eq(1)").show();
+
+    }
+    console.log("Hey I changed :)")
+  });
+
+  $('.submit-btn').on('click', function(e){
+        if (!validateForm($(this).closest("form")[0]))
+            e.preventDefault()
+        
+   })
+
+  $('.datepicker').datetimepicker({
+    //endDate: '+5y',
+    format:'YYYY/MM/DD',
+    
+  });
+
+  $(".profile-file").change(function(input) { 
+    input = input.target
+    if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#profilepic')
+                    .attr('src', e.target.result)
+                    .width(150)
+                    .height(200);
+                $('#pic-preview').hide()  
+                $('#profilepic').show()
+            };
+
+            reader.readAsDataURL(input.files[0]);
+
+        }
+  });
+
+  $(".file-upload").change(function(input) { 
+    var input = input.target;
+    if (input.files && input.files[0]) {
+        var fileName = input.files[0].name;
+        var container =  $(this).closest(".upload-wrapper");
+        var nameSpan = container.find(".file-name");
+        nameSpan.text(fileName);
+        var removeSpan = container.find(".remove-file");
+        removeSpan.show();
+        }
+  }); 
+
+  $(".remove-file").on('click', function(){
+        var container =  $(this).closest(".upload-wrapper");
+
+        nameSpan = container.find(".file-name");
+        nameSpan.text("");
+
+        var removeSpan = container.find(".remove-file");
+        removeSpan.hide();
+
+        var inputfield  = container.find(".file-upload");
+        inputfield[0].value = "";
+
+  });
+  $(".breed-selecter").on("change", function(e){
+
+    var text = $(".breed-selecter option:selected").text();
+    var val = $(".breed-selecter option:selected").val();
+    if(text == "Select Breed"){
+      return
+    }
+    html = $("#breeds-list").html();
+    html += "<div id = 'breed-" + val + "'' class = 'breed-item select-item' style = 'position: relative; display: inline-block;'>" 
+        + "<p style = 'margin:0px; padding-right:15px'>" + text + "</p>" + 
+       "<span class = 'glyphicon glyphicon-remove remove-breed remove-item' style='margin:2px; float:right;'>" +"</span>" + 
+       " </div>"
+    $("#breeds-list").html(html);
+    $(".remove-breed").on("click", function(){
+      $(this).closest(".breed-item").detach()
+      setHiddenBreeds();
+    })
+    //just for now while im setting up the new breeds
+    $(this).get(0).selectedIndex = 0;
+    setHiddenBreeds();
+  })
+  function setHiddenBreeds(){
+    str = ""
+    $(".breed-item").each(function(){
+      var id = this.id.split("-")[1]
+      str += id + "|"
+    })
+    $(".hidden-breeds").val(str)
+  }
+
+
+
+
+  $(".behavior-dd-item").on("click", function(e){
+
+    e.stopPropagation();
+    e.preventDefault();
+    var text = $(this).text();
+    var val = $(this).attr("value");
+    if(text == "Select Behavior"){
+      return
+    }
+    html = $("#behavior-list").html();
+    html += "<div id = 'behavior-" + val + "'' class = 'behavior-item select-item' style = 'position: relative; display: inline-block;'>" 
+        + "<p style = 'margin:0px; padding-right:15px'>" + text + "</p>" + 
+       "<span class = 'glyphicon glyphicon-remove remove-behavior remove-item' style='margin:2px; float:right;'>" +"</span>" + 
+       " </div>"
+    $("#behavior-list").html(html);
+    $(".remove-behavior").on("click", function(){
+      $(this).closest(".behavior-item").detach()
+      setHiddenBehavior();
+    })
+    //just for now while im setting up the new breeds
+    $(this).get(0).selectedIndex = 0;
+    setHiddenBehavior();
+  })
+  function setHiddenBehavior(){
+
+    str = ""
+    $(".behavior-dd-item").show();
+
+    $(".behavior-item").each(function(){
+      var id = this.id.split("-")[1]
+      $("#behavior-dd-" +id).hide();
+      str += id + "|"
+    })
+    $(".hidden-behavior").val(str)
+  }
+
+  function setDivSizes(){
+    console.log
+    var height  =$( window ).height() - ($("#characteristics-body").offset().top - $(window).scrollTop())  - 40;
+    $("#characteristics-body").css("height", height);
+    $("#tracking-body").css("height", height);
+    $("#paper-body").css("height", height);
+    $("#notes-body").css("height", height);
+  }
+  setDivSizes();
+
+</script>
+

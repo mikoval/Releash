@@ -1,0 +1,132 @@
+<% modal ||= false %>
+<% remote = modal ? true : false %>
+
+<%= form_for(paperwork_animal, remote: remote, url: url_for(action: 'editAnimal', animal_id: animal_id, controller: 'animals', method: 'patch'))      do |f| %>
+
+    <%= f.hidden_field :animal_id, value: animal_id%>
+
+    <div id="upload-buttons" style="padding-top: 15px">
+
+    <div class = "upload-wrapper">
+        <span class="btn btn-large btn-warning btn-file">
+            <%= label_tag "Vetting Document" %>
+            <%= f.file_field :vetting_document, class: 'file-upload' %>
+        </span>
+        <span class = "file-name">
+          <% if @animal.vetting_document.length > 0 %>
+            <%= @animal.vetting_document.file.filename %> 
+          <% end %>
+        </span>
+        <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"> </span>
+    </div>
+
+    <div class = "upload-wrapper">
+        <span class="btn btn-large btn-primary btn-file">
+            <%= label_tag "Intake Document" %>
+            <%= f.file_field :intake_document, class: 'file-upload' %>
+        </span>
+        <span class = "file-name"> 
+           <% if @animal.intake_document.length > 0 %>
+          <%= @animal.intake_document.file.filename %> 
+          <% end %>
+        </span>
+        <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+     </div>
+
+     <div class = "upload-wrapper">
+        <span class="btn btn-large btn-info btn-file">
+            <%= label_tag "Owner Surrender" %>
+            <%= f.file_field  :owner_surrender_document, class: 'file-upload' %>
+        </span>
+        <span class = "file-name">
+          <% if @animal.owner_surrender_document.length > 0 %>
+            <%= @animal.owner_surrender_document.file.filename %> 
+          <% end %>
+        </span>
+        <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+    </div>
+
+    <div class = "upload-wrapper">
+      <span class="btn btn-large btn-info btn-file">
+          <%= label_tag "Home Check" %>
+          <%= f.file_field  :home_check_document, class: 'file-upload' %>
+      </span>
+      <span class = "file-name">
+          <% if @animal.home_check_document.length > 0 %>
+            <%= @animal.home_check_document.file.filename %> 
+          <% end %>
+        </span>
+      <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+    </div>
+
+    <div class = "upload-wrapper">
+      <span class="btn btn-large btn-info btn-file">
+          <%= label_tag "Match Application" %>
+          <%= f.file_field  :match_application_document, class: 'file-upload' %>
+      </span>
+      <span class = "file-name">
+          <% if @animal.match_application_document.length > 0 %>
+            <%= @animal.match_application_document.file.filename %> 
+          <% end %>
+        </span>
+      <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+    </div>
+
+    <div class = "upload-wrapper">
+      <span class="btn btn-large btn-info btn-file">
+          <%= label_tag "Adoption Application" %>
+          <%= f.file_field  :adoption_application_document, class: 'file-upload' %>
+      </span>
+      <span class = "file-name">
+        <% if @animal.adoption_application_document.length > 0 %>
+          <%= @animal.adoption_application_document.file.filename %> 
+          <% end %></span>
+      <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+    </div>
+
+    <div class = "upload-wrapper">
+      <span class="btn btn-large btn-info btn-file">
+          <%= label_tag "Adoption Contract" %>
+          <%= f.file_field  :adoption_contract_document, class: 'file-upload' %>
+      </span>
+      <span class = "file-name">
+          <% if @animal.adoption_contract_document.length > 0 %>
+            <%= @animal.adoption_contract_document.file.filename %> 
+          <% end %>
+        </span>
+      <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
+    </div>
+
+    </div>
+      
+
+    <%= f.submit 'Submit', class: 'btn btn-primary submit-btn' %>
+<% end %>
+
+<script>
+  $(".file-upload").change(function(input) { 
+    var input = input.target;
+    if (input.files && input.files[0]) {
+        var fileName = input.files[0].name;
+        var container =  $(this).closest(".upload-wrapper");
+        var nameSpan = container.find(".file-name");
+        nameSpan.text(fileName);
+        var removeSpan = container.find(".remove-file");
+        removeSpan.show();
+        }
+  }); 
+  $(".remove-file").on('click', function(){
+        var container =  $(this).closest(".upload-wrapper");
+
+        nameSpan = container.find(".file-name");
+        nameSpan.text("");
+
+        var removeSpan = container.find(".remove-file");
+        removeSpan.hide();
+
+        var inputfield  = container.find(".file-upload");
+        inputfield[0].value = "";
+
+  });
+   
+</script>
