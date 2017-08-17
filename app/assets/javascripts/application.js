@@ -33,13 +33,10 @@ function checkEditable(userID, createdID, alertID){
 }
  function validateForm(param){
     ret = true
-    console.log("HEYYYYYY");
-    console.log($(param).find(".required"))
+ 
     
     $(param).find(".required").each(function(){
       if($(this).val()==""){
-          
-          console.log(this);
 
           $(this).addClass("required-error")
           ret = false;
@@ -48,7 +45,6 @@ function checkEditable(userID, createdID, alertID){
             $(this).removeClass("required-error")
         }
     })
-    console.log(ret);
     return ret;
 
   }

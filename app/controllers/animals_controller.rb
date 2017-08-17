@@ -420,7 +420,7 @@ class AnimalsController < ApplicationController
       redirect_to :controller => "animals", :action => "profile", :param => @animal
     else
       flash.now[:danger] = "Error adding Animal!"
-      render 'new'
+      redirect_to :controller => "animals", :action => "new"
     end
   end
   skip_before_filter :verify_authenticity_token, :only => :editAnimal

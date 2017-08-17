@@ -1,0 +1,120 @@
+.form{
+  padding:0px;
+  background-color: lightgray;
+}
+#characteristics-body{
+    overflow-y:auto;
+    
+}
+.mobile-tabs{
+  z-index: 10;
+  position: relative;
+  left:0px;
+
+  height:40px;
+  font-size: 30px;
+  background-color:lightgray;
+  text-align: center;
+  width:100%;
+}
+.mobile-tabs-wrapper{
+  position:relative;
+  width:100%;
+  height:100%;
+}
+#tab-left{
+   z-index: 11;
+   position: absolute;
+   top:0px;
+  left:0px;
+  border:solid black 1px;
+  width:40px;
+  padding:3px;
+  margin:auto;
+  background-color:gray;
+
+}
+#tab-right{
+  z-index: 11;
+  position: absolute;
+  top:0px;
+  right:0px;
+  border:solid black 1px;
+  width:40px;
+  padding:3px;
+  margin:auto;
+  background-color:gray;
+
+}
+.mobile-tab-title{
+  display:none;
+}
+
+.pg-title{
+  margin-bottom: 0px
+}
+#characteristics-body{
+  padding:0px;
+  background-color:#E0E0E0;
+}
+#paper-body{
+  padding:0px;
+  background-color:#E0E0E0;
+}
+#notes-body{
+  padding:0px;
+  background-color:#E0E0E0;
+}
+#tracking-body{
+  padding:0px;
+  background-color:#E0E0E0;
+}
+.submit{
+  width:100%;
+  height:40px;
+  margin-top:-5px;
+  margin-bottom:0px;
+  padding-top:9px;
+  padding-bottom:9px;
+}
+.select-item{
+  background-color:#F0F0F0;
+}
+.remove-item{
+  position: absolute;
+  top:5px;
+  right:0px;
+}
+.dropdown-toggle{
+  width:100%;
+}
+.file-upload{
+  width:100%;
+}
+.btn-file{
+  width:100%;
+}
+.picture{
+  text-align: center
+}
+#profilepic{
+  display: block;
+  margin:auto;
+}
+#pic-preview{
+  margin:auto;
+}
+.profile-file{
+  background-color:#FFF;
+  width:90%;
+  padding:5px;
+  border-radius: 10px;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:5px;
+  margin-bottom:5px;
+}
+.required-error{
+  background-color:lightpink;
+  border-color:red;
+}
