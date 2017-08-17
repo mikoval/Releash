@@ -1,6 +1,8 @@
 
 
 $bg-color: #FBFBFB;
+$navcolor: #4A494B;
+$widgetcol: #fff; 
 
 
 
@@ -44,10 +46,9 @@ body {
     height: 40px;
 }
 .brick{
-    border: solid;
-    border-color: #aaa;
-    background-color: #eee;
-    box-shadow: 0px 2px 1px #9B9B9B;
+    border: 1px solid $widgetcol;
+    background-color: $widgetcol;
+    box-shadow: 0px 1px 1px #9B9B9B;
 }
 .gridly{
     position:relative;
@@ -95,8 +96,8 @@ body {
 /* Navs*/
 
 #side-nav {
-    background-color: #4A494B;
-    box-shadow: 0px 2px 1px #4A494B;
+    background-color: $navcolor;
+    box-shadow: 0px 2px 1px $navcolor;
     position: fixed;
     height: 100vh;
     text-align: left;
@@ -127,10 +128,12 @@ body {
 
 #top-nav {
     box-shadow: 0px 1px 1px #4A494B;
-    background-color: white;
+    background-color: $navcolor;
     position:fixed;
     top:0px;
     z-index: 1;
+    width: 100%;
+    margin: 0px;
 
 }
 

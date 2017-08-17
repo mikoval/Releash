@@ -4,7 +4,7 @@
 
 
 <% if employee?(current_user) %>
-<%= link_to "<button>Add Animal</button>".html_safe,  :controller => "animals", :action => "new", :method => "get" %>
+<%= link_to "<button>Add Animal</button>".html_safe,  {:controller => "animals", :action => "new", :method => "get"}, {class: "main-btn"} %>
 <a href='#' style="float: right; padding-right: 10%"
         onclick='downloadCSV({ filename: "animals-data" });'
     >Download CSV</a>
