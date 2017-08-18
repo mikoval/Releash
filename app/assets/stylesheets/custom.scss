@@ -1,11 +1,8 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import 'set-style';
 
 /* mixins, variables, etc. */
-
-$gray-medium-light: #eaeaea;
-$bg-color: #fbfbfb;
-
 @mixin box_sizing {
   -moz-box-sizing:    border-box;
   -webkit-box-sizing: border-box;

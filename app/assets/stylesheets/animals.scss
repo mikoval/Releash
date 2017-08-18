@@ -2,13 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-//Style for tracking in profile
-$neutral: #e1e1e1;
-$blue : #2980b9;
-$bg-color: #FBFBFB;
-$navcolor: #4A494B;
-$navhover: #6B6A6B;
-$divbody: #E0DDDD;
+@import 'set-style';
 
 p {
   margin: 0px;
