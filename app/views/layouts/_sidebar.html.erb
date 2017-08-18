@@ -8,10 +8,32 @@
       </div>
     </div>
     <ul class="sidebar-nav">
-        <li><a href="/home">Home</a></li>
-        <li><a href="/animals">Animals</a></li>
-        <li><a href="/people">People</a></li>
-        <li><a href="/alerts">Upcoming Events</a></li>
-        <li><a href="/logout">Logout</a></li>
+        <li id="home"><a href="/home">Home</a></li>
+        <li id="animals"><a href="/animals">Animals</a></li>
+        <li id="people"><a href="/people">People</a></li>
+        <li id="alerts"><a href="/alerts">Upcoming Events</a></li>
+        <li id="logout"><a href="/logout">Logout</a></li>
     </ul>
 </div>
+
+
+
+<!-- Keep sidebar link highlighted since it reloads onevery page -->
+<script>
+    $(function() {
+        var link= "";
+        $('.sidebar-nav li a').click(function() {
+            link = $(this).attr('href');
+            localStorage.setItem("link", link);
+        });
+        $(document).ready(function() {
+            var savedLink = localStorage.getItem("link");
+            if (savedLink == "/logout" || savedLink == "") {
+                $('#home').css('background-color', '#363536');
+            } else {
+                var clickedId = "#" + savedLink.substr(1);
+                $(clickedId).css('background-color', '#363536');
+            }
+        });
+    });
+</script>

@@ -5,6 +5,8 @@
 
 /* Login */
 
+$btn-border: #9C9898;
+
 body {
     font-family: 'NunitoSans-Light', sans-serif;
     color: #4A4A4A;
@@ -97,13 +99,31 @@ input[type=checkbox] {
 }
 
 #login-btn {
-    background-color: #f9f9f9;
-    font-family: 'NunitoSans-Black', sans-serif;
-    font-size: 1.2em;
-    border-radius: 0;
-    border-color: #E7E7E7;
-    box-shadow: 0px 1px 1px #979797;
     margin-bottom: 30px;
+}
+
+/* buttons */
+
+
+
+/*button {
+  margin      : 0;
+  padding     : 0;
+  border      : 0;
+  background  : transparent;
+  font-family : inherit;
+  font-size   : 1em;
+  cursor      : pointer;
+}*/
+
+button {
+    margin: 0;
+    border: 1px solid $btn-border;
+    font-family: 'NunitoSans-Black', sans-serif;
+    font-size: 1em;
+    border-radius: 3px;
+    background-color: white;
+    padding: 5px;
 }
 
 .main-btn {
@@ -113,6 +133,16 @@ input[type=checkbox] {
     border-radius: 0;
     border-color: #E7E7E7;
     box-shadow: 0px 1px 1px #979797;
-    margin-bottom: 30px;
+    padding: 5px;
+}
+
+.reg-btn {
+    border: 1px solid $btn-border;
+    font-family: 'NunitoSans-Black', sans-serif;
+    font-size: 1em;
+    border-radius: 3px;
+    background-color: white;
+    padding: 5px;
+    min-width: 30px;
 
 }

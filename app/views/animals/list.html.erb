@@ -1,8 +1,9 @@
 <!-- comment -->
 <% provide(:title, "Animals") %>
-<h1 class="pg-title">Animals</h1>
+<!-- <h1 class="pg-title">Animals</h1> -->
 
 
+<div class = "bg-page">
 <% if employee?(current_user) %>
 <%= link_to "<button>Add Animal</button>".html_safe,  {:controller => "animals", :action => "new", :method => "get"}, {class: "main-btn"} %>
 <a href='#' style="float: right; padding-right: 10%"
@@ -66,8 +67,8 @@
     <div id = "animals-list" class = "col-md-8" > 
 
     </div>
-
 </div>
+
 
 <script>
 var slider = $("#age_slider").slider({

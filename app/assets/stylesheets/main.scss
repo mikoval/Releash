@@ -3,6 +3,7 @@
 $bg-color: #FBFBFB;
 $navcolor: #4A494B;
 $widgetcol: #fff; 
+$navselect: #363536;
 
 
 
@@ -11,7 +12,13 @@ body {
     background-color: $bg-color;
 }
 
+.bg-page {
+    //padding: 30px;
+    min-height: 100vH;
+}
+
 #page-render {
+    padding: 30px;
     background-color: $bg-color;
     min-height: 100vH;
 }
@@ -47,6 +54,7 @@ body {
 }
 .brick{
     border: 1px solid $widgetcol;
+    border-radius: 3px;
     background-color: $widgetcol;
     box-shadow: 0px 1px 1px #9B9B9B;
 }
@@ -109,7 +117,10 @@ body {
     padding:0px;
 }
 
-
+.sidebar-nav {
+    padding: 0px;
+    margin: 0px;
+}
 
 .sidebar-nav li {
     list-style: none;
@@ -117,14 +128,30 @@ body {
     display: block;
     color: #fff;
     padding: 5%;
-    margin-left: 0;
 }
+
 
 .sidebar-nav li a {
     color: #fff;
     font-family: 'NunitoSans-ExtraLight', sans-serif;
     font-size: 1.1em;
+    text-decoration: none;
+    margin-left: 20px;
 }
+
+.sidebar-nav li:hover {
+    background-color: $navselect;
+    text-decoration: none;
+}
+
+/*.sidebar-nav li:active {
+    background-color: white;
+}*/
+
+.current {
+    background-color: orange;
+}
+
 
 #top-nav {
     box-shadow: 0px 1px 1px #4A494B;
@@ -143,10 +170,25 @@ body {
     min-height: 100vh;
     padding:0px;
     margin-top:0px;
-
     width:auto;
-
 }
+
+/*Search*/
+#search-wrap {
+    position:relative;
+    background-color: white;
+    width:500px;
+    height:40px;
+    display:inline-block;
+    vertical-align:center;
+}
+
+#search-input {
+    width: 450px;
+    line-height:38px;
+    border:none;
+}
+
 .search-list {
     border:solid black 1px;
     z-index:3000;
