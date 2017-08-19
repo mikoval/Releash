@@ -13,16 +13,16 @@ body {
 }
 
 #page-render {
-    padding: 30px;
     background-color: $bg-color;
+    padding: 30px;
     min-height: 100vH;
 }
 
 
 
 /* Widgets */
-.content-body{margin:4px;
-}
+/*.content-body{margin:4px;
+}*/
 
 .brick{
     border: $shrt-border $widgetbody;
@@ -96,12 +96,12 @@ body {
     background-color: $navcolor;
     box-shadow: 0px 2px 1px $navcolor;
     position: fixed;
-    height: 100vh;
     text-align: left;
     z-index: 2;
     font-family: 'NunitoSans-Bold', sans-serif;
     color: #fff;
     width:210px;
+    height: 100vh;
     margin:0px;
     padding:0px;
 }
