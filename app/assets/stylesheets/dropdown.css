@@ -1,0 +1,23 @@
+.dd-list{
+	background-color: lightgray;
+}
+.dd-input{
+	margin-bottom: 0px;
+}
+.dd-item{
+	padding:3px;
+}
+.dd-item:hover{
+	background-color: lightyellow;
+	cursor: pointer;
+
+}
+.dd-row-0{
+	background-color:#aaa;
+}
+.dd-row-1{
+	background-color:#bbb;
+}
+.dd-item-selected{
+	background-color:lightgreen;
+}
