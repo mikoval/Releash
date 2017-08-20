@@ -4,79 +4,119 @@ function FilterDropdown(div, source, style = {}){
 	var selected = [];
 	//obj.append("<input type='text' class='form-control'></input>")
 	var input = $('<input/>').attr({ type: 'text', id: 'input' }).addClass("form-control dd-input")
-	var display = $('<div/>').addClass("dd-list").css("display", "none");
+	var list = $('<div/>').addClass("dd-list").css("display", "none");
+	var display = $('<div/>').addClass("dd-display")
 	input.appendTo(obj);
+	list.appendTo(obj);
 	display.appendTo(obj);
 	$(input).on('keyup paste', function() {
-		context.setDisplay($(this).val());
-		context.showDisplay();
+		context.setList($(this).val());
+		context.showList();
 	});
 	$(document).on("mouseup", function(e){
-		if (!display.is(e.target) && display.has(e.target).length === 0) 
+		if (!list.is(e.target) && list.has(e.target).length === 0) 
 	    {
-	        display.hide();
+	        list.hide();
 	    }
 	    if (input.is(e.target) && input.has(e.target).length === 0) 
 	    {
-	        display.show();
+	        list.show();
 	    }
 	})
 	
-	this.setDisplay = function(str){
+	this.setList = function(str){
 		var html = "";
 		var count = 0;
 		for(var i = 0; i < this.data.length; i++){
 			if(this.data[i].name.toLowerCase().indexOf(str.toLowerCase()) !== -1){
 				count++;
 				var added = ""
-				if(this.containsItem(this.data[i])){
+				if(this.containsItem(this.data[i].id)){
 					added = "dd-item-selected";
 				}
 
 				html += "<div class='dd-item dd-row-"+ (count%2) +" "+added+"' id='"+this.data[i].id+"'>"+this.data[i].name+"</div>"
 			}
 		}
-		display.html(html);
-		display.find("div").on("click", function(){
+		list.html(html);
+		list.find("div").on("click", function(){
 
-			context.toggleItem(this);
+			context.toggleItem($(this).attr("id"));
 		})
+		this.createDisplay();
 		
 	}
-	this.showDisplay = function(){
-		display.show();
+	this.showList = function(){
+		list.show();
 	}
-	this.addItem = function(item){
-		item = $(item);
-		item.addClass("dd-item-selected");
-		selected.push({name:item.html(), id:item.attr("id")});
+	this.createDisplay = function(){
+		var str = "";
+		for(var i = 0; i < selected.length; i++){
+			var id = selected[i].id;
+			var text = selected[i].name;
+			str +=
+			"<div class = 'select-item' style = 'position: relative; display: inline-block;'>" 
+	        + "<p style = 'margin:0px; padding-right:15px'>" + text + "</p>" + 
+			"<span id = '"+id+"'class = 'glyphicon glyphicon-remove remove-behavior remove-item' style='margin:2px; float:right;'></span>" + 
+			" </div>"
+
+		}
+		display.html(str);
+		display.find(".glyphicon-remove").on("click", function(){
+			
+			context.removeItem($(this).attr("id"));
+		})
 	}
-	this.toggleItem = function(item){
-		item = $(item);
-		var json = {name:item.html(), id:item.attr("id")}
-		if(!this.containsItem(json)){
-			item.addClass("dd-item-selected");
-			selected.push(json);
+
+	this.addItem = function(id){
+		item = this.getItem(id);
+		
+		var id = item.id;
+		var text = item.name;
+		selected.push({name:text, id:id});
+		console.log(input.val());
+		this.setList(input.val());
+	}
+	
+	this.removeItem = function(id){
+		item = this.getItem(id);
+		var id = item.id;
+		var text = item.text;
+
+		selected.splice(this.getItemIndex(id), 1);
+		console.log(input.val());
+		this.setList(input.val());
+	}
+	this.toggleItem = function(id){
+		item = this.getItem(id);
+		var json = {name:item.name, id:item.id}
+		if(!this.containsItem(id)){
+			this.addItem(id);
 		}
 		else{
-			item.removeClass("dd-item-selected");
-
-			selected.splice(this.getItemIndex(json), 1);
+			this.removeItem(id);
 		}
-		
-		//this.updateSelected();
 	}
-	this.getItemIndex = function(item){
+	this.getItem = function(id){
+
+		for(var i = 0; i < this.data.length; i++){
+			if(this.data[i].id + "" == id){
+				return {id:id, name:this.data[i].name};
+			}
+		}
+		return {};
+	}
+	this.getItemIndex = function(id){
 		for(var i = 0; i < selected.length; i++){
-			if(selected[i].id == item.id){
+			if(selected[i].id == id){
 				return i;
 			}
 		}
 		return -1;
 	}
-	this.containsItem = function(item){
+	this.containsItem = function(id){
 		for(var i = 0; i < selected.length; i++){
-			if(selected[i].id == item.id){
+			if(selected[i].id == id){
 				return true;
 			}
 		}
@@ -100,7 +140,7 @@ function FilterDropdown(div, source, style = {}){
 	}
 	if(typeof source === 'string'){this.loadString(source);}
 	else{this.loadData(source);}
-	this.setDisplay("");
+	this.setList("");
 
 	
 }
