@@ -11,17 +11,17 @@
     <div class="form-head">
       <!-- Basic Header -->
       <ul class="nav nav-tabs-unstyled nav-justified">
-        <li class="active tab" target="characteristics-body"><a href="#">Basic</a></li>
-        <li class="tab"  target="paper-body"><a href="#" >Paperwork</a></li>
-        <li class="tab" target="tracking-body"><a href="#" >Tracking</a></li>
-        <li class="tab" target="notes-body"><a href="#" >Notes</a></li>
+        <li class="active tab" target="basics-body"><a href="#">Basic</a></li>
+        <li class="tab"  target="paperwork-body"><a href="#" >Paperwork</a></li>
+        <li class="tab" target="track-body"><a href="#" >Tracking</a></li>
+        <li class="tab" target="note-body"><a href="#" >Notes</a></li>
       </ul>
     </div>
 
 
     <div class="form-body">
       <!--Basic Characteristics Body -->
-      <div id = "characteristics-body" class="collapse in col-md-12 inner-formdiv">
+      <div id = "basics-body" class="collapse in col-md-12 inner-formdiv">
         
         <div class="info-wrapper col-md-12 col-md-offset-1">
           <!-- Profile Picture -->
@@ -100,7 +100,7 @@
       <!--===================== PAPERWORK =======================-->
 
       <!-- Paperwork Body -->
-      <div id="paper-body" class="collapse in inner-formdiv" style="display:none">
+      <div id="paperwork-body" class="collapse in inner-formdiv" style="display:none">
 
         <div class="table-wrapper">
           <table class="table table-striped">
@@ -181,66 +181,6 @@
             </tbody>
           </table>
         </div>
-
-<!--        
-        <div id="upload-buttons" style="padding-top: 15px">
-          <div class = "upload-wrapper" style= "padding-bottom: 15px">
-              <span class="btn btn-large btn-warning btn-file">
-                  <%#= label_tag "Vetting Document" %>
-                  <%#= f.file_field :vetting_document, class: 'file-upload' %>
-              </span>
-              <span class = "file-name"></span>
-              <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
-          </div>
-          <div class = "upload-wrapper" style= "padding-bottom: 15px">
-              <span class="btn btn-large btn-primary btn-file">
-                  <%#= label_tag "Intake Document" %>
-                  <%#= f.file_field :intake_document, class: 'file-upload' %>
-              </span>
-              <span class = "file-name"></span>
-              <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
-           </div>
-           <div class = "upload-wrapper" style= "padding-bottom: 15px">
-              <span class="btn btn-large btn-info btn-file">
-                  <%#= label_tag "Owner Surrender" %>
-                  <%#= f.file_field  :owner_surrender_document, class: 'file-upload' %>
-              </span>
-              <span class = "file-name"></span>
-              <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
-          </div>
-          <div class = "upload-wrapper" style= "padding-bottom: 15px">
-            <span class="btn btn-large btn-info btn-file">
-                <%#= label_tag "Home Check" %>
-                <%#= f.file_field  :home_check_document, class: 'file-upload' %>
-            </span>
-            <span class = "file-name"></span>
-            <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
-          </div>
-          <div class = "upload-wrapper" style= "padding-bottom: 15px">
-            <span class="btn btn-large btn-info btn-file">
-                <%#= label_tag "Match Application" %>
-                <%#= f.file_field  :match_application_document, class: 'file-upload' %>
-            </span>
-            <span class = "file-name"></span>
-            <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
-          </div>
-          <div class = "upload-wrapper" style= "padding-bottom: 15px">
-            <span class="btn btn-large btn-info btn-file">
-                <%#= label_tag "Adoption Application" %>
-                <%#= f.file_field  :adoption_application_document, class: 'file-upload' %>
-            </span>
-            <span class = "file-name"></span>
-            <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
-          </div>
-          <div class = "upload-wrapper">
-            <span class="btn btn-large btn-info btn-file">
-                <%#= label_tag "Adoption Contract" %>
-                <%#= f.file_field  :adoption_contract_document, class: 'file-upload' %>
-            </span>
-            <span class = "file-name"></span>
-            <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
-          </div>
-        </div> -->
       </div>
 
 
@@ -248,9 +188,9 @@
       
 
       <!-- Tracking Body -->
-      <div id="tracking-body" class="collapse inner-formdiv" style="display:none">
+      <div id="track-body" class="collapse inner-formdiv" style="display:none">
 
-        <div class= "basics-inner col-md-5">
+        <div class= "track-inner col-md-6 col-md-offset-3">
           <!-- Physical Features -->
           <a class= "card-header basics-header" data-toggle="collapse" href="#basics-track-body">
             <div>
@@ -312,16 +252,15 @@
       <!--===================== NOTES =======================-->
 
       <!-- Notes Body -->
-      <div id="notes-body" class="collapse inner-formdiv" style="display:none">
+      <div id="note-body" class="collapse inner-formdiv" style="display:none">
             <!-- Inputing Details-->
         <%= f.label :notes, "Type any notes below" %>
         <%= f.text_area(:notes, cols: 40, rows: 15)%>
       </div>
     </div>
-      <div class="col-xs-12" id="submit-div">
-
-        <%= f.submit "Add animal", class: "add-btn submit-btn"%>
-      </div>
+    <div class="col-xs-12" id="submit-div">
+      <%= f.submit "Add animal", class: "add-btn submit-btn"%>
+    </div>
     <% end %>
   </div>
 </div>

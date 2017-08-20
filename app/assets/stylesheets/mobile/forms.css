@@ -53,22 +53,7 @@
 .pg-title{
   margin-bottom: 0px
 }
-#characteristics-body{
-  padding:0px;
-  background-color:#E0E0E0;
-}
-#paper-body{
-  padding:0px;
-  background-color:#E0E0E0;
-}
-#notes-body{
-  padding:0px;
-  background-color:#E0E0E0;
-}
-#tracking-body{
-  padding:0px;
-  background-color:#E0E0E0;
-}
+
 .submit{
   width:100%;
   height:40px;
