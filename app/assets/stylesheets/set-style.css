@@ -1,0 +1,40 @@
+/* This file contains uniform scss form variables to be used in whole application */
+
+$neutral: #e1e1e1;
+$blue : #2980b9;
+$bodycolor: #fff;
+
+$bg-color: #FBFBFB;
+
+$divbody: #E0DDDD;
+
+
+$navselect: #363536;
+$navcolor: #4A494B;
+$navhover: #6B6A6B;
+
+$btn-border: #9C9898;
+
+$widgethead: #fff;
+$widgetbody: #fff; 
+
+$border: 1px solid #f3f3f3;
+$shrt-border: 1px solid;
+$shadow: 0px 1px 1px #9b9b9b;
+
+@mixin square($length) {
+    width: $length;
+    height: $length;
+}
+
+@mixin dimension($width, $height) {
+    width: $width;
+    height: $height;
+}
+
+
+
+
+
+
+

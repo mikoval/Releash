@@ -5,103 +5,104 @@
 }
 
 </style>
-<h1>Alerts</h1>
- <%= link_to "<button>Add Alert</button>".html_safe,  :controller => "alerts", :action => "new", :method => "get" %>
- <ul class="nav nav-tabs">
-    <li class="active"><a href="#calendar" data-toggle="tab">Calendar</a></li>
-    <li><a href="#list" data-toggle="tab">Assigned</a></li>
-    <li><a href="#created" data-toggle="tab">Created By Me</a></li>
-</ul>
+<div class=bg-page>
+  <h1>Alerts</h1>
+   <%= link_to "<button>Add Alert</button>".html_safe,  :controller => "alerts", :action => "new", :method => "get" %>
+   <ul class="nav nav-tabs">
+      <li class="active"><a href="#calendar" data-toggle="tab">Calendar</a></li>
+      <li><a href="#list" data-toggle="tab">Assigned</a></li>
+      <li><a href="#created" data-toggle="tab">Created By Me</a></li>
+  </ul>
 
-<div class="tab-content">
-    <div class="tab-pane active" id="calendar">
+  <div class="tab-content">
+      <div class="tab-pane active" id="calendar">
 
-        <%= month_calendar events: @allAlerts do |date, alerts| %>
-        <%= date.day%>
+          <%= month_calendar events: @allAlerts do |date, alerts| %>
+          <%= date.day%>
 
-        <% alerts.each do |alert| %>
+          <% alerts.each do |alert| %>
 
-          <div>
-            
+            <div>
+              
 
-            <a href = "#" class = "alert-event  calendar-event
-            <% if( alert.created_by.id == current_user.id ) %> created-by <% end %>
-            <% if( alert.assigned) %> assigned-to <% end %>
-            " id = "alert-<%= alert.id %> "><%= alert.title %> </a>
+              <a href = "#" class = "alert-event  calendar-event
+              <% if( alert.created_by.id == current_user.id ) %> created-by <% end %>
+              <% if( alert.assigned) %> assigned-to <% end %>
+              " id = "alert-<%= alert.id %> "><%= alert.title %> </a>
 
-          </div>
+            </div>
+          <% end %>
+
+
         <% end %>
-
-
-      <% end %>
-    </div>
+      </div>
 
 
 
 
-    <div class="tab-pane" id="list">
+      <div class="tab-pane" id="list">
 
-      <table id = "alert-table" class="table table-bordered table-inverse table-hover people-table">
-        <thead>
-          <tr>
-            <th class= "col-md-1">#</th>
-            <th class= "col-md-1">Title</th>
-            <th class= "col-md-3">Date</th>
-            <th class= "col-md-3">Created By</th>
-          </tr>
-        </thead>
-        <tbody>
-      <% @myAlerts.each_with_index do |a, index| %>
-         <tr style = "height: 70px;" >
-            <th scope="row"><%= index %></th>
-            <td>
-             <a href = "#" class = "alert-event" id = "alert-<%= a.id %> "><%= a.title %> </a>
+        <table id = "alert-table" class="table table-bordered table-inverse table-hover people-table">
+          <thead>
+            <tr>
+              <th class= "col-md-1">#</th>
+              <th class= "col-md-1">Title</th>
+              <th class= "col-md-3">Date</th>
+              <th class= "col-md-3">Created By</th>
+            </tr>
+          </thead>
+          <tbody>
+        <% @myAlerts.each_with_index do |a, index| %>
+           <tr style = "height: 70px;" >
+              <th scope="row"><%= index %></th>
+              <td>
+               <a href = "#" class = "alert-event" id = "alert-<%= a.id %> "><%= a.title %> </a>
 
-              </td>
+                </td>
 
-            <td> 
-                <%= a.date.to_formatted_s(:long_ordinal) %> 
-           </td> 
-            <td> <%= a.created_by.name%> </td> 
-          </tr> 
-       
+              <td> 
+                  <%= a.date.to_formatted_s(:long_ordinal) %> 
+             </td> 
+              <td> <%= a.created_by.name%> </td> 
+            </tr> 
+         
 
-      <% end %>
-        </tbody>
-      </table>
-    </div>
-    <div class="tab-pane" id="created">
+        <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div class="tab-pane" id="created">
 
-      <table id = "alert-table" class="table table-bordered table-inverse table-hover people-table">
-        <thead>
-          <tr>
-            <th class= "col-md-1">#</th>
-            <th class= "col-md-1">Title</th>
-            <th class= "col-md-3">Date</th>
-            <th class= "col-md-3">Created By</th>
-          </tr>
-        </thead>
-        <tbody>
-      <% @createdAlerts.each_with_index do |a, index| %>
-         <tr style = "height: 70px;" >
-            <th scope="row"><%= index %></th>
-            <td>
-             <a href = "#" class = "alert-event" id = "alert-<%= a.id %> "><%= a.title %> </a>
+        <table id = "alert-table" class="table table-bordered table-inverse table-hover people-table">
+          <thead>
+            <tr>
+              <th class= "col-md-1">#</th>
+              <th class= "col-md-1">Title</th>
+              <th class= "col-md-3">Date</th>
+              <th class= "col-md-3">Created By</th>
+            </tr>
+          </thead>
+          <tbody>
+        <% @createdAlerts.each_with_index do |a, index| %>
+           <tr style = "height: 70px;" >
+              <th scope="row"><%= index %></th>
+              <td>
+               <a href = "#" class = "alert-event" id = "alert-<%= a.id %> "><%= a.title %> </a>
 
-              </td>
+                </td>
 
-            <td> 
-                <%= a.date.to_formatted_s(:long_ordinal) %> 
-           </td>
-            <td> <%= a.created_by.name%> </td>
-          </tr>
-       
+              <td> 
+                  <%= a.date.to_formatted_s(:long_ordinal) %> 
+             </td>
+              <td> <%= a.created_by.name%> </td>
+            </tr>
+         
 
-      <% end %>
-        </tbody>
-      </table>
-    </div>
-    
+        <% end %>
+          </tbody>
+        </table>
+      </div>    
+  </div>
 </div>
     <!-- 
     loops over each person in @allPeople (defined in the people controller)

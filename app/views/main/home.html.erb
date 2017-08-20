@@ -1,11 +1,11 @@
 <% provide(:title, "Home") %>
 
 <div class="bg-page">    
-  <div class="row" style="padding-top:20px;">
+  <div class="row">
     <div style="margin:20px"> 
       <!-- <h1 style="display:inline-block" id="dashboard-head">Dashboard</h1>          -->
       <h5 id="date"></h5>
-      <button style="display:inline-block" type="button" class="new-widget  main-btn" href ="#widgetsList"> Add New Widgets </button>
+      <button style="display:inline-block" type="button" class="new-widget main-btn" href ="#widgetsList"> Add New Widgets </button>
     </div>
   </div>
 
@@ -43,6 +43,9 @@
            
 
 <script>
+document.getElementById("date").innerHTML = new Date().toDateString();
+
+
  $(".new-widget").on("click", function(){
   $('#widgetsList').modal('show')    
 })

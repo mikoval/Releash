@@ -24,107 +24,77 @@
       <!--Basic Characteristics Body -->
       <div id = "characteristics-body" class="collapse in col-md-12 inner-formdiv">
         
-        <!-- Profile Picture -->
-        <div class="picture col-md-3">
-          <%= f.label :picture %>
-          <div id="pic-preview" style="padding: 5px">
-            <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
-            <!-- alt="Dog Image"-->
+        <div class="info-wrapper col-md-12 col-md-offset-1">
+          <!-- Profile Picture -->
+          <div class="picture col-md-3">
+            <%= f.label :picture %>
+            <div id="pic-preview" style="padding: 5px">
+              <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
+              <!-- alt="Dog Image"-->
+            </div>
+
+            <img id="profilepic" src="#" alt="Dog Image" style="display: none"/>
+            <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'file-upload profile-file' %>
           </div>
 
-          <img id="profilepic" src="#" alt="Dog Image" style="display: none"/>
-          <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'file-upload profile-file' %>
-        </div>
-
-        <!-- Characteristics Info -->
-        <div class="characteristics-info col-md-9">
+          <!-- Characteristics Info -->
+          <div class="characteristics-info col-md-7">
 
 
-          <div class= "basics-inner col-md-5">
-            <!-- Physical Features -->
-            <a class= "card-header basics-header" data-toggle="collapse" href="#basics-body">
-              <div>
-                <h4 class="tab-inner-title">Characteristics</h4>
-              </div>
-            </a>
+            <div class= "basics-inner">
+              <!-- Physical Features -->
+              <a class= "card-header basics-header" data-toggle="collapse" href="#basics-body">
+                <div>
+                  <h4 class="tab-inner-title">Characteristics</h4>
+                </div>
+              </a>
 
-            <div id="basics-body" class="collapse in">
-              <!-- Basics -->
-              
-              <%= f.label :name %>
-              <%= f.text_field :name, class: 'required form-control' %>
-
-              <%= f.label :date_of_birth %>
-              <%= f.text_field :birthday, class: 'form-control datepicker required' %>
-
-              <%= f.label :gender %>
-              <%= f.select :gender, [ 'Male','Female'], {:prompt => 'Select Gender'}, class: "form-control" %>   
-
-              <%= f.label :primary_breed_id, "Primary Breed" %>
-              <%= f.collection_select(:primary_breed_id, @primary, :id, :name, {:prompt => "Select Breed"}, {class:"form-control required"} ) %>
-
-               <%= label :post, "Additional Breeds" %>
-              <%= collection_select(:breed_id, 0, @secondary, :id, :name, {:prompt => "Select Breed"}, {class: "form-control breed-selecter"}) %>              
-              <div id = "breeds-list"></div>
-              <%= text_field_tag 'breeds', "", class: "hidden-breeds", style: "display:none;"  %>
-
-              <%= f.label :color_primary %>
-              <%= f.text_field :color_primary, class: 'form-control' %>
-
-              <%= f.label :color_secondary %>
-              <%= f.text_field :color_secondary, class: 'form-control' %> 
-
-              <%= label :post, "behavior" %>
-              
-              <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Select Behavior
-                <span class="caret"></span></button>
+              <div id="basics-body" class="collapse in">
+                <!-- Basics -->
                 
-                <ul class="dropdown-menu">
-                  <% @behavior.each do |b| %>
-                  <li  class = "behavior-dd-item" id = "behavior-dd-<%= b.id %>"><a href="#" class= "behavior-dd-item" value = '<%= b.id %>'> <%= b.name %></a>  </li> 
-                  <% end %>
-                </ul>
+                <%= f.label :name %>
+                <%= f.text_field :name, class: 'required form-control' %>
+
+                <%= f.label :date_of_birth %>
+                <%= f.text_field :birthday, class: 'form-control datepicker required' %>
+
+                <%= f.label :gender %>
+                <%= f.select :gender, [ 'Male','Female'], {:prompt => 'Select Gender'}, class: "form-control" %>   
+
+                <%= f.label :primary_breed_id, "Primary Breed" %>
+                <%= f.collection_select(:primary_breed_id, @primary, :id, :name, {:prompt => "Select Breed"}, {class:"form-control required"} ) %>
+
+                 <%= label :post, "Additional Breeds" %>
+                <%= collection_select(:breed_id, 0, @secondary, :id, :name, {:prompt => "Select Breed"}, {class: "form-control breed-selecter"}) %>              
+                <div id = "breeds-list"></div>
+                <%= text_field_tag 'breeds', "", class: "hidden-breeds", style: "display:none;"  %>
+
+                <%= f.label :color_primary %>
+                <%= f.text_field :color_primary, class: 'form-control' %>
+
+                <%= f.label :color_secondary %>
+                <%= f.text_field :color_secondary, class: 'form-control' %> 
+
+                <%= label :post, "behavior" %>
+                
+                <div class="dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Select Behavior
+                  <span class="caret"></span></button>
+                  
+                  <ul class="dropdown-menu">
+                    <% @behavior.each do |b| %>
+                    <li  class = "behavior-dd-item" id = "behavior-dd-<%= b.id %>"><a href="#" class= "behavior-dd-item" value = '<%= b.id %>'> <%= b.name %></a>  </li> 
+                    <% end %>
+                  </ul>
+                </div>
+                <div id = "behavior-list"></div>
+                <%= text_field_tag 'behavior', "", class: "hidden-behavior", style: "display:none;"  %>
+                <br>
               </div>
-              <div id = "behavior-list"></div>
-              <%= text_field_tag 'behavior', "", class: "hidden-behavior", style: "display:none;"  %>
-              <br>
-            </div>
 
-          </div>
-          
-
-          <div class= "basics-inner col-md-5">
-            <!-- Physical Features -->
-            <a class= "card-header basics-header" data-toggle="collapse" href="#basics-track-body">
-              <div>
-                <h4 class="tab-inner-title">Tracking</h4>
-              </div>
-            </a>
-
-            <div id="basics-track-body" class="collapse in">
-              <!-- Tracking -->
-              <%= f.label :input_date %>
-              <%= f.text_field :input_date, class: 'form-control datepicker' %>
-
-              <%= f.label :microchip_number , "Microchip #"%>
-              <%= f.text_field :microchip_number, class: 'form-control' %>
-
-              <%= f.label :coordinator, "Assigned Coordinator"%>
-              <%= f.collection_select :coordinator_id, @coordinators, :id, :name, {:prompt => "Select Coordinator"}, class: 'form-control required' %>
-
-              <%= f.label :status %>
-              <%= f.collection_select :status_id, @status, :id, :name, {:prompt => "Select Status"}, class: 'form-control required' %> 
-              
-              <%= f.label :sub_status %>
-              <%= f.collection_select :sub_status_id, @sub_status, :id, :name, {:prompt => "Select SubStatus"}, class: "form-control"%> 
-
-              <%= f.label :marketing %>
-              <%= f.collection_select :marketing_id, @marketing, :id, :name, {:prompt => "Select Marketing Status"}, class: 'form-control required' %>
             </div>
           </div>
         </div>
-
       </div>
 
       
@@ -132,12 +102,93 @@
 
       <!-- Paperwork Body -->
       <div id="paper-body" class="collapse in inner-formdiv" style="display:none">
-        
+
+        <div class="table-wrapper">
+          <table class="table table-striped">
+            <thead class="table-head">
+              <tr>
+                <th>Document Type</th>
+                <th>Attached File</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="upload-wrapper">
+                <td>Vetting</td>
+                <td>
+                  <span class = "file-name"></span>
+                  <span class = "glyphicon glyphicon-remove remove-file" style = "display:none; width: 30px; height 30px;"></span>
+                </td>
+                <td>
+                  <span class="btn btn-large btn-primary btn-file">
+                      <%= label_tag "Vetting Document" %>
+                      <%= f.file_field :vetting_document, class: 'file-upload'%>
+                    </span>
+                </td>
+              </tr>
+              
+              <tr class="upload-wrapper">
+                <td>Intake</td>
+                <td>
+                  <span class = "file-name"></span>
+                  <span class = "glyphicon glyphicon-remove remove-file" style = "display:none; width: 30px; height 30px;"></span>
+                </td>
+                <td>
+                  <span class="btn btn-large btn-primary btn-file">
+                    <%= label_tag "Intake Document" %>
+                    <%= f.file_field :intake_document, class: 'file-upload' %>
+                  </span>
+                </td>
+              </tr>
+              <tr class="upload-wrapper">
+                <td>Owner Surrender</td>
+                <td>
+                  <span class = "file-name"></span>
+                  <span class = "glyphicon glyphicon-remove remove-file" style = "display:none; width: 30px; height 30px;"></span>
+                </td>
+                <td>
+                  <span class="btn btn-large btn-primary btn-file">
+                    <%= label_tag "Owner Surrender" %>
+                    <%= f.file_field  :owner_surrender_document, class: 'file-upload' %>
+                  </span>
+                </td>
+              </tr>
+              <tr class="upload-wrapper">
+                <td>Match Application</td>
+                <td>
+                  <span class = "file-name"></span>
+                  <span class = "glyphicon glyphicon-remove remove-file" style = "display:none; width: 30px; height 30px;"></span>
+                </td>
+                <td>
+                  <span class="btn btn-large btn-primary btn-file">
+                    <%= label_tag "Match Application" %>
+                    <%= f.file_field  :match_application_document, class: 'file-upload' %>
+                  </span>
+                </td>
+              </tr>
+              <tr class="upload-wrapper">
+                <td>Adoption Contract</td>
+                <td>
+                  <span class = "file-name"></span>
+                  <span class = "glyphicon glyphicon-remove remove-file" style = "display:none; width: 30px; height 30px;"></span>
+                </td>
+                <td>
+                  <span class="btn btn-large btn-primary btn-file">
+                    <%= label_tag "Adoption Contract" %>
+                    <%= f.file_field  :adoption_contract_document, class: 'file-upload' %>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+<!--        
         <div id="upload-buttons" style="padding-top: 15px">
           <div class = "upload-wrapper" style= "padding-bottom: 15px">
               <span class="btn btn-large btn-warning btn-file">
-                  <%= label_tag "Vetting Document" %>
-                  <%= f.file_field :vetting_document, class: 'file-upload' %>
+                  <%#= label_tag "Vetting Document" %>
+                  <%#= f.file_field :vetting_document, class: 'file-upload' %>
               </span>
               <span class = "file-name"></span>
               <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
@@ -145,8 +196,8 @@
 
           <div class = "upload-wrapper" style= "padding-bottom: 15px">
               <span class="btn btn-large btn-primary btn-file">
-                  <%= label_tag "Intake Document" %>
-                  <%= f.file_field :intake_document, class: 'file-upload' %>
+                  <%#= label_tag "Intake Document" %>
+                  <%#= f.file_field :intake_document, class: 'file-upload' %>
               </span>
               <span class = "file-name"></span>
               <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
@@ -154,8 +205,8 @@
 
            <div class = "upload-wrapper" style= "padding-bottom: 15px">
               <span class="btn btn-large btn-info btn-file">
-                  <%= label_tag "Owner Surrender" %>
-                  <%= f.file_field  :owner_surrender_document, class: 'file-upload' %>
+                  <%#= label_tag "Owner Surrender" %>
+                  <%#= f.file_field  :owner_surrender_document, class: 'file-upload' %>
               </span>
               <span class = "file-name"></span>
               <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
@@ -163,8 +214,8 @@
 
           <div class = "upload-wrapper" style= "padding-bottom: 15px">
             <span class="btn btn-large btn-info btn-file">
-                <%= label_tag "Home Check" %>
-                <%= f.file_field  :home_check_document, class: 'file-upload' %>
+                <%#= label_tag "Home Check" %>
+                <%#= f.file_field  :home_check_document, class: 'file-upload' %>
             </span>
             <span class = "file-name"></span>
             <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
@@ -172,8 +223,8 @@
 
           <div class = "upload-wrapper" style= "padding-bottom: 15px">
             <span class="btn btn-large btn-info btn-file">
-                <%= label_tag "Match Application" %>
-                <%= f.file_field  :match_application_document, class: 'file-upload' %>
+                <%#= label_tag "Match Application" %>
+                <%#= f.file_field  :match_application_document, class: 'file-upload' %>
             </span>
             <span class = "file-name"></span>
             <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
@@ -181,8 +232,8 @@
 
           <div class = "upload-wrapper" style= "padding-bottom: 15px">
             <span class="btn btn-large btn-info btn-file">
-                <%= label_tag "Adoption Application" %>
-                <%= f.file_field  :adoption_application_document, class: 'file-upload' %>
+                <%#= label_tag "Adoption Application" %>
+                <%#= f.file_field  :adoption_application_document, class: 'file-upload' %>
             </span>
             <span class = "file-name"></span>
             <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
@@ -190,13 +241,13 @@
 
           <div class = "upload-wrapper">
             <span class="btn btn-large btn-info btn-file">
-                <%= label_tag "Adoption Contract" %>
-                <%= f.file_field  :adoption_contract_document, class: 'file-upload' %>
+                <%#= label_tag "Adoption Contract" %>
+                <%#= f.file_field  :adoption_contract_document, class: 'file-upload' %>
             </span>
             <span class = "file-name"></span>
             <span class = "glyphicon glyphicon-remove remove-file" style = "display:none"></span>
           </div>
-        </div>
+        </div> -->
       </div>
 
 
@@ -206,33 +257,62 @@
       <!-- Tracking Body -->
       <div id="tracking-body" class="collapse inner-formdiv" style="display:none">
 
+        <div class= "basics-inner col-md-5">
+          <!-- Physical Features -->
+          <a class= "card-header basics-header" data-toggle="collapse" href="#basics-track-body">
+            <div>
+              <h4 class="tab-inner-title">Tracking</h4>
+            </div>
+          </a>
+
+          <div id="basics-track-body" class="collapse in">
+            <!-- Tracking -->
+            <%= f.label :input_date %>
+            <%= f.text_field :input_date, class: 'form-control datepicker' %>
+
+            <%= f.label :microchip_number , "Microchip #"%>
+            <%= f.text_field :microchip_number, class: 'form-control' %>
+
+            <%= f.label :coordinator, "Assigned Coordinator"%>
+            <%= f.collection_select :coordinator_id, @coordinators, :id, :name, {:prompt => "Select Coordinator"}, class: 'form-control required' %>
+
+            <%= f.label :status %>
+            <%= f.collection_select :status_id, @status, :id, :name, {:prompt => "Select Status"}, class: 'form-control required' %> 
+            
+            <%= f.label :sub_status %>
+            <%= f.collection_select :sub_status_id, @sub_status, :id, :name, {:prompt => "Select SubStatus"}, class: "form-control"%> 
+
+            <%= f.label :marketing %>
+            <%= f.collection_select :marketing_id, @marketing, :id, :name, {:prompt => "Select Marketing Status"}, class: 'form-control required' %>
+          </div>
+        </div>
+
         <!-- BEGIN TRACKING TAB DIV -->
-        <div id="status-div" class="tracking-innerDiv col-md-8">
+        <!-- <div id="status-div" class="tracking-innerDiv col-md-8"> -->
 
           <!-- Information for Statuses in Tabs-->
-          <div class="status-tabsInner tab-content">
+          <!-- <div class="status-tabsInner tab-content"> -->
             <!-- INTAKE -->
               <!-- Selecting Date-->
-              <%= f.label :intake_date, "Intake Date" %>
-              <%= text_field_tag 'intake_dt', "" ,class: 'form-control datepicker' %>
+              <%#= f.label :intake_date, "Intake Date" %>
+              <%#= text_field_tag 'intake_dt', "" ,class: 'form-control datepicker' %>
               
-              <%= f.label :intake_sub, "Sub Status"%>
-              <%= collection_select(:intake_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
+              <%#= f.label :intake_sub, "Sub Status"%>
+              <%#= collection_select(:intake_sub, :sub_status_id, SubStatusType.all, :id, :name, {:prompt => "Select Sub Status"}) %>
               
               <!-- Selecting Prev Location-->
-              <%= f.label :intake_loc, "Previous Location"%>
-              <%= collection_select(:intake_loc, :intake_reason_id, IntakeReason.all, :id, :name, {:prompt => "Select Previous Location"}) %>
+              <%#= f.label :intake_loc, "Previous Location"%>
+              <%#= collection_select(:intake_loc, :intake_reason_id, IntakeReason.all, :id, :name, {:prompt => "Select Previous Location"}) %>
 
               <!-- Selecting Previous Location-->
-              <%= f.label :intake_prev, "Animal Facility"%>
-              <%= collection_select(:intake_prev, :animal_facility_id, AnimalFacility.all, :id, :name, {:prompt => "Select Animal Facility"}) %>
+              <%#= f.label :intake_prev, "Animal Facility"%>
+              <%#= collection_select(:intake_prev, :animal_facility_id, AnimalFacility.all, :id, :name, {:prompt => "Select Animal Facility"}) %>
 
               <!-- Inputing Details-->
-              <%= f.label :intake_comm, "Details" %>
-              <%= text_field_tag 'intake_cm', "", class: 'form-control' %>
-
-          </div>
-        </div> 
+              <%#= f.label :intake_comm, "Details" %>
+              <%#= text_field_tag 'intake_cm', "", class: 'form-control' %>
+          <!-- </div> -->
+        <!-- </div>  -->
         <!-- END TRACKING TAB DIV -->
       </div>
 

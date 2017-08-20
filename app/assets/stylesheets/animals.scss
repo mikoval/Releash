@@ -2,13 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-//Style for tracking in profile
-$neutral: #e1e1e1;
-$blue : #2980b9;
-$bg-color: #FBFBFB;
-$navcolor: #4A494B;
-$navhover: #6B6A6B;
-$divbody: #E0DDDD;
+@import 'set-style';
 
 p {
   margin: 0px;
@@ -46,6 +40,7 @@ p {
 }
 
 .inner-formdiv {
+  background-color: $bodycolor;
   width: 100%;
   padding: 20px;
   border: solid #f0f0f0;
@@ -70,16 +65,22 @@ p {
 .form-body {
   //border: 1px solid $divbody;
   //border: 3px solid orange;
+  height: 400px;
+  background-color: orange;
+
 }
 
-.nav > li > a {
+.nav {
+
+  li > a {
   background-color: $navcolor;
   font-family: 'NunitoSans-ExtraBold', sans-serif;
   color: white;
-}
+  }
 
-.nav > li > a:hover {
+  li > a:hover {
   background-color: $navhover;
+  }
 }
 
 
@@ -145,16 +146,18 @@ p {
 
 
 /*========= New Page ==========*/
-/*#submit-div {
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin-bottom: 10px;
-  padding: 50px;
-}*/
+.table-head {
+    background-color: $navcolor;
+    font-family: 'NunitoSans-Black', sans-serif;
+    color: white;
+}
 
-.inner-formdiv {
-  background-color: white;
+.table-wrapper {
+  padding: 50px;
+}
+
+.info-wrapper {
+  background-color: $bodycolor;
 }
 
 .tab-inner-title {
@@ -227,13 +230,6 @@ p {
   border-width: 15px;
 }
 
-#snippet-info {
-
-}
-
-
-
-
 #animal-name {
   text-align: center;
 }
@@ -253,10 +249,8 @@ p {
   text-transform: 1.2em;
 }
 
-.inner-formdiv {
-  //background-color: black;
-  border: none;
-}
+
+
 
 //timeline inner
 div#timeline {
@@ -336,12 +330,10 @@ article {
 
 }
 
-.entry-text {
+.entry-text, .edit-enty {
   margin-top: 5%;
 }
-.edit-entry {
-  margin-top: 5%;
-}
+
 
 .status-buffer {
     height: 20px;
