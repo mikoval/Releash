@@ -1,26 +1,25 @@
 <!-- Inner form Content  Profile page-->
-<div class= "col-xs-12 pg-outer">
+<div class= "col-xs-12 bg-page">
   <h2 class= "pg-title">Add New Animal</h2>
   <div class="form col-md-12">
-    <!-- Begin animal form -->
-    <%= form_for(@animal, url: animals_path(@animal))  do |f| %>
 
-
-    <!--===================== BASIC CHARACTERISTICS =======================-->
-    
     <div class="form-head">
       <!-- Basic Header -->
-      <ul class="nav nav-tabs-unstyled nav-justified">
-        <li class="active tab" target="basics-body"><a href="#">Basic</a></li>
+      <ul class="nav nav-justified">
+        <li class="tab active" target="basics-body"><a href="#">Basic</a></li>
         <li class="tab"  target="paperwork-body"><a href="#" >Paperwork</a></li>
         <li class="tab" target="track-body"><a href="#" >Tracking</a></li>
         <li class="tab" target="note-body"><a href="#" >Notes</a></li>
       </ul>
     </div>
 
-
     <div class="form-body">
-      <!--Basic Characteristics Body -->
+
+      <!-- Begin animal form -->
+      <%= form_for(@animal, url: animals_path(@animal))  do |f| %>
+
+      <!--===================== BASIC CHARACTERISTICS =======================-->
+
       <div id = "basics-body" class="collapse in col-md-12 inner-formdiv">
         
         <div class="info-wrapper col-md-12 col-md-offset-1">
@@ -33,11 +32,14 @@
             </div>
 
             <img id="profilepic" src="#" alt="Dog Image" style="display: none"/>
-            <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'file-upload profile-file' %>
+            <div class="col-xs-12 profile-btn btn btn-md btn-primary btn-file">
+              <%= label_tag "Add Profile Image" %>
+              <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'file-upload profile-file' %>
+            </div>
           </div>
 
           <!-- Characteristics Info -->
-          <div class="characteristics-info col-md-7">
+          <div class="characteristics-info col-md-6">
 
 
             <div class= "basics-inner">
@@ -99,7 +101,6 @@
       
       <!--===================== PAPERWORK =======================-->
 
-      <!-- Paperwork Body -->
       <div id="paperwork-body" class="collapse in inner-formdiv" style="display:none">
 
         <div class="table-wrapper">
@@ -186,8 +187,6 @@
 
       <!--===================== TRACKING =======================-->
       
-
-      <!-- Tracking Body -->
       <div id="track-body" class="collapse inner-formdiv" style="display:none">
 
         <div class= "track-inner col-md-6 col-md-offset-3">
@@ -251,21 +250,20 @@
 
       <!--===================== NOTES =======================-->
 
-      <!-- Notes Body -->
       <div id="note-body" class="collapse inner-formdiv" style="display:none">
-            <!-- Inputing Details-->
         <%= f.label :notes, "Type any notes below" %>
         <%= f.text_area(:notes, cols: 40, rows: 15)%>
       </div>
+      <div class="col-xs-12 submit-div">
+        <div class="col-xs-4 col-xs-offset-4">
+          <%= f.submit "Add animal", class: "main-btn submit-btn"%>
+          <% end %>
+        </div>
+      </div>
     </div>
-    <div class="col-xs-12" id="submit-div">
-      <%= f.submit "Add animal", class: "add-btn submit-btn"%>
-    </div>
-    <% end %>
   </div>
 </div>
-
-
+</div>
 <!-- End Html -->
     
 <script>

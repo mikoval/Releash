@@ -16,19 +16,25 @@ p {
 
 /*========= New, Edit & Profile Page ==========*/
 
+#basics-body,#paperwork-body,#track-body,#note-body {
+  height: 600px;
+  overflow: scroll;
+}
+
 .pg-title {
   text-align: left;
   font-size: 24px;
-  font-family: 'NunitoSans-ExtraBold', sans-serif;
+  font-weight: 800;
   color: #4D4747;
 }
 
 #pic-preview {
-  width: 150px;
-  height: 200px;
-  border: 1px solid #bababa;
+  width: 170px;
+  height: 210px;
+  border: 2px dotted #bababa;
   background: transparent;
   border-radius: 5px;
+  margin-bottom: 10px;
 }
 
 
@@ -36,7 +42,10 @@ p {
   width: 150px;
   height: 200px;
   border: black;
+}
 
+.profile-btn {
+  margin-top: 10px;
 }
 
 .inner-formdiv {
@@ -54,7 +63,6 @@ p {
   width:100%;
   padding: 0px;
   border-width: 5px;
-  //border: 3px dotted blue;
   background-color: white;
 }
 
@@ -70,20 +78,6 @@ p {
 
 }
 
-.nav {
-
-  li > a {
-  background-color: $navcolor;
-  font-family: 'NunitoSans-ExtraBold', sans-serif;
-  color: white;
-  }
-
-  li > a:hover {
-  background-color: $navhover;
-  }
-}
-
-
 
 .form-div {
   border: solid #f0f0f0; 
@@ -93,19 +87,14 @@ p {
 
 /* Submit */
 
-.submit-btn {
-  background-color: #f9f9f9;
-  font-family: 'NunitoSans-Black', sans-serif;
-  font-size: 1.2em;
-  border-radius: 0;
-  border-color: #E7E7E7;
-  box-shadow: 0px 1px 1px #979797;
-  margin-bottom: 30px;
+.submit-div {
+  background-color: $bodycolor;
 }
 
-.add-btn {
-    width: 30%;
+.submit-btn {
+  margin-top: 25px;
 }
+
 
 .btn-file {
   position: relative;
@@ -148,7 +137,7 @@ p {
 /*========= New Page ==========*/
 .table-head {
     background-color: $navcolor;
-    font-family: 'NunitoSans-Black', sans-serif;
+    font-weight: 900;
     color: white;
 }
 
@@ -161,7 +150,7 @@ p {
 }
 
 .tab-inner-title {
-  font-family:"NunitoSans-SemiBold", sans-serif;
+  font-weight: 600;
 }
 
 .select-item{
