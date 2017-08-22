@@ -2,7 +2,9 @@ function TabbedForm(div){
 	this.obj = div;
 	this.titles = [];
 	this.index = 0;
-	this.submit = div.find(".submit");
+	this.submit = div.find(".submit-btn").addClass("mobile-form-submit");
+	//closure
+	var context = this;
 
 	var divs = div.find(".form-page");
 	for(var i = 0; i < divs.length; i++){
@@ -31,7 +33,7 @@ function TabbedForm(div){
 
     var height  =$( window ).height() - ($($(".form-page")[0]).offset().top - $(window).scrollTop())  - 40;
     var divs = div.find(".form-page");
-    var context = this;
+
 	for(var i = 0; i < divs.length; i++){
 		$(divs[i]).css("height", height);
 	}
