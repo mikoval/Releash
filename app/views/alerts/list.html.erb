@@ -6,13 +6,13 @@
 
 </style>
 <div class=bg-page>
-  <h1>Alerts</h1>
-   <%= link_to "<button>Add Alert</button>".html_safe,  :controller => "alerts", :action => "new", :method => "get" %>
-   <ul class="nav nav-tabs">
-      <li class="active"><a href="#calendar" data-toggle="tab">Calendar</a></li>
-      <li><a href="#list" data-toggle="tab">Assigned</a></li>
-      <li><a href="#created" data-toggle="tab">Created By Me</a></li>
-  </ul>
+    <div class="form-head">
+      <!-- Basic Header -->
+      <ul class="nav nav-justified">
+        <li class="tab" target="calendar-body"><a class ="active" target="calendar" href="#">Calendar View</a></li>
+        <li class="tab"  target="list-body"><a href="#" target="list" >List View</a></li>
+      </ul>
+    </div>
 
   <div class="tab-content">
       <div class="tab-pane active" id="calendar">
@@ -155,6 +155,14 @@ updateDisplayedEvents()
 $(document).on("ready", function(){
   bindAlertsModal();
 })
-bindAlertsModal();
+$(".tab a").on('click', function(e){
+  e.preventDefault();
+  console.log("done");
+  $(this).closest(".nav").find(".active").removeClass("active");
+  $(this).addClass("active");
+  var target = $(this).attr("target");
+  $(".tab-pane").hide();
+  $("#" + target).show();
+ })
 </script>
 

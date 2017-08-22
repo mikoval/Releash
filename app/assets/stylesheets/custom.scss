@@ -10,20 +10,24 @@
 }
  
 /* universal */
-.nav li > a {
-  background-color: $navcolor;
+.nav li > a, , .nav > li > a:focus{
+  background-color: $navcolor ;
   font-weight: 800;
   color: white;
 }
 
-.nav > li > a:hover, .nav > li > a:focus {
+.nav > li > a:hover{
   text-decoration: none;
-  background-color: $navfocus;
+  background-color: $navfocus ;
 }
 
-li.tab.active {
-  background-color: orange;
+.nav > li > a.active{
+  background-color: $navfocus ;
 }
+ul > li.active{
+  background-color: $navfocus ;
+}
+
 
 section {
   overflow: auto;

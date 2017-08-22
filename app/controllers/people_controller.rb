@@ -101,6 +101,7 @@ def editEmployee
   end
 def dashboardSave
     str = params["str"]
+    puts str
     if str
       @employee = User.where("id =  " + current_user.id.to_s).update_all( dashboard: str )
     end

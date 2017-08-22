@@ -21,18 +21,16 @@
 <!-- Keep sidebar link highlighted since it reloads onevery page -->
 <script>
     $(function() {
-        var link= "";
-        $('.sidebar-nav li a').click(function() {
-            link = $(this).attr('href');
-            localStorage.setItem("link", link);
-        });
+        
         $(document).ready(function() {
-            var savedLink = localStorage.getItem("link");
-            if (savedLink == "/logout" || savedLink == "") {
-                $('#home').css('background-color', '#363536');
-            } else {
-                var clickedId = "#" + savedLink.substr(1);
-                $(clickedId).css('background-color', '#363536');
+            var path = window.location.pathname.split("/")[1];
+
+            if(path == ""){
+                console.log("home");
+                $("#home").addClass("active");
+            }
+            else{
+                $("#" + path).addClass("active");
             }
         });
     });
