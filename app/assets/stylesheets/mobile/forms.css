@@ -1,10 +1,17 @@
-.form{
-  padding:0px;
-  background-color: lightgray;
-}
+
 #characteristics-body{
     overflow-y:auto;
     
+}
+.mobile-profile-file{
+  width:90%;
+  padding:5px;
+  border-radius: 10px;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:5px;
+  margin-bottom:10px;
+
 }
 .mobile-tabs{
   z-index: 10;
@@ -17,6 +24,7 @@
   text-align: center;
   width:100%;
 }
+
 .mobile-tabs-wrapper{
   position:relative;
   width:100%;
@@ -50,10 +58,6 @@
   display:none;
 }
 
-.pg-title{
-  margin-bottom: 0px
-}
-
 .mobile-form-submit{
   width:100%;
   height:40px;
@@ -61,41 +65,4 @@
   margin-bottom:0px;
   padding-top:9px;
   padding-bottom:9px;
-}
-.select-item{
-  background-color:#F0F0F0;
-}
-.remove-item{
-  position: absolute;
-  top:5px;
-  right:0px;
-}
-.dropdown-toggle{
-  width:100%;
-}
-.file-upload{
-  width:100%;
-}
-.btn-file{
-  width:100%;
-}
-.picture{
-  text-align: center
-}
-#profilepic{
-  display: block;
-  margin:auto;
-}
-#pic-preview{
-  margin:auto;
-}
-.profile-file{
-  background-color:#FFF;
-  width:90%;
-  padding:5px;
-  border-radius: 10px;
-  margin-left:auto;
-  margin-right:auto;
-  margin-top:5px;
-  margin-bottom:5px;
 }
