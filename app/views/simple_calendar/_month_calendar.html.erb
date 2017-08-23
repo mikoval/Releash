@@ -10,12 +10,11 @@
 </style>
 <div class="simple-calendar">
   <div class="calendar-heading">
-    <%= link_to t('simple_calendar.previous',  default: "<span class = 'glyphicon glyphicon-backward calendar-icon'></span>".html_safe), calendar.url_for_previous_view %>
+    <%= link_to t('simple_calendar.previous',  default: "<span class = 'glyphicon glyphicon-chevron-left calendar-icon'></span>".html_safe), calendar.url_for_previous_view %>
     <span class="calendar-title class"><%= t('date.month_names')[start_date.month] %> <%= start_date.year %></span>
-    <%= link_to t('simple_calendar.next', default: "<span class = 'glyphicon glyphicon-forward calendar-icon'></span>".html_safe), calendar.url_for_next_view %>
+    <%= link_to t('simple_calendar.next', default: "<span class = 'glyphicon glyphicon-chevron-right calendar-icon'></span>".html_safe), calendar.url_for_next_view %>
 
-    <p class = "small-text">Created by me </p> <input type="checkbox" name="created" value="Created" id = "created-alerts" class = "small-text" checked> 
-    <p  class = "small-text">Assigned to me  </p> <input type="checkbox" name="assigned" value="Assigned" id = "assigned-alerts"  class = "small-text" checked> 
+    
   </div>
 
   <table class="table table-striped">

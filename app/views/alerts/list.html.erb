@@ -3,9 +3,73 @@
 .modal-div{
   margin:10px;
 }
+.tab-pane{
+  border:solid black 1px;
+}
+.table{
+  margin-bottom: 0px;
+
+}
+#bootstrap-overrides td, #bootstrap-overrides th{
+    text-align: center;
+    vertical-align: middle;
+}
+#bootstrap-overrides .checkbox{
+  margin-left: 15px;
+}
+#bootstrap-overrides .new-event{
+  margin:25px;
+  margin-left:70%;
+}
+#bootstrap-overrides  .day{
+  height:80px;
+  text-align: left;
+  vertical-align: top;
+  border: solid black 1px;
+  padding:0px;
+
+}
+#bootstrap-overrides  .day .day-number{
+  margin-left: 5px;
+  margin-bottom:3px;
+}
+#bootstrap-overrides  .day .calendar-event{
+  text-align: left;
+  margin-left:5px;
+  margin-bottom:0px;
+
+}
+#bootstrap-overrides  .wday-1 {
+  border-left: none;
+}
+#bootstrap-overrides  .wday-0 {
+  border-right: none;
+}
+
+
+.prev-month, .next-month{
+  background-color:lightgray;
+  color:lightgray;
+  cursor:default;
+}
+.prev-month a:link,.prev-month a:visited {
+  color:lightgray;
+  cursor:default;
+}
+
+.calendar-heading{
+  text-align: center;
+}
+#bootstrap-overrides th{
+  border-bottom:none;
+}
+
+
 
 </style>
-<div class=bg-page>
+<div class=bg-page id = "bootstrap-overrides">
+    <h2 class  = "pg-title">Upcoming Events</h2>
+    <button style="display:inline-block" type="button" class="new-event main-btn" href ="#widgetsList"> Add New Event </button>
     <div class="form-head">
       <!-- Basic Header -->
       <ul class="nav nav-justified">
@@ -16,9 +80,11 @@
 
   <div class="tab-content">
       <div class="tab-pane active" id="calendar">
+         <input type="checkbox" name="created" value="Created" id = "created-alerts" class = "created-alerts small-text checkbox" checked> <p class = "small-text">Created by me </p> 
+         <input type="checkbox" name="assigned" value="Assigned" id = "assigned-alerts"  class = "assigned-alerts  small-text checkbox" checked>  <p  class = "small-text">Assigned to me  </p> 
 
           <%= month_calendar events: @allAlerts do |date, alerts| %>
-          <%= date.day%>
+          <p class="day-number"> <%= date.day%></p>
 
           <% alerts.each do |alert| %>
 
@@ -41,29 +107,33 @@
 
 
       <div class="tab-pane" id="list">
-
+        <input type="checkbox" name="created" value="Created" id = "created-alerts" class = "created-alerts small-text checkbox" checked> <p class = "small-text">Created by me </p> 
+         <input type="checkbox" name="assigned" value="Assigned" id = "assigned-alerts"  class = "assigned-alerts  small-text checkbox" checked>  <p  class = "small-text">Assigned to me  </p> 
         <table id = "alert-table" class="table table-bordered table-inverse table-hover people-table">
           <thead>
             <tr>
-              <th class= "col-md-1">#</th>
+   
               <th class= "col-md-1">Title</th>
               <th class= "col-md-3">Date</th>
               <th class= "col-md-3">Created By</th>
             </tr>
           </thead>
           <tbody>
-        <% @myAlerts.each_with_index do |a, index| %>
-           <tr style = "height: 70px;" >
-              <th scope="row"><%= index %></th>
+        <% @allAlerts.each do |alert| %>
+           <tr style = "height: 70px;" 
+             class = "alert-event 
+                  <% if( alert.created_by.id == current_user.id ) %> created-by <% end %>
+                  <% if( alert.assigned) %> assigned-to <% end %>
+              ">
               <td>
-               <a href = "#" class = "alert-event" id = "alert-<%= a.id %> "><%= a.title %> </a>
+               <a href = "#" class = "" id = "alert-<%= alert.id %> " ><%= alert.title %> </a>
 
                 </td>
 
               <td> 
-                  <%= a.date.to_formatted_s(:long_ordinal) %> 
+                  <%= alert.date.to_formatted_s(:long_ordinal) %> 
              </td> 
-              <td> <%= a.created_by.name%> </td> 
+              <td> <%= alert.created_by.name%> </td> 
             </tr> 
          
 
@@ -71,37 +141,7 @@
           </tbody>
         </table>
       </div>
-      <div class="tab-pane" id="created">
-
-        <table id = "alert-table" class="table table-bordered table-inverse table-hover people-table">
-          <thead>
-            <tr>
-              <th class= "col-md-1">#</th>
-              <th class= "col-md-1">Title</th>
-              <th class= "col-md-3">Date</th>
-              <th class= "col-md-3">Created By</th>
-            </tr>
-          </thead>
-          <tbody>
-        <% @createdAlerts.each_with_index do |a, index| %>
-           <tr style = "height: 70px;" >
-              <th scope="row"><%= index %></th>
-              <td>
-               <a href = "#" class = "alert-event" id = "alert-<%= a.id %> "><%= a.title %> </a>
-
-                </td>
-
-              <td> 
-                  <%= a.date.to_formatted_s(:long_ordinal) %> 
-             </td>
-              <td> <%= a.created_by.name%> </td>
-            </tr>
-         
-
-        <% end %>
-          </tbody>
-        </table>
-      </div>    
+      
   </div>
 </div>
     <!-- 
@@ -121,16 +161,19 @@ $("#people-table tr").hover(
 
 
 
-$("#created-alerts").on("change", function(){
-  updateDisplayedEvents();
+$(".created-alerts").on("change", function(){
+  var parent = $(this).closest(".tab-pane");
+  updateDisplayedEvents(parent);
 })
-$("#assigned-alerts").on("change", function(){
-  updateDisplayedEvents();
+$(".assigned-alerts").on("change", function(){
+  var parent = $(this).closest(".tab-pane");
+  updateDisplayedEvents(parent);
 })
-function updateDisplayedEvents(){
-  var created = $("#created-alerts").is(":checked")
-  var assigned = $("#assigned-alerts").is(":checked")
-  $(".calendar-event").each(function(){
+function updateDisplayedEvents(obj){
+  var created = obj.find(".created-alerts").is(":checked")
+  var assigned = obj.find(".assigned-alerts").is(":checked")
+  
+  $(obj).find(".alert-event").each(function(){
     var hide = true
     if(created){
       if($(this).hasClass("created-by")){
@@ -150,7 +193,7 @@ function updateDisplayedEvents(){
     }
   })
 }
-updateDisplayedEvents()
+
 
 $(document).on("ready", function(){
   bindAlertsModal();

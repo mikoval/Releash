@@ -66,10 +66,10 @@
                 <%= f.collection_select(:primary_breed_id, @primary, :id, :name, {:prompt => "Select Breed"}, {class:"form-control required"} ) %>
 
                  <%= label :post, "Additional Breeds" %>
-                <%= collection_select(:breed_id, 0, @secondary, :id, :name, {:prompt => "Select Breed"}, {class: "form-control breed-selecter"}) %>              
-                <div id = "breeds-list"></div>
-                <%= text_field_tag 'breeds', "", class: "hidden-breeds", style: "display:none;"  %>
-
+                <div id="additional-breeds">  
+              
+                  <%= text_field_tag 'breeds', "", class: "hidden-breeds storage", style: "display:none;"  %>
+                </div>
                 <%= f.label :color_primary %>
                 <%= f.text_field :color_primary, class: 'form-control' %>
 
@@ -268,6 +268,7 @@
 <!-- End Html -->
     
 <script>
+  FilterDropdown($("#additional-breeds"), <%= raw @secondary.to_json %>)
   $("#animal_species_id").change(function(){
     console.log($("#animal_breed_id"))
     if ($("#animal_species_id").val() == 1) {
@@ -324,34 +325,7 @@
         var inputfield  = container.find(".file-upload");
         inputfield[0].value = "";
   });
-  $(".breed-selecter").on("change", function(e){
-    var text = $(".breed-selecter option:selected").text();
-    var val = $(".breed-selecter option:selected").val();
-    if(text == "Select Breed"){
-      return
-    }
-    html = $("#breeds-list").html();
-    html += "<div id = 'breed-" + val + "'' class = 'breed-item select-item' style = 'position: relative; display: inline-block;'>" 
-        + "<p style = 'margin:0px; padding-right:15px'>" + text + "</p>" + 
-       "<span class = 'glyphicon glyphicon-remove remove-breed remove-item' style='margin:2px; float:right;'>" +"</span>" + 
-       " </div>"
-    $("#breeds-list").html(html);
-    $(".remove-breed").on("click", function(){
-      $(this).closest(".breed-item").detach()
-      setHiddenBreeds();
-    })
-    //just for now while im setting up the new breeds
-    $(this).get(0).selectedIndex = 0;
-    setHiddenBreeds();
-  })
-  function setHiddenBreeds(){
-    str = ""
-    $(".breed-item").each(function(){
-      var id = this.id.split("-")[1]
-      str += id + "|"
-    })
-    $(".hidden-breeds").val(str)
-  }
+ 
   $(".behavior-dd-item").on("click", function(e){
     e.stopPropagation();
     e.preventDefault();
