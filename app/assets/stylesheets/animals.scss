@@ -18,7 +18,11 @@ p {
 
 #basics-body,#paperwork-body,#track-body,#note-body {
   height: 600px;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-width: 100%;
+    
+
 }
 
 .pg-title {
