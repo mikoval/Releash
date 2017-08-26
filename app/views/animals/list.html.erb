@@ -2,22 +2,131 @@
 <% provide(:title, "Animals") %>
 <!-- <h1 class="pg-title">Animals</h1> -->
 
+<style>
+#reset-button{ 
+  cursor: pointer;
+
+  text-align: center;
+  margin: 10px;
+}
+#reset-button a{ 
+  color:gray; 
+}
+th{
+  background: #444;
+  text-align: center;
+  color:white;
+}
+.controls-wrapper{
+  position: relative;
+  width:90%;
+  height:50px;
+
+}
+.controls-wrapper .add-animal{
+  display:block;
+  position: absolute;
+  right:0px;
+  width: 200px;
+  top:0px;
+  color:black;
+}
+.add-animal button{
+  width:100%;
+}
+.controls-wrapper .download-csv{
+  display:block;
+  position: absolute;
+  right:0px;
+  top:50px;
+  color:gray;
+}
+.tooltip2 {
+    position: relative;
+    display: inline-block;
+  
+}
+
+.tooltip2 .tooltiptext2 {
+    visibility: hidden;
+    width: 350px;
+    height:200px;
+    background-color: #EEEEEE;
+    border: solid gray 1px;
+    
+    text-align: center;
+    border-radius: 10px;
+    padding: 5px 0;
+    text-align: left;
+    padding-left: 5px;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: -10px;
+    left: 55px;
+    font-family: "Times New Roman", Times, serif;
+}
+
+
+
+.tooltip2 .picture {
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:130px;
+  height:200px;
+ 
+}
+.tooltip2 .picture img{
+  position: absolute;
+  left:15px;
+  top:50px;
+  vertical-align: middle; 
+  border-radius: 50%;
+  border:solid black 1px;
+  width:100px;
+  height:100px;
+ 
+}
+.tooltip2 .content {
+  position:absolute;
+  left:130px;
+  top:0px;
+  width:200px;
+  height:200px;
+  padding-top:15px;
+  overflow: scroll;
+
+}
+
+
+
+
+
+.tooltip2:hover .tooltiptext2 {
+    visibility: visible;
+}
+</style>
+
 
 <div class = "bg-page">
-<% if employee?(current_user) %>
-<%= link_to "<button>Add Animal</button>".html_safe,  {:controller => "animals", :action => "new", :method => "get"}, {class: ""} %>
-<a href='#' style="float: right; padding-right: 10%"
-        onclick='downloadCSV({ filename: "animals-data" });'
-    >Download CSV</a>
+<h2 class= "pg-title">Animal List</h2>
+<div class='controls-wrapper'>
+  <% if employee?(current_user) %>
+  <%= link_to "<button class = 'main-btn'>Add Animal</button>".html_safe,  {:controller => "animals", :action => "new", :method => "get"}, {class: "add-animal "} %>
+
 
 <% end %>
+  <a href='#' onclick='downloadCSV({ filename: "animals-data" });' class='download-csv'>Download CSV</a>
+</div>
 
     <br><br>
 
     <div id='filterDiv' class = "filters col-md-3" style = "border-radius:1px; margin:5px; border:solid;";> 
-    <p> Name:  </p> <input type = "text" id = "filter-name" value = "<%= @name %> "/>
-    <p> Breed:  </p> 
-    <select id = "filter-breed">
+    <p style="font-weight: bold">Filter Content</p>
+    <p> Name  </p> <input type = "text" id = "filter-name"  class="form-control" value = "<%= @name %> "/>
+    <p> Breed  </p> 
+    <select id = "filter-breed" class="form-control">
       <option value = "">Select Breed</option>
 
       <% @breeds.each do |b|%>
@@ -26,15 +135,15 @@
 
     </select>
 
-    <p> Gender:  </p> 
-    <select id = "filter-gender">
+    <p> Gender  </p> 
+    <select id = "filter-gender" class="form-control">
       <option value = "">Select Gender</option>
       <option value = "Male" <% if(@gender == "Male") %> selected <% end %>>Male</option>
       <option value = "Female"<% if(@gender == "Female") %> selected <% end %>>Female</option>
     </select>
 
-    <p> Status:  </p> 
-    <select id = "filter-status">
+    <p> Status  </p> 
+    <select id = "filter-status" class="form-control">
       <option value = "">Select Status</option>
       <% @statuses.each do |b|%>
         <option value = "<%=  b.id %>" <% if( b.id.to_s == @status) %>selected <% end %> > <%= b.name %> </option>
@@ -42,10 +151,9 @@
     </select>
 
     <p style = "display:inline-block;  white-space: nowrap;"> 
-      Active: <input style = "display:inline-block; width:auto" type = "checkbox" id = "active-chk" 
-      <% if(@active.to_s == "true") %>checked <% end %> > 
-      Inactive: <input style = "display:inline-block; width:auto" type = "checkbox" id = "inactive-chk" 
-      <% if(@inactive.to_s == "true") %> checked <% end %>  ></p>
+       <input style = "display:inline-block; width:auto" type = "checkbox" checked id = "active-chk" > Active <br>
+       <input style = "display:inline-block; width:auto" type = "checkbox"  id = "inactive-chk"> Inactive
+    </p>
 
 
     <!-- <p> Spayed/Neutered:  </p> 
@@ -56,12 +164,12 @@
     </select> -->
     
 
-    <p> Age: <span id = "age-min"></span>-<span id = "age-max"> </span> </p>
+    <p> Age Range: <span id = "age-min"></span>-<span id = "age-max"> </span> </p>
      <div id="age_slider"></div>
 
     <br>
-    <button id = "generate-button">Filter Animals</button>
-    <button id = "reset-button" onclick = "resetFilters(); generateAnimalsList()";>Reset Filters</button>
+    <button id = "generate-button" style="width:80%; display:block; margin:auto; margin-bottom: 10px">Filter Animals</button>
+    <div id = "reset-button" ><a onclick = "resetFilters(); generateAnimalsList()";>Clear Filters</a></div>
 
     </div>
     
@@ -175,13 +283,23 @@ function generateAnimalsList(){
         for (x in result){
           str += "<tr>"
 
-          str += "<td> <div class=\"tooltip2\"><a href='/animals/profile?method=get&param=" + result[x].id + " '  >" + result[x].name + "</a><span class=\"tooltiptext2\"><div class= \"tooltiptext3\"><p class=\"two\">" 
+          str += "<td> <div class=\"tooltip2\"><a href='/animals/profile?method=get&param=" + result[x].id + " '  >" + result[x].name + "</a><span class=\"tooltiptext2\"><div class= \"tooltiptext3\">" 
 
-          str += "<div class=\"header\">" + result[x].name + "</div><b>Breed: </b>"+ result[x].primary
-          str += "<br><b>Birthday: </b>" + result[x].birthday.slice(0,result[x].birthday.length-6)  + "<br><b>Age: </b>" + result[x].age +"<br><b>Gender: </b>" + result[x].gender 
-          str += "<br><b>Spayed/Neutered: </b>" + result[x].neutered + "<br><b>Adoption Fee: </b>" + result[x].adoption_fee 
-          str += "<br><b> Coordinator: </b>" + result[x].coordinator + "<br><b> Notes: </b>" + result[x].notes 
-          str += "</div><div class = \"tooltiptext4\"><img src=" +  result[x].picture.picture.url +" "+ "height=\"150px\" width=\"150px\" align=\"right\"></p></div></span></div></td>"
+          str += "<div class='picture'><img src='" +  result[x].picture.picture.url +" ''></div>"
+          str += "<div class='content'>"
+
+          str += "<p class='animal-name' style='margin:0px; font-weight:bold; font-size:16px;'>"+result[x].name+"</p>"
+          str += "<b class='animal-label'>Breed: </b>"  + result[x].primary + "<br>"
+          str += "<b class='animal-label'>Birthday: </b>" + result[x].birthday.slice(0,result[x].birthday.length-6) + "<br>"
+          str += "<b class='animal-label'>Age: </b>" + result[x].age + "<br>"
+          str += "<b class='animal-label'>Spayed/Neutered: </b>" + result[x].neutered + "<br>"
+          str += "<b class='animal-label'>Adoption Fee: </b>" + result[x].adoption_fee + "<br>"
+          str += "<b class='animal-label'>Coordinator: </b>" + result[x].coordinator + "<br>"
+          str += "<b class='animal-label'>Notes: </b>" + result[x].notes + "<br>"
+
+
+          str += "</div>"
+          str += "</td>"
 
           str += "<td>" + result[x].status + "</td>"
           str += "<td>" + result[x].sub_status + "</td>"
