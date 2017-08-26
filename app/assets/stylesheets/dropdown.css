@@ -33,3 +33,38 @@
 .dd-display{
 	margin-bottom: 5px;
 }
+.ss-list{
+	background: #fff;
+    float: left;
+    width: 100%;
+    position: relative;
+    height: 200px;
+    z-index: 2000;
+    overflow-y: scroll;
+    font-size: 1.0em;
+    border-bottom: 3px solid #405871;
+    width:450px;
+}
+.ss-input{
+	margin-bottom: 0px;
+}
+.ss-item{
+	padding:3px;
+}
+.ss-item:hover{
+	background-color: lightyellow;
+	cursor: pointer;
+
+}
+.ss-row-0{
+	background-color:#aaa;
+}
+.ss-row-1{
+	background-color:#bbb;
+}
+.ss-item-selected{
+	background-color:lightgreen;
+}
+.ss-display{
+	margin-bottom: 5px;
+}

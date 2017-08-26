@@ -369,7 +369,7 @@ class AnimalsController < ApplicationController
     @breed = Breed.all
     @users = User.all
 
-    Rails.logger.debug("Params--------------: #{params.inspect}")
+    #Rails.logger.debug("Params--------------: #{params.inspect}")
     if @animal.save
 
       @status = StatusType.find(@animal.status_id)
@@ -415,7 +415,7 @@ class AnimalsController < ApplicationController
         @breed.save
         end
       end
-      
+
       if params["attribute"]
         arr = params["attribute"].split("|")
         arr.each do |d|

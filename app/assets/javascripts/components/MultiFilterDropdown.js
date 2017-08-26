@@ -1,19 +1,21 @@
-function FilterDropdown(div, source, style = {}){
+function MultiFilterDropdown(div, source, style = {}){
 	var context = this;
 	var obj = div;
 	var selected = [];
-	//obj.append("<input type='text' class='form-control'></input>")
+
 	var input = $('<input/>').attr({ type: 'text', id: 'input' }).addClass("form-control dd-input")
 	var list = $('<div/>').addClass("dd-list").css("display", "none");
 	var display = $('<div/>').addClass("dd-display")
+	
 	input.appendTo(obj);
 	list.appendTo(obj);
 	display.appendTo(obj);
+	
 	$(input).on('keyup paste', function() {
 		context.setList($(this).val());
 		context.showList();
 	});
-
+	console.log("Secondary");
 	$(document).ready(function () {
 
 	    $('.dd-list').animate({
