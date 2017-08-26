@@ -13,6 +13,15 @@ function FilterDropdown(div, source, style = {}){
 		context.setList($(this).val());
 		context.showList();
 	});
+
+	$(document).ready(function () {
+
+	    $('.dd-list').animate({
+	        scrollTop : $("#test").position().top,
+	    }, 200);
+
+	});
+
 	$(document).on("mouseup", function(e){
 		if (!list.is(e.target) && list.has(e.target).length === 0) 
 	    {
@@ -24,6 +33,19 @@ function FilterDropdown(div, source, style = {}){
 	    }
 	})
 	
+	this.setHiddenBreeds = function (){
+	   str = ""
+	   for(var i = 0; i < selected.length; i++){
+	   		//console.log("ids");
+      		var id = selected[i].id
+      		//console.log(id);
+      		str += id + "|"
+      		//onsole.log(str);
+	    }
+	    div.find(".storage").val(str);
+  	}
+
+
 	this.setList = function(str){
 		var html = "";
 		var count = 0;
@@ -38,6 +60,7 @@ function FilterDropdown(div, source, style = {}){
 				html += "<div class='dd-item dd-row-"+ (count%2) +" "+added+"' id='"+this.data[i].id+"'>"+this.data[i].name+"</div>"
 			}
 		}
+
 		list.html(html);
 		list.find("div").on("click", function(){
 
@@ -61,10 +84,14 @@ function FilterDropdown(div, source, style = {}){
 			" </div>"
 
 		}
+		$(this).get(0).selectedIndex = 0;
+		setHiddenBreeds();
 		display.html(str);
 		display.find(".glyphicon-remove").on("click", function(){
 			
 			context.removeItem($(this).attr("id"));
+			$(this).closest(".dd-item").detach()
+      		setHiddenBreeds();
 		})
 	}
 

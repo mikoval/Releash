@@ -369,7 +369,7 @@ class AnimalsController < ApplicationController
     @breed = Breed.all
     @users = User.all
 
-    
+    Rails.logger.debug("Params--------------: #{params.inspect}")
     if @animal.save
 
       @status = StatusType.find(@animal.status_id)
@@ -406,6 +406,16 @@ class AnimalsController < ApplicationController
         @Characteristic.save
         end
       end
+
+      if params["breeds"]
+        arr = params["breeds"].split("|")
+        arr.each do |d|
+          
+        @breed = AnimalBreed.new({animal_id: @animal.id, breed_id: d})
+        @breed.save
+        end
+      end
+      
       if params["attribute"]
         arr = params["attribute"].split("|")
         arr.each do |d|
