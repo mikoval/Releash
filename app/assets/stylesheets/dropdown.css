@@ -1,5 +1,14 @@
 .dd-list{
-	background-color: lightgray;
+	background: #fff;
+    float: left;
+    width: 100%;
+    position: relative;
+    height: 200px;
+    z-index: 2000;
+    overflow-y: scroll;
+    font-size: 1.0em;
+    border-bottom: 3px solid #405871;
+    width:450px;
 }
 .dd-input{
 	margin-bottom: 0px;
