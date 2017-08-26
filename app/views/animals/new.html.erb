@@ -44,13 +44,9 @@
 
             <div class= "basics-inner">
               <!-- Physical Features -->
-              <a class= "card-header basics-header" data-toggle="collapse" href="#basics-body">
-                <div>
-                  <h4 class="tab-inner-title">Characteristics</h4>
-                </div>
-              </a>
+          
 
-              <div id="basics-body" class="collapse in">
+              <div id="basics-body" >
                 <!-- Basics -->
                 
                 <%= f.label :name %>
@@ -101,7 +97,7 @@
       
       <!--===================== PAPERWORK =======================-->
 
-      <div id="paperwork-body" class="collapse in inner-formdiv" style="display:none">
+      <div id="paperwork-body" class=" in inner-formdiv" style="display:none">
 
         <div class="table-wrapper">
           <table class="table table-striped">
@@ -188,17 +184,13 @@
 
       <!--===================== TRACKING =======================-->
       
-      <div id="track-body" class="collapse inner-formdiv" style="display:none">
+      <div id="track-body" class=" inner-formdiv" style="display:none">
 
         <div class= "track-inner col-md-6 col-md-offset-3">
           <!-- Physical Features -->
-          <a class= "card-header basics-header" data-toggle="collapse" href="#basics-track-body">
-            <div>
-              <h4 class="tab-inner-title">Tracking</h4>
-            </div>
-          </a>
+         
 
-          <div id="basics-track-body" class="collapse in">
+          <div id="basics-track-body">
             <!-- Tracking -->
             <%= f.label :input_date %>
             <%= f.text_field :input_date, class: 'form-control datepicker' %>
@@ -251,7 +243,7 @@
 
       <!--===================== NOTES =======================-->
 
-      <div id="note-body" class="collapse inner-formdiv" style="display:none">
+      <div id="note-body" class=" inner-formdiv" style="display:none">
         <%= f.label :notes, "Type any notes below" %>
         <%= f.text_area(:notes, cols: 40, rows: 15)%>
       </div>
