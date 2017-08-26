@@ -69,6 +69,7 @@
                 <div id="additional-breeds">  
               
                   <%= text_field_tag 'breeds', "", class: "hidden-breeds storage", style: "display:none;"  %>
+                  
                 </div>
                 <%= f.label :color_primary %>
                 <%= f.text_field :color_primary, class: 'form-control' %>
@@ -269,6 +270,7 @@
     
 <script>
   FilterDropdown($("#additional-breeds"), <%= raw @secondary.to_json %>)
+
   $("#animal_species_id").change(function(){
     console.log($("#animal_breed_id"))
     if ($("#animal_species_id").val() == 1) {

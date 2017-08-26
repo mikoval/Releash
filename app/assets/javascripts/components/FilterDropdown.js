@@ -33,6 +33,19 @@ function FilterDropdown(div, source, style = {}){
 	    }
 	})
 	
+	this.setHiddenBreeds = function (){
+	   str = ""
+	   for(var i = 0; i < selected.length; i++){
+	   		//console.log("ids");
+      		var id = selected[i].id
+      		//console.log(id);
+      		str += id + "|"
+      		//onsole.log(str);
+	    }
+	    div.find(".storage").val(str);
+  	}
+
+
 	this.setList = function(str){
 		var html = "";
 		var count = 0;
@@ -71,10 +84,14 @@ function FilterDropdown(div, source, style = {}){
 			" </div>"
 
 		}
+		$(this).get(0).selectedIndex = 0;
+		setHiddenBreeds();
 		display.html(str);
 		display.find(".glyphicon-remove").on("click", function(){
 			
 			context.removeItem($(this).attr("id"));
+			$(this).closest(".dd-item").detach()
+      		setHiddenBreeds();
 		})
 	}
 
