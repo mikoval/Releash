@@ -10,11 +10,12 @@ body {
 .bg-page {
     min-height: 100vH;
     background-color: $pg-color;
+    padding: 20px;
 }
 
 #page-render {
     background-color: $bg-color;
-    padding: 20px;
+    padding: 0px;
     min-height: 100vH;
 }
 

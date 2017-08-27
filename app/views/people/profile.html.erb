@@ -52,7 +52,7 @@
               <% end %> 
 
               <% if @employee.user_document.length > 0 %>
-                  <p style = "text-align: center">Homecheck Document: <%= link_to @employee.user_document.file.filename, @employee.user_document.url %> </p>
+                  <p>Homecheck Document: <%= link_to @employee.user_document.file.filename, @employee.user_document.url %> </p>
               <% end %>
             </p>
             <br>

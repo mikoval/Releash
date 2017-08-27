@@ -64,16 +64,8 @@ p {
   background-color: white;
 }
 
-.form-head {
-  //border: 3px dotted red;
-}
-
 .form-body {
-  //border: 1px solid $divbody;
-  //border: 3px solid orange;
-  height: 400px;
-  background-color: orange;
-
+  min-height: 600px;
 }
 
 
@@ -190,19 +182,6 @@ p {
 }
 
 
-/*#profile-container {
-  background-color: white;
-  margin-top: 5%;
-  padding: 2%;
-  border-radius: 0.5%;
-}
-
-#profile-snippet {
-  background-color: #f1f1f1;
-  border-radius: 0.7%;
-  border-color: blue;
-  border-width: 15px;
-}*/
 
 #animal-name {
   text-align: center;
@@ -221,6 +200,10 @@ p {
 
 .card-header {
   text-transform: 1.2em;
+}
+
+.user-table {
+  margin-top: 10px;
 }
 
 
