@@ -3,14 +3,19 @@
 <div class="bg-page">
   <h2 class= "pg-title">People List</h2>
   <!-- BUTTONS TO ADD USERS -->
-  <div>
-  <% if admin?(current_user) %>
-    <%= link_to "<button>Add User</button>".html_safe,  :controller => "people", :action => "new", :method => "get" %>
-    <%= link_to "<button>Add Non User</button>".html_safe,  :controller => "non_user", :action => "new", :method => "get" %>
-    <%= link_to "<button>Add Trainer</button>".html_safe,  :controller => "trainer", :action => "new", :method => "get" %>
-    <%= link_to "<button>Add Veterinarian</button>".html_safe,  :controller => "veterinarian", :action => "new", :method => "get" %>  
-    <%= link_to "<button>Add Animal Facility</button>".html_safe,  :controller => "animal_facility", :action => "new", :method => "get" %>  
-  <% end %>
+  <div class="col-md-offset-10 btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      Add new User <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+    <% if admin?(current_user) %>
+      <li><%= link_to "Add User".html_safe,  :controller => "people", :action => "new", :method => "get" %></li>
+      <li><%= link_to "Add Non User".html_safe,  :controller => "non_user", :action => "new", :method => "get" %></li>
+      <li><%= link_to "Add Trainer".html_safe,  :controller => "trainer", :action => "new", :method => "get" %></li>
+      <li><%= link_to "Add Veterinarian".html_safe,  :controller => "veterinarian", :action => "new", :method => "get" %></li>  
+      <li><%= link_to "Add Animal Facility".html_safe,  :controller => "animal_facility", :action => "new", :method => "get" %></li>  
+    <% end %>
+    </ul>
   </div>
 
   <!-- TAB NAV LINKS-->

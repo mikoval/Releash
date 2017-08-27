@@ -369,7 +369,10 @@ class AnimalsController < ApplicationController
     @breed = Breed.all
     @users = User.all
 
-    #Rails.logger.debug("Params--------------: #{params.inspect}")
+    if params["prim_breeds"]
+      @animal.primary_breed = Breed.find(params["prim_breeds"].to_i)
+    end
+    Rails.logger.debug("Params--------------: #{params.inspect}")
     if @animal.save
 
       @status = StatusType.find(@animal.status_id)

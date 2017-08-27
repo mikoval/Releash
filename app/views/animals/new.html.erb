@@ -57,20 +57,17 @@
 
                 <%= f.label :gender %>
                 <%= f.select :gender, [ 'Male','Female'], {:prompt => 'Select Gender'}, class: "form-control" %>   
-
-                <%= f.hidden_field :primary_breed_id, value: ''%>
                 
                 <%= label :post, "Primary Breed" %>
                 <div id="primary-breed">  
-                  <%= f.hidden_field :primary_breed_id, id: "prim_breed",value: ''%>
+                  <%= text_field_tag 'prim_breeds', "", class: "prim-breed storage", style: "display:none;"  %>
                 </div>
 
-                 <%= label :post, "Additional Breeds" %>
+                <%= label :post, "Additional Breeds" %>
                 <div id="additional-breeds">  
-              
                   <%= text_field_tag 'breeds', "", class: "hidden-breeds storage", style: "display:none;"  %>
-                  
                 </div>
+
                 <%= f.label :color_primary %>
                 <%= f.text_field :color_primary, class: 'form-control' %>
 
@@ -265,8 +262,8 @@
 <!-- End Html -->
     
 <script>
-  //MultiFilterDropdown($("#additional-breeds"), <%= raw @secondary.to_json %>)
-  // SingleFilterDropdown($("#primary-breed"), <%= raw @primary.to_json %>)
+  MultiFilterDropdown($("#additional-breeds"), <%= raw @secondary.to_json %>)
+  SingleFilterDropdown($("#primary-breed"), <%= raw @primary.to_json %>)
 
   $("#animal_species_id").change(function(){
     console.log($("#animal_breed_id"))

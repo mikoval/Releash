@@ -4,7 +4,7 @@ function SingleFilterDropdown(div, source, style = {}){
 	var selected = [];
 
 	var input = $('<input/>').attr({ type: 'text', id: 'input2' }).addClass("form-control ss-input")
-	var list = $('<div/>').addClass("ss-list").css("display", "none");
+	var list = $('<div/>').attr({id: 'list2'}).addClass("ss-list").css("display", "none");
 	var display = $('<div/>').addClass("ss-display")
 
 	
@@ -13,8 +13,8 @@ function SingleFilterDropdown(div, source, style = {}){
 	display.appendTo(obj);
 	
 	$(input).on('keyup paste', function() {
-		context.setList($(this).val());
-		context.showList();
+		context.setList1($(this).val());
+		context.showList1();
 	});
 
 	$(document).ready(function () {
@@ -29,7 +29,6 @@ function SingleFilterDropdown(div, source, style = {}){
 		if (!list.is(e.target) && list.has(e.target).length === 0) 
 	    {
 	        list.hide();
-	        //input.val("");
 	    }
 	    if (input.is(e.target) && input.has(e.target).length === 0) 
 	    {
@@ -37,18 +36,19 @@ function SingleFilterDropdown(div, source, style = {}){
 	    }
 	})
 	
-	this.setHiddenBreeds = function (){
-	    div.find("prim_breed").val(selected[0].id);
-	    console.log(selected);
+	this.setHiddenVals = function (){
+	    //div.find("animal_primary_breed_id").val(selected[0].id);
+	    div.find(".storage").val(selected[0].id);
 	    input.val(selected[0].name);
-	    console.log(input)
+	    //console.log(selected)
   	}
 
 
-	this.setList = function(str){
+	this.setList1 = function(str){
 		var html = "";
 		var count = 0;
-		for(var i = 0; i < this.data.length; i++){
+		
+		for (var i = 0; i < this.data.length; i++) {
 			if(this.data[i].name.toLowerCase().indexOf(str.toLowerCase()) !== -1){
 				count++;
 				var added = ""
@@ -56,75 +56,54 @@ function SingleFilterDropdown(div, source, style = {}){
 					added = "ss-item-selected";
 				}
 
-				html += "<div class='ss-item ss-row-"+ (count%2) +" "+added+"' id='"+this.data[i].id+"'>"+this.data[i].name+"</div>"
+				html += "<div class='ss-item ss-row-"+ (count%2) +" "+added+"' id='"+this.data[i].id + "'>"+this.data[i].name+"</div>"
 			}
 		}
 
 		list.html(html);
 		list.find("div").on("click", function(){
-
-			context.toggleItem($(this).attr("id"));
+			context.toggleItem1($(this).attr("id"));
+			console.log($(this).attr("id"));
 		})
-		setHiddenBreeds();
-		//this.createDisplay();
-		
+		if(selected.length != 0) {
+			setHiddenVals();
+		}
 	}
-	this.showList = function(){
+	this.showList1 = function(){
 		list.show();
 	}
-	this.createDisplay = function(){
-		var str = "";
-		for(var i = 0; i < selected.length; i++){
-			var id = selected[i].id;
-			var text = selected[i].name;
-			str +=
-			"<div class = 'select-item' style = 'position: relative; display: inline-block;'>" 
-	        + "<p style = 'margin:0px; padding-right:15px'>" + text + "</p>" + 
-			"<span id = '"+id+"'class = 'glyphicon glyphicon-remove remove-behavior remove-item' style='margin:2px; float:right;'></span>" + 
-			" </div>"
-
-		}
-		$(this).get(0).selectedIndex = 0;
-		setHiddenBreeds();
-		display.html(str);
-		display.find(".glyphicon-remove").on("click", function(){
-			
-			context.removeItem($(this).attr("id"));
-			$(this).closest(".ss-item").detach()
-      		setHiddenBreeds();
-		})
-	}
-
-	this.addItem = function(id){
+	this.addItem1 = function(id){
 		item = this.getItem(id);
-		
+		console.log(item);
 		var id = item.id;
 		var text = item.name;
 		selected.push({name:text, id:id});
-		console.log(input.val());
-		this.setList(input.val());
+		
+		this.setList1(input.val());
 	}
 	
-	this.removeItem = function(id){
+	this.removeItem1 = function(id){
 		item = this.getItem(id);
 		var id = item.id;
 		var text = item.text;
 
 		selected.splice(this.getItemIndex(id), 1);
-		console.log(input.val());
-		this.setList(input.val());
+		//console.log(input.val());
+		this.setList1(input.val());
 	}
-	this.toggleItem = function(id){
-		item = this.getItem(id);
+	this.toggleItem1 = function(id){
+		item = this.getItem1(id);
+		//console.log(id);
 		var json = {name:item.name, id:item.id}
+		
 		if(!this.containsItem(id)){
-			this.addItem(id);
+			this.addItem1(id);
 		}
 		else{
-			this.removeItem(id);
+			this.removeItem1(id);
 		}
 	}
-	this.getItem = function(id){
+	this.getItem1 = function(id){
 
 		for(var i = 0; i < this.data.length; i++){
 			if(this.data[i].id + "" == id){
@@ -133,7 +112,7 @@ function SingleFilterDropdown(div, source, style = {}){
 		}
 		return {};
 	}
-	this.getItemIndex = function(id){
+	this.getItemIndex1 = function(id){
 		for(var i = 0; i < selected.length; i++){
 			if(selected[i].id == id){
 				return i;
@@ -141,7 +120,7 @@ function SingleFilterDropdown(div, source, style = {}){
 		}
 		return -1;
 	}
-	this.containsItem = function(id){
+	this.containsItem1 = function(id){
 		for(var i = 0; i < selected.length; i++){
 			if(selected[i].id == id){
 				return true;
@@ -149,10 +128,10 @@ function SingleFilterDropdown(div, source, style = {}){
 		}
 		return false;
 	}
-	this.loadData = function(data){
+	this.loadData1 = function(data){
 		this.data = data;
 	}
-	this.loadString = function(str){
+	this.loadString1 = function(str){
 		$.ajax({
 			url: source,
 			context:context, 
@@ -165,9 +144,9 @@ function SingleFilterDropdown(div, source, style = {}){
 	    	}
 		});
 	}
-	if(typeof source === 'string'){this.loadString(source);}
-	else{this.loadData(source);}
-	this.setList("");
+	if(typeof source === 'string'){this.loadString1(source);}
+	else{this.loadData1(source);}
+	this.setList1("");
 
 	
 }
