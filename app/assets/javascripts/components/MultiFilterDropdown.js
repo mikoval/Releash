@@ -4,7 +4,7 @@ function MultiFilterDropdown(div, source, style = {}){
 	var selected = [];
 
 	var input = $('<input/>').attr({ type: 'text', id: 'input' }).addClass("form-control dd-input")
-	var list = $('<div/>').addClass("dd-list").css("display", "none");
+	var list = $('<div/>').attr({id: 'list1'}).addClass("dd-list").css("display", "none");
 	var display = $('<div/>').addClass("dd-display")
 	
 	input.appendTo(obj);
@@ -15,7 +15,7 @@ function MultiFilterDropdown(div, source, style = {}){
 		context.setList($(this).val());
 		context.showList();
 	});
-	console.log("Secondary");
+	//console.log("Secondary");
 	$(document).ready(function () {
 
 	    $('.dd-list').animate({
@@ -65,7 +65,7 @@ function MultiFilterDropdown(div, source, style = {}){
 
 		list.html(html);
 		list.find("div").on("click", function(){
-
+			console.log($(this).attr("id"));
 			context.toggleItem($(this).attr("id"));
 		})
 		this.createDisplay();
@@ -103,7 +103,7 @@ function MultiFilterDropdown(div, source, style = {}){
 		var id = item.id;
 		var text = item.name;
 		selected.push({name:text, id:id});
-		console.log(input.val());
+		//console.log(input.val());
 		this.setList(input.val());
 	}
 	
