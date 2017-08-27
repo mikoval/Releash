@@ -1,8 +1,9 @@
 /* This file contains uniform scss form variables to be used in whole application */
 
 /*GENERAL COLOR SCHEME*/
-$black: #e1e1e1; /*profile names*/
+$black: #181717; /*profile names*/
 $blue : #2980b9;
+$crimson: #A41C1C;
 
 
 /* Dark Greys */

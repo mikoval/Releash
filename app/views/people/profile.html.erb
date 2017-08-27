@@ -3,9 +3,11 @@
 <div class="col-xs-12 bg-page">
   <!--First Row -->
   <div class="row">
+    <div class="col-xs-12 col-md-4 col-md-offset-10" style="margin-top: 10px">
     <% if admin?(current_user) || @employee.id == current_user.id %>
-    <%= link_to ' <span class ="glyphicon glyphicon-pencil" style = "cursor: pointer; font-size:25px;"></span>'.html_safe,  :controller => "people", :action => "edit", :param => @employee, :method => "get" %>
+    <%= link_to ' <button class ="reg-btn">Edit Profile</button>'.html_safe,  :controller => "people", :action => "edit", :param => @employee, :method => "get" %>
     <%end %>
+    </div>
   </div>
 
   <!-- Second Row -->
@@ -53,12 +55,13 @@
                   <p style = "text-align: center">Homecheck Document: <%= link_to @employee.user_document.file.filename, @employee.user_document.url %> </p>
               <% end %>
             </p>
-            <p><span class="inner-title">Notes</span></p>
+            <br>
+            <p><span class="inner-title" id="inside-inner">Notes</span></p>
             <p><%=simple_format(@employee.home_comm)%></p>
           </div>
         </div>
 
-        <div class="profile-div">
+<!--         <div class="profile-div">
           <div class="profile-header">
             <a class= "card-header" data-toggle="collapse" href="#person-events"><h3 class="tab-title">Assigned Events</h3>
             </a>
@@ -66,7 +69,7 @@
           <div class="profile-div" id="person-events">
             <p>I've got mucho events!</p>
           </div>
-        </div> 
+        </div>  -->
       </div>
     </div>
   </div>
@@ -74,11 +77,95 @@
   <!-- Third Row -->
   <div class="row">
     <div class="col-xs-12">
-      <a class= "card-header" data-toggle="collapse" href="#person-adoption">
-      <div><h3 class="tab-title">Adoption Information</h3></div>
-      </a>
+      <div class="profile-header">
+        <a class= "card-header" data-toggle="collapse" href="#person-adoption"><h3 class="tab-title">Adoption Information</h3>
+        </a>
+      </div>
+
       <div class="profile-div" id="person-adoption">
-        <p>I'll adop all the</p>
+        <!-- TABBED CONTENT -->
+        <div class="tab-head">
+          <ul class="nav nav-justified" role="tablist">
+            <li class="active"><a href="#foster" data-toggle="tab">Animals Fostered</a></li>
+            <li><a href="#adopt" data-toggle="tab">Animals Adopted</a></li>
+            <li><a href="#applied" data-toggle="tab">Animals Applied For</a></li>
+          </ul>
+        </div>
+
+        <div class="tab-content">
+          <div class="tab-pane fade in active" id="foster">
+            <table id = "foster-table" class="table table-bordered table-inverse table-hover foster-table">
+              <thead>
+                <tr>
+                  <th class= "col-md-1">Date</th>
+                  <th class= "col-md-2">Animal Name</th>
+                </tr>
+              </thead>
+              <% if @allFosters != nil%>
+                <tbody>
+                  <% @allFosters.each do |a| %>
+                     <tr style = "height: 70px;" >
+                        <td><%= a.foster_date%></td>
+                        <td> 
+                          <%= Animal.find_by(id: a.animal_id).name%>
+                        </td>
+                      </tr>
+                  <% end %>
+                </tbody>
+              <% end %>
+            </table>
+          </div>
+
+          <div class="tab-pane fade" id="adopt">
+            <table id = "adopt-table" class="table table-bordered table-inverse table-hover adopt-table">
+              <thead>
+                <tr>
+                  <th class= "col-md-1">Date</th>
+                  <th class= "col-md-2">Animal Name</th>
+                </tr>
+              </thead>
+              <% if @allAdoptions != nil%>
+                <tbody>
+                  <% @allAdoptions.each do |a| %>
+                     <tr style = "height: 70px;" >
+                        <td><%= a.adopt_date%></td>
+                        <td> 
+                          <%= Animal.find_by(id: a.animal_id).name%>
+                        </td>
+                      </tr>
+                  <% end %>
+                </tbody>
+              <% end %>
+            </table>
+          </div>
+
+          <div class="tab-pane fade" id="applied">
+              <table id = "app-table" class="table table-bordered table-inverse table-hover adopt-table">
+                <thead>
+                  <tr>
+                    <th class= "col-md-1">Date</th>
+                    <th class= "col-md-2">Animal Name</th>
+                  </tr>
+                </thead>
+                
+                <% if @allApps != nil%>
+                  <tbody>
+                    <% @allApps.each do |a| %>
+                       <tr style = "height: 70px;" >
+                          <td><%= a.app_date%></td>
+                          <td> 
+                            <%= Animal.find_by(id: a.animal_id).name%>
+                          </td>
+                        </tr>
+                    <% end %>
+                  </tbody>
+                <% end %>
+
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- END TABBED CONTENT -->
       </div>
     </div>
   </div>

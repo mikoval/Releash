@@ -25,12 +25,6 @@ p {
 
 }
 
-.pg-title {
-  text-align: left;
-  font-size: 24px;
-  font-weight: 800;
-  color: #4D4747;
-}
 
 #pic-preview {
   width: 170px;
@@ -139,15 +133,6 @@ p {
 
 
 /*========= New Page ==========*/
-.table-head {
-    background-color: $navcolor;
-    font-weight: 900;
-    color: white;
-}
-
-.table-wrapper {
-  padding: 50px;
-}
 
 .info-wrapper {
   background-color: $pg-color;
@@ -205,7 +190,7 @@ p {
 }
 
 
-#profile-container {
+/*#profile-container {
   background-color: white;
   margin-top: 5%;
   padding: 2%;
@@ -217,7 +202,7 @@ p {
   border-radius: 0.7%;
   border-color: blue;
   border-width: 15px;
-}
+}*/
 
 #animal-name {
   text-align: center;
@@ -311,16 +296,18 @@ article {
 }
 
 .entry-item {
-  border-style: solid;
-  border-width: 1px;
-  border-radius: 0.2%;
-  border-color: $neutral;
+  border-bottom: 2px dashed $neutral;
   margin-bottom: 5%;
 
 }
 
 .entry-text, .edit-enty {
   margin-top: 5%;
+}
+
+.entry-text p {
+  padding: 0px;
+  margin-left: 0px;
 }
 
 

@@ -1,7 +1,9 @@
 <% provide(:title, "People") %>
 
 <div class="bg-page">
+  <h2 class= "pg-title">People List</h2>
   <!-- BUTTONS TO ADD USERS -->
+  <div>
   <% if admin?(current_user) %>
     <%= link_to "<button>Add User</button>".html_safe,  :controller => "people", :action => "new", :method => "get" %>
     <%= link_to "<button>Add Non User</button>".html_safe,  :controller => "non_user", :action => "new", :method => "get" %>
@@ -9,22 +11,25 @@
     <%= link_to "<button>Add Veterinarian</button>".html_safe,  :controller => "veterinarian", :action => "new", :method => "get" %>  
     <%= link_to "<button>Add Animal Facility</button>".html_safe,  :controller => "animal_facility", :action => "new", :method => "get" %>  
   <% end %>
+  </div>
 
   <!-- TAB NAV LINKS-->
-  <ul class="nav nav-tabs-unstyled nav-justified">
-      <li class="active"><a href="#user" data-toggle="tab">Users</a></li>
-      <li><a href="#non_user" data-toggle="tab">Non Users</a></li>
-      <li><a href="#trainer" data-toggle="tab">Trainers</a></li>
-      <li><a href="#vet" data-toggle="tab">Veterinarian</a></li>
-      <li><a href="#animal_fac" data-toggle="tab">Animal Facilities</a></li>
-  </ul>
+  <div class="tab-head">
+    <ul class="nav nav-tabs-unstyled nav-justified">
+        <li class="active"><a href="#user" data-toggle="tab">Users</a></li>
+        <li><a href="#non_user" data-toggle="tab">Non Users</a></li>
+        <li><a href="#trainer" data-toggle="tab">Trainers</a></li>
+        <li><a href="#vet" data-toggle="tab">Veterinarian</a></li>
+        <li><a href="#animal_fac" data-toggle="tab">Animal Facilities</a></li>
+    </ul>
+  </div>
 
 
   <!-- TAB CONTENT -->
   <div class="tab-content">
     
     <!-- USER TAB CONENT -->
-    <div class="tab-pane active" id="user">
+    <div class="tab-pane fade in active" id="user">
       <table id = "people-table" class="table table-bordered table-inverse table-hover people-table">
         <thead>
           <tr>
@@ -59,7 +64,7 @@
     </div>
 
     <!-- NONUSER TAB CONTENT -->
-    <div class="tab-pane" id="non_user">
+    <div class="tab-pane fade" id="non_user">
       <table id = "user-table" class="table table-bordered table-inverse table-hover user-table">
         <thead>
           <tr>
@@ -90,7 +95,7 @@
     </div>
 
     <!-- TRAINER TAB CONTENT -->
-    <div class="tab-pane" id="trainer">
+    <div class="tab-pane fade" id="trainer">
       <table id = "user-table" class="table table-bordered table-inverse table-hover user-table">
         <thead>
           <tr>
@@ -124,7 +129,7 @@
     </div>
     
     <!-- VET TAB CONTENT -->
-    <div class="tab-pane" id="vet">
+    <div class="tab-pane fade" id="vet">
       <table id = "user-table" class="table table-bordered table-inverse table-hover user-table">
         <thead>
           <tr>
@@ -158,7 +163,7 @@
       </table>
     </div>
     <!--- ANIMAL FACILITY-->
-    <div class="tab-pane" id="animal_fac">
+    <div class="tab-pane fade" id="animal_fac">
       <table id = "user-table" class="table table-bordered table-inverse table-hover user-table">
         <thead>
           <tr>
