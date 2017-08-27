@@ -2,6 +2,45 @@
 @import "bootstrap";
 @import 'set-style';
 
+/*Backgrounds*/
+body {
+    background-color: $bg-color;
+}
+
+.bg-page {
+    min-height: 100vH;
+    background-color: $pg-color;
+}
+
+#page-render {
+    background-color: $bg-color;
+    padding: 20px;
+    min-height: 100vH;
+}
+
+/* Profile pages */
+.inner-title {
+  font-weight: 600;
+}
+
+.profile-summary {
+  background-color: $bg-lightgrey;
+  border: 1px solid $border-lightgrey;
+  border-radius: 3px;
+}
+
+.profile-header {
+  border-bottom: 1px solid $black;
+}
+
+.tab-title {
+  color: $deep-grey;
+  font-size: 1.0em;
+  font-weight: 600;
+}
+
+
+
 /* mixins, variables, etc. */
 @mixin box_sizing {
   -moz-box-sizing:    border-box;

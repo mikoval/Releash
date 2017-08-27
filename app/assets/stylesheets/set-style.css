@@ -1,22 +1,35 @@
 /* This file contains uniform scss form variables to be used in whole application */
 
-$neutral: #e1e1e1;
+/*GENERAL COLOR SCHEME*/
+$black: #e1e1e1; /*profile names*/
 $blue : #2980b9;
-$bodycolor: #fff;
 
+
+/* Dark Greys */
+$deep-grey: #363536;
+$drk-grey: #4A494B;
+$md-grey: #9C9898;
+
+/* Light Greys */
+$neutral: #e1e1e1;
+$bg-lightgrey: #f8f8f8;
+$border-lightgrey: #c3cccc;
+
+/* Whites */
 $bg-color: #FBFBFB;
+$pg-color: #fff;
 
-$divbody: #E0DDDD;
 
 
-$navselect: #363536;
+/* COMPONENT COLORS */
 $navcolor: #4A494B;
+$navselect: #363536;
 $navfocus: #363536;
 
 $btn-border: #9C9898;
 
-$widgethead: #fff;
-$widgetbody: #fff; 
+$widgethead: var($pg-color);
+$widgetbody: var($pg-color); 
 
 $border: 1px solid #f3f3f3;
 $shrt-border: 1px solid;
