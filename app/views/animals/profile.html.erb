@@ -119,7 +119,7 @@
               <a class= "card-header" data-toggle="collapse" href="#animal-events"><h3 class="tab-title">Upcoming Events</h3>
               </a>
             </div>
-             <a href='/alerts/new?method=get&param= <%= @animal.id %> '><button class = "btn btn-default" >Add New Alert</button></a>
+             <a href='/alerts/new?method=get&param= <%= @animal.id %> '><button class = "btn btn-default" >Add New Event</button></a>
           </div>
           <div class="profile-div" id="animal-events">
             <table class="table">
@@ -131,6 +131,7 @@
                 </tr>
               </thead>
               <tbody>
+                
                 <% @alerts.each do |a| %>
                   <tr>
                   <td><a href = "#" class = "alert-event" id = "alert-<%= a['id'] %> "><%= a["title"] %> </a></td>
