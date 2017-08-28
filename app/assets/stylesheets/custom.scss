@@ -2,6 +2,153 @@
 @import "bootstrap";
 @import 'set-style';
 
+/*Backgrounds*/
+body {
+    background-color: $bg-color;
+}
+
+.bg-page {
+    min-height: 100vH;
+    background-color: $pg-color;
+    padding: 20px;
+}
+
+#page-render {
+    background-color: $bg-color;
+    padding: 0px;
+    min-height: 100vH;
+}
+
+.bg-page#widget-pg {
+  background-color: $bg-color;
+}
+
+/*All Title*/
+.pg-title {
+  text-align: left;
+  font-size: 24px;
+  font-weight: 800;
+  color: #4D4747;
+  margin-bottom: 5px;
+}
+
+/* Profile pages */
+.inner-title {
+  font-weight: 600;
+}
+
+.profile-name {
+  color: $black;
+  font-weight: 800;
+}
+
+.profile-summary {
+  background-color: $bg-lightgrey;
+  border: 1px solid $border-lightgrey;
+  border-radius: 3px;
+}
+
+.profile-header {
+  border-bottom: 1px solid $neutral;
+}
+
+.tab-title {
+  color: $deep-grey;
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+.tab-title#inside-inner {
+    font-size: 1.0em;
+}
+
+/* Buttons */
+
+/*button {
+  margin      : 0;
+  padding     : 0;
+  border      : 0;
+  background  : transparent;
+  font-family : inherit;
+  font-size   : 1em;
+  cursor      : pointer;
+}*/
+
+button {
+    margin: 0;
+    border: 1px solid $btn-border;
+    font-weight: 900;
+    font-size: 1em;
+    border-radius: 3px;
+    background-color: white;
+    padding: 5px;
+}
+
+.main-btn {
+  background-color: #f9f9f9;
+  font-weight: 900;
+  font-size: 1.2em;
+  border-radius: 0;
+  border-color: #E7E7E7;
+  box-shadow: 0px 1px 1px #979797;
+  padding: 5px;
+}
+
+.main-btn:hover {
+    color: $blue;
+    text-decoration: none;
+}
+
+.delete-btn {
+  background-color: $crimson;
+  font-weight: 900;
+  color: white;
+  font-size: 1.2em;
+  border-radius: 1px;
+  border-color: $crimson;
+  box-shadow: 0px 1px 1px #979797;
+  padding: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.delete-btn a {
+  text-decoration: none;
+  color: white;
+}
+
+.delete-btn a {
+
+}
+
+
+.reg-btn {
+    border: 1px solid $btn-border;
+    font-weight: 900;
+    font-size: 1em;
+    border-radius: 3px;
+    background-color: white;
+    padding: 5px;
+    min-width: 30px;
+}
+
+/*Tables & Tabs */
+
+.table-head {
+    background-color: $navcolor;
+    font-weight: 900;
+    color: white;
+}
+
+.table-wrapper {
+  padding: 50px;
+}
+
+
+
+
+
+
 /* mixins, variables, etc. */
 @mixin box_sizing {
   -moz-box-sizing:    border-box;

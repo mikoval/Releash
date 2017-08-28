@@ -1,24 +1,6 @@
 @import 'set-style';
 
 
-
-/*Background for all pages */
-body {
-    background-color: $bg-color;
-}
-
-.bg-page {
-    min-height: 100vH;
-}
-
-#page-render {
-    background-color: $bg-color;
-    padding: 30px;
-    min-height: 100vH;
-}
-
-
-
 /* Widgets */
 /*.content-body{margin:4px;
 }*/

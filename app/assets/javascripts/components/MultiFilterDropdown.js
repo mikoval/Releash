@@ -1,14 +1,16 @@
-function FilterDropdown(div, source, style = {}){
+function MultiFilterDropdown(div, source, style = {}){
 	var context = this;
 	var obj = div;
 	var selected = [];
-	//obj.append("<input type='text' class='form-control'></input>")
+
 	var input = $('<input/>').attr({ type: 'text', id: 'input' }).addClass("form-control dd-input")
-	var list = $('<div/>').addClass("dd-list").css("display", "none");
+	var list = $('<div/>').attr({id: 'list1'}).addClass("dd-list").css("display", "none");
 	var display = $('<div/>').addClass("dd-display")
+	
 	input.appendTo(obj);
 	list.appendTo(obj);
 	display.appendTo(obj);
+	
 	$(input).on('keyup paste', function() {
 		context.setList($(this).val());
 		context.showList();
@@ -36,11 +38,9 @@ function FilterDropdown(div, source, style = {}){
 	this.setHiddenBreeds = function (){
 	   str = ""
 	   for(var i = 0; i < selected.length; i++){
-	   		//console.log("ids");
+
       		var id = selected[i].id
-      		//console.log(id);
       		str += id + "|"
-      		//onsole.log(str);
 	    }
 	    div.find(".storage").val(str);
   	}
@@ -63,7 +63,6 @@ function FilterDropdown(div, source, style = {}){
 
 		list.html(html);
 		list.find("div").on("click", function(){
-
 			context.toggleItem($(this).attr("id"));
 		})
 		this.createDisplay();
@@ -101,7 +100,7 @@ function FilterDropdown(div, source, style = {}){
 		var id = item.id;
 		var text = item.name;
 		selected.push({name:text, id:id});
-		console.log(input.val());
+
 		this.setList(input.val());
 	}
 	
@@ -111,7 +110,7 @@ function FilterDropdown(div, source, style = {}){
 		var text = item.text;
 
 		selected.splice(this.getItemIndex(id), 1);
-		console.log(input.val());
+
 		this.setList(input.val());
 	}
 	this.toggleItem = function(id){
