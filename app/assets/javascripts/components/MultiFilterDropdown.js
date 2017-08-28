@@ -15,7 +15,7 @@ function MultiFilterDropdown(div, source, style = {}){
 		context.setList($(this).val());
 		context.showList();
 	});
-	//console.log("Secondary");
+
 	$(document).ready(function () {
 
 	    $('.dd-list').animate({
@@ -38,11 +38,9 @@ function MultiFilterDropdown(div, source, style = {}){
 	this.setHiddenBreeds = function (){
 	   str = ""
 	   for(var i = 0; i < selected.length; i++){
-	   		//console.log("ids");
+
       		var id = selected[i].id
-      		//console.log(id);
       		str += id + "|"
-      		//onsole.log(str);
 	    }
 	    div.find(".storage").val(str);
   	}
@@ -65,7 +63,6 @@ function MultiFilterDropdown(div, source, style = {}){
 
 		list.html(html);
 		list.find("div").on("click", function(){
-			console.log($(this).attr("id"));
 			context.toggleItem($(this).attr("id"));
 		})
 		this.createDisplay();
@@ -103,7 +100,7 @@ function MultiFilterDropdown(div, source, style = {}){
 		var id = item.id;
 		var text = item.name;
 		selected.push({name:text, id:id});
-		//console.log(input.val());
+
 		this.setList(input.val());
 	}
 	
@@ -113,7 +110,7 @@ function MultiFilterDropdown(div, source, style = {}){
 		var text = item.text;
 
 		selected.splice(this.getItemIndex(id), 1);
-		console.log(input.val());
+
 		this.setList(input.val());
 	}
 	this.toggleItem = function(id){

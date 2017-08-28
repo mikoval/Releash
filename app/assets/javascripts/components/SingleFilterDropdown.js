@@ -37,10 +37,8 @@ function SingleFilterDropdown(div, source, style = {}){
 	})
 	
 	this.setHiddenVals = function (){
-	    //div.find("animal_primary_breed_id").val(selected[0].id);
 	    div.find(".storage").val(selected[0].id);
 	    input.val(selected[0].name);
-	    //console.log(selected)
   	}
 
 
@@ -52,7 +50,7 @@ function SingleFilterDropdown(div, source, style = {}){
 			if(this.data[i].name.toLowerCase().indexOf(str.toLowerCase()) !== -1){
 				count++;
 				var added = ""
-				if(this.containsItem(this.data[i].id)){
+				if(this.containsItem1(this.data[i].id)){
 					added = "ss-item-selected";
 				}
 
@@ -63,7 +61,6 @@ function SingleFilterDropdown(div, source, style = {}){
 		list.html(html);
 		list.find("div").on("click", function(){
 			context.toggleItem1($(this).attr("id"));
-			console.log($(this).attr("id"));
 		})
 		if(selected.length != 0) {
 			setHiddenVals();
@@ -74,7 +71,7 @@ function SingleFilterDropdown(div, source, style = {}){
 	}
 	this.addItem1 = function(id){
 		item = this.getItem(id);
-		console.log(item);
+
 		var id = item.id;
 		var text = item.name;
 		selected.push({name:text, id:id});
@@ -88,15 +85,15 @@ function SingleFilterDropdown(div, source, style = {}){
 		var text = item.text;
 
 		selected.splice(this.getItemIndex(id), 1);
-		//console.log(input.val());
+		input.val("");
 		this.setList1(input.val());
 	}
 	this.toggleItem1 = function(id){
 		item = this.getItem1(id);
-		//console.log(id);
+		console.log("toggle");
 		var json = {name:item.name, id:item.id}
 		
-		if(!this.containsItem(id)){
+		if(!this.containsItem1(id)){
 			this.addItem1(id);
 		}
 		else{
