@@ -122,6 +122,7 @@
              <a href='/alerts/new?method=get&param= <%= @animal.id %> '><button class = "btn btn-default" >Add New Event</button></a>
           </div>
           <div class="profile-div" id="animal-events">
+            <% if @alerts.count > 0 %>
             <table class="table">
               <thead class="table-head">
                 <tr>
@@ -131,7 +132,6 @@
                 </tr>
               </thead>
               <tbody>
-                
                 <% @alerts.each do |a| %>
                   <tr>
                   <td><a href = "#" class = "alert-event" id = "alert-<%= a['id'] %> "><%= a["title"] %> </a></td>
@@ -141,6 +141,9 @@
                 <% end %>
               </tbody>
             </table>
+            <% else %>
+            <p> There are no upcoming events </p>
+            <% end %>
           </div>
         </div>
         <!--Paperwork-->
